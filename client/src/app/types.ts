@@ -21,9 +21,11 @@ export type Exercise = {
   id: number;
   name: string;
   type: ExerciseType;
-  targetReps: string;
   category: ExerciseCategory;
   comments?: string;
   thumbLink?: string;
-  siteLink?: string;
+  targetSets: number;
+  targetRepsMin?: number;
+  targetRepsMax?: number;
+  targetDuration?: string;
 };
