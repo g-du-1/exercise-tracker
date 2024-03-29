@@ -6,64 +6,87 @@ exports[`ExerciseTracker > renders 1`] = `
     class="MuiBox-root css-0"
   >
     <div
-      class="MuiBox-root css-70qvj9"
+      class="MuiBox-root css-1vr2anf"
     >
       <div
-        class="MuiBox-root css-0"
+        class="MuiBox-root css-70qvj9"
       >
-        Exercise 1
-      </div>
-      <button
-        aria-label="add"
-        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
-        tabindex="0"
-        type="button"
-      >
-        <svg
-          aria-hidden="true"
-          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-          data-testid="AddIcon"
-          focusable="false"
-          viewBox="0 0 24 24"
+        <div
+          class="MuiBox-root css-0"
         >
-          <path
-            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"
+          Exercise 1
+        </div>
+        <button
+          aria-label="add"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+          tabindex="0"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+            data-testid="AddIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"
+            />
+          </svg>
+          <span
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
           />
-        </svg>
-        <span
-          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+        </button>
+      </div>
+      <div
+        class="video-responsive"
+      >
+        <iframe
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen=""
+          src="https://www.youtube.com/embed/HFv2WwgeVMk"
+          title="Exercise 1 Video"
         />
-      </button>
+      </div>
     </div>
     <div
-      class="MuiBox-root css-70qvj9"
+      class="MuiBox-root css-1vr2anf"
     >
       <div
-        class="MuiBox-root css-0"
+        class="MuiBox-root css-70qvj9"
       >
-        Exercise 2
-      </div>
-      <button
-        aria-label="add"
-        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
-        tabindex="0"
-        type="button"
-      >
-        <svg
-          aria-hidden="true"
-          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-          data-testid="AddIcon"
-          focusable="false"
-          viewBox="0 0 24 24"
+        <div
+          class="MuiBox-root css-0"
         >
-          <path
-            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"
+          Exercise 2
+        </div>
+        <button
+          aria-label="add"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+          tabindex="0"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+            data-testid="AddIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"
+            />
+          </svg>
+          <span
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
           />
-        </svg>
-        <span
-          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-        />
-      </button>
+        </button>
+      </div>
+      <img
+        alt="Exercise 2 Image"
+        src="https://i.imgur.com/6vOLzTC.jpg"
+        style="width: 100%; height: auto;"
+      />
     </div>
   </div>
 </div>

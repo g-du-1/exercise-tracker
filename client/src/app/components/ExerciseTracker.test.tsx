@@ -12,6 +12,7 @@ let mockExercises: Exercise[] = [
     targetRepsMin: 5,
     targetRepsMax: 10,
     name: "Exercise 1",
+    thumbLink: "https://www.youtube.com/watch?v=HFv2WwgeVMk",
   },
   {
     id: 2,
@@ -21,6 +22,7 @@ let mockExercises: Exercise[] = [
     targetRepsMin: 5,
     targetRepsMax: 10,
     name: "Exercise 2",
+    thumbLink: "https://i.imgur.com/6vOLzTC.jpg",
   },
 ];
 
@@ -55,5 +57,23 @@ describe("ExerciseTracker", () => {
     fireEvent.click(addButtons[0]);
 
     expect(getByText("Add Exercise 1 Reps")).toBeDefined();
+  });
+
+  it("displays a video if it has a video link", () => {
+    const { queryByTitle } = render(
+      <ExerciseTracker exercises={mockExercises} />
+    );
+
+    expect(queryByTitle("Exercise 1 Video")).not.toBeNull();
+    expect(queryByTitle("Exercise 2 Video")).toBeNull();
+  });
+
+  it("displays an image if it has an image", () => {
+    const { queryByAltText } = render(
+      <ExerciseTracker exercises={mockExercises} />
+    );
+
+    expect(queryByAltText("Exercise 1 Image")).toBeNull();
+    expect(queryByAltText("Exercise 2 Image")).not.toBeNull();
   });
 });

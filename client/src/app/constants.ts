@@ -42,7 +42,7 @@ const warmUps: Exercise[] = [
     targetRepsMax: 30,
     isDuration: true,
     name: "Deadbugs (Alternating)",
-    comments: "https://nick-e.com/deadbug/",
+    thumbLink: "https://www.youtube.com/watch?v=HFv2WwgeVMk",
   },
 ];
 
