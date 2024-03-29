@@ -24,5 +24,6 @@ export type Exercise = {
   targetReps: string;
   category: ExerciseCategory;
   comments?: string;
-  ytLink?: string;
+  thumbLink?: string;
+  siteLink?: string;
 };
