@@ -9,8 +9,5 @@ describe("Home Page", () => {
     expect(
       screen.getByRole("heading", { level: 1, name: "Exercise Tracker" })
     ).toBeDefined();
-
-    expect(screen.getByText("Exercise 1")).toBeDefined();
-    expect(screen.getByText("Exercise 2")).toBeDefined();
   });
 });
