@@ -1,0 +1,14 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ExerciseTracker > renders 1`] = `
+<div>
+  <div>
+    <div>
+      Exercise 1
+    </div>
+    <div>
+      Exercise 2
+    </div>
+  </div>
+</div>
+`;

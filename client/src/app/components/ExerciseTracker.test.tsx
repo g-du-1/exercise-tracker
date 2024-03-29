@@ -4,7 +4,7 @@ import { ExerciseTracker } from "./ExerciseTracker";
 
 describe("ExerciseTracker", () => {
   it("renders", () => {
-    render(
+    const result = render(
       <ExerciseTracker
         exercises={[
           { id: 1, name: "Exercise 1" },
@@ -13,7 +13,6 @@ describe("ExerciseTracker", () => {
       />
     );
 
-    expect(screen.getByText("Exercise 1")).toBeDefined();
-    expect(screen.getByText("Exercise 2")).toBeDefined();
+    expect(result.container).toMatchSnapshot();
   });
 });
