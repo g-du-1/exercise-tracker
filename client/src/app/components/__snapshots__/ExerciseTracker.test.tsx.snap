@@ -2,12 +2,68 @@
 
 exports[`ExerciseTracker > renders 1`] = `
 <div>
-  <div>
-    <div>
-      Exercise 1
+  <div
+    class="MuiBox-root css-0"
+  >
+    <div
+      class="MuiBox-root css-70qvj9"
+    >
+      <div
+        class="MuiBox-root css-0"
+      >
+        Exercise 1
+      </div>
+      <button
+        aria-label="add"
+        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+        tabindex="0"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+          data-testid="AddIcon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"
+          />
+        </svg>
+        <span
+          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+        />
+      </button>
     </div>
-    <div>
-      Exercise 2
+    <div
+      class="MuiBox-root css-70qvj9"
+    >
+      <div
+        class="MuiBox-root css-0"
+      >
+        Exercise 2
+      </div>
+      <button
+        aria-label="add"
+        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+        tabindex="0"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+          data-testid="AddIcon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"
+          />
+        </svg>
+        <span
+          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+        />
+      </button>
     </div>
   </div>
 </div>
