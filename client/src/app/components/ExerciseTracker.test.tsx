@@ -7,8 +7,20 @@ describe("ExerciseTracker", () => {
     const result = render(
       <ExerciseTracker
         exercises={[
-          { id: 1, name: "Exercise 1" },
-          { id: 2, name: "Exercise 2" },
+          {
+            id: 1,
+            category: "warmup",
+            type: "warmup",
+            targetReps: "5-10",
+            name: "Exercise 1",
+          },
+          {
+            id: 2,
+            category: "warmup",
+            type: "warmup",
+            targetReps: "5-10",
+            name: "Exercise 2",
+          },
         ]}
       />
     );

@@ -1,12 +1,7 @@
 import { ExerciseTracker } from "./components/ExerciseTracker";
-import { Exercise } from "./types";
+import { exercises } from "./constants";
 
 export default function Home() {
-  const exercises: Exercise[] = [
-    { id: 1, name: "Exercise 1" },
-    { id: 2, name: "Exercise 2" },
-  ];
-
   return (
     <>
       <h1>Exercise Tracker</h1>
