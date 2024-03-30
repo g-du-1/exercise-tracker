@@ -15,6 +15,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import ClearIcon from "@mui/icons-material/Clear";
 
 const style = {
   position: "absolute" as "absolute",
@@ -119,13 +120,34 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
               >
                 <Box>{exercise.name}</Box>
 
-                <IconButton
-                  size="large"
-                  aria-label="add"
-                  onClick={() => handleAddClick(exercise)}
-                >
-                  <AddIcon />
-                </IconButton>
+                <Box>
+                  <IconButton
+                    color="error"
+                    size="large"
+                    aria-label="Delete Reps"
+                    onClick={() => {
+                      const newReps = { ...savedReps };
+
+                      const existingExercise = newReps[exercise.id];
+
+                      if (existingExercise) {
+                        existingExercise.reps = [];
+                      }
+
+                      setSavedReps(newReps);
+                    }}
+                  >
+                    <ClearIcon />
+                  </IconButton>
+
+                  <IconButton
+                    size="large"
+                    aria-label="add"
+                    onClick={() => handleAddClick(exercise)}
+                  >
+                    <AddIcon />
+                  </IconButton>
+                </Box>
               </Box>
 
               <Box>

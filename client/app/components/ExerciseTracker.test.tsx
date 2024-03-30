@@ -126,7 +126,7 @@ describe("ExerciseTracker", () => {
     expect(getByTestId("divider")).toBeInTheDocument();
   });
 
-  it("saves sets of reps for an exercise", () => {
+  it("saves and resets sets of reps for an exercise", () => {
     const { getAllByLabelText, getByText } = render(
       <ExerciseTracker exercises={mockExercises} />
     );
@@ -158,5 +158,11 @@ describe("ExerciseTracker", () => {
     });
 
     expect(getByText("76")).toBeInTheDocument();
+
+    const resetRepsButtons = getAllByLabelText("Delete Reps");
+
+    fireEvent.click(resetRepsButtons[1]);
+
+    expect(screen.queryByText("76")).not.toBeInTheDocument();
   });
 });
