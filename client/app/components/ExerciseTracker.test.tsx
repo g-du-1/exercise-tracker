@@ -13,8 +13,7 @@ let mockExercises: Exercise[] = [
     category: "warmup",
     type: "warmup",
     targetSets: 1,
-    targetRepsMin: 5,
-    targetRepsMax: 10,
+    targetRepsMin: 10,
     name: "Exercise 1",
     thumbLink: "https://www.youtube.com/watch?v=HFv2WwgeVMk",
     targetRest: 0,
@@ -29,6 +28,18 @@ let mockExercises: Exercise[] = [
     name: "Exercise 2",
     thumbLink: "https://i.imgur.com/6vOLzTC.jpg",
     targetRest: 90,
+  },
+  {
+    id: 3,
+    category: "firstPair",
+    type: "dip",
+    targetSets: 3,
+    targetRepsMin: 30,
+    targetRest: 90,
+    isDuration: true,
+    name: "Parallel Bar Support Hold",
+    thumbLink:
+      "https://antranik.org/wp-content/uploads/2014/01/antranik-holding-support-hold-on-parallel-bars.jpg",
   },
 ];
 
@@ -46,7 +57,7 @@ describe("ExerciseTracker", () => {
 
     const addButtons = getAllByLabelText("add");
 
-    expect(addButtons).toHaveLength(2);
+    expect(addButtons).toHaveLength(3);
   });
 
   it("add button opens a modal on click for the exercise", () => {
@@ -109,21 +120,9 @@ describe("ExerciseTracker", () => {
   });
 
   it("renders category separator when category changes", () => {
-    const exercises: Exercise[] = [
-      ...mockExercises,
-      {
-        id: 3,
-        category: "firstPair",
-        type: "pullUp",
-        targetSets: 3,
-        targetRepsMin: 5,
-        targetRepsMax: 8,
-        name: "Exercise 3",
-        targetRest: 0,
-      },
-    ];
-
-    const { getByTestId } = render(<ExerciseTracker exercises={exercises} />);
+    const { getByTestId } = render(
+      <ExerciseTracker exercises={mockExercises} />
+    );
 
     expect(getByTestId("divider")).toBeInTheDocument();
   });
@@ -347,5 +346,13 @@ describe("ExerciseTracker", () => {
     fireEvent.click(screen.getByLabelText("Delete Reps"));
 
     expect(screen.getByText("00:00:00")).toBeInTheDocument();
+  });
+
+  it("displays target sets", () => {
+    render(<ExerciseTracker exercises={mockExercises} />);
+
+    expect(screen.getByText("1x10")).toBeInTheDocument();
+    expect(screen.getByText("3x5-8")).toBeInTheDocument();
+    expect(screen.getByText("3x30s")).toBeInTheDocument();
   });
 });

@@ -190,7 +190,13 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
                 }}
               >
                 <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <Box>{exercise.name}</Box>
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Box sx={{ mr: 1, fontSize: "12px", color: "#b9b9b9" }}>
+                      {`${exercise.targetSets}x${exercise.targetRepsMin ? `${exercise.targetRepsMin}` : ``}${exercise.targetRepsMax ? `-${exercise.targetRepsMax}` : ``}${exercise.isDuration ? `s` : ``}`}
+                    </Box>
+
+                    <Box sx={{ fontSize: "14px" }}>{exercise.name}</Box>
+                  </Box>
 
                   {savedReps?.[exercise.id]?.reps.length >=
                     exercise.targetSets && (
@@ -211,7 +217,9 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
                 </Box>
               </Box>
 
-              <Box sx={{ display: "flex", flexDirection: "row" }}>
+              <Box
+                sx={{ display: "flex", flexDirection: "row", fontSize: "12px" }}
+              >
                 {savedReps?.[exercise.id]?.reps.map((rep: number, idx) => (
                   <Box
                     key={`${exercise.id}-${idx}`}
