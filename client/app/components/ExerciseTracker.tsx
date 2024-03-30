@@ -209,8 +209,19 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
                 </Box>
               </Box>
 
-              <Box>
-                {savedReps?.[exercise.id]?.reps.map((rep: number) => rep)}
+              <Box sx={{ display: "flex", flexDirection: "row" }}>
+                {savedReps?.[exercise.id]?.reps.map((rep: number, idx) => (
+                  <Box
+                    key={`${exercise.id}-${idx}`}
+                    sx={{ display: "flex", flexDirection: "row", mr: 1, mb: 2 }}
+                  >
+                    <Box sx={{ mr: 0.75, color: "#b9b9b9" }}>
+                      Set {idx + 1}:
+                    </Box>
+
+                    <Box sx={{ fontWeight: "500" }}>{rep}</Box>
+                  </Box>
+                ))}
               </Box>
             </Box>
 

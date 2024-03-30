@@ -159,7 +159,8 @@ describe("ExerciseTracker", () => {
       code: "Escape",
     });
 
-    expect(getByText("76")).toBeInTheDocument();
+    expect(getByText("7")).toBeInTheDocument();
+    expect(getByText("6")).toBeInTheDocument();
 
     const resetRepsButtons = getAllByLabelText("Delete Reps");
 

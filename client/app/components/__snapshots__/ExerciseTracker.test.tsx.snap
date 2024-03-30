@@ -120,7 +120,7 @@ exports[`ExerciseTracker renders 1`] = `
           </div>
         </div>
         <div
-          class="MuiBox-root css-0"
+          class="MuiBox-root css-1xhj18k"
         />
       </div>
       <div
@@ -180,7 +180,7 @@ exports[`ExerciseTracker renders 1`] = `
           </div>
         </div>
         <div
-          class="MuiBox-root css-0"
+          class="MuiBox-root css-1xhj18k"
         />
       </div>
       <img
