@@ -87,12 +87,13 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
       }
 
       setSavedReps(newReps);
+
+      resetStopwatch();
+      startStopwatch();
     }
 
     setModalOpen(false);
     setFieldValue("");
-    resetStopwatch();
-    startStopwatch();
   };
 
   return (
