@@ -18,6 +18,7 @@ const style = {
   width: 400,
   bgcolor: "background.paper",
   p: 4,
+  m: 1,
 };
 
 export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
@@ -34,12 +35,20 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
 
   return (
     <>
-      <IconButton
-        aria-label="Load Thumbnails"
-        onClick={() => setShowThumbnails(!showThumbnails)}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
       >
-        <VideoCameraBackIcon />
-      </IconButton>
+        <IconButton
+          size="large"
+          aria-label="Load Thumbnails"
+          onClick={() => setShowThumbnails(!showThumbnails)}
+        >
+          <VideoCameraBackIcon />
+        </IconButton>
+      </Box>
 
       <Box>
         {exercises.map((exercise) => (
@@ -55,11 +64,14 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
               sx={{
                 display: "flex",
                 alignItems: "center",
+                width: "100%",
+                justifyContent: "space-between",
               }}
             >
               <Box>{exercise.name}</Box>
 
               <IconButton
+                size="large"
                 aria-label="add"
                 onClick={() => handleAddClick(exercise.name)}
               >

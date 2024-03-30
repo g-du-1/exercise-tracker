@@ -2,27 +2,31 @@
 
 exports[`ExerciseTracker renders 1`] = `
 <div>
-  <button
-    aria-label="Load Thumbnails"
-    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
-    tabindex="0"
-    type="button"
+  <div
+    class="MuiBox-root css-gg4vpm"
   >
-    <svg
-      aria-hidden="true"
-      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-      data-testid="VideoCameraBackIcon"
-      focusable="false"
-      viewBox="0 0 24 24"
+    <button
+      aria-label="Load Thumbnails"
+      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-mf1cb5-MuiButtonBase-root-MuiIconButton-root"
+      tabindex="0"
+      type="button"
     >
-      <path
-        d="M18 10.48V6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-4.48l4 3.98v-11zM5 16l2.38-3.17L9 15l2.62-3.5L15 16z"
+      <svg
+        aria-hidden="true"
+        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+        data-testid="VideoCameraBackIcon"
+        focusable="false"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M18 10.48V6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-4.48l4 3.98v-11zM5 16l2.38-3.17L9 15l2.62-3.5L15 16z"
+        />
+      </svg>
+      <span
+        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
       />
-    </svg>
-    <span
-      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-    />
-  </button>
+    </button>
+  </div>
   <div
     class="MuiBox-root css-0"
   >
@@ -30,7 +34,7 @@ exports[`ExerciseTracker renders 1`] = `
       class="MuiBox-root css-1vr2anf"
     >
       <div
-        class="MuiBox-root css-70qvj9"
+        class="MuiBox-root css-1k06pwf"
       >
         <div
           class="MuiBox-root css-0"
@@ -39,7 +43,7 @@ exports[`ExerciseTracker renders 1`] = `
         </div>
         <button
           aria-label="add"
-          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-mf1cb5-MuiButtonBase-root-MuiIconButton-root"
           tabindex="0"
           type="button"
         >
@@ -64,7 +68,7 @@ exports[`ExerciseTracker renders 1`] = `
       class="MuiBox-root css-1vr2anf"
     >
       <div
-        class="MuiBox-root css-70qvj9"
+        class="MuiBox-root css-1k06pwf"
       >
         <div
           class="MuiBox-root css-0"
@@ -73,7 +77,7 @@ exports[`ExerciseTracker renders 1`] = `
         </div>
         <button
           aria-label="add"
-          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-mf1cb5-MuiButtonBase-root-MuiIconButton-root"
           tabindex="0"
           type="button"
         >

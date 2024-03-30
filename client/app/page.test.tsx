@@ -10,7 +10,7 @@ describe("Home Page", () => {
     render(<Page />);
 
     expect(
-      screen.getByRole("heading", { level: 1, name: "Exercise Tracker" })
+      screen.getByRole("heading", { level: 1, name: "BWF Tracker" })
     ).toBeDefined();
   });
 });
