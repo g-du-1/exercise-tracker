@@ -30,12 +30,10 @@ type RepRange = "lower" | "inRange" | "higher";
 type RepRangeMap = { [key in RepRange]: string };
 
 const getRepRange = (
-  targetRepsMin: number | undefined,
-  targetRepsMax: number | undefined,
+  targetRepsMin: number = 0,
+  targetRepsMax: number = targetRepsMin,
   rep: number
 ): RepRange | null => {
-  if (!targetRepsMin || !targetRepsMax) return null;
-
   if (rep < targetRepsMin) {
     return "lower";
   } else if (rep >= targetRepsMin && rep <= targetRepsMax) {

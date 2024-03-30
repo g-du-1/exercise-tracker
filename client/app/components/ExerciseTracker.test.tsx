@@ -418,4 +418,25 @@ describe("ExerciseTracker", () => {
       screen.getByLabelText("Exercise 2 35 Reps Higher Than Range")
     ).toBeInTheDocument();
   });
+
+  it("adds label for cases without max target step", () => {
+    render(<ExerciseTracker exercises={mockExercises} />);
+
+    const addButtons = screen.getAllByLabelText("add");
+
+    fireEvent.click(addButtons[0]);
+
+    const input = screen.getByLabelText("Reps");
+
+    fireEvent.change(input, { target: { value: "10" } });
+
+    fireEvent.keyDown(screen.getByText("Add Exercise 1 Reps"), {
+      key: "Escape",
+      code: "Escape",
+    });
+
+    expect(
+      screen.getByLabelText("Exercise 1 10 Reps In Range")
+    ).toBeInTheDocument();
+  });
 });
