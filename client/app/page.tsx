@@ -10,16 +10,9 @@ export default function Home() {
         p: 1,
       }}
     >
-      <Typography
-        variant="h6"
-        component="h1"
-        textAlign={"center"}
-        sx={{ mt: "48px" }}
-      >
-        BWF Tracker
-      </Typography>
-
-      <ExerciseTracker exercises={exercises} />
+      <Box sx={{ mt: "48px" }}>
+        <ExerciseTracker exercises={exercises} />
+      </Box>
     </Box>
   );
 }
