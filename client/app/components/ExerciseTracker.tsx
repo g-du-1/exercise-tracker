@@ -17,20 +17,16 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import ClearIcon from "@mui/icons-material/Clear";
 
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  p: 4,
-  m: 1,
+type SavedReps = {
+  name: string;
+  reps: number[];
 };
 
 export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
   const [fieldValue, setFieldValue] = React.useState("");
-  const [savedReps, setSavedReps] = React.useState<{ [key: string]: any }>({});
+  const [savedReps, setSavedReps] = React.useState<{
+    [key: string]: SavedReps;
+  }>({});
   const [showMoreInfo, setShowMoreInfo] = React.useState(false);
   const [selectedExercise, setSelectedExercise] =
     React.useState<Exercise | null>(null);
