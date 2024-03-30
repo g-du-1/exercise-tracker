@@ -8,6 +8,7 @@ import * as React from "react";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { getYtVidId } from "../util/getYtVidId";
+import VideoCameraBackIcon from "@mui/icons-material/VideoCameraBack";
 
 const style = {
   position: "absolute" as "absolute",
@@ -20,6 +21,7 @@ const style = {
 };
 
 export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
+  const [showThumbnails, setShowThumbnails] = React.useState(false);
   const [selectedExercise, setSelectedExercise] = React.useState("");
   const [modalOpen, setModalOpen] = React.useState(false);
 
@@ -32,6 +34,13 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
 
   return (
     <>
+      <IconButton
+        aria-label="Load Thumbnails"
+        onClick={() => setShowThumbnails(!showThumbnails)}
+      >
+        <VideoCameraBackIcon />
+      </IconButton>
+
       <Box>
         {exercises.map((exercise) => (
           <Box
@@ -58,7 +67,8 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
               </IconButton>
             </Box>
 
-            {exercise.thumbLink &&
+            {showThumbnails &&
+              exercise.thumbLink &&
               (exercise.thumbLink.includes("youtube") ? (
                 <div className="video-responsive">
                   <iframe

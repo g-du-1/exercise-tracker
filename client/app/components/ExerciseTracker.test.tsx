@@ -57,27 +57,50 @@ describe("ExerciseTracker", () => {
     expect(getByText("Add Exercise 1 Reps")).toBeDefined();
   });
 
-  it("displays a video if it has a video link", () => {
-    const { queryByTitle } = render(
+  it("does not display thumbnails by default", () => {
+    const { queryByTitle, queryByAltText } = render(
       <ExerciseTracker exercises={mockExercises} />
     );
+
+    expect(queryByTitle("Exercise 1 Video")).toBeNull();
+    expect(queryByTitle("Exercise 2 Video")).toBeNull();
+    expect(queryByAltText("Exercise 1 Image")).toBeNull();
+    expect(queryByAltText("Exercise 2 Image")).toBeNull();
+  });
+
+  it("displays a video if it has a video link", () => {
+    const { queryByTitle, getByLabelText } = render(
+      <ExerciseTracker exercises={mockExercises} />
+    );
+
+    fireEvent.click(getByLabelText("Load Thumbnails"));
 
     expect(queryByTitle("Exercise 1 Video")).not.toBeNull();
     expect(queryByTitle("Exercise 2 Video")).toBeNull();
   });
 
-  it("displays an image if it has an image", () => {
-    const { queryByAltText } = render(
+  it("displays an image if it has an image link", () => {
+    const { queryByAltText, getByLabelText } = render(
       <ExerciseTracker exercises={mockExercises} />
     );
+
+    fireEvent.click(getByLabelText("Load Thumbnails"));
 
     expect(queryByAltText("Exercise 1 Image")).toBeNull();
     expect(queryByAltText("Exercise 2 Image")).not.toBeNull();
   });
 
-  // it("thumbnail", () => {
-  //   const { getByText } = render(<ExerciseTracker exercises={mockExercises} />);
+  it("toggles thumbnails", () => {
+    const { getByLabelText, queryByTitle } = render(
+      <ExerciseTracker exercises={mockExercises} />
+    );
 
-  //   const thumbnailIcon = getByText("xxxxxxx");
-  // });
+    const thumbnailIcon = getByLabelText("Load Thumbnails");
+
+    fireEvent.click(thumbnailIcon);
+    expect(queryByTitle("Exercise 1 Video")).not.toBeNull();
+
+    fireEvent.click(thumbnailIcon);
+    expect(queryByTitle("Exercise 1 Video")).toBeNull();
+  });
 });

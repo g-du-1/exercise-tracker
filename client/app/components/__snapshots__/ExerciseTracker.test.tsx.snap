@@ -2,6 +2,27 @@
 
 exports[`ExerciseTracker renders 1`] = `
 <div>
+  <button
+    aria-label="Load Thumbnails"
+    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+    tabindex="0"
+    type="button"
+  >
+    <svg
+      aria-hidden="true"
+      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+      data-testid="VideoCameraBackIcon"
+      focusable="false"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M18 10.48V6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-4.48l4 3.98v-11zM5 16l2.38-3.17L9 15l2.62-3.5L15 16z"
+      />
+    </svg>
+    <span
+      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+    />
+  </button>
   <div
     class="MuiBox-root css-0"
   >
@@ -38,16 +59,6 @@ exports[`ExerciseTracker renders 1`] = `
           />
         </button>
       </div>
-      <div
-        class="video-responsive"
-      >
-        <iframe
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen=""
-          src="https://www.youtube.com/embed/HFv2WwgeVMk"
-          title="Exercise 1 Video"
-        />
-      </div>
     </div>
     <div
       class="MuiBox-root css-1vr2anf"
@@ -82,11 +93,6 @@ exports[`ExerciseTracker renders 1`] = `
           />
         </button>
       </div>
-      <img
-        alt="Exercise 2 Image"
-        src="https://i.imgur.com/6vOLzTC.jpg"
-        style="width: 100%; height: auto;"
-      />
     </div>
   </div>
 </div>
