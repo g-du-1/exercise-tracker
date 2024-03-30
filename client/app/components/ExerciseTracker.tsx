@@ -88,8 +88,10 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
 
       setSavedReps(newReps);
 
-      resetStopwatch();
-      startStopwatch();
+      if (selectedExercise.category !== "warmup") {
+        resetStopwatch();
+        startStopwatch();
+      }
     }
 
     setModalOpen(false);

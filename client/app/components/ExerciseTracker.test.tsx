@@ -21,8 +21,8 @@ let mockExercises: Exercise[] = [
   },
   {
     id: 2,
-    category: "warmup",
-    type: "warmup",
+    category: "firstPair",
+    type: "pullUp",
     targetSets: 1,
     targetRepsMin: 5,
     targetRepsMax: 10,
@@ -212,6 +212,29 @@ describe("ExerciseTracker", () => {
     });
 
     expect(screen.getByText("00:00:05")).toBeInTheDocument();
+  });
+
+  it("does not start the stopwatch when saving a warmup", () => {
+    render(<ExerciseTracker exercises={mockExercises} />);
+
+    const addButtons = screen.getAllByLabelText("add");
+
+    fireEvent.click(addButtons[0]);
+
+    const input = screen.getByLabelText("Reps");
+
+    fireEvent.change(input, { target: { value: "6" } });
+
+    fireEvent.keyDown(screen.getByText("Add Exercise 1 Reps"), {
+      key: "Escape",
+      code: "Escape",
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(5000);
+    });
+
+    expect(screen.getByText("00:00:00")).toBeInTheDocument();
   });
 
   it("starts the stopwatch", () => {

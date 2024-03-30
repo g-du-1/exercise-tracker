@@ -134,6 +134,10 @@ exports[`ExerciseTracker renders 1`] = `
           title="Exercise 1 Video"
         />
       </div>
+      <hr
+        class="MuiDivider-root MuiDivider-fullWidth MuiDivider-flexItem css-1r4dlxu-MuiDivider-root"
+        data-testid="divider"
+      />
     </div>
     <div
       class="MuiBox-root css-1vr2anf"
