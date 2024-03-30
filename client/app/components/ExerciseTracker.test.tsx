@@ -296,4 +296,29 @@ describe("ExerciseTracker", () => {
 
     expect(screen.getByLabelText("Done")).toBeInTheDocument();
   });
+
+  it("displays warning after the target rest has passed", () => {
+    render(<ExerciseTracker exercises={mockExercises} />);
+
+    expect(screen.queryByAltText(/rest time passed/i)).not.toBeInTheDocument();
+
+    const addButtons = screen.getAllByLabelText("add");
+
+    fireEvent.click(addButtons[1]);
+
+    const input = screen.getByLabelText("Reps");
+
+    fireEvent.change(input, { target: { value: "6" } });
+
+    fireEvent.keyDown(screen.getByText("Add Exercise 2 Reps"), {
+      key: "Escape",
+      code: "Escape",
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(90000);
+    });
+
+    expect(screen.getByLabelText(/rest time passed/i)).toBeInTheDocument();
+  });
 });

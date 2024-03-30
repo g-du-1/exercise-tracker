@@ -19,6 +19,7 @@ import { useRef, useState } from "react";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import DoneIcon from "@mui/icons-material/Done";
+import WarningIcon from "@mui/icons-material/Warning";
 
 type SavedReps = {
   name: string;
@@ -140,6 +141,18 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
           </IconButton>
 
           <Box sx={{ ml: 1 }}>{formatSwTime(swElapsedTime)}</Box>
+
+          {selectedExercise &&
+            swElapsedTime > 0 &&
+            swElapsedTime >= selectedExercise.targetRest && (
+              <IconButton
+                size="large"
+                color="warning"
+                aria-label="Rest Time Passed"
+              >
+                <WarningIcon />
+              </IconButton>
+            )}
         </Box>
 
         <IconButton
