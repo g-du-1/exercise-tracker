@@ -10,19 +10,19 @@ exports[`ExerciseTracker renders 1`] = `
     >
       <button
         aria-label="Start Stopwatch"
-        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-mf1cb5-MuiButtonBase-root-MuiIconButton-root"
+        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorSuccess MuiIconButton-sizeLarge css-93mzl9-MuiButtonBase-root-MuiIconButton-root"
         tabindex="0"
         type="button"
       >
         <svg
           aria-hidden="true"
           class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-          data-testid="PlayCircleFilledIcon"
+          data-testid="PlayArrowIcon"
           focusable="false"
           viewBox="0 0 24 24"
         >
           <path
-            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m-2 14.5v-9l6 4.5z"
+            d="M8 5v14l11-7z"
           />
         </svg>
         <span
@@ -31,7 +31,7 @@ exports[`ExerciseTracker renders 1`] = `
       </button>
       <button
         aria-label="Reset Stopwatch"
-        class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeLarge css-mf1cb5-MuiButtonBase-root-MuiIconButton-root"
+        class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-colorError MuiIconButton-sizeLarge css-fz35w-MuiButtonBase-root-MuiIconButton-root"
         disabled=""
         tabindex="-1"
         type="button"

@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 
 export const Stopwatch = () => {
@@ -37,16 +37,18 @@ export const Stopwatch = () => {
   return (
     <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
       <IconButton
+        color="success"
         size="large"
         aria-label="Start Stopwatch"
         disabled={isRunning}
         onClick={startStopwatch}
       >
-        <PlayCircleFilledIcon />
+        <PlayArrowIcon />
       </IconButton>
 
       <IconButton
         size="large"
+        color="error"
         aria-label="Reset Stopwatch"
         disabled={!isRunning}
         onClick={resetStopwatch}
