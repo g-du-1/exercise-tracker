@@ -304,6 +304,7 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
 
                   setSavedReps(newReps);
                   setModalOpen(false);
+                  resetStopwatch();
                 }}
               >
                 <DeleteIcon />

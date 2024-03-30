@@ -321,4 +321,31 @@ describe("ExerciseTracker", () => {
 
     expect(screen.getByLabelText(/rest time passed/i)).toBeInTheDocument();
   });
+
+  it("resets the timer when reps are deleted", () => {
+    render(<ExerciseTracker exercises={mockExercises} />);
+
+    const addButtons = screen.getAllByLabelText("add");
+
+    fireEvent.click(addButtons[1]);
+
+    const input = screen.getByLabelText("Reps");
+
+    fireEvent.change(input, { target: { value: "6" } });
+
+    fireEvent.keyDown(screen.getByText("Add Exercise 2 Reps"), {
+      key: "Escape",
+      code: "Escape",
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(5000);
+    });
+
+    fireEvent.click(addButtons[1]);
+
+    fireEvent.click(screen.getByLabelText("Delete Reps"));
+
+    expect(screen.getByText("00:00:00")).toBeInTheDocument();
+  });
 });
