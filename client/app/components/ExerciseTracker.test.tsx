@@ -126,7 +126,7 @@ describe("ExerciseTracker", () => {
     expect(getByTestId("divider")).toBeInTheDocument();
   });
 
-  it("saves a set of reps for an exercise", () => {
+  it("saves sets of reps for an exercise", () => {
     const { getAllByLabelText, getByText } = render(
       <ExerciseTracker exercises={mockExercises} />
     );
@@ -144,6 +144,17 @@ describe("ExerciseTracker", () => {
       code: "Escape",
     });
 
-    expect(getByText("7")).toBeInTheDocument();
+    fireEvent.click(addButtons[1]);
+
+    const inputTwo = screen.getByLabelText("Reps");
+
+    fireEvent.change(inputTwo, { target: { value: "6" } });
+
+    fireEvent.keyDown(screen.getByText("Add Exercise 2 Reps"), {
+      key: "Escape",
+      code: "Escape",
+    });
+
+    expect(getByText("76")).toBeInTheDocument();
   });
 });
