@@ -26,6 +26,41 @@ type SavedReps = {
   reps: number[];
 };
 
+type RepRange = "lower" | "inRange" | "higher";
+type RepRangeMap = { [key in RepRange]: string };
+
+const getRepRange = (
+  targetRepsMin: number | undefined,
+  targetRepsMax: number | undefined,
+  rep: number
+): RepRange | null => {
+  if (!targetRepsMin || !targetRepsMax) return null;
+
+  if (rep < targetRepsMin) {
+    return "lower";
+  } else if (rep >= targetRepsMin && rep <= targetRepsMax) {
+    return "inRange";
+  } else if (rep > targetRepsMax) {
+    return "higher";
+  }
+
+  return null;
+};
+
+const getRepRangeLabel = (
+  exercise: Exercise,
+  rep: number,
+  repRange: RepRange | null
+): string => {
+  const labels: RepRangeMap = {
+    lower: `${exercise.name} ${rep} Reps Lower Than Range`,
+    inRange: `${exercise.name} ${rep} Reps In Range`,
+    higher: `${exercise.name} ${rep} Reps Higher Than Range`,
+  };
+
+  return repRange ? labels[repRange] : "";
+};
+
 export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
   const [fieldValue, setFieldValue] = useState("");
   const [savedReps, setSavedReps] = useState<{
@@ -220,18 +255,45 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
               <Box
                 sx={{ display: "flex", flexDirection: "row", fontSize: "12px" }}
               >
-                {savedReps?.[exercise.id]?.reps.map((rep: number, idx) => (
-                  <Box
-                    key={`${exercise.id}-${idx}`}
-                    sx={{ display: "flex", flexDirection: "row", mr: 1, mb: 2 }}
-                  >
-                    <Box sx={{ mr: 0.75, color: "#b9b9b9" }}>
-                      Set {idx + 1}:
-                    </Box>
+                {savedReps?.[exercise.id]?.reps.map((rep: number, idx) => {
+                  const colorMap: RepRangeMap = {
+                    lower: "red",
+                    inRange: "green",
+                    higher: "orange",
+                  };
 
-                    <Box sx={{ fontWeight: "500" }}>{rep}</Box>
-                  </Box>
-                ))}
+                  const repRange = getRepRange(
+                    exercise.targetRepsMin,
+                    exercise.targetRepsMax,
+                    rep
+                  );
+
+                  return (
+                    <Box
+                      key={`${exercise.id}-${idx}`}
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        mr: 1,
+                        mb: 2,
+                      }}
+                    >
+                      <Box sx={{ mr: 0.75, color: "#b9b9b9" }}>
+                        Set {idx + 1}:
+                      </Box>
+
+                      <Box
+                        sx={{
+                          fontWeight: "500",
+                          color: repRange ? colorMap[repRange] : "",
+                        }}
+                        aria-label={getRepRangeLabel(exercise, rep, repRange)}
+                      >
+                        {rep}
+                      </Box>
+                    </Box>
+                  );
+                })}
               </Box>
             </Box>
 

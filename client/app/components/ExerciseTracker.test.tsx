@@ -355,4 +355,67 @@ describe("ExerciseTracker", () => {
     expect(screen.getByText("3x5-8")).toBeInTheDocument();
     expect(screen.getByText("3x30s")).toBeInTheDocument();
   });
+
+  it("adds label for in range reps", () => {
+    render(<ExerciseTracker exercises={mockExercises} />);
+
+    const addButtons = screen.getAllByLabelText("add");
+
+    fireEvent.click(addButtons[1]);
+
+    const input = screen.getByLabelText("Reps");
+
+    fireEvent.change(input, { target: { value: "6" } });
+
+    fireEvent.keyDown(screen.getByText("Add Exercise 2 Reps"), {
+      key: "Escape",
+      code: "Escape",
+    });
+
+    expect(
+      screen.getByLabelText("Exercise 2 6 Reps In Range")
+    ).toBeInTheDocument();
+  });
+
+  it("adds label for out of range reps - lower", () => {
+    render(<ExerciseTracker exercises={mockExercises} />);
+
+    const addButtons = screen.getAllByLabelText("add");
+
+    fireEvent.click(addButtons[1]);
+
+    const input = screen.getByLabelText("Reps");
+
+    fireEvent.change(input, { target: { value: "3" } });
+
+    fireEvent.keyDown(screen.getByText("Add Exercise 2 Reps"), {
+      key: "Escape",
+      code: "Escape",
+    });
+
+    expect(
+      screen.getByLabelText("Exercise 2 3 Reps Lower Than Range")
+    ).toBeInTheDocument();
+  });
+
+  it("adds label for out of range reps - higher", () => {
+    render(<ExerciseTracker exercises={mockExercises} />);
+
+    const addButtons = screen.getAllByLabelText("add");
+
+    fireEvent.click(addButtons[1]);
+
+    const input = screen.getByLabelText("Reps");
+
+    fireEvent.change(input, { target: { value: "35" } });
+
+    fireEvent.keyDown(screen.getByText("Add Exercise 2 Reps"), {
+      key: "Escape",
+      code: "Escape",
+    });
+
+    expect(
+      screen.getByLabelText("Exercise 2 35 Reps Higher Than Range")
+    ).toBeInTheDocument();
+  });
 });
