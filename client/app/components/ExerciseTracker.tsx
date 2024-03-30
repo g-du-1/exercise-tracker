@@ -2,7 +2,7 @@
 
 import { Exercise } from "../types";
 import IconButton from "@mui/material/IconButton";
-import AddIcon from "@mui/icons-material/Add";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import Box from "@mui/material/Box";
 import * as React from "react";
 import { getYtVidId } from "../util/getYtVidId";
@@ -14,7 +14,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import ClearIcon from "@mui/icons-material/Clear";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { useRef, useState } from "react";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
@@ -188,33 +188,12 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
                 </Box>
 
                 <Box>
-                  {savedReps?.[exercise.id]?.reps?.length > 0 && (
-                    <IconButton
-                      color="error"
-                      size="large"
-                      aria-label="Delete Reps"
-                      onClick={() => {
-                        const newReps = { ...savedReps };
-
-                        const existingExercise = newReps[exercise.id];
-
-                        if (existingExercise) {
-                          existingExercise.reps = [];
-                        }
-
-                        setSavedReps(newReps);
-                      }}
-                    >
-                      <ClearIcon />
-                    </IconButton>
-                  )}
-
                   <IconButton
                     size="large"
                     aria-label="add"
                     onClick={() => handleAddClick(exercise)}
                   >
-                    <AddIcon />
+                    <OpenInNewIcon />
                   </IconButton>
                 </Box>
               </Box>
@@ -295,6 +274,29 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
         </DialogContent>
 
         <DialogActions>
+          {selectedExercise &&
+            savedReps?.[selectedExercise.id]?.reps?.length > 0 && (
+              <IconButton
+                color="error"
+                size="large"
+                aria-label="Delete Reps"
+                onClick={() => {
+                  const newReps = { ...savedReps };
+
+                  const existingExercise = newReps[selectedExercise.id];
+
+                  if (existingExercise) {
+                    existingExercise.reps = [];
+                  }
+
+                  setSavedReps(newReps);
+                  setModalOpen(false);
+                }}
+              >
+                <DeleteIcon />
+              </IconButton>
+            )}
+
           <Button onClick={() => setModalOpen(false)}>Cancel</Button>
         </DialogActions>
       </Dialog>

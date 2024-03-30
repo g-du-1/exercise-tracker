@@ -162,19 +162,22 @@ describe("ExerciseTracker", () => {
     expect(getByText("7")).toBeInTheDocument();
     expect(getByText("6")).toBeInTheDocument();
 
-    const resetRepsButtons = getAllByLabelText("Delete Reps");
+    fireEvent.click(addButtons[1]);
 
-    fireEvent.click(resetRepsButtons[0]);
+    fireEvent.click(screen.getByLabelText("Delete Reps"));
 
-    expect(screen.queryByText("76")).not.toBeInTheDocument();
+    expect(screen.queryByText("7")).not.toBeInTheDocument();
+    expect(screen.queryByText("6")).not.toBeInTheDocument();
   });
 
-  it("only renders delete reps icons if there are reps saved", () => {
+  it("only renders the delete reps icon if there are reps saved and closes the modal on save", () => {
     render(<ExerciseTracker exercises={mockExercises} />);
 
     const addButtons = screen.getAllByLabelText("add");
 
     fireEvent.click(addButtons[1]);
+
+    expect(screen.queryByLabelText("Delete Reps")).not.toBeInTheDocument();
 
     const input = screen.getByLabelText("Reps");
 
@@ -185,11 +188,13 @@ describe("ExerciseTracker", () => {
       code: "Escape",
     });
 
-    expect(screen.getAllByLabelText("Delete Reps")).toHaveLength(1);
+    fireEvent.click(addButtons[1]);
 
-    fireEvent.click(screen.getAllByLabelText("Delete Reps")[0]);
+    expect(screen.getByLabelText("Delete Reps")).toBeInTheDocument();
 
-    expect(screen.queryAllByLabelText("Delete Reps")).toHaveLength(0);
+    fireEvent.click(screen.getByLabelText("Delete Reps"));
+
+    expect(screen.queryByText("Add Exercise 2 Reps")).not.toBeVisible();
   });
 
   it("starts the stopwatch when saving reps", () => {
