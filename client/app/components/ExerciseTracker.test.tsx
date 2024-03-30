@@ -161,8 +161,31 @@ describe("ExerciseTracker", () => {
 
     const resetRepsButtons = getAllByLabelText("Delete Reps");
 
-    fireEvent.click(resetRepsButtons[1]);
+    fireEvent.click(resetRepsButtons[0]);
 
     expect(screen.queryByText("76")).not.toBeInTheDocument();
+  });
+
+  it("only renders delete reps icons if there are reps saved", () => {
+    render(<ExerciseTracker exercises={mockExercises} />);
+
+    const addButtons = screen.getAllByLabelText("add");
+
+    fireEvent.click(addButtons[1]);
+
+    const input = screen.getByLabelText("Reps");
+
+    fireEvent.change(input, { target: { value: "6" } });
+
+    fireEvent.keyDown(screen.getByText("Add Exercise 2 Reps"), {
+      key: "Escape",
+      code: "Escape",
+    });
+
+    expect(screen.getAllByLabelText("Delete Reps")).toHaveLength(1);
+
+    fireEvent.click(screen.getAllByLabelText("Delete Reps")[0]);
+
+    expect(screen.queryAllByLabelText("Delete Reps")).toHaveLength(0);
   });
 });

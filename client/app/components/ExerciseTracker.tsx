@@ -121,24 +121,26 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
                 <Box>{exercise.name}</Box>
 
                 <Box>
-                  <IconButton
-                    color="error"
-                    size="large"
-                    aria-label="Delete Reps"
-                    onClick={() => {
-                      const newReps = { ...savedReps };
+                  {savedReps?.[exercise.id]?.reps?.length > 0 && (
+                    <IconButton
+                      color="error"
+                      size="large"
+                      aria-label="Delete Reps"
+                      onClick={() => {
+                        const newReps = { ...savedReps };
 
-                      const existingExercise = newReps[exercise.id];
+                        const existingExercise = newReps[exercise.id];
 
-                      if (existingExercise) {
-                        existingExercise.reps = [];
-                      }
+                        if (existingExercise) {
+                          existingExercise.reps = [];
+                        }
 
-                      setSavedReps(newReps);
-                    }}
-                  >
-                    <ClearIcon />
-                  </IconButton>
+                        setSavedReps(newReps);
+                      }}
+                    >
+                      <ClearIcon />
+                    </IconButton>
+                  )}
 
                   <IconButton
                     size="large"
