@@ -1,9 +1,11 @@
 /**
  * @jest-environment jsdom
  */
-import { render, fireEvent, screen } from "@testing-library/react";
+import { render, fireEvent, screen, act } from "@testing-library/react";
 import { ExerciseTracker } from "./ExerciseTracker";
 import { Exercise } from "../types";
+
+jest.useFakeTimers();
 
 let mockExercises: Exercise[] = [
   {
@@ -187,5 +189,61 @@ describe("ExerciseTracker", () => {
     fireEvent.click(screen.getAllByLabelText("Delete Reps")[0]);
 
     expect(screen.queryAllByLabelText("Delete Reps")).toHaveLength(0);
+  });
+
+  it("starts the stopwatch when saving reps", () => {
+    render(<ExerciseTracker exercises={mockExercises} />);
+
+    const addButtons = screen.getAllByLabelText("add");
+
+    fireEvent.click(addButtons[1]);
+
+    const input = screen.getByLabelText("Reps");
+
+    fireEvent.change(input, { target: { value: "6" } });
+
+    fireEvent.keyDown(screen.getByText("Add Exercise 2 Reps"), {
+      key: "Escape",
+      code: "Escape",
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(5000);
+    });
+
+    expect(screen.getByText("00:00:05")).toBeInTheDocument();
+  });
+
+  it("starts the stopwatch", () => {
+    render(<ExerciseTracker exercises={mockExercises} />);
+
+    const startBtn = screen.getByLabelText("Start Stopwatch");
+    fireEvent.click(startBtn);
+    expect(startBtn).toBeDisabled();
+
+    act(() => {
+      jest.advanceTimersByTime(5000);
+    });
+
+    expect(screen.getByText("00:00:05")).toBeInTheDocument();
+  });
+
+  it("resets the stopwatch", () => {
+    render(<ExerciseTracker exercises={mockExercises} />);
+
+    const resetBtn = screen.getByLabelText("Reset Stopwatch");
+    expect(resetBtn).toBeDisabled();
+
+    const startBtn = screen.getByLabelText("Start Stopwatch");
+    fireEvent.click(startBtn);
+    expect(startBtn).toBeDisabled();
+
+    act(() => {
+      jest.advanceTimersByTime(8000);
+    });
+
+    fireEvent.click(resetBtn);
+
+    expect(screen.getByText("00:00:00")).toBeInTheDocument();
   });
 });

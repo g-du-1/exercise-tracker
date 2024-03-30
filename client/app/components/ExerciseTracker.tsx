@@ -8,7 +8,6 @@ import * as React from "react";
 import { getYtVidId } from "../util/getYtVidId";
 import InfoIcon from "@mui/icons-material/Info";
 import Divider from "@mui/material/Divider";
-import { Stopwatch } from "./Stopwatch";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -16,6 +15,9 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import ClearIcon from "@mui/icons-material/Clear";
+import { useRef, useState } from "react";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
 
 type SavedReps = {
   name: string;
@@ -23,14 +25,44 @@ type SavedReps = {
 };
 
 export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
-  const [fieldValue, setFieldValue] = React.useState("");
-  const [savedReps, setSavedReps] = React.useState<{
+  const [fieldValue, setFieldValue] = useState("");
+  const [savedReps, setSavedReps] = useState<{
     [key: string]: SavedReps;
   }>({});
-  const [showMoreInfo, setShowMoreInfo] = React.useState(false);
-  const [selectedExercise, setSelectedExercise] =
-    React.useState<Exercise | null>(null);
-  const [modalOpen, setModalOpen] = React.useState(false);
+  const [showMoreInfo, setShowMoreInfo] = useState(false);
+  const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(
+    null
+  );
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const [swRunning, setSwRunning] = useState(false);
+  const [swElapsedTime, setSwElapsedTime] = useState(0);
+  const swIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  const startStopwatch = () => {
+    setSwRunning(true);
+
+    swIntervalRef.current = setInterval(() => {
+      setSwElapsedTime((prevElapsedTime) => prevElapsedTime + 1);
+    }, 1000);
+  };
+
+  const resetStopwatch = () => {
+    if (swIntervalRef.current) clearInterval(swIntervalRef.current);
+
+    setSwElapsedTime(0);
+    setSwRunning(false);
+  };
+
+  const formatSwTime = (timeInSeconds: number) => {
+    const hours = Math.floor(timeInSeconds / 3600);
+    const minutes = Math.floor((timeInSeconds % 3600) / 60);
+    const seconds = timeInSeconds % 60;
+
+    return `${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+  };
 
   const handleAddClick = (selectedExercise: Exercise) => {
     setSelectedExercise(selectedExercise);
@@ -59,6 +91,8 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
 
     setModalOpen(false);
     setFieldValue("");
+    resetStopwatch();
+    startStopwatch();
   };
 
   return (
@@ -78,7 +112,31 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
           borderBottom: "1.5px solid #e8e8e8",
         }}
       >
-        <Stopwatch />
+        <Box
+          sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
+        >
+          <IconButton
+            color="success"
+            size="large"
+            aria-label="Start Stopwatch"
+            disabled={swRunning}
+            onClick={startStopwatch}
+          >
+            <PlayArrowIcon />
+          </IconButton>
+
+          <IconButton
+            size="large"
+            color="error"
+            aria-label="Reset Stopwatch"
+            disabled={!swRunning}
+            onClick={resetStopwatch}
+          >
+            <RestartAltIcon />
+          </IconButton>
+
+          <Box sx={{ ml: 1 }}>{formatSwTime(swElapsedTime)}</Box>
+        </Box>
 
         <IconButton
           size="large"
@@ -196,28 +254,26 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
         ))}
       </Box>
 
-      <React.Fragment>
-        <Dialog open={modalOpen} onClose={handleModalClose} disableRestoreFocus>
-          <DialogTitle>Add {selectedExercise?.name} Reps</DialogTitle>
+      <Dialog open={modalOpen} onClose={handleModalClose} disableRestoreFocus>
+        <DialogTitle>Add {selectedExercise?.name} Reps</DialogTitle>
 
-          <DialogContent>
-            <TextField
-              autoFocus
-              margin="dense"
-              label="Reps"
-              type="number"
-              fullWidth
-              variant="standard"
-              value={fieldValue}
-              onChange={(e) => setFieldValue(e.target.value)}
-            />
-          </DialogContent>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Reps"
+            type="number"
+            fullWidth
+            variant="standard"
+            value={fieldValue}
+            onChange={(e) => setFieldValue(e.target.value)}
+          />
+        </DialogContent>
 
-          <DialogActions>
-            <Button onClick={() => setModalOpen(false)}>Cancel</Button>
-          </DialogActions>
-        </Dialog>
-      </React.Fragment>
+        <DialogActions>
+          <Button onClick={() => setModalOpen(false)}>Cancel</Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };
