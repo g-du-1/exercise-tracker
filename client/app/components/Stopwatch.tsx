@@ -1,4 +1,8 @@
 import { useRef, useState } from "react";
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
 
 export const Stopwatch = () => {
   const [isRunning, setIsRunning] = useState(false);
@@ -31,17 +35,26 @@ export const Stopwatch = () => {
   };
 
   return (
-    <div>
-      <div>{formatTime(elapsedTime)}</div>
-      <div>
-        <button disabled={isRunning} onClick={startStopwatch}>
-          Start
-        </button>
+    <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+      <IconButton
+        size="large"
+        aria-label="Start Stopwatch"
+        disabled={isRunning}
+        onClick={startStopwatch}
+      >
+        <PlayCircleFilledIcon />
+      </IconButton>
 
-        <button disabled={!isRunning} onClick={resetStopwatch}>
-          Reset
-        </button>
-      </div>
-    </div>
+      <IconButton
+        size="large"
+        aria-label="Reset Stopwatch"
+        disabled={!isRunning}
+        onClick={resetStopwatch}
+      >
+        <RestartAltIcon />
+      </IconButton>
+
+      <Box sx={{ ml: 1 }}>{formatTime(elapsedTime)}</Box>
+    </Box>
   );
 };

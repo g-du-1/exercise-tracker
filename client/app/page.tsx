@@ -10,7 +10,12 @@ export default function Home() {
         p: 1,
       }}
     >
-      <Typography variant="h4" component="h1" textAlign={"center"}>
+      <Typography
+        variant="h4"
+        component="h1"
+        textAlign={"center"}
+        sx={{ mt: "48px" }}
+      >
         BWF Tracker
       </Typography>
 

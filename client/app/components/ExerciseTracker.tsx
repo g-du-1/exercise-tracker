@@ -41,6 +41,14 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
         sx={{
           display: "flex",
           justifyContent: "space-between",
+          position: "fixed",
+          top: 0,
+          zIndex: 1,
+          background: "white",
+          width: "100%",
+          opacity: 0.9,
+          left: "50%",
+          transform: "translateX(-50%)",
         }}
       >
         <Stopwatch />

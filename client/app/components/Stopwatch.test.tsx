@@ -16,7 +16,7 @@ describe("Stopwatch", () => {
   it("starts the stopwatch", () => {
     render(<Stopwatch />);
 
-    const startBtn = screen.getByText("Start");
+    const startBtn = screen.getByLabelText("Start Stopwatch");
     fireEvent.click(startBtn);
     expect(startBtn).toBeDisabled();
 
@@ -30,10 +30,10 @@ describe("Stopwatch", () => {
   it("resets the stopwatch", () => {
     render(<Stopwatch />);
 
-    const resetBtn = screen.getByText("Reset");
+    const resetBtn = screen.getByLabelText("Reset Stopwatch");
     expect(resetBtn).toBeDisabled();
 
-    const startBtn = screen.getByText("Start");
+    const startBtn = screen.getByLabelText("Start Stopwatch");
     fireEvent.click(startBtn);
     expect(startBtn).toBeDisabled();
 
