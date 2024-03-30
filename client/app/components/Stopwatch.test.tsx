@@ -13,38 +13,35 @@ describe("Stopwatch", () => {
     expect(result.container).toMatchSnapshot();
   });
 
-  it("starts and stops the stopwatch", () => {
+  it("starts the stopwatch", () => {
     render(<Stopwatch />);
 
-    fireEvent.click(screen.getByText("Start / Stop"));
+    const startBtn = screen.getByText("Start");
+    fireEvent.click(startBtn);
+    expect(startBtn).toBeDisabled();
 
     act(() => {
       jest.advanceTimersByTime(5000);
     });
 
-    fireEvent.click(screen.getByText("Start / Stop"));
-
     expect(screen.getByText("00:00:05")).toBeInTheDocument();
-
-    fireEvent.click(screen.getByText("Start / Stop"));
-
-    act(() => {
-      jest.advanceTimersByTime(3000);
-    });
-
-    expect(screen.getByText("00:00:08")).toBeInTheDocument();
   });
 
   it("resets the stopwatch", () => {
     render(<Stopwatch />);
 
-    fireEvent.click(screen.getByText("Start / Stop"));
+    const resetBtn = screen.getByText("Reset");
+    expect(resetBtn).toBeDisabled();
+
+    const startBtn = screen.getByText("Start");
+    fireEvent.click(startBtn);
+    expect(startBtn).toBeDisabled();
 
     act(() => {
       jest.advanceTimersByTime(8000);
     });
 
-    fireEvent.click(screen.getByText("Reset"));
+    fireEvent.click(resetBtn);
 
     expect(screen.getByText("00:00:00")).toBeInTheDocument();
   });

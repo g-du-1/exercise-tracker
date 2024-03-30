@@ -11,9 +11,11 @@ exports[`ExerciseTracker renders 1`] = `
       </div>
       <div>
         <button>
-          Start / Stop
+          Start
         </button>
-        <button>
+        <button
+          disabled=""
+        >
           Reset
         </button>
       </div>

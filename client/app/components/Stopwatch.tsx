@@ -13,21 +13,11 @@ export const Stopwatch = () => {
     }, 1000);
   };
 
-  const stopStopwatch = () => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
-
-    setIsRunning(false);
-  };
-
   const resetStopwatch = () => {
     if (intervalRef.current) clearInterval(intervalRef.current);
 
     setElapsedTime(0);
     setIsRunning(false);
-  };
-
-  const toggleStopwatch = () => {
-    isRunning ? stopStopwatch() : startStopwatch();
   };
 
   const formatTime = (timeInSeconds: number) => {
@@ -44,8 +34,13 @@ export const Stopwatch = () => {
     <div>
       <div>{formatTime(elapsedTime)}</div>
       <div>
-        <button onClick={toggleStopwatch}>Start / Stop</button>
-        <button onClick={resetStopwatch}>Reset</button>
+        <button disabled={isRunning} onClick={startStopwatch}>
+          Start
+        </button>
+
+        <button disabled={!isRunning} onClick={resetStopwatch}>
+          Reset
+        </button>
       </div>
     </div>
   );

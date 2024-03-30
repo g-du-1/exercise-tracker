@@ -8,9 +8,11 @@ exports[`Stopwatch renders stopwatch with initial time of 00:00:00 1`] = `
     </div>
     <div>
       <button>
-        Start / Stop
+        Start
       </button>
-      <button>
+      <button
+        disabled=""
+      >
         Reset
       </button>
     </div>
