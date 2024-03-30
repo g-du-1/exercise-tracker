@@ -55,7 +55,7 @@ exports[`ExerciseTracker renders 1`] = `
       </div>
     </div>
     <button
-      aria-label="Load Thumbnails"
+      aria-label="Show Thumbnails"
       class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-mf1cb5-MuiButtonBase-root-MuiIconButton-root"
       tabindex="0"
       type="button"
@@ -112,6 +112,17 @@ exports[`ExerciseTracker renders 1`] = `
           />
         </button>
       </div>
+      <div
+        class="video-responsive MuiBox-root css-1qm1lh"
+        style="display: none;"
+      >
+        <iframe
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen=""
+          src="https://www.youtube.com/embed/HFv2WwgeVMk"
+          title="Exercise 1 Video"
+        />
+      </div>
     </div>
     <div
       class="MuiBox-root css-1vr2anf"
@@ -146,6 +157,11 @@ exports[`ExerciseTracker renders 1`] = `
           />
         </button>
       </div>
+      <img
+        alt="Exercise 2 Image"
+        src="https://i.imgur.com/6vOLzTC.jpg"
+        style="display: none;"
+      />
     </div>
   </div>
 </div>

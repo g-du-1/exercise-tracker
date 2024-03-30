@@ -56,7 +56,7 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
 
         <IconButton
           size="large"
-          aria-label="Load Thumbnails"
+          aria-label="Show Thumbnails"
           onClick={() => setShowThumbnails(!showThumbnails)}
         >
           <VideoCameraBackIcon />
@@ -91,10 +91,14 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
                 <AddIcon />
               </IconButton>
             </Box>
-            {showThumbnails &&
-              exercise.thumbLink &&
+
+            {exercise.thumbLink &&
               (exercise.thumbLink.includes("youtube") ? (
-                <Box className="video-responsive" sx={{ mb: 2 }}>
+                <Box
+                  className="video-responsive"
+                  sx={{ mb: 2 }}
+                  style={!showThumbnails ? { display: "none" } : {}}
+                >
                   <iframe
                     src={`https://www.youtube.com/embed/${getYtVidId(
                       exercise.thumbLink
@@ -108,7 +112,11 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
                 <img
                   src={exercise.thumbLink}
                   alt={`${exercise.name} Image`}
-                  style={{ width: "100%", height: "auto" }}
+                  style={
+                    !showThumbnails
+                      ? { display: "none" }
+                      : { width: "100%", height: "auto" }
+                  }
                 />
               ) : null)}
 

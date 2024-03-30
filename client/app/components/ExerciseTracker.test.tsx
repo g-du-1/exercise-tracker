@@ -62,10 +62,10 @@ describe("ExerciseTracker", () => {
       <ExerciseTracker exercises={mockExercises} />
     );
 
-    expect(queryByTitle("Exercise 1 Video")).toBeNull();
+    expect(queryByTitle("Exercise 1 Video")).not.toBeVisible();
     expect(queryByTitle("Exercise 2 Video")).toBeNull();
     expect(queryByAltText("Exercise 1 Image")).toBeNull();
-    expect(queryByAltText("Exercise 2 Image")).toBeNull();
+    expect(queryByAltText("Exercise 2 Image")).not.toBeVisible();
   });
 
   it("displays a video if it has a video link", () => {
@@ -73,9 +73,9 @@ describe("ExerciseTracker", () => {
       <ExerciseTracker exercises={mockExercises} />
     );
 
-    fireEvent.click(getByLabelText("Load Thumbnails"));
+    fireEvent.click(getByLabelText("Show Thumbnails"));
 
-    expect(queryByTitle("Exercise 1 Video")).not.toBeNull();
+    expect(queryByTitle("Exercise 1 Video")).toBeVisible();
     expect(queryByTitle("Exercise 2 Video")).toBeNull();
   });
 
@@ -84,7 +84,7 @@ describe("ExerciseTracker", () => {
       <ExerciseTracker exercises={mockExercises} />
     );
 
-    fireEvent.click(getByLabelText("Load Thumbnails"));
+    fireEvent.click(getByLabelText("Show Thumbnails"));
 
     expect(queryByAltText("Exercise 1 Image")).toBeNull();
     expect(queryByAltText("Exercise 2 Image")).not.toBeNull();
@@ -95,13 +95,13 @@ describe("ExerciseTracker", () => {
       <ExerciseTracker exercises={mockExercises} />
     );
 
-    const thumbnailIcon = getByLabelText("Load Thumbnails");
+    const thumbnailIcon = getByLabelText("Show Thumbnails");
 
     fireEvent.click(thumbnailIcon);
     expect(queryByTitle("Exercise 1 Video")).not.toBeNull();
 
     fireEvent.click(thumbnailIcon);
-    expect(queryByTitle("Exercise 1 Video")).toBeNull();
+    expect(queryByTitle("Exercise 1 Video")).not.toBeVisible();
   });
 
   it("renders category separator when category changes", () => {
