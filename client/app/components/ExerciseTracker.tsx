@@ -5,13 +5,16 @@ import IconButton from "@mui/material/IconButton";
 import AddIcon from "@mui/icons-material/Add";
 import Box from "@mui/material/Box";
 import * as React from "react";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
 import { getYtVidId } from "../util/getYtVidId";
 import InfoIcon from "@mui/icons-material/Info";
 import Divider from "@mui/material/Divider";
 import { Stopwatch } from "./Stopwatch";
 import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const style = {
   position: "absolute" as "absolute",
@@ -173,27 +176,28 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
         ))}
       </Box>
 
-      <Modal open={modalOpen} onClose={handleModalClose}>
-        <Box sx={style}>
-          <Typography variant="h6" component="h2">
-            Add {selectedExercise?.name} Reps
-          </Typography>
+      <React.Fragment>
+        <Dialog open={modalOpen} onClose={handleModalClose} disableRestoreFocus>
+          <DialogTitle>Add {selectedExercise?.name} Reps</DialogTitle>
 
-          <Box sx={{ mt: 2 }}>
+          <DialogContent>
             <TextField
+              autoFocus
+              margin="dense"
               label="Reps"
-              variant="outlined"
+              type="number"
+              fullWidth
+              variant="standard"
               value={fieldValue}
               onChange={(e) => setFieldValue(e.target.value)}
-              type="number"
-              inputProps={{
-                inputMode: "numeric",
-                pattern: "[0-9]*",
-              }}
             />
-          </Box>
-        </Box>
-      </Modal>
+          </DialogContent>
+
+          <DialogActions>
+            <Button onClick={() => setModalOpen(false)}>Cancel</Button>
+          </DialogActions>
+        </Dialog>
+      </React.Fragment>
     </>
   );
 };

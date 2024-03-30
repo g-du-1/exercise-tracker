@@ -136,6 +136,7 @@ describe("ExerciseTracker", () => {
     fireEvent.click(addButtons[1]);
 
     const input = screen.getByLabelText("Reps");
+    expect(input).toHaveFocus();
 
     fireEvent.change(input, { target: { value: "7" } });
 
@@ -147,6 +148,7 @@ describe("ExerciseTracker", () => {
     fireEvent.click(addButtons[1]);
 
     const inputTwo = screen.getByLabelText("Reps");
+    expect(inputTwo).toHaveFocus();
 
     fireEvent.change(inputTwo, { target: { value: "6" } });
 
