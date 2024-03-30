@@ -5,6 +5,19 @@ exports[`ExerciseTracker renders 1`] = `
   <div
     class="MuiBox-root css-gg4vpm"
   >
+    <div>
+      <div>
+        00:00:00
+      </div>
+      <div>
+        <button>
+          Start / Stop
+        </button>
+        <button>
+          Reset
+        </button>
+      </div>
+    </div>
     <button
       aria-label="Load Thumbnails"
       class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-mf1cb5-MuiButtonBase-root-MuiIconButton-root"

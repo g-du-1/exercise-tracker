@@ -10,6 +10,7 @@ import Modal from "@mui/material/Modal";
 import { getYtVidId } from "../util/getYtVidId";
 import VideoCameraBackIcon from "@mui/icons-material/VideoCameraBack";
 import Divider from "@mui/material/Divider";
+import { Stopwatch } from "./Stopwatch";
 
 const style = {
   position: "absolute" as "absolute",
@@ -42,6 +43,8 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
           justifyContent: "space-between",
         }}
       >
+        <Stopwatch />
+
         <IconButton
           size="large"
           aria-label="Load Thumbnails"

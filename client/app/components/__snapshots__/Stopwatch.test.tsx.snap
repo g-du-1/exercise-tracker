@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Stopwatch renders stopwatch with initial time of 00:00:00 1`] = `
+<div>
+  <div>
+    <div>
+      00:00:00
+    </div>
+    <div>
+      <button>
+        Start / Stop
+      </button>
+      <button>
+        Reset
+      </button>
+    </div>
+  </div>
+</div>
+`;
