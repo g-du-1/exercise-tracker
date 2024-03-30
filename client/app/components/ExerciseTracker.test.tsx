@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { render, fireEvent } from "@testing-library/react";
+import { render, fireEvent, screen } from "@testing-library/react";
 import { ExerciseTracker } from "./ExerciseTracker";
 import { Exercise } from "../types";
 
@@ -124,5 +124,26 @@ describe("ExerciseTracker", () => {
     const { getByTestId } = render(<ExerciseTracker exercises={exercises} />);
 
     expect(getByTestId("divider")).toBeInTheDocument();
+  });
+
+  it("saves a set of reps for an exercise", () => {
+    const { getAllByLabelText, getByText } = render(
+      <ExerciseTracker exercises={mockExercises} />
+    );
+
+    const addButtons = getAllByLabelText("add");
+
+    fireEvent.click(addButtons[1]);
+
+    const input = screen.getByLabelText("Reps");
+
+    fireEvent.change(input, { target: { value: "7" } });
+
+    fireEvent.keyDown(screen.getByText("Add Exercise 2 Reps"), {
+      key: "Escape",
+      code: "Escape",
+    });
+
+    expect(getByText("7")).toBeInTheDocument();
   });
 });

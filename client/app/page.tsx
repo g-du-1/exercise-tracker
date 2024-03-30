@@ -11,7 +11,7 @@ export default function Home() {
       }}
     >
       <Typography
-        variant="h4"
+        variant="h6"
         component="h1"
         textAlign={"center"}
         sx={{ mt: "48px" }}

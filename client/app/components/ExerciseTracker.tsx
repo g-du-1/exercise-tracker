@@ -11,6 +11,7 @@ import { getYtVidId } from "../util/getYtVidId";
 import InfoIcon from "@mui/icons-material/Info";
 import Divider from "@mui/material/Divider";
 import { Stopwatch } from "./Stopwatch";
+import TextField from "@mui/material/TextField";
 
 const style = {
   position: "absolute" as "absolute",
@@ -24,16 +25,41 @@ const style = {
 };
 
 export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
+  const [fieldValue, setFieldValue] = React.useState("");
+  const [savedReps, setSavedReps] = React.useState<{ [key: string]: any }>({});
   const [showMoreInfo, setShowMoreInfo] = React.useState(false);
-  const [selectedExercise, setSelectedExercise] = React.useState("");
+  const [selectedExercise, setSelectedExercise] =
+    React.useState<Exercise | null>(null);
   const [modalOpen, setModalOpen] = React.useState(false);
 
-  const handleAddClick = (selectedExercise: string) => {
+  const handleAddClick = (selectedExercise: Exercise) => {
     setSelectedExercise(selectedExercise);
     setModalOpen(true);
   };
 
-  const handleModalClose = () => setModalOpen(false);
+  const handleModalClose = () => {
+    const fieldValNum = parseInt(fieldValue);
+
+    if (selectedExercise && fieldValNum) {
+      const newReps = { ...savedReps };
+
+      const exercise = newReps[selectedExercise.id];
+
+      if (exercise) {
+        exercise.reps.push(parseInt(fieldValue));
+      } else {
+        newReps[selectedExercise.id] = {
+          name: selectedExercise.name,
+          reps: [fieldValNum],
+        };
+      }
+
+      setSavedReps(newReps);
+    }
+
+    setModalOpen(false);
+    setFieldValue("");
+  };
 
   return (
     <>
@@ -76,20 +102,32 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
             <Box
               sx={{
                 display: "flex",
-                alignItems: "center",
+                flexDirection: "column",
                 width: "100%",
-                justifyContent: "space-between",
               }}
             >
-              <Box>{exercise.name}</Box>
-
-              <IconButton
-                size="large"
-                aria-label="add"
-                onClick={() => handleAddClick(exercise.name)}
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  width: "100%",
+                  justifyContent: "space-between",
+                }}
               >
-                <AddIcon />
-              </IconButton>
+                <Box>{exercise.name}</Box>
+
+                <IconButton
+                  size="large"
+                  aria-label="add"
+                  onClick={() => handleAddClick(exercise)}
+                >
+                  <AddIcon />
+                </IconButton>
+              </Box>
+
+              <Box>
+                {savedReps?.[exercise.id]?.reps.map((rep: number) => rep)}
+              </Box>
             </Box>
 
             {exercise.thumbLink &&
@@ -134,13 +172,26 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
           </Box>
         ))}
       </Box>
+
       <Modal open={modalOpen} onClose={handleModalClose}>
         <Box sx={style}>
           <Typography variant="h6" component="h2">
-            Add {selectedExercise} Reps
+            Add {selectedExercise?.name} Reps
           </Typography>
 
-          {/* <Box sx={{ mt: 2 }}>Description placeholder</Box> */}
+          <Box sx={{ mt: 2 }}>
+            <TextField
+              label="Reps"
+              variant="outlined"
+              value={fieldValue}
+              onChange={(e) => setFieldValue(e.target.value)}
+              type="number"
+              inputProps={{
+                inputMode: "numeric",
+                pattern: "[0-9]*",
+              }}
+            />
+          </Box>
         </Box>
       </Modal>
     </>
