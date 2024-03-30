@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { getYtVidId } from "../util/getYtVidId";
 import VideoCameraBackIcon from "@mui/icons-material/VideoCameraBack";
+import Divider from "@mui/material/Divider";
 
 const style = {
   position: "absolute" as "absolute",
@@ -51,7 +52,7 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
       </Box>
 
       <Box>
-        {exercises.map((exercise) => (
+        {exercises.map((exercise, idx) => (
           <Box
             key={exercise.id}
             sx={{
@@ -78,11 +79,10 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
                 <AddIcon />
               </IconButton>
             </Box>
-
             {showThumbnails &&
               exercise.thumbLink &&
               (exercise.thumbLink.includes("youtube") ? (
-                <div className="video-responsive">
+                <Box className="video-responsive" sx={{ mb: 2 }}>
                   <iframe
                     src={`https://www.youtube.com/embed/${getYtVidId(
                       exercise.thumbLink
@@ -91,7 +91,7 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
                     allowFullScreen
                     title={`${exercise.name} Video`}
                   />
-                </div>
+                </Box>
               ) : exercise.thumbLink.endsWith("jpg") ? (
                 <img
                   src={exercise.thumbLink}
@@ -99,6 +99,11 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
                   style={{ width: "100%", height: "auto" }}
                 />
               ) : null)}
+
+            {exercises[idx + 1] &&
+              exercise.category !== exercises[idx + 1].category && (
+                <Divider flexItem data-testid="divider" sx={{ my: 1 }} />
+              )}
           </Box>
         ))}
       </Box>

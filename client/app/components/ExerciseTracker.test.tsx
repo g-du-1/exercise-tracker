@@ -103,4 +103,23 @@ describe("ExerciseTracker", () => {
     fireEvent.click(thumbnailIcon);
     expect(queryByTitle("Exercise 1 Video")).toBeNull();
   });
+
+  it("renders category separator when category changes", () => {
+    const exercises: Exercise[] = [
+      ...mockExercises,
+      {
+        id: 3,
+        category: "firstPair",
+        type: "pullUp",
+        targetSets: 3,
+        targetRepsMin: 5,
+        targetRepsMax: 8,
+        name: "Exercise 3",
+      },
+    ];
+
+    const { getByTestId } = render(<ExerciseTracker exercises={exercises} />);
+
+    expect(getByTestId("divider")).toBeInTheDocument();
+  });
 });
