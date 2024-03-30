@@ -62,7 +62,9 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
               (exercise.thumbLink.includes("youtube") ? (
                 <div className="video-responsive">
                   <iframe
-                    src={`https://www.youtube.com/embed/${getYtVidId(exercise.thumbLink)}`}
+                    src={`https://www.youtube.com/embed/${getYtVidId(
+                      exercise.thumbLink
+                    )}`}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                     title={`${exercise.name} Video`}
@@ -78,7 +80,6 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
           </Box>
         ))}
       </Box>
-
       <Modal open={modalOpen} onClose={handleModalClose}>
         <Box sx={style}>
           <Typography variant="h6" component="h2">

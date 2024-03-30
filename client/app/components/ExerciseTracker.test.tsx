@@ -1,4 +1,6 @@
-import { expect, it, describe, afterEach } from "vitest";
+/**
+ * @jest-environment jsdom
+ */
 import { render, fireEvent } from "@testing-library/react";
 import { ExerciseTracker } from "./ExerciseTracker";
 import { Exercise } from "../types";
@@ -27,10 +29,6 @@ let mockExercises: Exercise[] = [
 ];
 
 describe("ExerciseTracker", () => {
-  afterEach(() => {
-    mockExercises = [];
-  });
-
   it("renders", () => {
     const result = render(<ExerciseTracker exercises={mockExercises} />);
 
@@ -76,4 +74,10 @@ describe("ExerciseTracker", () => {
     expect(queryByAltText("Exercise 1 Image")).toBeNull();
     expect(queryByAltText("Exercise 2 Image")).not.toBeNull();
   });
+
+  // it("thumbnail", () => {
+  //   const { getByText } = render(<ExerciseTracker exercises={mockExercises} />);
+
+  //   const thumbnailIcon = getByText("xxxxxxx");
+  // });
 });
