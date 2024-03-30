@@ -258,7 +258,7 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
             {showMoreInfo && exercise.comments && (
               <Box
                 dangerouslySetInnerHTML={{ __html: exercise.comments }}
-                sx={{ width: "100%" }}
+                sx={{ width: "100%", fontSize: "12px" }}
               />
             )}
 
