@@ -23,12 +23,12 @@ let mockExercises: Exercise[] = [
     id: 2,
     category: "firstPair",
     type: "pullUp",
-    targetSets: 1,
+    targetSets: 3,
     targetRepsMin: 5,
-    targetRepsMax: 10,
+    targetRepsMax: 8,
     name: "Exercise 2",
     thumbLink: "https://i.imgur.com/6vOLzTC.jpg",
-    targetRest: 0,
+    targetRest: 90,
   },
 ];
 
@@ -269,5 +269,26 @@ describe("ExerciseTracker", () => {
     fireEvent.click(resetBtn);
 
     expect(screen.getByText("00:00:00")).toBeInTheDocument();
+  });
+
+  it("displays a tick when the saved sets reach the target sets", () => {
+    render(<ExerciseTracker exercises={mockExercises} />);
+
+    expect(screen.queryByLabelText("Done")).not.toBeInTheDocument();
+
+    const addButtons = screen.getAllByLabelText("add");
+
+    fireEvent.click(addButtons[0]);
+
+    const input = screen.getByLabelText("Reps");
+
+    fireEvent.change(input, { target: { value: "6" } });
+
+    fireEvent.keyDown(screen.getByText("Add Exercise 1 Reps"), {
+      key: "Escape",
+      code: "Escape",
+    });
+
+    expect(screen.getByLabelText("Done")).toBeInTheDocument();
   });
 });

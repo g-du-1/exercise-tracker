@@ -18,6 +18,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import { useRef, useState } from "react";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import DoneIcon from "@mui/icons-material/Done";
 
 type SavedReps = {
   name: string;
@@ -175,7 +176,16 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
                   justifyContent: "space-between",
                 }}
               >
-                <Box>{exercise.name}</Box>
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <Box>{exercise.name}</Box>
+
+                  {savedReps?.[exercise.id]?.reps.length >=
+                    exercise.targetSets && (
+                    <IconButton color="success" size="small" aria-label="Done">
+                      <DoneIcon />
+                    </IconButton>
+                  )}
+                </Box>
 
                 <Box>
                   {savedReps?.[exercise.id]?.reps?.length > 0 && (

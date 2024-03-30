@@ -89,9 +89,13 @@ exports[`ExerciseTracker renders 1`] = `
           class="MuiBox-root css-1k06pwf"
         >
           <div
-            class="MuiBox-root css-0"
+            class="MuiBox-root css-70qvj9"
           >
-            Exercise 1
+            <div
+              class="MuiBox-root css-0"
+            >
+              Exercise 1
+            </div>
           </div>
           <div
             class="MuiBox-root css-0"
@@ -149,9 +153,13 @@ exports[`ExerciseTracker renders 1`] = `
           class="MuiBox-root css-1k06pwf"
         >
           <div
-            class="MuiBox-root css-0"
+            class="MuiBox-root css-70qvj9"
           >
-            Exercise 2
+            <div
+              class="MuiBox-root css-0"
+            >
+              Exercise 2
+            </div>
           </div>
           <div
             class="MuiBox-root css-0"
