@@ -28,4 +28,5 @@ export type Exercise = {
   targetRepsMin?: number;
   targetRepsMax?: number;
   isDuration?: boolean;
+  targetRest: number;
 };

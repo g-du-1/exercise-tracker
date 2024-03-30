@@ -15,6 +15,7 @@ let mockExercises: Exercise[] = [
     targetRepsMax: 10,
     name: "Exercise 1",
     thumbLink: "https://www.youtube.com/watch?v=HFv2WwgeVMk",
+    targetRest: 0,
   },
   {
     id: 2,
@@ -25,6 +26,7 @@ let mockExercises: Exercise[] = [
     targetRepsMax: 10,
     name: "Exercise 2",
     thumbLink: "https://i.imgur.com/6vOLzTC.jpg",
+    targetRest: 0,
   },
 ];
 
@@ -115,6 +117,7 @@ describe("ExerciseTracker", () => {
         targetRepsMin: 5,
         targetRepsMax: 8,
         name: "Exercise 3",
+        targetRest: 0,
       },
     ];
 
