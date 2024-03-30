@@ -8,7 +8,7 @@ import * as React from "react";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { getYtVidId } from "../util/getYtVidId";
-import VideoCameraBackIcon from "@mui/icons-material/VideoCameraBack";
+import InfoIcon from "@mui/icons-material/Info";
 import Divider from "@mui/material/Divider";
 import { Stopwatch } from "./Stopwatch";
 
@@ -24,7 +24,7 @@ const style = {
 };
 
 export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
-  const [showThumbnails, setShowThumbnails] = React.useState(false);
+  const [showMoreInfo, setShowMoreInfo] = React.useState(false);
   const [selectedExercise, setSelectedExercise] = React.useState("");
   const [modalOpen, setModalOpen] = React.useState(false);
 
@@ -56,10 +56,10 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
 
         <IconButton
           size="large"
-          aria-label="Show Thumbnails"
-          onClick={() => setShowThumbnails(!showThumbnails)}
+          aria-label="Show More Info"
+          onClick={() => setShowMoreInfo(!showMoreInfo)}
         >
-          <VideoCameraBackIcon />
+          <InfoIcon />
         </IconButton>
       </Box>
 
@@ -97,7 +97,7 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
                 <Box
                   className="video-responsive"
                   sx={{ mb: 2 }}
-                  style={!showThumbnails ? { display: "none" } : {}}
+                  style={!showMoreInfo ? { display: "none" } : {}}
                 >
                   <iframe
                     src={`https://www.youtube.com/embed/${getYtVidId(
@@ -113,14 +113,14 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
                   src={exercise.thumbLink}
                   alt={`${exercise.name} Image`}
                   style={
-                    !showThumbnails
+                    !showMoreInfo
                       ? { display: "none" }
                       : { width: "100%", height: "auto" }
                   }
                 />
               ) : null)}
 
-            {exercise.comments && (
+            {showMoreInfo && exercise.comments && (
               <Box
                 dangerouslySetInnerHTML={{ __html: exercise.comments }}
                 sx={{ width: "100%" }}

@@ -55,7 +55,7 @@ exports[`ExerciseTracker renders 1`] = `
       </div>
     </div>
     <button
-      aria-label="Show Thumbnails"
+      aria-label="Show More Info"
       class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-mf1cb5-MuiButtonBase-root-MuiIconButton-root"
       tabindex="0"
       type="button"
@@ -63,12 +63,12 @@ exports[`ExerciseTracker renders 1`] = `
       <svg
         aria-hidden="true"
         class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-        data-testid="VideoCameraBackIcon"
+        data-testid="InfoIcon"
         focusable="false"
         viewBox="0 0 24 24"
       >
         <path
-          d="M18 10.48V6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-4.48l4 3.98v-11zM5 16l2.38-3.17L9 15l2.62-3.5L15 16z"
+          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m1 15h-2v-6h2zm0-8h-2V7h2z"
         />
       </svg>
       <span

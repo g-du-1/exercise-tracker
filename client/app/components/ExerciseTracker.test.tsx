@@ -57,7 +57,7 @@ describe("ExerciseTracker", () => {
     expect(getByText("Add Exercise 1 Reps")).toBeDefined();
   });
 
-  it("does not display thumbnails by default", () => {
+  it("does not display more info by default", () => {
     const { queryByTitle, queryByAltText } = render(
       <ExerciseTracker exercises={mockExercises} />
     );
@@ -73,7 +73,7 @@ describe("ExerciseTracker", () => {
       <ExerciseTracker exercises={mockExercises} />
     );
 
-    fireEvent.click(getByLabelText("Show Thumbnails"));
+    fireEvent.click(getByLabelText("Show More Info"));
 
     expect(queryByTitle("Exercise 1 Video")).toBeVisible();
     expect(queryByTitle("Exercise 2 Video")).toBeNull();
@@ -84,23 +84,23 @@ describe("ExerciseTracker", () => {
       <ExerciseTracker exercises={mockExercises} />
     );
 
-    fireEvent.click(getByLabelText("Show Thumbnails"));
+    fireEvent.click(getByLabelText("Show More Info"));
 
     expect(queryByAltText("Exercise 1 Image")).toBeNull();
     expect(queryByAltText("Exercise 2 Image")).not.toBeNull();
   });
 
-  it("toggles thumbnails", () => {
+  it("toggles more info", () => {
     const { getByLabelText, queryByTitle } = render(
       <ExerciseTracker exercises={mockExercises} />
     );
 
-    const thumbnailIcon = getByLabelText("Show Thumbnails");
+    const moreInfoIcon = getByLabelText("Show More Info");
 
-    fireEvent.click(thumbnailIcon);
+    fireEvent.click(moreInfoIcon);
     expect(queryByTitle("Exercise 1 Video")).not.toBeNull();
 
-    fireEvent.click(thumbnailIcon);
+    fireEvent.click(moreInfoIcon);
     expect(queryByTitle("Exercise 1 Video")).not.toBeVisible();
   });
 
