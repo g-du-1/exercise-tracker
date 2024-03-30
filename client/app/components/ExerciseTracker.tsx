@@ -120,6 +120,13 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
                 />
               ) : null)}
 
+            {exercise.comments && (
+              <Box
+                dangerouslySetInnerHTML={{ __html: exercise.comments }}
+                sx={{ width: "100%" }}
+              />
+            )}
+
             {exercises[idx + 1] &&
               exercise.category !== exercises[idx + 1].category && (
                 <Divider flexItem data-testid="divider" sx={{ my: 1 }} />

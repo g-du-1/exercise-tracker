@@ -10,7 +10,11 @@ const warmUps: Exercise[] = [
     targetRepsMax: 10,
     name: "Yuri's Shoulder Band Warmup",
     thumbLink: "https://www.youtube.com/watch?v=Vwn5hSf3WEg",
-    comments: "Can also be done with a tee-shirt",
+    comments: `
+      <ul>
+        <li>Can also be done with a tee-shirt</li>
+      </ul>
+    `,
   },
   {
     id: 2,
@@ -31,7 +35,11 @@ const warmUps: Exercise[] = [
     targetRepsMax: Infinity,
     name: "GMB Wrist Prep",
     thumbLink: "https://www.youtube.com/watch?v=mSZWSQSSEjE",
-    comments: "Do as many reps as you want",
+    comments: `
+      <ul>
+        <li>Do as many reps as you want</li>
+      </ul>
+    `,
   },
   {
     id: 4,
@@ -57,10 +65,12 @@ const firstPair: Exercise[] = [
     name: "Arch Hangs",
     thumbLink: "https://www.youtube.com/watch?v=C995b3KLXS4&t=7s",
     comments: `
-        - Elbows should stay straight
-        - Hold it for time/reps
-        - Start at this level https://www.youtube.com/watch?v=HoE-C85ZlCE
-        - Progress towards a 90 degree in your shoulder. Like this https://i.ytimg.com/vi/JusddCep6PA/hqdefault.jpg
+      <ul>
+        <li>Elbows should stay straight</li>
+        <li>Hold it for time/reps</li>
+        <li>Start at this <a href="https://www.youtube.com/watch?v=HoE-C85ZlCE">level</a></li>
+        <li>Progress towards a 90 degree in your shoulder. Like <a href="https://i.ytimg.com/vi/JusddCep6PA/hqdefault.jpg">this</a></li>
+      </ul>
     `,
   },
   {
@@ -73,8 +83,10 @@ const firstPair: Exercise[] = [
     name: "Bulgarian Split Squat",
     thumbLink: "https://www.youtube.com/watch?v=kkdmHTASZg8&t=75s",
     comments: `
-        - Pretend the barbell doesn't exist.
-        - You can progress this further by elevating both your legs
+      <ul>
+        <li>Pretend the barbell doesn't exist.</li>
+        <li>You can progress this further by elevating both your legs</li>
+      </ul>
     `,
   },
 ];
@@ -91,8 +103,10 @@ const secondPair: Exercise[] = [
     thumbLink:
       "https://antranik.org/wp-content/uploads/2014/01/antranik-holding-support-hold-on-parallel-bars.jpg",
     comments: `
-        - Work up to 3 sets of 1 minute holds for this progression
-        - If you can't hold yourself up at all, consider using bands or your feet to assist you until you gain the necessary strength.
+      <ul>
+        <li>Work up to 3 sets of 1 minute holds for this progression</li>
+        <li>If you can't hold yourself up at all, consider using bands or your feet to assist you until you gain the necessary strength.</li>
+      </ul>
     `,
   },
   {
@@ -105,8 +119,10 @@ const secondPair: Exercise[] = [
     name: "Negative Hamstring Slide",
     thumbLink: "https://www.youtube.com/watch?v=OY8Jci5KJdM",
     comments: `
-        - Start in the top position of a glute bridge, slide legs out under control until your butt touches the ground/knees are extended.
-        - Return to starting position and repeat for desired reps.
+      <ul>
+        <li>Start in the top position of a glute bridge, slide legs out under control until your butt touches the ground/knees are extended.</li>
+        <li>Return to starting position and repeat for desired reps.</li>
+      </ul>
     `,
   },
 ];
@@ -121,7 +137,11 @@ const thirdPair: Exercise[] = [
     targetRepsMax: 8,
     name: "Incline Rows",
     thumbLink: "https://www.youtube.com/watch?v=LR2EnFWpVao",
-    comments: `Perform a row, but with the body position somewhere between vertical and horizontal. Go closer to horizontal to make it harder.`,
+    comments: `
+      <ul>
+        <li>Perform a row, but with the body position somewhere between vertical and horizontal. Go closer to horizontal to make it harder.</li>
+      </ul>
+    `,
   },
   {
     id: 10,
@@ -133,11 +153,13 @@ const thirdPair: Exercise[] = [
     name: "Full Pushup",
     thumbLink: "https://www.youtube.com/watch?v=IODxDxX7oi4",
     comments: `
-        - Body in a straight line from head to toe: don't let the hips sag!
-        - Lock out arms and protract the shoulderblades (https://www.reddit.com/r/bodyweightfitness/wiki/kb/positioning/) at the top
-        - Go down until chest nearly touches the ground
-        - Keep the elbows in, don't let them flare out
-        - Don't shrug up your shoulders to your ears, focus on depressing the shoulderblades (https://www.reddit.com/r/bodyweightfitness/wiki/kb/positioning).
+      <ul>
+        <li>Body in a straight line from head to toe: don't let the hips sag!</li>
+        <li>Lock out arms and protract the shoulderblades (<a href="https://reddit.com/r/bodyweightfitness/wiki/kb/positioning" rel="nofollow">what does that even mean?</a>) at the top</li>
+        <li>Go down until chest nearly touches the ground</li>
+        <li>Keep the elbows in, don't let them flare out</li>
+        <li>Don't shrug up your shoulders to your ears, focus on depressing the shoulderblades (<a href="https://reddit.com/r/bodyweightfitness/wiki/kb/positioning" rel="nofollow">what does that even mean?</a>).</li>
+      </ul>
     `,
   },
 ];
@@ -153,10 +175,12 @@ const coreTriplet: Exercise[] = [
     name: "Ring Ab Rollouts",
     thumbLink: "https://www.youtube.com/watch?v=LBUfnmugKLw",
     comments: `
-        - Elbows should stay straight
-        - Remain in a hollow body position (ribs down, butt tucked)
-        - Keep your hands as close as your overhead mobility will allow.
-        - Higher ring position will make this easier. Elevating the feet will make it harder.
+      <ul>
+        <li>Elbows should stay straight</li>
+        <li>Remain in a hollow body position (ribs down, butt tucked)</li>
+        <li>Keep your hands as close as your overhead mobility will allow.</li>
+        <li>Higher ring position will make this easier. Elevating the feet will make it harder.</li>
+      </ul>
     `,
   },
   {
@@ -169,9 +193,11 @@ const coreTriplet: Exercise[] = [
     name: "Assisted Knee Copenhagen Plank",
     thumbLink: "https://i.imgur.com/6vOLzTC.jpg",
     comments: `
-        - Lower leg should give the minimum assistance you need.
-        - Don't let the hips sag.
-        - Can be performed on your hand instead of elbow.
+      <ul>
+        <li>Lower leg should give the minimum assistance you need.</li>
+        <li>Don't let the hips sag.</li>
+        <li>Can be performed on your hand instead of elbow.</li>
+      </ul>
     `,
   },
   {
@@ -183,7 +209,11 @@ const coreTriplet: Exercise[] = [
     targetRepsMax: 12,
     name: "Reverse Hyperextension",
     thumbLink: "https://www.youtube.com/watch?v=ZeRsNzFcQLQ&",
-    comments: `Keep your butt tucked`,
+    comments: `
+      <ul>
+        <li>Keep your butt tucked</li>
+      </ul>
+    `,
   },
 ];
 
