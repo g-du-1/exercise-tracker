@@ -106,6 +106,7 @@ const secondPair: Exercise[] = [
     targetRepsMin: 30,
     targetRepsMax: 30,
     targetRest: 90,
+    isDuration: true,
     name: "Parallel Bar Support Hold",
     thumbLink:
       "https://antranik.org/wp-content/uploads/2014/01/antranik-holding-support-hold-on-parallel-bars.jpg",
