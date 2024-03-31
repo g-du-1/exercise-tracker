@@ -3,234 +3,153 @@
  */
 import { render, fireEvent, screen, act } from "@testing-library/react";
 import { ExerciseTracker } from "./ExerciseTracker";
-import { Exercise } from "../types";
 import { getStartTime } from "../util/getStartTime";
+import { mockExercises } from "./fixtures/mockExercises";
 
 jest.useFakeTimers();
 
-let mockExercises: Exercise[] = [
-  {
-    id: 1,
-    category: "warmup",
-    type: "warmup",
-    targetSets: 1,
-    targetRepsMin: 10,
-    name: "Exercise 1",
-    thumbLink: "https://www.youtube.com/watch?v=HFv2WwgeVMk",
-    targetRest: 0,
-  },
-  {
-    id: 2,
-    category: "firstPair",
-    type: "pullUp",
-    targetSets: 3,
-    targetRepsMin: 5,
-    targetRepsMax: 8,
-    name: "Exercise 2",
-    thumbLink: "https://i.imgur.com/6vOLzTC.jpg",
-    targetRest: 90,
-  },
-  {
-    id: 3,
-    category: "firstPair",
-    type: "dip",
-    targetSets: 3,
-    targetRepsMin: 30,
-    targetRest: 90,
-    isDuration: true,
-    name: "Exercise 3",
-    thumbLink:
-      "https://antranik.org/wp-content/uploads/2014/01/antranik-holding-support-hold-on-parallel-bars.jpg",
-  },
-];
+const DELETE_REPS = "Delete Reps";
+
+const renderExerciseTracker = () =>
+  render(<ExerciseTracker exercises={mockExercises} />);
+
+const getModalOpenBtns = () => screen.getAllByLabelText("add");
+
+const clickOpenModalBtn = (idx: number) => {
+  const openModalBtns = getModalOpenBtns();
+
+  fireEvent.click(openModalBtns[idx]);
+};
+
+const getRepsInput = () => {
+  const input = screen.getByLabelText("Reps");
+  expect(input).toHaveFocus();
+
+  return input;
+};
+
+const submitReps = (val: string) => {
+  const input = getRepsInput();
+  fireEvent.change(input, { target: { value: val } });
+  fireEvent.submit(input);
+};
+
+const getDeleteRepsBtn = () => screen.getByLabelText(DELETE_REPS);
+
+const clickDeleteReps = () => fireEvent.click(getDeleteRepsBtn());
 
 describe("ExerciseTracker", () => {
-  it("renders", () => {
-    const result = render(<ExerciseTracker exercises={mockExercises} />);
+  it("matches snapshot", () => {
+    const result = renderExerciseTracker();
 
     expect(result.container).toMatchSnapshot();
   });
 
-  it("displays add buttons next to each exercise", () => {
-    const { getAllByLabelText } = render(
-      <ExerciseTracker exercises={mockExercises} />
-    );
+  it("displays modal open buttons next to each exercise", () => {
+    renderExerciseTracker();
 
-    const addButtons = getAllByLabelText("add");
-
-    expect(addButtons).toHaveLength(3);
+    expect(getModalOpenBtns()).toHaveLength(3);
   });
 
-  it("add button opens a modal on click for the exercise", () => {
-    const { getAllByLabelText, getByText } = render(
-      <ExerciseTracker exercises={mockExercises} />
-    );
+  it("open modal button opens a modal on click for the exercise", () => {
+    renderExerciseTracker();
 
-    const addButtons = getAllByLabelText("add");
+    fireEvent.click(getModalOpenBtns()[0]);
 
-    fireEvent.click(addButtons[0]);
-
-    expect(getByText("Add Exercise 1 Reps")).toBeDefined();
+    expect(screen.getByText("Add GMB Wrist Prep Reps")).toBeDefined();
   });
 
   it("does not display more info by default", () => {
-    const { queryByTitle, queryByAltText } = render(
-      <ExerciseTracker exercises={mockExercises} />
-    );
+    renderExerciseTracker();
 
-    expect(queryByTitle("Exercise 1 Video")).not.toBeVisible();
-    expect(queryByTitle("Exercise 2 Video")).toBeNull();
-    expect(queryByAltText("Exercise 1 Image")).toBeNull();
-    expect(queryByAltText("Exercise 2 Image")).not.toBeVisible();
+    expect(screen.queryByTitle("GMB Wrist Prep Video")).not.toBeVisible();
+    expect(screen.queryByTitle("Arch Hangs Video")).not.toBeVisible();
+    expect(
+      screen.queryByAltText("Parallel Bar Support Hold Image")
+    ).not.toBeVisible();
   });
 
-  it("displays a video if it has a video link", () => {
-    const { queryByTitle, getByLabelText } = render(
-      <ExerciseTracker exercises={mockExercises} />
-    );
+  it("displays videos and images when more info is clicked", () => {
+    renderExerciseTracker();
 
-    fireEvent.click(getByLabelText("Show More Info"));
+    fireEvent.click(screen.getByLabelText("Show More Info"));
 
-    expect(queryByTitle("Exercise 1 Video")).toBeVisible();
-    expect(queryByTitle("Exercise 2 Video")).toBeNull();
+    expect(screen.getByTitle("GMB Wrist Prep Video")).toBeVisible();
+    expect(screen.getByTitle("Arch Hangs Video")).toBeVisible();
+    expect(
+      screen.getByAltText("Parallel Bar Support Hold Image")
+    ).toBeVisible();
   });
 
-  it("displays an image if it has an image link", () => {
-    const { queryByAltText, getByLabelText } = render(
-      <ExerciseTracker exercises={mockExercises} />
-    );
+  it("renders category separators when category changes", () => {
+    renderExerciseTracker();
 
-    fireEvent.click(getByLabelText("Show More Info"));
-
-    expect(queryByAltText("Exercise 1 Image")).toBeNull();
-    expect(queryByAltText("Exercise 2 Image")).not.toBeNull();
-  });
-
-  it("toggles more info", () => {
-    const { getByLabelText, queryByTitle } = render(
-      <ExerciseTracker exercises={mockExercises} />
-    );
-
-    const moreInfoIcon = getByLabelText("Show More Info");
-
-    fireEvent.click(moreInfoIcon);
-    expect(queryByTitle("Exercise 1 Video")).not.toBeNull();
-
-    fireEvent.click(moreInfoIcon);
-    expect(queryByTitle("Exercise 1 Video")).not.toBeVisible();
-  });
-
-  it("renders category separator when category changes", () => {
-    const { getByTestId } = render(
-      <ExerciseTracker exercises={mockExercises} />
-    );
-
-    expect(getByTestId("divider")).toBeInTheDocument();
+    expect(screen.getAllByTestId("divider")).toHaveLength(2);
   });
 
   it("saves and resets sets of reps for an exercise", () => {
-    const { getAllByLabelText, getByText } = render(
-      <ExerciseTracker exercises={mockExercises} />
-    );
+    renderExerciseTracker();
 
-    const addButtons = getAllByLabelText("add");
+    clickOpenModalBtn(1);
 
-    fireEvent.click(addButtons[1]);
+    submitReps("7");
 
-    const input = screen.getByLabelText("Reps");
-    expect(input).toHaveFocus();
+    clickOpenModalBtn(1);
 
-    fireEvent.change(input, { target: { value: "7" } });
+    submitReps("6");
 
-    fireEvent.keyDown(screen.getByText("Add Exercise 2 Reps"), {
-      key: "Escape",
-      code: "Escape",
-    });
+    expect(screen.getByText("7")).toBeInTheDocument();
+    expect(screen.getByText("6")).toBeInTheDocument();
 
-    fireEvent.click(addButtons[1]);
+    clickOpenModalBtn(1);
 
-    const inputTwo = screen.getByLabelText("Reps");
-    expect(inputTwo).toHaveFocus();
-
-    fireEvent.change(inputTwo, { target: { value: "6" } });
-
-    fireEvent.keyDown(screen.getByText("Add Exercise 2 Reps"), {
-      key: "Escape",
-      code: "Escape",
-    });
-
-    expect(getByText("7")).toBeInTheDocument();
-    expect(getByText("6")).toBeInTheDocument();
-
-    fireEvent.click(addButtons[1]);
-
-    fireEvent.click(screen.getByLabelText("Delete Reps"));
+    clickDeleteReps();
 
     expect(screen.queryByText("7")).not.toBeInTheDocument();
     expect(screen.queryByText("6")).not.toBeInTheDocument();
   });
 
-  it("saves reps on submit", () => {
-    const { getAllByLabelText, getByText } = render(
-      <ExerciseTracker exercises={mockExercises} />
-    );
+  it("saves reps on modal close", () => {
+    renderExerciseTracker();
 
-    const addButtons = getAllByLabelText("add");
+    clickOpenModalBtn(1);
 
-    fireEvent.click(addButtons[1]);
+    const repsInput = getRepsInput();
 
-    const input = screen.getByLabelText("Reps");
-    expect(input).toHaveFocus();
+    fireEvent.change(repsInput, { target: { value: "8" } });
 
-    fireEvent.change(input, { target: { value: "7" } });
+    fireEvent.keyDown(repsInput, {
+      key: "Escape",
+      code: "Escape",
+    });
 
-    fireEvent.submit(input);
-
-    expect(getByText("7")).toBeInTheDocument();
+    expect(screen.getByText("8")).toBeInTheDocument();
   });
 
   it("only renders the delete reps icon if there are reps saved and closes the modal on save", () => {
-    render(<ExerciseTracker exercises={mockExercises} />);
+    renderExerciseTracker();
 
-    const addButtons = screen.getAllByLabelText("add");
+    clickOpenModalBtn(1);
 
-    fireEvent.click(addButtons[1]);
+    expect(screen.queryByLabelText(DELETE_REPS)).not.toBeInTheDocument();
 
-    expect(screen.queryByLabelText("Delete Reps")).not.toBeInTheDocument();
+    submitReps("6");
 
-    const input = screen.getByLabelText("Reps");
+    clickOpenModalBtn(1);
 
-    fireEvent.change(input, { target: { value: "6" } });
+    expect(screen.getByLabelText(DELETE_REPS)).toBeInTheDocument();
 
-    fireEvent.keyDown(screen.getByText("Add Exercise 2 Reps"), {
-      key: "Escape",
-      code: "Escape",
-    });
+    clickDeleteReps();
 
-    fireEvent.click(addButtons[1]);
-
-    expect(screen.getByLabelText("Delete Reps")).toBeInTheDocument();
-
-    fireEvent.click(screen.getByLabelText("Delete Reps"));
-
-    expect(screen.queryByText("Add Exercise 2 Reps")).not.toBeVisible();
+    expect(screen.queryByText("Add Arch Hangs Reps")).not.toBeVisible();
   });
 
   it("starts the stopwatch when saving reps", () => {
-    render(<ExerciseTracker exercises={mockExercises} />);
+    renderExerciseTracker();
 
-    const addButtons = screen.getAllByLabelText("add");
+    clickOpenModalBtn(1);
 
-    fireEvent.click(addButtons[1]);
-
-    const input = screen.getByLabelText("Reps");
-
-    fireEvent.change(input, { target: { value: "6" } });
-
-    fireEvent.keyDown(screen.getByText("Add Exercise 2 Reps"), {
-      key: "Escape",
-      code: "Escape",
-    });
+    submitReps("6");
 
     act(() => {
       jest.advanceTimersByTime(5000);
@@ -240,20 +159,11 @@ describe("ExerciseTracker", () => {
   });
 
   it("does not start the stopwatch when saving a warmup", () => {
-    render(<ExerciseTracker exercises={mockExercises} />);
+    renderExerciseTracker();
 
-    const addButtons = screen.getAllByLabelText("add");
+    clickOpenModalBtn(0);
 
-    fireEvent.click(addButtons[0]);
-
-    const input = screen.getByLabelText("Reps");
-
-    fireEvent.change(input, { target: { value: "6" } });
-
-    fireEvent.keyDown(screen.getByText("Add Exercise 1 Reps"), {
-      key: "Escape",
-      code: "Escape",
-    });
+    submitReps("6");
 
     act(() => {
       jest.advanceTimersByTime(5000);
@@ -263,10 +173,12 @@ describe("ExerciseTracker", () => {
   });
 
   it("starts the stopwatch", () => {
-    render(<ExerciseTracker exercises={mockExercises} />);
+    renderExerciseTracker();
 
     const startBtn = screen.getByLabelText("Start Stopwatch");
+
     fireEvent.click(startBtn);
+
     expect(startBtn).toBeDisabled();
 
     act(() => {
@@ -277,13 +189,16 @@ describe("ExerciseTracker", () => {
   });
 
   it("resets the stopwatch", () => {
-    render(<ExerciseTracker exercises={mockExercises} />);
+    renderExerciseTracker();
 
     const resetBtn = screen.getByLabelText("Reset Stopwatch");
+
     expect(resetBtn).toBeDisabled();
 
     const startBtn = screen.getByLabelText("Start Stopwatch");
+
     fireEvent.click(startBtn);
+
     expect(startBtn).toBeDisabled();
 
     act(() => {
@@ -295,81 +210,54 @@ describe("ExerciseTracker", () => {
     expect(screen.getByText("00:00:00")).toBeInTheDocument();
   });
 
-  it("displays a tick when the saved sets reach the target sets", () => {
-    render(<ExerciseTracker exercises={mockExercises} />);
+  it("displays a done elem when the saved sets reach the target sets", () => {
+    renderExerciseTracker();
 
     expect(screen.queryByLabelText("Done")).not.toBeInTheDocument();
 
-    const addButtons = screen.getAllByLabelText("add");
+    clickOpenModalBtn(0);
 
-    fireEvent.click(addButtons[0]);
-
-    const input = screen.getByLabelText("Reps");
-
-    fireEvent.change(input, { target: { value: "6" } });
-
-    fireEvent.keyDown(screen.getByText("Add Exercise 1 Reps"), {
-      key: "Escape",
-      code: "Escape",
-    });
+    submitReps("6");
 
     expect(screen.getByLabelText("Done")).toBeInTheDocument();
   });
 
   it("displays warning after the target rest has passed", () => {
-    render(<ExerciseTracker exercises={mockExercises} />);
+    renderExerciseTracker();
 
-    expect(screen.queryByAltText(/rest time passed/i)).not.toBeInTheDocument();
+    expect(screen.queryByAltText("Rest Time Passed")).not.toBeInTheDocument();
 
-    const addButtons = screen.getAllByLabelText("add");
+    clickOpenModalBtn(1);
 
-    fireEvent.click(addButtons[1]);
-
-    const input = screen.getByLabelText("Reps");
-
-    fireEvent.change(input, { target: { value: "6" } });
-
-    fireEvent.keyDown(screen.getByText("Add Exercise 2 Reps"), {
-      key: "Escape",
-      code: "Escape",
-    });
+    submitReps("6");
 
     act(() => {
       jest.advanceTimersByTime(90000);
     });
 
-    expect(screen.getByLabelText(/rest time passed/i)).toBeInTheDocument();
+    expect(screen.getByLabelText("Rest Time Passed")).toBeInTheDocument();
   });
 
   it("resets the timer when reps are deleted", () => {
-    render(<ExerciseTracker exercises={mockExercises} />);
+    renderExerciseTracker();
 
-    const addButtons = screen.getAllByLabelText("add");
+    clickOpenModalBtn(1);
 
-    fireEvent.click(addButtons[1]);
-
-    const input = screen.getByLabelText("Reps");
-
-    fireEvent.change(input, { target: { value: "6" } });
-
-    fireEvent.keyDown(screen.getByText("Add Exercise 2 Reps"), {
-      key: "Escape",
-      code: "Escape",
-    });
+    submitReps("6");
 
     act(() => {
       jest.advanceTimersByTime(5000);
     });
 
-    fireEvent.click(addButtons[1]);
+    clickOpenModalBtn(1);
 
-    fireEvent.click(screen.getByLabelText("Delete Reps"));
+    clickDeleteReps();
 
     expect(screen.getByText("00:00:00")).toBeInTheDocument();
   });
 
   it("displays target sets", () => {
-    render(<ExerciseTracker exercises={mockExercises} />);
+    renderExerciseTracker();
 
     expect(screen.getByText("1x10")).toBeInTheDocument();
     expect(screen.getByText("3x5-8")).toBeInTheDocument();
@@ -377,101 +265,63 @@ describe("ExerciseTracker", () => {
   });
 
   it("adds label for in range reps", () => {
-    render(<ExerciseTracker exercises={mockExercises} />);
+    renderExerciseTracker();
 
-    const addButtons = screen.getAllByLabelText("add");
+    clickOpenModalBtn(1);
 
-    fireEvent.click(addButtons[1]);
-
-    const input = screen.getByLabelText("Reps");
-
-    fireEvent.change(input, { target: { value: "6" } });
-
-    fireEvent.keyDown(screen.getByText("Add Exercise 2 Reps"), {
-      key: "Escape",
-      code: "Escape",
-    });
+    submitReps("6");
 
     expect(
-      screen.getByLabelText("Exercise 2 6 Reps In Range")
+      screen.getByLabelText("Arch Hangs 6 Reps In Range")
     ).toBeInTheDocument();
   });
 
   it("adds label for out of range reps - lower", () => {
-    render(<ExerciseTracker exercises={mockExercises} />);
+    renderExerciseTracker();
 
-    const addButtons = screen.getAllByLabelText("add");
+    clickOpenModalBtn(1);
 
-    fireEvent.click(addButtons[1]);
-
-    const input = screen.getByLabelText("Reps");
-
-    fireEvent.change(input, { target: { value: "3" } });
-
-    fireEvent.keyDown(screen.getByText("Add Exercise 2 Reps"), {
-      key: "Escape",
-      code: "Escape",
-    });
+    submitReps("3");
 
     expect(
-      screen.getByLabelText("Exercise 2 3 Reps Lower Than Range")
+      screen.getByLabelText("Arch Hangs 3 Reps Lower Than Range")
     ).toBeInTheDocument();
   });
 
   it("adds label for out of range reps - higher", () => {
-    render(<ExerciseTracker exercises={mockExercises} />);
+    renderExerciseTracker();
 
-    const addButtons = screen.getAllByLabelText("add");
+    clickOpenModalBtn(1);
 
-    fireEvent.click(addButtons[1]);
-
-    const input = screen.getByLabelText("Reps");
-
-    fireEvent.change(input, { target: { value: "35" } });
-
-    fireEvent.keyDown(screen.getByText("Add Exercise 2 Reps"), {
-      key: "Escape",
-      code: "Escape",
-    });
+    submitReps("35");
 
     expect(
-      screen.getByLabelText("Exercise 2 35 Reps Higher Than Range")
+      screen.getByLabelText("Arch Hangs 35 Reps Higher Than Range")
     ).toBeInTheDocument();
   });
 
   it("adds label for cases without max target step", () => {
-    render(<ExerciseTracker exercises={mockExercises} />);
+    renderExerciseTracker();
 
-    const addButtons = screen.getAllByLabelText("add");
+    clickOpenModalBtn(0);
 
-    fireEvent.click(addButtons[0]);
-
-    const input = screen.getByLabelText("Reps");
-
-    fireEvent.change(input, { target: { value: "10" } });
-
-    fireEvent.keyDown(screen.getByText("Add Exercise 1 Reps"), {
-      key: "Escape",
-      code: "Escape",
-    });
+    submitReps("10");
 
     expect(
-      screen.getByLabelText("Exercise 1 10 Reps In Range")
+      screen.getByLabelText("GMB Wrist Prep 10 Reps In Range")
     ).toBeInTheDocument();
   });
 
   it("hides completed exercises if hiding is turned on", () => {
-    render(<ExerciseTracker exercises={mockExercises} />);
+    renderExerciseTracker();
 
-    expect(screen.getByText("Exercise 1")).toBeVisible();
-    expect(screen.getByText("Exercise 2")).toBeVisible();
-    expect(screen.getByText("Exercise 3")).toBeVisible();
+    expect(screen.getByText("GMB Wrist Prep")).toBeVisible();
+    expect(screen.getByText("Arch Hangs")).toBeVisible();
+    expect(screen.getByText("Parallel Bar Support Hold")).toBeVisible();
 
-    fireEvent.click(screen.getAllByLabelText("add")[0]);
+    clickOpenModalBtn(0);
 
-    const input = screen.getByLabelText("Reps");
-    fireEvent.change(input, { target: { value: "8" } });
-    fireEvent.submit(input);
+    submitReps("8");
 
     const checkbox = screen.getByLabelText("Show Completed Exercises");
     expect(checkbox).toBeChecked();
@@ -479,19 +329,17 @@ describe("ExerciseTracker", () => {
     fireEvent.click(checkbox);
     expect(checkbox).not.toBeChecked();
 
-    expect(screen.getByText("Exercise 1")).not.toBeVisible();
-    expect(screen.getByText("Exercise 2")).toBeVisible();
-    expect(screen.getByText("Exercise 3")).toBeVisible();
+    expect(screen.getByText("GMB Wrist Prep")).not.toBeVisible();
+    expect(screen.getByText("Arch Hangs")).toBeVisible();
+    expect(screen.getByText("Parallel Bar Support Hold")).toBeVisible();
   });
 
   it("saves and renders start time", () => {
-    render(<ExerciseTracker exercises={mockExercises} />);
+    renderExerciseTracker();
 
-    fireEvent.click(screen.getAllByLabelText("add")[0]);
+    clickOpenModalBtn(0);
 
-    const input = screen.getByLabelText("Reps");
-    fireEvent.change(input, { target: { value: "8" } });
-    fireEvent.submit(input);
+    submitReps("8");
 
     const startTime = getStartTime();
 
@@ -501,11 +349,9 @@ describe("ExerciseTracker", () => {
       jest.advanceTimersByTime(500000);
     });
 
-    fireEvent.click(screen.getAllByLabelText("add")[1]);
+    clickOpenModalBtn(1);
 
-    const input2 = screen.getByLabelText("Reps");
-    fireEvent.change(input2, { target: { value: "6" } });
-    fireEvent.submit(input2);
+    submitReps("6");
 
     expect(screen.getByText(`Started: ${startTime}`)).toBeInTheDocument();
   });

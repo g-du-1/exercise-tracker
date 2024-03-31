@@ -1,7 +1,6 @@
 import { ExerciseTracker } from "./components/ExerciseTracker";
 import { exercises } from "./constants";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 
 export default function Home() {
   return (
