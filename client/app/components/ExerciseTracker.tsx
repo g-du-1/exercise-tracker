@@ -20,6 +20,9 @@ import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import DoneIcon from "@mui/icons-material/Done";
 import WarningIcon from "@mui/icons-material/Warning";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
 
 type SavedReps = {
   name: string;
@@ -197,28 +200,55 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
         </IconButton>
       </Box>
 
-      <Box>
-        {exercises.map((exercise, idx) => (
-          <Box
-            key={exercise.id}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              flexDirection: "column",
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                width: "100%",
-              }}
-            >
-              <Box
+      {exercises.map((exercise, idx) => (
+        <React.Fragment key={exercise.id}>
+          <Card sx={{ mb: 2 }}>
+            <Box sx={{ borderBottom: "1px solid #e8e8e8" }}>
+              {exercise.thumbLink &&
+                (exercise.thumbLink.includes("youtube") ? (
+                  <Box
+                    className="video-responsive"
+                    style={!showMoreInfo ? { display: "none" } : {}}
+                  >
+                    <iframe
+                      src={`https://www.youtube.com/embed/${getYtVidId(
+                        exercise.thumbLink
+                      )}`}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      title={`${exercise.name} Video`}
+                    />
+                  </Box>
+                ) : exercise.thumbLink.endsWith("jpg") ? (
+                  <img
+                    src={exercise.thumbLink}
+                    alt={`${exercise.name} Image`}
+                    style={
+                      !showMoreInfo
+                        ? { display: "none" }
+                        : { width: "100%", height: "auto", display: "block" }
+                    }
+                  />
+                ) : null)}
+
+              {showMoreInfo && exercise.comments && (
+                <Box
+                  dangerouslySetInnerHTML={{ __html: exercise.comments }}
+                  sx={{
+                    fontSize: "12px",
+                    p: 1,
+                    lineHeight: 1.5,
+                  }}
+                />
+              )}
+            </Box>
+
+            <CardContent sx={{ p: 1, "&:last-child": { pb: 1 } }}>
+              <Typography
+                variant="h2"
+                component="div"
                 sx={{
                   display: "flex",
-                  alignItems: "center",
-                  width: "100%",
                   justifyContent: "space-between",
                 }}
               >
@@ -228,7 +258,9 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
                       {`${exercise.targetSets}x${exercise.targetRepsMin ? `${exercise.targetRepsMin}` : ``}${exercise.targetRepsMax ? `-${exercise.targetRepsMax}` : ``}${exercise.isDuration ? `s` : ``}`}
                     </Box>
 
-                    <Box sx={{ fontSize: "14px" }}>{exercise.name}</Box>
+                    <Box sx={{ fontSize: "14px", fontWeight: 500 }}>
+                      {exercise.name}
+                    </Box>
                   </Box>
 
                   {savedReps?.[exercise.id]?.reps.length >=
@@ -239,19 +271,23 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
                   )}
                 </Box>
 
-                <Box>
-                  <IconButton
-                    size="large"
-                    aria-label="add"
-                    onClick={() => handleAddClick(exercise)}
-                  >
-                    <OpenInNewIcon />
-                  </IconButton>
-                </Box>
-              </Box>
+                <IconButton
+                  size="large"
+                  aria-label="add"
+                  onClick={() => handleAddClick(exercise)}
+                >
+                  <OpenInNewIcon />
+                </IconButton>
+              </Typography>
 
-              <Box
-                sx={{ display: "flex", flexDirection: "row", fontSize: "12px" }}
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  fontSize: "12px",
+                }}
               >
                 {savedReps?.[exercise.id]?.reps.map((rep: number, idx) => {
                   const colorMap: RepRangeMap = {
@@ -273,7 +309,7 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
                         display: "flex",
                         flexDirection: "row",
                         mr: 1,
-                        mb: 2,
+                        mb: 1.5,
                       }}
                     >
                       <Box sx={{ mr: 0.75, color: "#b9b9b9" }}>
@@ -292,53 +328,36 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
                     </Box>
                   );
                 })}
-              </Box>
-            </Box>
+              </Typography>
+            </CardContent>
+          </Card>
 
-            {exercise.thumbLink &&
-              (exercise.thumbLink.includes("youtube") ? (
-                <Box
-                  className="video-responsive"
-                  sx={{ mb: 2 }}
-                  style={!showMoreInfo ? { display: "none" } : {}}
-                >
-                  <iframe
-                    src={`https://www.youtube.com/embed/${getYtVidId(
-                      exercise.thumbLink
-                    )}`}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    title={`${exercise.name} Video`}
-                  />
-                </Box>
-              ) : exercise.thumbLink.endsWith("jpg") ? (
-                <img
-                  src={exercise.thumbLink}
-                  alt={`${exercise.name} Image`}
-                  style={
-                    !showMoreInfo
-                      ? { display: "none" }
-                      : { width: "100%", height: "auto" }
-                  }
-                />
-              ) : null)}
-
-            {showMoreInfo && exercise.comments && (
-              <Box
-                dangerouslySetInnerHTML={{ __html: exercise.comments }}
-                sx={{ width: "100%", fontSize: "12px" }}
+          {exercises[idx + 1] &&
+            exercise.category !== exercises[idx + 1].category && (
+              <Divider
+                flexItem
+                data-testid="divider"
+                sx={{
+                  mb: 2,
+                  borderBottomWidth: 2,
+                }}
               />
             )}
+        </React.Fragment>
+      ))}
 
-            {exercises[idx + 1] &&
-              exercise.category !== exercises[idx + 1].category && (
-                <Divider flexItem data-testid="divider" sx={{ my: 1 }} />
-              )}
-          </Box>
-        ))}
-      </Box>
-
-      <Dialog open={modalOpen} onClose={handleModalClose} disableRestoreFocus>
+      <Dialog
+        open={modalOpen}
+        onClose={handleModalClose}
+        disableRestoreFocus
+        PaperProps={{
+          component: "form",
+          onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
+            event.preventDefault();
+            handleModalClose();
+          },
+        }}
+      >
         <DialogTitle>Add {selectedExercise?.name} Reps</DialogTitle>
 
         <DialogContent>

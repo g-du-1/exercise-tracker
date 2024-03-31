@@ -10,7 +10,7 @@ export default function Home() {
         p: 1,
       }}
     >
-      <Box sx={{ mt: "48px" }}>
+      <Box sx={{ mt: 7 }}>
         <ExerciseTracker exercises={exercises} />
       </Box>
     </Box>

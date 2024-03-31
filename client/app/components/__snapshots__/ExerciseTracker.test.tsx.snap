@@ -77,67 +77,13 @@ exports[`ExerciseTracker renders 1`] = `
     </button>
   </div>
   <div
-    class="MuiBox-root css-0"
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-xaep3o-MuiPaper-root-MuiCard-root"
   >
     <div
-      class="MuiBox-root css-1vr2anf"
+      class="MuiBox-root css-1nsk1m1"
     >
       <div
-        class="MuiBox-root css-1ofqig9"
-      >
-        <div
-          class="MuiBox-root css-1k06pwf"
-        >
-          <div
-            class="MuiBox-root css-70qvj9"
-          >
-            <div
-              class="MuiBox-root css-70qvj9"
-            >
-              <div
-                class="MuiBox-root css-12yyoxx"
-              >
-                1x10
-              </div>
-              <div
-                class="MuiBox-root css-1kuy7z7"
-              >
-                Exercise 1
-              </div>
-            </div>
-          </div>
-          <div
-            class="MuiBox-root css-0"
-          >
-            <button
-              aria-label="add"
-              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-mf1cb5-MuiButtonBase-root-MuiIconButton-root"
-              tabindex="0"
-              type="button"
-            >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                data-testid="OpenInNewIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3z"
-                />
-              </svg>
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
-            </button>
-          </div>
-        </div>
-        <div
-          class="MuiBox-root css-1n9ud6n"
-        />
-      </div>
-      <div
-        class="video-responsive MuiBox-root css-1qm1lh"
+        class="video-responsive MuiBox-root css-0"
         style="display: none;"
       >
         <iframe
@@ -147,68 +93,68 @@ exports[`ExerciseTracker renders 1`] = `
           title="Exercise 1 Video"
         />
       </div>
-      <hr
-        class="MuiDivider-root MuiDivider-fullWidth MuiDivider-flexItem css-1r4dlxu-MuiDivider-root"
-        data-testid="divider"
-      />
     </div>
     <div
-      class="MuiBox-root css-1vr2anf"
+      class="MuiCardContent-root css-1v7oru7-MuiCardContent-root"
     >
       <div
-        class="MuiBox-root css-1ofqig9"
+        class="MuiTypography-root MuiTypography-h2 css-1f5et6c-MuiTypography-root"
       >
         <div
-          class="MuiBox-root css-1k06pwf"
+          class="MuiBox-root css-70qvj9"
         >
           <div
             class="MuiBox-root css-70qvj9"
           >
             <div
-              class="MuiBox-root css-70qvj9"
+              class="MuiBox-root css-12yyoxx"
             >
-              <div
-                class="MuiBox-root css-12yyoxx"
-              >
-                3x5-8
-              </div>
-              <div
-                class="MuiBox-root css-1kuy7z7"
-              >
-                Exercise 2
-              </div>
+              1x10
+            </div>
+            <div
+              class="MuiBox-root css-bg3st0"
+            >
+              Exercise 1
             </div>
           </div>
-          <div
-            class="MuiBox-root css-0"
-          >
-            <button
-              aria-label="add"
-              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-mf1cb5-MuiButtonBase-root-MuiIconButton-root"
-              tabindex="0"
-              type="button"
-            >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                data-testid="OpenInNewIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3z"
-                />
-              </svg>
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
-            </button>
-          </div>
         </div>
-        <div
-          class="MuiBox-root css-1n9ud6n"
-        />
+        <button
+          aria-label="add"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-mf1cb5-MuiButtonBase-root-MuiIconButton-root"
+          tabindex="0"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+            data-testid="OpenInNewIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3z"
+            />
+          </svg>
+          <span
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          />
+        </button>
       </div>
+      <p
+        class="MuiTypography-root MuiTypography-body2 css-1qonid4-MuiTypography-root"
+      />
+    </div>
+  </div>
+  <hr
+    class="MuiDivider-root MuiDivider-fullWidth MuiDivider-flexItem css-1y1k9n9-MuiDivider-root"
+    data-testid="divider"
+  />
+  <div
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-xaep3o-MuiPaper-root-MuiCard-root"
+  >
+    <div
+      class="MuiBox-root css-1nsk1m1"
+    >
       <img
         alt="Exercise 2 Image"
         src="https://i.imgur.com/6vOLzTC.jpg"
@@ -216,66 +162,116 @@ exports[`ExerciseTracker renders 1`] = `
       />
     </div>
     <div
-      class="MuiBox-root css-1vr2anf"
+      class="MuiCardContent-root css-1v7oru7-MuiCardContent-root"
     >
       <div
-        class="MuiBox-root css-1ofqig9"
+        class="MuiTypography-root MuiTypography-h2 css-1f5et6c-MuiTypography-root"
       >
         <div
-          class="MuiBox-root css-1k06pwf"
+          class="MuiBox-root css-70qvj9"
         >
           <div
             class="MuiBox-root css-70qvj9"
           >
             <div
-              class="MuiBox-root css-70qvj9"
+              class="MuiBox-root css-12yyoxx"
             >
-              <div
-                class="MuiBox-root css-12yyoxx"
-              >
-                3x30s
-              </div>
-              <div
-                class="MuiBox-root css-1kuy7z7"
-              >
-                Parallel Bar Support Hold
-              </div>
+              3x5-8
+            </div>
+            <div
+              class="MuiBox-root css-bg3st0"
+            >
+              Exercise 2
             </div>
           </div>
-          <div
-            class="MuiBox-root css-0"
-          >
-            <button
-              aria-label="add"
-              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-mf1cb5-MuiButtonBase-root-MuiIconButton-root"
-              tabindex="0"
-              type="button"
-            >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                data-testid="OpenInNewIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3z"
-                />
-              </svg>
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
-            </button>
-          </div>
         </div>
-        <div
-          class="MuiBox-root css-1n9ud6n"
-        />
+        <button
+          aria-label="add"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-mf1cb5-MuiButtonBase-root-MuiIconButton-root"
+          tabindex="0"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+            data-testid="OpenInNewIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3z"
+            />
+          </svg>
+          <span
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          />
+        </button>
       </div>
+      <p
+        class="MuiTypography-root MuiTypography-body2 css-1qonid4-MuiTypography-root"
+      />
+    </div>
+  </div>
+  <div
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-xaep3o-MuiPaper-root-MuiCard-root"
+  >
+    <div
+      class="MuiBox-root css-1nsk1m1"
+    >
       <img
         alt="Parallel Bar Support Hold Image"
         src="https://antranik.org/wp-content/uploads/2014/01/antranik-holding-support-hold-on-parallel-bars.jpg"
         style="display: none;"
+      />
+    </div>
+    <div
+      class="MuiCardContent-root css-1v7oru7-MuiCardContent-root"
+    >
+      <div
+        class="MuiTypography-root MuiTypography-h2 css-1f5et6c-MuiTypography-root"
+      >
+        <div
+          class="MuiBox-root css-70qvj9"
+        >
+          <div
+            class="MuiBox-root css-70qvj9"
+          >
+            <div
+              class="MuiBox-root css-12yyoxx"
+            >
+              3x30s
+            </div>
+            <div
+              class="MuiBox-root css-bg3st0"
+            >
+              Parallel Bar Support Hold
+            </div>
+          </div>
+        </div>
+        <button
+          aria-label="add"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-mf1cb5-MuiButtonBase-root-MuiIconButton-root"
+          tabindex="0"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+            data-testid="OpenInNewIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3z"
+            />
+          </svg>
+          <span
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          />
+        </button>
+      </div>
+      <p
+        class="MuiTypography-root MuiTypography-body2 css-1qonid4-MuiTypography-root"
       />
     </div>
   </div>
