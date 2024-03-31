@@ -16,6 +16,7 @@ import { useContext } from "react";
 import { FormModalContext } from "../context/formModalContext";
 import { ExerciseTrackerContext } from "../context/ExerciseContext";
 import { StartTime } from "./StartTime";
+import { CardComments } from "./card/CardComments";
 
 type RepRange = "lower" | "inRange" | "higher";
 type RepRangeMap = { [key in RepRange]: string };
@@ -112,14 +113,7 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
                   ) : null)}
 
                 {showMoreInfo && exercise.comments && (
-                  <Box
-                    dangerouslySetInnerHTML={{ __html: exercise.comments }}
-                    sx={{
-                      fontSize: "12px",
-                      p: 1,
-                      lineHeight: 1.5,
-                    }}
-                  />
+                  <CardComments comments={exercise.comments} />
                 )}
               </Box>
 
