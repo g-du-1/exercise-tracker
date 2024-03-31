@@ -3,23 +3,20 @@ import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import { StopWatch } from "./StopWatch";
-import { ExerciseTracker } from "../types";
-
-type Props = {
-  exerciseTracker: ExerciseTracker;
-};
+import { useContext } from "react";
+import { ExerciseTrackerContext } from "../context/ExerciseContext";
 
 const showCompletedLabel = {
   inputProps: { "aria-label": "Show Completed Exercises" },
 };
 
-export const TopBar = ({ exerciseTracker }: Props) => {
+export const TopBar = () => {
   const {
     showCompletedExercises,
     setShowCompletedExercises,
     showMoreInfo,
     setShowMoreInfo,
-  } = exerciseTracker;
+  } = useContext(ExerciseTrackerContext);
 
   return (
     <Box
@@ -37,7 +34,7 @@ export const TopBar = ({ exerciseTracker }: Props) => {
         borderBottom: "1.5px solid #e8e8e8",
       }}
     >
-      <StopWatch exerciseTracker={exerciseTracker} />
+      <StopWatch />
 
       <Box>
         <Checkbox

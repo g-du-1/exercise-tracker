@@ -8,13 +8,13 @@ import CardContent from "@mui/material/CardContent";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { useExerciseTracker } from "../hooks/useExerciseTracker";
 import { Exercise } from "../types";
 import { getYtVidId } from "../util/getYtVidId";
 import { RepsModal } from "./RepsModal";
 import { TopBar } from "./TopBar";
 import { useContext } from "react";
 import { FormModalContext } from "../context/formModalContext";
+import { ExerciseTrackerContext } from "../context/ExerciseContext";
 
 type RepRange = "lower" | "inRange" | "higher";
 type RepRangeMap = { [key in RepRange]: string };
@@ -50,14 +50,13 @@ const getRepRangeLabel = (
 };
 
 export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
-  const exerciseTracker = useExerciseTracker();
   const {
     showCompletedExercises,
     savedStartTime,
     savedReps,
     setSelectedExercise,
     showMoreInfo,
-  } = exerciseTracker;
+  } = useContext(ExerciseTrackerContext);
 
   const { setModalOpen } = useContext(FormModalContext);
 
@@ -68,7 +67,7 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
 
   return (
     <>
-      <TopBar exerciseTracker={exerciseTracker} />
+      <TopBar />
 
       {exercises.map((exercise, idx) => {
         const exerciseCompleted =
@@ -235,7 +234,7 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
         </Box>
       )}
 
-      <RepsModal exerciseTracker={exerciseTracker} />
+      <RepsModal />
     </>
   );
 };
