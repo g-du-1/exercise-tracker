@@ -13,7 +13,7 @@ const DELETE_REPS = "Delete Reps";
 const renderExerciseTracker = () =>
   render(<ExerciseTracker exercises={mockExercises} />);
 
-const getModalOpenBtns = () => screen.getAllByLabelText("add");
+const getModalOpenBtns = () => screen.getAllByLabelText("Open Modal");
 
 const clickOpenModalBtn = (idx: number) => {
   const openModalBtns = getModalOpenBtns();
@@ -22,7 +22,7 @@ const clickOpenModalBtn = (idx: number) => {
 };
 
 const getRepsInput = () => {
-  const input = screen.getByLabelText("Reps");
+  const input = screen.getByLabelText("Add Reps");
   expect(input).toHaveFocus();
 
   return input;
@@ -213,13 +213,15 @@ describe("ExerciseTracker", () => {
   it("displays a done elem when the saved sets reach the target sets", () => {
     renderExerciseTracker();
 
-    expect(screen.queryByLabelText("Done")).not.toBeInTheDocument();
+    expect(
+      screen.queryByLabelText("Exercise Completed")
+    ).not.toBeInTheDocument();
 
     clickOpenModalBtn(0);
 
     submitReps("6");
 
-    expect(screen.getByLabelText("Done")).toBeInTheDocument();
+    expect(screen.getByLabelText("Exercise Completed")).toBeInTheDocument();
   });
 
   it("displays warning after the target rest has passed", () => {

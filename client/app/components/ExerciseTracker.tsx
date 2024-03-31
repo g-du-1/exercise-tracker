@@ -299,7 +299,7 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
                       <IconButton
                         color="success"
                         size="small"
-                        aria-label="Done"
+                        aria-label="Exercise Completed"
                       >
                         <DoneIcon />
                       </IconButton>
@@ -308,7 +308,7 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
 
                   <IconButton
                     size="large"
-                    aria-label="add"
+                    aria-label="Open Modal"
                     onClick={() => handleAddClick(exercise)}
                   >
                     <OpenInNewIcon />
@@ -404,7 +404,7 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
           <TextField
             autoFocus
             margin="dense"
-            label="Reps"
+            label="Add Reps"
             type="number"
             fullWidth
             variant="standard"
