@@ -24,6 +24,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Checkbox from "@mui/material/Checkbox";
+import { getStartTime } from "../util/getStartTime";
 
 type SavedReps = {
   name: string;
@@ -69,6 +70,7 @@ const showCompletedLabel = {
 
 export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
   const [showCompletedExercises, setShowCompletedExercises] = useState(true);
+  const [savedStartTime, setSavedStartTime] = useState("");
   const [fieldValue, setFieldValue] = useState("");
   const [savedReps, setSavedReps] = useState<{
     [key: string]: SavedReps;
@@ -135,6 +137,10 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
       if (selectedExercise.category !== "warmup") {
         resetStopwatch();
         startStopwatch();
+      }
+
+      if (!savedStartTime) {
+        setSavedStartTime(getStartTime());
       }
     }
 
@@ -373,6 +379,12 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
           </Box>
         );
       })}
+
+      {savedStartTime && (
+        <Box textAlign={"center"} fontWeight={500} mb={1}>
+          Started: {savedStartTime}
+        </Box>
+      )}
 
       <Dialog
         open={modalOpen}

@@ -4,6 +4,7 @@
 import { render, fireEvent, screen, act } from "@testing-library/react";
 import { ExerciseTracker } from "./ExerciseTracker";
 import { Exercise } from "../types";
+import { getStartTime } from "../util/getStartTime";
 
 jest.useFakeTimers();
 
@@ -481,5 +482,31 @@ describe("ExerciseTracker", () => {
     expect(screen.getByText("Exercise 1")).not.toBeVisible();
     expect(screen.getByText("Exercise 2")).toBeVisible();
     expect(screen.getByText("Exercise 3")).toBeVisible();
+  });
+
+  it("saves and renders start time", () => {
+    render(<ExerciseTracker exercises={mockExercises} />);
+
+    fireEvent.click(screen.getAllByLabelText("add")[0]);
+
+    const input = screen.getByLabelText("Reps");
+    fireEvent.change(input, { target: { value: "8" } });
+    fireEvent.submit(input);
+
+    const startTime = getStartTime();
+
+    expect(screen.getByText(`Started: ${startTime}`)).toBeInTheDocument();
+
+    act(() => {
+      jest.advanceTimersByTime(500000);
+    });
+
+    fireEvent.click(screen.getAllByLabelText("add")[1]);
+
+    const input2 = screen.getByLabelText("Reps");
+    fireEvent.change(input2, { target: { value: "6" } });
+    fireEvent.submit(input2);
+
+    expect(screen.getByText(`Started: ${startTime}`)).toBeInTheDocument();
   });
 });
