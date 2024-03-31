@@ -37,7 +37,7 @@ let mockExercises: Exercise[] = [
     targetRepsMin: 30,
     targetRest: 90,
     isDuration: true,
-    name: "Parallel Bar Support Hold",
+    name: "Exercise 3",
     thumbLink:
       "https://antranik.org/wp-content/uploads/2014/01/antranik-holding-support-hold-on-parallel-bars.jpg",
   },
@@ -457,5 +457,29 @@ describe("ExerciseTracker", () => {
     expect(
       screen.getByLabelText("Exercise 1 10 Reps In Range")
     ).toBeInTheDocument();
+  });
+
+  it("hides completed exercises if hiding is turned on", () => {
+    render(<ExerciseTracker exercises={mockExercises} />);
+
+    expect(screen.getByText("Exercise 1")).toBeVisible();
+    expect(screen.getByText("Exercise 2")).toBeVisible();
+    expect(screen.getByText("Exercise 3")).toBeVisible();
+
+    fireEvent.click(screen.getAllByLabelText("add")[0]);
+
+    const input = screen.getByLabelText("Reps");
+    fireEvent.change(input, { target: { value: "8" } });
+    fireEvent.submit(input);
+
+    const checkbox = screen.getByLabelText("Show Completed Exercises");
+    expect(checkbox).toBeChecked();
+
+    fireEvent.click(checkbox);
+    expect(checkbox).not.toBeChecked();
+
+    expect(screen.getByText("Exercise 1")).not.toBeVisible();
+    expect(screen.getByText("Exercise 2")).toBeVisible();
+    expect(screen.getByText("Exercise 3")).toBeVisible();
   });
 });

@@ -23,6 +23,7 @@ import WarningIcon from "@mui/icons-material/Warning";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import Checkbox from "@mui/material/Checkbox";
 
 type SavedReps = {
   name: string;
@@ -62,7 +63,12 @@ const getRepRangeLabel = (
   return repRange ? labels[repRange] : "";
 };
 
+const showCompletedLabel = {
+  inputProps: { "aria-label": "Show Completed Exercises" },
+};
+
 export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
+  const [showCompletedExercises, setShowCompletedExercises] = useState(true);
   const [fieldValue, setFieldValue] = useState("");
   const [savedReps, setSavedReps] = useState<{
     [key: string]: SavedReps;
@@ -191,160 +197,182 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
             )}
         </Box>
 
-        <IconButton
-          size="large"
-          aria-label="Show More Info"
-          onClick={() => setShowMoreInfo(!showMoreInfo)}
-        >
-          <InfoIcon />
-        </IconButton>
+        <Box>
+          <Checkbox
+            {...showCompletedLabel}
+            color="default"
+            checked={showCompletedExercises}
+            onChange={() => setShowCompletedExercises(!showCompletedExercises)}
+          />
+
+          <IconButton
+            size="large"
+            aria-label="Show More Info"
+            onClick={() => setShowMoreInfo(!showMoreInfo)}
+          >
+            <InfoIcon />
+          </IconButton>
+        </Box>
       </Box>
 
-      {exercises.map((exercise, idx) => (
-        <React.Fragment key={exercise.id}>
-          <Card sx={{ mb: 2 }}>
-            <Box sx={{ borderBottom: "1px solid #e8e8e8" }}>
-              {exercise.thumbLink &&
-                (exercise.thumbLink.includes("youtube") ? (
-                  <Box
-                    className="video-responsive"
-                    style={!showMoreInfo ? { display: "none" } : {}}
-                  >
-                    <iframe
-                      src={`https://www.youtube.com/embed/${getYtVidId(
-                        exercise.thumbLink
-                      )}`}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      title={`${exercise.name} Video`}
-                    />
-                  </Box>
-                ) : exercise.thumbLink.endsWith("jpg") ? (
-                  <img
-                    src={exercise.thumbLink}
-                    alt={`${exercise.name} Image`}
-                    style={
-                      !showMoreInfo
-                        ? { display: "none" }
-                        : { width: "100%", height: "auto", display: "block" }
-                    }
-                  />
-                ) : null)}
+      {exercises.map((exercise, idx) => {
+        const exerciseCompleted =
+          savedReps?.[exercise.id]?.reps.length >= exercise.targetSets;
 
-              {showMoreInfo && exercise.comments && (
-                <Box
-                  dangerouslySetInnerHTML={{ __html: exercise.comments }}
+        return (
+          <Box
+            key={exercise.id}
+            style={
+              !showCompletedExercises && exerciseCompleted
+                ? { display: "none" }
+                : {}
+            }
+          >
+            <Card sx={{ mb: 2 }}>
+              <Box sx={{ borderBottom: "1px solid #e8e8e8" }}>
+                {exercise.thumbLink &&
+                  (exercise.thumbLink.includes("youtube") ? (
+                    <Box
+                      className="video-responsive"
+                      style={!showMoreInfo ? { display: "none" } : {}}
+                    >
+                      <iframe
+                        src={`https://www.youtube.com/embed/${getYtVidId(
+                          exercise.thumbLink
+                        )}`}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        title={`${exercise.name} Video`}
+                      />
+                    </Box>
+                  ) : exercise.thumbLink.endsWith("jpg") ? (
+                    <img
+                      src={exercise.thumbLink}
+                      alt={`${exercise.name} Image`}
+                      style={
+                        !showMoreInfo
+                          ? { display: "none" }
+                          : { width: "100%", height: "auto", display: "block" }
+                      }
+                    />
+                  ) : null)}
+
+                {showMoreInfo && exercise.comments && (
+                  <Box
+                    dangerouslySetInnerHTML={{ __html: exercise.comments }}
+                    sx={{
+                      fontSize: "12px",
+                      p: 1,
+                      lineHeight: 1.5,
+                    }}
+                  />
+                )}
+              </Box>
+
+              <CardContent sx={{ p: 1, "&:last-child": { pb: 1 } }}>
+                <Typography
+                  variant="h2"
+                  component="div"
                   sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                      <Box sx={{ mr: 1, fontSize: "12px", color: "#b9b9b9" }}>
+                        {`${exercise.targetSets}x${exercise.targetRepsMin ? `${exercise.targetRepsMin}` : ``}${exercise.targetRepsMax ? `-${exercise.targetRepsMax}` : ``}${exercise.isDuration ? `s` : ``}`}
+                      </Box>
+
+                      <Box sx={{ fontSize: "14px", fontWeight: 500 }}>
+                        {exercise.name}
+                      </Box>
+                    </Box>
+
+                    {exerciseCompleted && (
+                      <IconButton
+                        color="success"
+                        size="small"
+                        aria-label="Done"
+                      >
+                        <DoneIcon />
+                      </IconButton>
+                    )}
+                  </Box>
+
+                  <IconButton
+                    size="large"
+                    aria-label="add"
+                    onClick={() => handleAddClick(exercise)}
+                  >
+                    <OpenInNewIcon />
+                  </IconButton>
+                </Typography>
+
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
                     fontSize: "12px",
-                    p: 1,
-                    lineHeight: 1.5,
+                  }}
+                >
+                  {savedReps?.[exercise.id]?.reps.map((rep: number, idx) => {
+                    const colorMap: RepRangeMap = {
+                      lower: "red",
+                      inRange: "green",
+                      higher: "orange",
+                    };
+
+                    const repRange = getRepRange(
+                      exercise.targetRepsMin,
+                      exercise.targetRepsMax,
+                      rep
+                    );
+
+                    return (
+                      <Box
+                        key={`${exercise.id}-${idx}`}
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                          mr: 1,
+                          mb: 1.5,
+                        }}
+                      >
+                        <Box sx={{ mr: 0.75, color: "#b9b9b9" }}>
+                          Set {idx + 1}:
+                        </Box>
+
+                        <Box
+                          sx={{
+                            fontWeight: "500",
+                            color: repRange ? colorMap[repRange] : "",
+                          }}
+                          aria-label={getRepRangeLabel(exercise, rep, repRange)}
+                        >
+                          {rep}
+                        </Box>
+                      </Box>
+                    );
+                  })}
+                </Box>
+              </CardContent>
+            </Card>
+
+            {exercises[idx + 1] &&
+              exercise.category !== exercises[idx + 1].category && (
+                <Divider
+                  flexItem
+                  data-testid="divider"
+                  sx={{
+                    mb: 2,
+                    borderBottomWidth: 2,
                   }}
                 />
               )}
-            </Box>
-
-            <CardContent sx={{ p: 1, "&:last-child": { pb: 1 } }}>
-              <Typography
-                variant="h2"
-                component="div"
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              >
-                <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <Box sx={{ mr: 1, fontSize: "12px", color: "#b9b9b9" }}>
-                      {`${exercise.targetSets}x${exercise.targetRepsMin ? `${exercise.targetRepsMin}` : ``}${exercise.targetRepsMax ? `-${exercise.targetRepsMax}` : ``}${exercise.isDuration ? `s` : ``}`}
-                    </Box>
-
-                    <Box sx={{ fontSize: "14px", fontWeight: 500 }}>
-                      {exercise.name}
-                    </Box>
-                  </Box>
-
-                  {savedReps?.[exercise.id]?.reps.length >=
-                    exercise.targetSets && (
-                    <IconButton color="success" size="small" aria-label="Done">
-                      <DoneIcon />
-                    </IconButton>
-                  )}
-                </Box>
-
-                <IconButton
-                  size="large"
-                  aria-label="add"
-                  onClick={() => handleAddClick(exercise)}
-                >
-                  <OpenInNewIcon />
-                </IconButton>
-              </Typography>
-
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  fontSize: "12px",
-                }}
-              >
-                {savedReps?.[exercise.id]?.reps.map((rep: number, idx) => {
-                  const colorMap: RepRangeMap = {
-                    lower: "red",
-                    inRange: "green",
-                    higher: "orange",
-                  };
-
-                  const repRange = getRepRange(
-                    exercise.targetRepsMin,
-                    exercise.targetRepsMax,
-                    rep
-                  );
-
-                  return (
-                    <Box
-                      key={`${exercise.id}-${idx}`}
-                      sx={{
-                        display: "flex",
-                        flexDirection: "row",
-                        mr: 1,
-                        mb: 1.5,
-                      }}
-                    >
-                      <Box sx={{ mr: 0.75, color: "#b9b9b9" }}>
-                        Set {idx + 1}:
-                      </Box>
-
-                      <Box
-                        sx={{
-                          fontWeight: "500",
-                          color: repRange ? colorMap[repRange] : "",
-                        }}
-                        aria-label={getRepRangeLabel(exercise, rep, repRange)}
-                      >
-                        {rep}
-                      </Box>
-                    </Box>
-                  );
-                })}
-              </Typography>
-            </CardContent>
-          </Card>
-
-          {exercises[idx + 1] &&
-            exercise.category !== exercises[idx + 1].category && (
-              <Divider
-                flexItem
-                data-testid="divider"
-                sx={{
-                  mb: 2,
-                  borderBottomWidth: 2,
-                }}
-              />
-            )}
-        </React.Fragment>
-      ))}
+          </Box>
+        );
+      })}
 
       <Dialog
         open={modalOpen}
