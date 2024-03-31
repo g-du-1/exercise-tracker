@@ -6,17 +6,18 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
-import { Exercise, ExerciseTracker, FormModal, Stopwatch } from "app/types";
+import { Exercise, ExerciseTracker, Stopwatch } from "app/types";
 import * as React from "react";
 import { getStartTime } from "../util/getStartTime";
+import { useContext } from "react";
+import { FormModalContext } from "../context/formModalContext";
 
 type Props = {
   stopwatch: Stopwatch;
   exerciseTracker: ExerciseTracker;
-  formModal: FormModal;
 };
 
-export const RepsModal = ({ stopwatch, exerciseTracker, formModal }: Props) => {
+export const RepsModal = ({ stopwatch, exerciseTracker }: Props) => {
   const {
     selectedExercise,
     savedReps,
@@ -27,7 +28,8 @@ export const RepsModal = ({ stopwatch, exerciseTracker, formModal }: Props) => {
 
   const { startStopwatch, resetStopwatch } = stopwatch;
 
-  const { fieldValue, setFieldValue, setModalOpen, modalOpen } = formModal;
+  const { fieldValue, setFieldValue, setModalOpen, modalOpen } =
+    useContext(FormModalContext);
 
   const handleModalClose = () => {
     const fieldValNum = parseInt(fieldValue);

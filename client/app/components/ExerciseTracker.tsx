@@ -9,12 +9,13 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { useExerciseTracker } from "../hooks/useExerciseTracker";
-import { useFormModal } from "../hooks/useFormModal";
 import { useStopwatch } from "../hooks/useStopwatch";
 import { Exercise } from "../types";
 import { getYtVidId } from "../util/getYtVidId";
 import { RepsModal } from "./RepsModal";
 import { TopBar } from "./TopBar";
+import { useContext } from "react";
+import { FormModalContext } from "../context/formModalContext";
 
 type RepRange = "lower" | "inRange" | "higher";
 type RepRangeMap = { [key in RepRange]: string };
@@ -61,8 +62,7 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
     showMoreInfo,
   } = exerciseTracker;
 
-  const formModal = useFormModal();
-  const { setModalOpen } = formModal;
+  const { setModalOpen } = useContext(FormModalContext);
 
   const handleAddClick = (selectedExercise: Exercise) => {
     setSelectedExercise(selectedExercise);
@@ -238,11 +238,7 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
         </Box>
       )}
 
-      <RepsModal
-        exerciseTracker={exerciseTracker}
-        stopwatch={stopwatch}
-        formModal={formModal}
-      />
+      <RepsModal exerciseTracker={exerciseTracker} stopwatch={stopwatch} />
     </>
   );
 };
