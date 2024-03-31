@@ -3,10 +3,9 @@ import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import { StopWatch } from "./StopWatch";
-import { ExerciseTracker, Stopwatch } from "../types";
+import { ExerciseTracker } from "../types";
 
 type Props = {
-  stopwatch: Stopwatch;
   exerciseTracker: ExerciseTracker;
 };
 
@@ -14,7 +13,7 @@ const showCompletedLabel = {
   inputProps: { "aria-label": "Show Completed Exercises" },
 };
 
-export const TopBar = ({ stopwatch, exerciseTracker }: Props) => {
+export const TopBar = ({ exerciseTracker }: Props) => {
   const {
     showCompletedExercises,
     setShowCompletedExercises,
@@ -38,7 +37,7 @@ export const TopBar = ({ stopwatch, exerciseTracker }: Props) => {
         borderBottom: "1.5px solid #e8e8e8",
       }}
     >
-      <StopWatch stopwatch={stopwatch} exerciseTracker={exerciseTracker} />
+      <StopWatch exerciseTracker={exerciseTracker} />
 
       <Box>
         <Checkbox

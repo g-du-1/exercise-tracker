@@ -3,21 +3,22 @@ import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import WarningIcon from "@mui/icons-material/Warning";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import { ExerciseTracker, Stopwatch } from "../types";
+import { ExerciseTracker } from "../types";
+import { useContext } from "react";
+import { StopwatchContext } from "../context/StopwatchContext";
 
 type Props = {
-  stopwatch: Stopwatch;
   exerciseTracker: ExerciseTracker;
 };
 
-export const StopWatch = ({ stopwatch, exerciseTracker }: Props) => {
+export const StopWatch = ({ exerciseTracker }: Props) => {
   const {
     swRunning,
     swElapsedTime,
     startStopwatch,
     resetStopwatch,
     formatSwTime,
-  } = stopwatch;
+  } = useContext(StopwatchContext);
 
   const { selectedExercise } = exerciseTracker;
 

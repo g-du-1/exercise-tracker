@@ -9,7 +9,6 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { useExerciseTracker } from "../hooks/useExerciseTracker";
-import { useStopwatch } from "../hooks/useStopwatch";
 import { Exercise } from "../types";
 import { getYtVidId } from "../util/getYtVidId";
 import { RepsModal } from "./RepsModal";
@@ -51,8 +50,6 @@ const getRepRangeLabel = (
 };
 
 export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
-  const stopwatch = useStopwatch();
-
   const exerciseTracker = useExerciseTracker();
   const {
     showCompletedExercises,
@@ -71,7 +68,7 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
 
   return (
     <>
-      <TopBar stopwatch={stopwatch} exerciseTracker={exerciseTracker} />
+      <TopBar exerciseTracker={exerciseTracker} />
 
       {exercises.map((exercise, idx) => {
         const exerciseCompleted =
@@ -238,7 +235,7 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
         </Box>
       )}
 
-      <RepsModal exerciseTracker={exerciseTracker} stopwatch={stopwatch} />
+      <RepsModal exerciseTracker={exerciseTracker} />
     </>
   );
 };
