@@ -15,6 +15,7 @@ import { TopBar } from "./TopBar";
 import { useContext } from "react";
 import { FormModalContext } from "../context/formModalContext";
 import { ExerciseTrackerContext } from "../context/ExerciseContext";
+import { StartTime } from "./StartTime";
 
 type RepRange = "lower" | "inRange" | "higher";
 type RepRangeMap = { [key in RepRange]: string };
@@ -52,7 +53,6 @@ const getRepRangeLabel = (
 export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
   const {
     showCompletedExercises,
-    savedStartTime,
     savedReps,
     setSelectedExercise,
     showMoreInfo,
@@ -228,11 +228,7 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
         );
       })}
 
-      {savedStartTime && (
-        <Box textAlign={"center"} fontWeight={500} mb={1}>
-          Started: {savedStartTime}
-        </Box>
-      )}
+      <StartTime />
 
       <RepsModal />
     </>
