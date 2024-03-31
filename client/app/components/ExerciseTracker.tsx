@@ -1,35 +1,23 @@
 "use client";
 
-import DoneIcon from "@mui/icons-material/Done";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
 import { Exercise } from "../types";
 import { RepsModal } from "./RepsModal";
 import { TopBar } from "./TopBar";
 import { useContext } from "react";
-import { FormModalContext } from "../context/formModalContext";
 import { ExerciseTrackerContext } from "../context/ExerciseContext";
 import { StartTime } from "./StartTime";
-import { SavedReps } from "./card/SavedReps";
 import { CardInfo } from "./card/CardInfo";
-import { TargetReps } from "./card/TargetReps";
+import { CardHeading } from "./card/CardHeading";
+import { SavedReps } from "./card/SavedReps";
 
 export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
-  const { showCompletedExercises, savedReps, setSelectedExercise } = useContext(
+  const { showCompletedExercises, savedReps } = useContext(
     ExerciseTrackerContext
   );
-
-  const { setModalOpen } = useContext(FormModalContext);
-
-  const handleAddClick = (selectedExercise: Exercise) => {
-    setSelectedExercise(selectedExercise);
-    setModalOpen(true);
-  };
 
   return (
     <>
@@ -52,36 +40,10 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
               <CardInfo exercise={exercise} />
 
               <CardContent sx={{ p: 1, "&:last-child": { pb: 1 } }}>
-                <Typography
-                  variant="h2"
-                  component="div"
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <TargetReps exercise={exercise} />
-
-                    {exerciseCompleted && (
-                      <IconButton
-                        color="success"
-                        size="small"
-                        aria-label="Exercise Completed"
-                      >
-                        <DoneIcon />
-                      </IconButton>
-                    )}
-                  </Box>
-
-                  <IconButton
-                    size="large"
-                    aria-label="Open Modal"
-                    onClick={() => handleAddClick(exercise)}
-                  >
-                    <OpenInNewIcon />
-                  </IconButton>
-                </Typography>
+                <CardHeading
+                  exercise={exercise}
+                  exerciseCompleted={exerciseCompleted}
+                />
 
                 <SavedReps exercise={exercise} />
               </CardContent>
