@@ -1,35 +1,28 @@
 "use client";
 
-import { Exercise } from "../types";
-import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+import DoneIcon from "@mui/icons-material/Done";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import Box from "@mui/material/Box";
-import * as React from "react";
-import { getYtVidId } from "../util/getYtVidId";
-import InfoIcon from "@mui/icons-material/Info";
-import Divider from "@mui/material/Divider";
-import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { useRef, useState } from "react";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import RestartAltIcon from "@mui/icons-material/RestartAlt";
-import DoneIcon from "@mui/icons-material/Done";
-import WarningIcon from "@mui/icons-material/Warning";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import Checkbox from "@mui/material/Checkbox";
+import * as React from "react";
+import { useExerciseTracker } from "../hooks/useExerciseTracker";
+import { useFormModal } from "../hooks/useFormModal";
+import { useStopwatch } from "../hooks/useStopwatch";
+import { Exercise } from "../types";
 import { getStartTime } from "../util/getStartTime";
-
-type SavedReps = {
-  name: string;
-  reps: number[];
-};
+import { getYtVidId } from "../util/getYtVidId";
+import { TopBar } from "./TopBar";
 
 type RepRange = "lower" | "inRange" | "higher";
 type RepRangeMap = { [key in RepRange]: string };
@@ -64,51 +57,24 @@ const getRepRangeLabel = (
   return repRange ? labels[repRange] : "";
 };
 
-const showCompletedLabel = {
-  inputProps: { "aria-label": "Show Completed Exercises" },
-};
-
 export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
-  const [showCompletedExercises, setShowCompletedExercises] = useState(true);
-  const [savedStartTime, setSavedStartTime] = useState("");
-  const [fieldValue, setFieldValue] = useState("");
-  const [savedReps, setSavedReps] = useState<{
-    [key: string]: SavedReps;
-  }>({});
-  const [showMoreInfo, setShowMoreInfo] = useState(false);
-  const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(
-    null
-  );
-  const [modalOpen, setModalOpen] = useState(false);
+  const stopwatch = useStopwatch();
+  const { startStopwatch, resetStopwatch } = stopwatch;
 
-  const [swRunning, setSwRunning] = useState(false);
-  const [swElapsedTime, setSwElapsedTime] = useState(0);
-  const swIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const exerciseTracker = useExerciseTracker();
+  const {
+    showCompletedExercises,
+    savedStartTime,
+    setSavedStartTime,
+    savedReps,
+    setSavedReps,
+    setSelectedExercise,
+    selectedExercise,
+    showMoreInfo,
+  } = exerciseTracker;
 
-  const startStopwatch = () => {
-    setSwRunning(true);
-
-    swIntervalRef.current = setInterval(() => {
-      setSwElapsedTime((prevElapsedTime) => prevElapsedTime + 1);
-    }, 1000);
-  };
-
-  const resetStopwatch = () => {
-    if (swIntervalRef.current) clearInterval(swIntervalRef.current);
-
-    setSwElapsedTime(0);
-    setSwRunning(false);
-  };
-
-  const formatSwTime = (timeInSeconds: number) => {
-    const hours = Math.floor(timeInSeconds / 3600);
-    const minutes = Math.floor((timeInSeconds % 3600) / 60);
-    const seconds = timeInSeconds % 60;
-
-    return `${hours.toString().padStart(2, "0")}:${minutes
-      .toString()
-      .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
-  };
+  const formModal = useFormModal();
+  const { fieldValue, setFieldValue, modalOpen, setModalOpen } = formModal;
 
   const handleAddClick = (selectedExercise: Exercise) => {
     setSelectedExercise(selectedExercise);
@@ -150,76 +116,7 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
 
   return (
     <>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          position: "fixed",
-          top: 0,
-          zIndex: 1,
-          background: "white",
-          width: "100%",
-          opacity: 0.9,
-          left: "50%",
-          transform: "translateX(-50%)",
-          borderBottom: "1.5px solid #e8e8e8",
-        }}
-      >
-        <Box
-          sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
-        >
-          <IconButton
-            color="success"
-            size="large"
-            aria-label="Start Stopwatch"
-            disabled={swRunning}
-            onClick={startStopwatch}
-          >
-            <PlayArrowIcon />
-          </IconButton>
-
-          <IconButton
-            size="large"
-            color="error"
-            aria-label="Reset Stopwatch"
-            disabled={!swRunning}
-            onClick={resetStopwatch}
-          >
-            <RestartAltIcon />
-          </IconButton>
-
-          <Box sx={{ ml: 1 }}>{formatSwTime(swElapsedTime)}</Box>
-
-          {selectedExercise &&
-            swElapsedTime > 0 &&
-            swElapsedTime >= selectedExercise.targetRest && (
-              <IconButton
-                size="large"
-                color="warning"
-                aria-label="Rest Time Passed"
-              >
-                <WarningIcon />
-              </IconButton>
-            )}
-        </Box>
-
-        <Box>
-          <Checkbox
-            {...showCompletedLabel}
-            color="default"
-            checked={showCompletedExercises}
-            onChange={() => setShowCompletedExercises(!showCompletedExercises)}
-          />
-
-          <IconButton
-            size="large"
-            aria-label="Show More Info"
-            onClick={() => setShowMoreInfo(!showMoreInfo)}
-          >
-            <InfoIcon />
-          </IconButton>
-        </Box>
-      </Box>
+      <TopBar stopwatch={stopwatch} exerciseTracker={exerciseTracker} />
 
       {exercises.map((exercise, idx) => {
         const exerciseCompleted =

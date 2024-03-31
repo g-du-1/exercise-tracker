@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 type ExerciseCategory =
   | "warmup"
   | "firstPair"
@@ -29,4 +31,34 @@ export type Exercise = {
   targetRepsMax?: number;
   isDuration?: boolean;
   targetRest: number;
+};
+
+export type SavedReps = {
+  name: string;
+  reps: number[];
+};
+
+export type Stopwatch = {
+  swRunning: boolean;
+  swElapsedTime: number;
+  startStopwatch: () => void;
+  resetStopwatch: () => void;
+  formatSwTime: (timeInSeconds: number) => string;
+};
+
+export type ExerciseTracker = {
+  showCompletedExercises: boolean;
+  setShowCompletedExercises: Dispatch<SetStateAction<boolean>>;
+  savedStartTime: string;
+  setSavedStartTime: Dispatch<SetStateAction<string>>;
+  savedReps: { [key: string]: SavedReps };
+  setSavedReps: Dispatch<
+    SetStateAction<{
+      [key: string]: SavedReps;
+    }>
+  >;
+  setSelectedExercise: Dispatch<SetStateAction<Exercise | null>>;
+  selectedExercise: Exercise | null;
+  showMoreInfo: boolean;
+  setShowMoreInfo: Dispatch<SetStateAction<boolean>>;
 };
