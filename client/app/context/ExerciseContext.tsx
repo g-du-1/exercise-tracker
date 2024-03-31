@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { ExerciseTracker } from "./types";
+import { ExerciseTracker } from "../types";
 
 export const ExerciseTrackerContext = createContext<ExerciseTracker>({
   showCompletedExercises: true,
