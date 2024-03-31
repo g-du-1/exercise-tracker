@@ -10,7 +10,7 @@ const warmUps: Exercise[] = [
     targetRepsMax: 10,
     targetRest: 0,
     name: "Yuri's Shoulder Band Warmup",
-    thumbLink: "https://www.youtube.com/watch?v=Vwn5hSf3WEg",
+    thumbLink: "https://www.youtube.com/watch?v=6y_AU-aGhVE",
     comments: `
       <ul>
         <li>Can also be done with a tee-shirt</li>
