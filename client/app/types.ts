@@ -46,6 +46,13 @@ export type Stopwatch = {
   formatSwTime: (timeInSeconds: number) => string;
 };
 
+export type FormModal = {
+  fieldValue: string;
+  setFieldValue: Dispatch<SetStateAction<string>>;
+  modalOpen: boolean;
+  setModalOpen: Dispatch<SetStateAction<boolean>>;
+};
+
 export type ExerciseTracker = {
   showCompletedExercises: boolean;
   setShowCompletedExercises: Dispatch<SetStateAction<boolean>>;

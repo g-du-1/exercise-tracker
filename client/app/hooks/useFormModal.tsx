@@ -1,6 +1,7 @@
+import { FormModal } from "../types";
 import { useState } from "react";
 
-export const useFormModal = () => {
+export const useFormModal = (): FormModal => {
   const [fieldValue, setFieldValue] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
 

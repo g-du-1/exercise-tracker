@@ -1,27 +1,19 @@
 "use client";
 
-import DeleteIcon from "@mui/icons-material/Delete";
 import DoneIcon from "@mui/icons-material/Done";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import * as React from "react";
 import { useExerciseTracker } from "../hooks/useExerciseTracker";
 import { useFormModal } from "../hooks/useFormModal";
 import { useStopwatch } from "../hooks/useStopwatch";
 import { Exercise } from "../types";
-import { getStartTime } from "../util/getStartTime";
 import { getYtVidId } from "../util/getYtVidId";
+import { RepsModal } from "./RepsModal";
 import { TopBar } from "./TopBar";
 
 type RepRange = "lower" | "inRange" | "higher";
@@ -59,59 +51,22 @@ const getRepRangeLabel = (
 
 export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
   const stopwatch = useStopwatch();
-  const { startStopwatch, resetStopwatch } = stopwatch;
 
   const exerciseTracker = useExerciseTracker();
   const {
     showCompletedExercises,
     savedStartTime,
-    setSavedStartTime,
     savedReps,
-    setSavedReps,
     setSelectedExercise,
-    selectedExercise,
     showMoreInfo,
   } = exerciseTracker;
 
   const formModal = useFormModal();
-  const { fieldValue, setFieldValue, modalOpen, setModalOpen } = formModal;
+  const { setModalOpen } = formModal;
 
   const handleAddClick = (selectedExercise: Exercise) => {
     setSelectedExercise(selectedExercise);
     setModalOpen(true);
-  };
-
-  const handleModalClose = () => {
-    const fieldValNum = parseInt(fieldValue);
-
-    if (selectedExercise && fieldValNum) {
-      const newReps = { ...savedReps };
-
-      const exercise = newReps[selectedExercise.id];
-
-      if (exercise) {
-        exercise.reps.push(parseInt(fieldValue));
-      } else {
-        newReps[selectedExercise.id] = {
-          name: selectedExercise.name,
-          reps: [fieldValNum],
-        };
-      }
-
-      setSavedReps(newReps);
-
-      if (selectedExercise.category !== "warmup") {
-        resetStopwatch();
-        startStopwatch();
-      }
-
-      if (!savedStartTime) {
-        setSavedStartTime(getStartTime());
-      }
-    }
-
-    setModalOpen(false);
-    setFieldValue("");
   };
 
   return (
@@ -283,61 +238,11 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
         </Box>
       )}
 
-      <Dialog
-        open={modalOpen}
-        onClose={handleModalClose}
-        disableRestoreFocus
-        PaperProps={{
-          component: "form",
-          onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
-            event.preventDefault();
-            handleModalClose();
-          },
-        }}
-      >
-        <DialogTitle>Add {selectedExercise?.name} Reps</DialogTitle>
-
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            label="Add Reps"
-            type="number"
-            fullWidth
-            variant="standard"
-            value={fieldValue}
-            onChange={(e) => setFieldValue(e.target.value)}
-          />
-        </DialogContent>
-
-        <DialogActions>
-          {selectedExercise &&
-            savedReps?.[selectedExercise.id]?.reps?.length > 0 && (
-              <IconButton
-                color="error"
-                size="large"
-                aria-label="Delete Reps"
-                onClick={() => {
-                  const newReps = { ...savedReps };
-
-                  const existingExercise = newReps[selectedExercise.id];
-
-                  if (existingExercise) {
-                    existingExercise.reps = [];
-                  }
-
-                  setSavedReps(newReps);
-                  setModalOpen(false);
-                  resetStopwatch();
-                }}
-              >
-                <DeleteIcon />
-              </IconButton>
-            )}
-
-          <Button onClick={() => setModalOpen(false)}>Cancel</Button>
-        </DialogActions>
-      </Dialog>
+      <RepsModal
+        exerciseTracker={exerciseTracker}
+        stopwatch={stopwatch}
+        formModal={formModal}
+      />
     </>
   );
 };
