@@ -9,23 +9,19 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { Exercise } from "../types";
-import { getYtVidId } from "../util/getYtVidId";
 import { RepsModal } from "./RepsModal";
 import { TopBar } from "./TopBar";
 import { useContext } from "react";
 import { FormModalContext } from "../context/formModalContext";
 import { ExerciseTrackerContext } from "../context/ExerciseContext";
 import { StartTime } from "./StartTime";
-import { CardComments } from "./card/CardComments";
 import { SavedReps } from "./card/SavedReps";
+import { CardInfo } from "./card/CardInfo";
 
 export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
-  const {
-    showCompletedExercises,
-    savedReps,
-    setSelectedExercise,
-    showMoreInfo,
-  } = useContext(ExerciseTrackerContext);
+  const { showCompletedExercises, savedReps, setSelectedExercise } = useContext(
+    ExerciseTrackerContext
+  );
 
   const { setModalOpen } = useContext(FormModalContext);
 
@@ -52,38 +48,7 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
             }
           >
             <Card sx={{ mb: 2 }}>
-              <Box sx={{ borderBottom: "1px solid #e8e8e8" }}>
-                {exercise.thumbLink &&
-                  (exercise.thumbLink.includes("youtube") ? (
-                    <Box
-                      className="video-responsive"
-                      style={!showMoreInfo ? { display: "none" } : {}}
-                    >
-                      <iframe
-                        src={`https://www.youtube.com/embed/${getYtVidId(
-                          exercise.thumbLink
-                        )}`}
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                        title={`${exercise.name} Video`}
-                      />
-                    </Box>
-                  ) : exercise.thumbLink.endsWith("jpg") ? (
-                    <img
-                      src={exercise.thumbLink}
-                      alt={`${exercise.name} Image`}
-                      style={
-                        !showMoreInfo
-                          ? { display: "none" }
-                          : { width: "100%", height: "auto", display: "block" }
-                      }
-                    />
-                  ) : null)}
-
-                {showMoreInfo && exercise.comments && (
-                  <CardComments comments={exercise.comments} />
-                )}
-              </Box>
+              <CardInfo exercise={exercise} />
 
               <CardContent sx={{ p: 1, "&:last-child": { pb: 1 } }}>
                 <Typography
