@@ -169,6 +169,25 @@ describe("ExerciseTracker", () => {
     expect(screen.queryByText("6")).not.toBeInTheDocument();
   });
 
+  it("saves reps on submit", () => {
+    const { getAllByLabelText, getByText } = render(
+      <ExerciseTracker exercises={mockExercises} />
+    );
+
+    const addButtons = getAllByLabelText("add");
+
+    fireEvent.click(addButtons[1]);
+
+    const input = screen.getByLabelText("Reps");
+    expect(input).toHaveFocus();
+
+    fireEvent.change(input, { target: { value: "7" } });
+
+    fireEvent.submit(input);
+
+    expect(getByText("7")).toBeInTheDocument();
+  });
+
   it("only renders the delete reps icon if there are reps saved and closes the modal on save", () => {
     render(<ExerciseTracker exercises={mockExercises} />);
 

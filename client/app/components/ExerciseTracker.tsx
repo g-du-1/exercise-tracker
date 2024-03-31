@@ -346,7 +346,18 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
         </React.Fragment>
       ))}
 
-      <Dialog open={modalOpen} onClose={handleModalClose} disableRestoreFocus>
+      <Dialog
+        open={modalOpen}
+        onClose={handleModalClose}
+        disableRestoreFocus
+        PaperProps={{
+          component: "form",
+          onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
+            event.preventDefault();
+            handleModalClose();
+          },
+        }}
+      >
         <DialogTitle>Add {selectedExercise?.name} Reps</DialogTitle>
 
         <DialogContent>
