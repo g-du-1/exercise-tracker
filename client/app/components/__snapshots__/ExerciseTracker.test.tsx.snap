@@ -2,8 +2,8 @@
 
 exports[`ExerciseTracker matches snapshot 1`] = `
 <div>
-  <div
-    class="MuiBox-root css-1bf2odj"
+  <header
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionFixed mui-fixed css-1rpv8rv-MuiPaper-root-MuiAppBar-root"
   >
     <div
       class="MuiBox-root css-u4p24i"
@@ -104,7 +104,7 @@ exports[`ExerciseTracker matches snapshot 1`] = `
         />
       </button>
     </div>
-  </div>
+  </header>
   <div
     class="MuiBox-root css-0"
   >

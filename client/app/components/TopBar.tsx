@@ -2,6 +2,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
+import AppBar from "@mui/material/AppBar";
 import { StopWatch } from "./StopWatch";
 import { useContext } from "react";
 import { ExerciseTrackerContext } from "../context/ExerciseTrackerContext";
@@ -19,19 +20,15 @@ export const TopBar = () => {
   };
 
   return (
-    <Box
+    <AppBar
+      position="fixed"
       sx={{
         display: "flex",
         justifyContent: "space-between",
-        position: "fixed",
-        top: 0,
-        zIndex: 1,
-        background: "white",
-        width: "100%",
+        flexDirection: "row",
         opacity: 0.9,
-        left: "50%",
-        transform: "translateX(-50%)",
-        borderBottom: "1.5px solid #e8e8e8",
+        color: "text.primary",
+        background: "#fff",
       }}
     >
       <StopWatch />
@@ -52,6 +49,6 @@ export const TopBar = () => {
           <InfoIcon />
         </IconButton>
       </Box>
-    </Box>
+    </AppBar>
   );
 };
