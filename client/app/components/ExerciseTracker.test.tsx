@@ -70,7 +70,7 @@ describe("ExerciseTracker", () => {
     expect(screen.getByText("Add GMB Wrist Prep Reps")).toBeDefined();
   });
 
-  it("does not display more info by default", () => {
+  it("does not display media by default", () => {
     renderExerciseTracker();
 
     expect(screen.queryByTitle("GMB Wrist Prep Video")).not.toBeVisible();
@@ -80,10 +80,10 @@ describe("ExerciseTracker", () => {
     ).not.toBeVisible();
   });
 
-  it("displays videos and images when more info is clicked", () => {
+  it("displays media when toggle media is clicked", () => {
     renderExerciseTracker();
 
-    fireEvent.click(screen.getByLabelText("Show More Info"));
+    fireEvent.click(screen.getByLabelText("Toggle Media"));
 
     expect(screen.getByTitle("GMB Wrist Prep Video")).toBeVisible();
     expect(screen.getByTitle("Arch Hangs Video")).toBeVisible();
@@ -381,5 +381,35 @@ describe("ExerciseTracker", () => {
     submitReps("6");
 
     expect(screen.getByText(`Started: ${startTime}`)).toBeInTheDocument();
+  });
+
+  it("shows comments when they are turned on", () => {
+    renderExerciseTracker();
+
+    expect(
+      screen.queryByText("Do as many reps as you want")
+    ).not.toBeInTheDocument();
+
+    expect(
+      screen.queryByText("Elbows should stay straight")
+    ).not.toBeInTheDocument();
+
+    expect(
+      screen.queryByText(
+        "Work up to 3 sets of 1 minute holds for this progression"
+      )
+    ).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByLabelText("Toggle Comments"));
+
+    expect(screen.getByText("Do as many reps as you want")).toBeInTheDocument();
+
+    expect(screen.getByText("Elbows should stay straight")).toBeInTheDocument();
+
+    expect(
+      screen.getByText(
+        "Work up to 3 sets of 1 minute holds for this progression"
+      )
+    ).toBeInTheDocument();
   });
 });

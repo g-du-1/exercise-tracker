@@ -1,8 +1,9 @@
-import InfoIcon from "@mui/icons-material/Info";
+import PermMediaIcon from "@mui/icons-material/PermMedia";
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import AppBar from "@mui/material/AppBar";
+import NotesIcon from "@mui/icons-material/Notes";
 import { StopWatch } from "./StopWatch";
 import { useContext } from "react";
 import { ExerciseTrackerContext } from "../context/ExerciseTrackerContext";
@@ -11,8 +12,10 @@ export const TopBar = () => {
   const {
     showCompletedExercises,
     setShowCompletedExercises,
-    showMoreInfo,
-    setShowMoreInfo,
+    showMedia,
+    setShowMedia,
+    showComments,
+    setShowComments,
   } = useContext(ExerciseTrackerContext);
 
   const showCompletedLabel = {
@@ -43,10 +46,18 @@ export const TopBar = () => {
 
         <IconButton
           size="large"
-          aria-label="Show More Info"
-          onClick={() => setShowMoreInfo(!showMoreInfo)}
+          aria-label="Toggle Comments"
+          onClick={() => setShowComments(!showComments)}
         >
-          <InfoIcon />
+          <NotesIcon />
+        </IconButton>
+
+        <IconButton
+          size="large"
+          aria-label="Toggle Media"
+          onClick={() => setShowMedia(!showMedia)}
+        >
+          <PermMediaIcon />
         </IconButton>
       </Box>
     </AppBar>

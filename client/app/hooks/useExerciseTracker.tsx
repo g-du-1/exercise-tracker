@@ -9,7 +9,8 @@ export const useExerciseTracker = (): ExerciseTracker => {
   const [savedReps, setSavedReps] = useState<{
     [key: string]: SavedReps;
   }>({});
-  const [showMoreInfo, setShowMoreInfo] = useState(false);
+  const [showMedia, setShowMedia] = useState(false);
+  const [showComments, setShowComments] = useState(false);
   const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(
     null
   );
@@ -33,8 +34,8 @@ export const useExerciseTracker = (): ExerciseTracker => {
     setSavedReps,
     setSelectedExercise,
     selectedExercise,
-    showMoreInfo,
-    setShowMoreInfo,
+    showMedia,
+    setShowMedia,
     fieldValue,
     setFieldValue,
     modalOpen,
@@ -44,5 +45,7 @@ export const useExerciseTracker = (): ExerciseTracker => {
     startStopwatch,
     resetStopwatch,
     formatSwTime,
+    showComments,
+    setShowComments,
   };
 };

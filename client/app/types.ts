@@ -67,6 +67,8 @@ export type ExerciseTracker = FormModal &
     >;
     setSelectedExercise: Dispatch<SetStateAction<Exercise | null>>;
     selectedExercise: Exercise | null;
-    showMoreInfo: boolean;
-    setShowMoreInfo: Dispatch<SetStateAction<boolean>>;
+    showMedia: boolean;
+    setShowMedia: Dispatch<SetStateAction<boolean>>;
+    showComments: boolean;
+    setShowComments: Dispatch<SetStateAction<boolean>>;
   };

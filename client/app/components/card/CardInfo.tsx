@@ -6,7 +6,7 @@ import { CardComments } from "./CardComments";
 import { getYtVidId } from "../../util/getYtVidId";
 
 export const CardInfo = ({ exercise }: { exercise: Exercise }) => {
-  const { showMoreInfo } = useContext(ExerciseTrackerContext);
+  const { showMedia, showComments } = useContext(ExerciseTrackerContext);
 
   return (
     <Box sx={{ borderBottom: "1px solid #e8e8e8" }}>
@@ -14,7 +14,7 @@ export const CardInfo = ({ exercise }: { exercise: Exercise }) => {
         (exercise.thumbLink.includes("youtube") ? (
           <Box
             className="video-responsive"
-            sx={showMoreInfo ? {} : { display: "none" }}
+            sx={showMedia ? {} : { display: "none" }}
           >
             <iframe
               src={`https://www.youtube.com/embed/${getYtVidId(
@@ -30,14 +30,14 @@ export const CardInfo = ({ exercise }: { exercise: Exercise }) => {
             src={exercise.thumbLink}
             alt={`${exercise.name} Image`}
             style={
-              !showMoreInfo
-                ? { display: "none" }
-                : { width: "100%", height: "auto", display: "block" }
+              showMedia
+                ? { width: "100%", height: "auto", display: "block" }
+                : { display: "none" }
             }
           />
         ) : null)}
 
-      {showMoreInfo && exercise.comments && (
+      {showComments && exercise.comments && (
         <CardComments comments={exercise.comments} />
       )}
     </Box>

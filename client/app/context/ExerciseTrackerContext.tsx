@@ -10,8 +10,8 @@ export const ExerciseTrackerContext = createContext<ExerciseTracker>({
   setSavedReps: () => {},
   setSelectedExercise: () => {},
   selectedExercise: null,
-  showMoreInfo: false,
-  setShowMoreInfo: () => {},
+  showMedia: false,
+  setShowMedia: () => {},
   fieldValue: "",
   setFieldValue: () => {},
   modalOpen: false,
@@ -21,4 +21,6 @@ export const ExerciseTrackerContext = createContext<ExerciseTracker>({
   startStopwatch: () => {},
   resetStopwatch: () => {},
   formatSwTime: () => "",
+  showComments: false,
+  setShowComments: () => {},
 });
