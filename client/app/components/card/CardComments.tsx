@@ -6,7 +6,9 @@ export const CardComments = ({ comments }: { comments: string }) => {
       dangerouslySetInnerHTML={{ __html: comments }}
       sx={{
         fontSize: "12px",
-        p: 1,
+        borderTop: "1px solid #e8e8e8",
+        mt: 0.5,
+        pt: 0.5,
         lineHeight: 1.5,
       }}
     />

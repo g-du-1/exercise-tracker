@@ -2,11 +2,10 @@ import Box from "@mui/material/Box";
 import { ExerciseTrackerContext } from "../../context/ExerciseTrackerContext";
 import { useContext } from "react";
 import { Exercise } from "app/types";
-import { CardComments } from "./CardComments";
 import { getYtVidId } from "../../util/getYtVidId";
 
-export const CardInfo = ({ exercise }: { exercise: Exercise }) => {
-  const { showMedia, showComments } = useContext(ExerciseTrackerContext);
+export const CardExerciseMedia = ({ exercise }: { exercise: Exercise }) => {
+  const { showMedia } = useContext(ExerciseTrackerContext);
 
   return (
     <Box sx={{ borderBottom: "1px solid #e8e8e8" }}>
@@ -36,10 +35,6 @@ export const CardInfo = ({ exercise }: { exercise: Exercise }) => {
             }
           />
         ) : null)}
-
-      {showComments && exercise.comments && (
-        <CardComments comments={exercise.comments} />
-      )}
     </Box>
   );
 };

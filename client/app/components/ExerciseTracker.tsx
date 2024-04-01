@@ -10,12 +10,13 @@ import { TopBar } from "./TopBar";
 import { useContext } from "react";
 import { ExerciseTrackerContext } from "../context/ExerciseTrackerContext";
 import { StartTime } from "./StartTime";
-import { CardInfo } from "./card/CardInfo";
+import { CardExerciseMedia } from "./card/CardExerciseMedia";
 import { CardHeading } from "./card/CardHeading";
 import { SavedReps } from "./card/SavedReps";
+import { CardComments } from "./card/CardComments";
 
 export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
-  const { showCompletedExercises, savedReps } = useContext(
+  const { showCompletedExercises, savedReps, showComments } = useContext(
     ExerciseTrackerContext
   );
 
@@ -37,7 +38,7 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
             }
           >
             <Card sx={{ mb: 2 }}>
-              <CardInfo exercise={exercise} />
+              <CardExerciseMedia exercise={exercise} />
 
               <CardContent sx={{ p: 1, "&:last-child": { pb: 1 } }}>
                 <CardHeading
@@ -46,6 +47,10 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
                 />
 
                 <SavedReps exercise={exercise} />
+
+                {showComments && exercise.comments && (
+                  <CardComments comments={exercise.comments} />
+                )}
               </CardContent>
             </Card>
 
