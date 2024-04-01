@@ -1,5 +1,5 @@
 import Box from "@mui/material/Box";
-import { ExerciseTrackerContext } from "../../context/ExerciseContext";
+import { ExerciseTrackerContext } from "../../context/ExerciseTrackerContext";
 import { useContext } from "react";
 import { Exercise } from "app/types";
 import { CardComments } from "./CardComments";

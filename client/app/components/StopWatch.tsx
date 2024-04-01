@@ -4,19 +4,17 @@ import WarningIcon from "@mui/icons-material/Warning";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import { useContext } from "react";
-import { StopwatchContext } from "../context/StopwatchContext";
-import { ExerciseTrackerContext } from "../context/ExerciseContext";
+import { ExerciseTrackerContext } from "../context/ExerciseTrackerContext";
 
 export const StopWatch = () => {
   const {
+    selectedExercise,
     swRunning,
     swElapsedTime,
     startStopwatch,
     resetStopwatch,
     formatSwTime,
-  } = useContext(StopwatchContext);
-
-  const { selectedExercise } = useContext(ExerciseTrackerContext);
+  } = useContext(ExerciseTrackerContext);
 
   const restTimeExceeded =
     selectedExercise &&

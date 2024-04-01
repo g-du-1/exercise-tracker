@@ -6,11 +6,7 @@ import { ExerciseTracker } from "./ExerciseTracker";
 import { getStartTime } from "../util/getStartTime";
 import { mockExercises } from "./fixtures/mockExercises";
 import { useExerciseTracker } from "../hooks/useExerciseTracker";
-import { useStopwatch } from "../hooks/useStopwatch";
-import { useFormModal } from "../hooks/useFormModal";
-import { ExerciseTrackerContext } from "../context/ExerciseContext";
-import { StopwatchContext } from "../context/StopwatchContext";
-import { FormModalContext } from "../context/formModalContext";
+import { ExerciseTrackerContext } from "../context/ExerciseTrackerContext";
 
 jest.useFakeTimers();
 
@@ -18,16 +14,10 @@ const DELETE_REPS = "Delete Reps";
 
 function ExerciseTrackerTestWrapper() {
   const exerciseTracker = useExerciseTracker();
-  const stopwatch = useStopwatch();
-  const formModal = useFormModal();
 
   return (
     <ExerciseTrackerContext.Provider value={exerciseTracker}>
-      <StopwatchContext.Provider value={stopwatch}>
-        <FormModalContext.Provider value={formModal}>
-          <ExerciseTracker exercises={mockExercises} />
-        </FormModalContext.Provider>
-      </StopwatchContext.Provider>
+      <ExerciseTracker exercises={mockExercises} />
     </ExerciseTrackerContext.Provider>
   );
 }

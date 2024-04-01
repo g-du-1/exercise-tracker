@@ -10,9 +10,7 @@ import { Exercise } from "app/types";
 import * as React from "react";
 import { getStartTime } from "../util/getStartTime";
 import { useContext } from "react";
-import { FormModalContext } from "../context/formModalContext";
-import { StopwatchContext } from "../context/StopwatchContext";
-import { ExerciseTrackerContext } from "../context/ExerciseContext";
+import { ExerciseTrackerContext } from "../context/ExerciseTrackerContext";
 
 export const RepsModal = () => {
   const {
@@ -21,12 +19,13 @@ export const RepsModal = () => {
     setSavedReps,
     savedStartTime,
     setSavedStartTime,
+    startStopwatch,
+    resetStopwatch,
+    fieldValue,
+    setFieldValue,
+    setModalOpen,
+    modalOpen,
   } = useContext(ExerciseTrackerContext);
-
-  const { startStopwatch, resetStopwatch } = useContext(StopwatchContext);
-
-  const { fieldValue, setFieldValue, setModalOpen, modalOpen } =
-    useContext(FormModalContext);
 
   const handleModalClose = () => {
     const fieldValNum = parseInt(fieldValue);

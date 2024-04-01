@@ -8,7 +8,7 @@ import { Exercise } from "../types";
 import { RepsModal } from "./RepsModal";
 import { TopBar } from "./TopBar";
 import { useContext } from "react";
-import { ExerciseTrackerContext } from "../context/ExerciseContext";
+import { ExerciseTrackerContext } from "../context/ExerciseTrackerContext";
 import { StartTime } from "./StartTime";
 import { CardInfo } from "./card/CardInfo";
 import { CardHeading } from "./card/CardHeading";

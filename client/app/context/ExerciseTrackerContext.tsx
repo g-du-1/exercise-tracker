@@ -12,4 +12,13 @@ export const ExerciseTrackerContext = createContext<ExerciseTracker>({
   selectedExercise: null,
   showMoreInfo: false,
   setShowMoreInfo: () => {},
+  fieldValue: "",
+  setFieldValue: () => {},
+  modalOpen: false,
+  setModalOpen: () => {},
+  swRunning: false,
+  swElapsedTime: 0,
+  startStopwatch: () => {},
+  resetStopwatch: () => {},
+  formatSwTime: () => "",
 });

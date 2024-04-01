@@ -1,4 +1,4 @@
-import { ExerciseTrackerContext } from "../context/ExerciseContext";
+import { ExerciseTrackerContext } from "../context/ExerciseTrackerContext";
 import { useContext } from "react";
 import Box from "@mui/material/Box";
 

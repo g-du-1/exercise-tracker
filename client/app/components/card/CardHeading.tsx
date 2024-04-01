@@ -1,8 +1,7 @@
 import { useContext } from "react";
 import { Exercise } from "../../types";
 import Box from "@mui/material/Box";
-import { ExerciseTrackerContext } from "../../context/ExerciseContext";
-import { FormModalContext } from "../../context/formModalContext";
+import { ExerciseTrackerContext } from "../../context/ExerciseTrackerContext";
 import Typography from "@mui/material/Typography";
 import DoneIcon from "@mui/icons-material/Done";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
@@ -15,9 +14,9 @@ export const CardHeading = ({
   exercise: Exercise;
   exerciseCompleted: boolean;
 }) => {
-  const { setSelectedExercise } = useContext(ExerciseTrackerContext);
-
-  const { setModalOpen } = useContext(FormModalContext);
+  const { setSelectedExercise, setModalOpen } = useContext(
+    ExerciseTrackerContext
+  );
 
   const handleAddClick = (selectedExercise: Exercise) => {
     setSelectedExercise(selectedExercise);

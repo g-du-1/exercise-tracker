@@ -4,7 +4,7 @@ import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import { StopWatch } from "./StopWatch";
 import { useContext } from "react";
-import { ExerciseTrackerContext } from "../context/ExerciseContext";
+import { ExerciseTrackerContext } from "../context/ExerciseTrackerContext";
 
 const showCompletedLabel = {
   inputProps: { "aria-label": "Show Completed Exercises" },

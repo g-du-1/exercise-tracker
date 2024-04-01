@@ -53,19 +53,20 @@ export type FormModal = {
   setModalOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-export type ExerciseTracker = {
-  showCompletedExercises: boolean;
-  setShowCompletedExercises: Dispatch<SetStateAction<boolean>>;
-  savedStartTime: string;
-  setSavedStartTime: Dispatch<SetStateAction<string>>;
-  savedReps: { [key: string]: SavedReps };
-  setSavedReps: Dispatch<
-    SetStateAction<{
-      [key: string]: SavedReps;
-    }>
-  >;
-  setSelectedExercise: Dispatch<SetStateAction<Exercise | null>>;
-  selectedExercise: Exercise | null;
-  showMoreInfo: boolean;
-  setShowMoreInfo: Dispatch<SetStateAction<boolean>>;
-};
+export type ExerciseTracker = FormModal &
+  Stopwatch & {
+    showCompletedExercises: boolean;
+    setShowCompletedExercises: Dispatch<SetStateAction<boolean>>;
+    savedStartTime: string;
+    setSavedStartTime: Dispatch<SetStateAction<string>>;
+    savedReps: { [key: string]: SavedReps };
+    setSavedReps: Dispatch<
+      SetStateAction<{
+        [key: string]: SavedReps;
+      }>
+    >;
+    setSelectedExercise: Dispatch<SetStateAction<Exercise | null>>;
+    selectedExercise: Exercise | null;
+    showMoreInfo: boolean;
+    setShowMoreInfo: Dispatch<SetStateAction<boolean>>;
+  };
