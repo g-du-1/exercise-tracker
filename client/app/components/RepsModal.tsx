@@ -67,9 +67,10 @@ export const RepsModal = () => {
 
     if (existingExercise) {
       existingExercise.reps = [];
+
+      setSavedReps(newReps);
     }
 
-    setSavedReps(newReps);
     setModalOpen(false);
     resetStopwatch();
   };

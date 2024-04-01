@@ -14,7 +14,7 @@ export const CardInfo = ({ exercise }: { exercise: Exercise }) => {
         (exercise.thumbLink.includes("youtube") ? (
           <Box
             className="video-responsive"
-            style={!showMoreInfo ? { display: "none" } : {}}
+            sx={showMoreInfo ? {} : { display: "none" }}
           >
             <iframe
               src={`https://www.youtube.com/embed/${getYtVidId(

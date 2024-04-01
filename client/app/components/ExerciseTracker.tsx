@@ -30,8 +30,8 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
         return (
           <Box
             key={exercise.id}
-            style={
-              !showCompletedExercises && exerciseCompleted
+            sx={
+              exerciseCompleted && !showCompletedExercises
                 ? { display: "none" }
                 : {}
             }
@@ -53,7 +53,6 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
               exercise.category !== exercises[idx + 1].category && (
                 <Divider
                   flexItem
-                  data-testid="divider"
                   sx={{
                     mb: 2,
                     borderBottomWidth: 2,

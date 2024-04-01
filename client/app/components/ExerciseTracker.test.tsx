@@ -95,7 +95,7 @@ describe("ExerciseTracker", () => {
   it("renders category separators when category changes", () => {
     renderExerciseTracker();
 
-    expect(screen.getAllByTestId("divider")).toHaveLength(2);
+    expect(screen.getAllByRole("separator")).toHaveLength(2);
   });
 
   it("saves and resets sets of reps for an exercise", () => {

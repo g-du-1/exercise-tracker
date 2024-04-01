@@ -115,8 +115,7 @@ exports[`ExerciseTracker matches snapshot 1`] = `
         class="MuiBox-root css-1nsk1m1"
       >
         <div
-          class="video-responsive MuiBox-root css-0"
-          style="display: none;"
+          class="video-responsive MuiBox-root css-1hyfx7x"
         >
           <iframe
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -179,7 +178,6 @@ exports[`ExerciseTracker matches snapshot 1`] = `
     </div>
     <hr
       class="MuiDivider-root MuiDivider-fullWidth MuiDivider-flexItem css-1y1k9n9-MuiDivider-root"
-      data-testid="divider"
     />
   </div>
   <div
@@ -192,8 +190,7 @@ exports[`ExerciseTracker matches snapshot 1`] = `
         class="MuiBox-root css-1nsk1m1"
       >
         <div
-          class="video-responsive MuiBox-root css-0"
-          style="display: none;"
+          class="video-responsive MuiBox-root css-1hyfx7x"
         >
           <iframe
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -256,7 +253,6 @@ exports[`ExerciseTracker matches snapshot 1`] = `
     </div>
     <hr
       class="MuiDivider-root MuiDivider-fullWidth MuiDivider-flexItem css-1y1k9n9-MuiDivider-root"
-      data-testid="divider"
     />
   </div>
   <div

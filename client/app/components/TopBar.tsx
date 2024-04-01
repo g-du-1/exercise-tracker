@@ -6,10 +6,6 @@ import { StopWatch } from "./StopWatch";
 import { useContext } from "react";
 import { ExerciseTrackerContext } from "../context/ExerciseTrackerContext";
 
-const showCompletedLabel = {
-  inputProps: { "aria-label": "Show Completed Exercises" },
-};
-
 export const TopBar = () => {
   const {
     showCompletedExercises,
@@ -17,6 +13,10 @@ export const TopBar = () => {
     showMoreInfo,
     setShowMoreInfo,
   } = useContext(ExerciseTrackerContext);
+
+  const showCompletedLabel = {
+    inputProps: { "aria-label": "Show Completed Exercises" },
+  };
 
   return (
     <Box
