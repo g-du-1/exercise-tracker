@@ -10,7 +10,7 @@ const getRepRange = (
   targetRepsMin: number = 0,
   targetRepsMax: number = targetRepsMin,
   rep: number
-): RepRange | null => {
+): RepRange | undefined => {
   if (rep < targetRepsMin) {
     return "lower";
   } else if (rep >= targetRepsMin && rep <= targetRepsMax) {
@@ -18,14 +18,12 @@ const getRepRange = (
   } else if (rep > targetRepsMax) {
     return "higher";
   }
-
-  return null;
 };
 
 const getRepRangeLabel = (
   exercise: Exercise,
   rep: number,
-  repRange: RepRange | null
+  repRange: RepRange
 ): string => {
   const labels: RepRangeMap = {
     lower: `${exercise.name} ${rep} Reps Lower Than Range`,
@@ -33,7 +31,7 @@ const getRepRangeLabel = (
     higher: `${exercise.name} ${rep} Reps Higher Than Range`,
   };
 
-  return repRange ? labels[repRange] : "";
+  return labels[repRange];
 };
 
 export const SavedReps = ({ exercise }: { exercise: Exercise }) => {
@@ -72,15 +70,17 @@ export const SavedReps = ({ exercise }: { exercise: Exercise }) => {
           >
             <Box sx={{ mr: 0.75, color: "#b9b9b9" }}>Set {idx + 1}:</Box>
 
-            <Box
-              sx={{
-                fontWeight: "500",
-                color: repRange ? colorMap[repRange] : "",
-              }}
-              aria-label={getRepRangeLabel(exercise, rep, repRange)}
-            >
-              {rep}
-            </Box>
+            {repRange && (
+              <Box
+                sx={{
+                  fontWeight: "500",
+                  color: colorMap[repRange],
+                }}
+                aria-label={getRepRangeLabel(exercise, rep, repRange)}
+              >
+                {rep}
+              </Box>
+            )}
           </Box>
         );
       })}

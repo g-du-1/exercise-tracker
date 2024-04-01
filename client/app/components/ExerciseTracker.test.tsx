@@ -137,6 +137,20 @@ describe("ExerciseTracker", () => {
     expect(screen.getByText("8")).toBeInTheDocument();
   });
 
+  it("does not save reps on cancel click", () => {
+    renderExerciseTracker();
+
+    clickOpenModalBtn(1);
+
+    const repsInput = getRepsInput();
+
+    fireEvent.change(repsInput, { target: { value: "8" } });
+
+    fireEvent.click(screen.getByText("Cancel"));
+
+    expect(screen.queryByText("8")).not.toBeInTheDocument();
+  });
+
   it("only renders the delete reps icon if there are reps saved and closes the modal on save", () => {
     renderExerciseTracker();
 
