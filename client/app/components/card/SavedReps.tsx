@@ -1,7 +1,6 @@
 import Box from "@mui/material/Box";
-import { ExerciseTrackerContext } from "../../context/ExerciseTrackerContext";
-import { useContext } from "react";
 import { Exercise } from "app/types";
+import { useBoundStore } from "../../store/store";
 
 type RepRange = "lower" | "inRange" | "higher";
 type RepRangeMap = { [key in RepRange]: string };
@@ -35,7 +34,7 @@ const getRepRangeLabel = (
 };
 
 export const SavedReps = ({ exercise }: { exercise: Exercise }) => {
-  const { savedReps } = useContext(ExerciseTrackerContext);
+  const savedReps = useBoundStore((state) => state.savedReps);
 
   return (
     <Box
@@ -45,7 +44,7 @@ export const SavedReps = ({ exercise }: { exercise: Exercise }) => {
         fontSize: "12px",
       }}
     >
-      {savedReps?.[exercise.id]?.reps.map((rep: number, idx) => {
+      {savedReps?.[exercise.id]?.reps.map((rep: number, idx: number) => {
         const colorMap: RepRangeMap = {
           lower: "red",
           inRange: "green",

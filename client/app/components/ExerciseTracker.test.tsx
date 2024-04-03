@@ -5,24 +5,13 @@ import { render, fireEvent, screen, act } from "@testing-library/react";
 import { ExerciseTracker } from "./ExerciseTracker";
 import { getStartTime } from "../util/getStartTime";
 import { mockExercises } from "./fixtures/mockExercises";
-import { useExerciseTracker } from "../hooks/useExerciseTracker";
-import { ExerciseTrackerContext } from "../context/ExerciseTrackerContext";
 
 jest.useFakeTimers();
 
 const DELETE_REPS = "Delete Reps";
 
-function ExerciseTrackerTestWrapper() {
-  const exerciseTracker = useExerciseTracker();
-
-  return (
-    <ExerciseTrackerContext.Provider value={exerciseTracker}>
-      <ExerciseTracker exercises={mockExercises} />
-    </ExerciseTrackerContext.Provider>
-  );
-}
-
-const renderExerciseTracker = () => render(<ExerciseTrackerTestWrapper />);
+const renderExerciseTracker = () =>
+  render(<ExerciseTracker exercises={mockExercises} />);
 
 const getModalOpenBtns = () => screen.getAllByLabelText("Open Modal");
 

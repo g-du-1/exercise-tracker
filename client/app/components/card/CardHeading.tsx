@@ -1,11 +1,10 @@
-import { useContext } from "react";
 import { Exercise } from "../../types";
 import Box from "@mui/material/Box";
-import { ExerciseTrackerContext } from "../../context/ExerciseTrackerContext";
 import Typography from "@mui/material/Typography";
 import DoneIcon from "@mui/icons-material/Done";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import IconButton from "@mui/material/IconButton";
+import { useBoundStore } from "../../store/store";
 
 export const CardHeading = ({
   exercise,
@@ -14,9 +13,11 @@ export const CardHeading = ({
   exercise: Exercise;
   exerciseCompleted: boolean;
 }) => {
-  const { setSelectedExercise, setModalOpen } = useContext(
-    ExerciseTrackerContext
+  const setSelectedExercise = useBoundStore(
+    (state) => state.setSelectedExercise
   );
+
+  const setModalOpen = useBoundStore((state) => state.setModalOpen);
 
   const handleAddClick = (selectedExercise: Exercise) => {
     setSelectedExercise(selectedExercise);

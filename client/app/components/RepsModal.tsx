@@ -9,23 +9,20 @@ import TextField from "@mui/material/TextField";
 import { Exercise } from "app/types";
 import * as React from "react";
 import { getStartTime } from "../util/getStartTime";
-import { useContext } from "react";
-import { ExerciseTrackerContext } from "../context/ExerciseTrackerContext";
+import { useBoundStore } from "../store/store";
 
 export const RepsModal = () => {
-  const {
-    selectedExercise,
-    savedReps,
-    setSavedReps,
-    savedStartTime,
-    setSavedStartTime,
-    startStopwatch,
-    resetStopwatch,
-    fieldValue,
-    setFieldValue,
-    setModalOpen,
-    modalOpen,
-  } = useContext(ExerciseTrackerContext);
+  const fieldValue = useBoundStore((state) => state.fieldValue);
+  const modalOpen = useBoundStore((state) => state.modalOpen);
+  const savedReps = useBoundStore((state) => state.savedReps);
+  const selectedExercise = useBoundStore((state) => state.selectedExercise);
+  const savedStartTime = useBoundStore((state) => state.savedStartTime);
+  const setFieldValue = useBoundStore((state) => state.setFieldValue);
+  const setModalOpen = useBoundStore((state) => state.setModalOpen);
+  const setSavedReps = useBoundStore((state) => state.setSavedReps);
+  const startStopwatch = useBoundStore((state) => state.startStopwatch);
+  const resetStopwatch = useBoundStore((state) => state.resetStopwatch);
+  const setSavedStartTime = useBoundStore((state) => state.setSavedStartTime);
 
   const handleModalClose = () => {
     const fieldValNum = parseInt(fieldValue);

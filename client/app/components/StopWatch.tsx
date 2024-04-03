@@ -3,18 +3,15 @@ import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import WarningIcon from "@mui/icons-material/Warning";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import { useContext } from "react";
-import { ExerciseTrackerContext } from "../context/ExerciseTrackerContext";
+import { useBoundStore } from "../store/store";
 
 export const StopWatch = () => {
-  const {
-    selectedExercise,
-    swRunning,
-    swElapsedTime,
-    startStopwatch,
-    resetStopwatch,
-    formatSwTime,
-  } = useContext(ExerciseTrackerContext);
+  const selectedExercise = useBoundStore((state) => state.selectedExercise);
+  const swRunning = useBoundStore((state) => state.swRunning);
+  const swElapsedTime = useBoundStore((state) => state.swElapsedTime);
+  const startStopwatch = useBoundStore((state) => state.startStopwatch);
+  const resetStopwatch = useBoundStore((state) => state.resetStopwatch);
+  const formatSwTime = useBoundStore((state) => state.formatSwTime);
 
   const restTimeExceeded =
     selectedExercise &&

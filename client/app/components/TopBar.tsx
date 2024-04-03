@@ -5,18 +5,19 @@ import IconButton from "@mui/material/IconButton";
 import AppBar from "@mui/material/AppBar";
 import NotesIcon from "@mui/icons-material/Notes";
 import { StopWatch } from "./StopWatch";
-import { useContext } from "react";
-import { ExerciseTrackerContext } from "../context/ExerciseTrackerContext";
+import { useBoundStore } from "../store/store";
 
 export const TopBar = () => {
-  const {
-    showCompletedExercises,
-    setShowCompletedExercises,
-    showMedia,
-    setShowMedia,
-    showComments,
-    setShowComments,
-  } = useContext(ExerciseTrackerContext);
+  const showComments = useBoundStore((state) => state.showComments);
+  const showMedia = useBoundStore((state) => state.showMedia);
+  const showCompletedExercises = useBoundStore(
+    (state) => state.showCompletedExercises
+  );
+  const setShowComments = useBoundStore((state) => state.setShowComments);
+  const setShowMedia = useBoundStore((state) => state.setShowMedia);
+  const setShowCompletedExercises = useBoundStore(
+    (state) => state.setShowCompletedExercises
+  );
 
   const showCompletedLabel = {
     inputProps: { "aria-label": "Show Completed Exercises" },

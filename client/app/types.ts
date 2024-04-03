@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from "react";
-
 type ExerciseCategory =
   | "warmup"
   | "firstPair"
@@ -37,38 +35,3 @@ export type SavedReps = {
   name: string;
   reps: number[];
 };
-
-export type Stopwatch = {
-  swRunning: boolean;
-  swElapsedTime: number;
-  startStopwatch: () => void;
-  resetStopwatch: () => void;
-  formatSwTime: (timeInSeconds: number) => string;
-};
-
-export type FormModal = {
-  fieldValue: string;
-  setFieldValue: Dispatch<SetStateAction<string>>;
-  modalOpen: boolean;
-  setModalOpen: Dispatch<SetStateAction<boolean>>;
-};
-
-export type ExerciseTracker = FormModal &
-  Stopwatch & {
-    showCompletedExercises: boolean;
-    setShowCompletedExercises: Dispatch<SetStateAction<boolean>>;
-    savedStartTime: string;
-    setSavedStartTime: Dispatch<SetStateAction<string>>;
-    savedReps: { [key: string]: SavedReps };
-    setSavedReps: Dispatch<
-      SetStateAction<{
-        [key: string]: SavedReps;
-      }>
-    >;
-    setSelectedExercise: Dispatch<SetStateAction<Exercise | null>>;
-    selectedExercise: Exercise | null;
-    showMedia: boolean;
-    setShowMedia: Dispatch<SetStateAction<boolean>>;
-    showComments: boolean;
-    setShowComments: Dispatch<SetStateAction<boolean>>;
-  };
