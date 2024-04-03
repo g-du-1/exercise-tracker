@@ -1,9 +1,8 @@
-import { ExerciseTrackerContext } from "../context/ExerciseTrackerContext";
-import { useContext } from "react";
 import Box from "@mui/material/Box";
+import { useBoundStore } from "../store/store";
 
 export const StartTime = () => {
-  const { savedStartTime } = useContext(ExerciseTrackerContext);
+  const savedStartTime = useBoundStore((state) => state.savedStartTime);
 
   if (savedStartTime) {
     return (

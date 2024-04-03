@@ -7,17 +7,18 @@ import Divider from "@mui/material/Divider";
 import { Exercise } from "../types";
 import { RepsModal } from "./RepsModal";
 import { TopBar } from "./TopBar";
-import { useContext } from "react";
-import { ExerciseTrackerContext } from "../context/ExerciseTrackerContext";
 import { StartTime } from "./StartTime";
 import { CardExerciseMedia } from "./card/CardExerciseMedia";
 import { CardHeading } from "./card/CardHeading";
 import { SavedReps } from "./card/SavedReps";
 import { CardComments } from "./card/CardComments";
+import { useBoundStore } from "../store/store";
 
 export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
-  const { showCompletedExercises, savedReps, showComments } = useContext(
-    ExerciseTrackerContext
+  const showComments = useBoundStore((state) => state.showComments);
+  const savedReps = useBoundStore((state) => state.savedReps);
+  const showCompletedExercises = useBoundStore(
+    (state) => state.showCompletedExercises
   );
 
   return (

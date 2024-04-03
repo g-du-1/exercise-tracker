@@ -1,11 +1,10 @@
 import Box from "@mui/material/Box";
-import { ExerciseTrackerContext } from "../../context/ExerciseTrackerContext";
-import { useContext } from "react";
 import { Exercise } from "app/types";
 import { getYtVidId } from "../../util/getYtVidId";
+import { useBoundStore } from "../../store/store";
 
 export const CardExerciseMedia = ({ exercise }: { exercise: Exercise }) => {
-  const { showMedia } = useContext(ExerciseTrackerContext);
+  const showMedia = useBoundStore((state) => state.showMedia);
 
   return (
     <Box sx={{ borderBottom: "1px solid #e8e8e8" }}>
