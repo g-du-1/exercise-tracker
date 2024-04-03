@@ -101,7 +101,7 @@ const secondPair: Exercise[] = [
     category: "secondPair",
     type: "dip",
     targetSets: 3,
-    targetRepsMin: 30,
+    targetRepsMin: 60,
     targetRest: 90,
     isDuration: true,
     name: "Parallel Bar Support Hold",
