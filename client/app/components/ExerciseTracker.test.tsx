@@ -3,7 +3,7 @@
  */
 import { render, fireEvent, screen, act } from "@testing-library/react";
 import { ExerciseTracker } from "./ExerciseTracker";
-import { getStartTime } from "../util/getStartTime";
+import { getFormattedTime } from "../util/getFormattedTime";
 import { mockExercises } from "./fixtures/mockExercises";
 
 jest.useFakeTimers();
@@ -357,7 +357,7 @@ describe("ExerciseTracker", () => {
 
     submitReps("8");
 
-    const startTime = getStartTime();
+    const startTime = getFormattedTime();
 
     expect(screen.getByText(`Started: ${startTime}`)).toBeInTheDocument();
 
@@ -370,6 +370,21 @@ describe("ExerciseTracker", () => {
     submitReps("6");
 
     expect(screen.getByText(`Started: ${startTime}`)).toBeInTheDocument();
+  });
+
+  it("saves and renders finish time after completing the last exercise", () => {
+    renderExerciseTracker();
+
+    clickOpenModalTrigger(2);
+    submitReps("8");
+    clickOpenModalTrigger(2);
+    submitReps("7");
+    clickOpenModalTrigger(2);
+    submitReps("8");
+
+    expect(
+      screen.getByText(`Finished: ${getFormattedTime()}`)
+    ).toBeInTheDocument();
   });
 
   it("shows comments when they are turned on", () => {

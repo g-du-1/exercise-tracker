@@ -13,6 +13,7 @@ import { CardHeading } from "./card/CardHeading";
 import { SavedReps } from "./card/SavedReps";
 import { CardComments } from "./card/CardComments";
 import { useBoundStore } from "../store/store";
+import { FinishTime } from "./FinishTime";
 
 export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
   const showComments = useBoundStore((state) => state.showComments);
@@ -83,6 +84,8 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
       })}
 
       <StartTime />
+
+      <FinishTime exercises={exercises} />
 
       <RepsModal exercises={exercises} />
     </>

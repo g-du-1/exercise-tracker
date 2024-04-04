@@ -8,7 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import { Exercise } from "app/types";
 import * as React from "react";
-import { getStartTime } from "../util/getStartTime";
+import { getFormattedTime } from "../util/getFormattedTime";
 import { useBoundStore } from "../store/store";
 
 type Props = {
@@ -65,7 +65,7 @@ export const RepsModal = ({ exercises }: Props) => {
       }
 
       if (!savedStartTime) {
-        setSavedStartTime(getStartTime());
+        setSavedStartTime(getFormattedTime());
       }
     }
 
