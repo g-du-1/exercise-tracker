@@ -1,4 +1,4 @@
-export const getStartTime = (date = new Date()) => {
+export const getFormattedTime = (date = new Date()) => {
   return date.toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
