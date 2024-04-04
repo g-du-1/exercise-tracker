@@ -186,42 +186,52 @@ describe("ExerciseTracker", () => {
     expect(screen.getByText("00:00:00")).toBeInTheDocument();
   });
 
-  it("starts the stopwatch", () => {
+  it("starts and resets the stopwatch", () => {
     renderExerciseTracker();
 
-    const startBtn = screen.getByLabelText("Start Stopwatch");
+    expect(
+      screen.queryByRole("button", {
+        name: /reset stopwatch/i,
+      })
+    ).not.toBeInTheDocument();
 
-    fireEvent.click(startBtn);
-
-    expect(startBtn).toBeDisabled();
-
-    act(() => {
-      jest.advanceTimersByTime(5000);
-    });
-
-    expect(screen.getByText("00:00:05")).toBeInTheDocument();
-  });
-
-  it("resets the stopwatch", () => {
-    renderExerciseTracker();
-
-    const resetBtn = screen.getByLabelText("Reset Stopwatch");
-
-    expect(resetBtn).toBeDisabled();
-
-    const startBtn = screen.getByLabelText("Start Stopwatch");
-
-    fireEvent.click(startBtn);
-
-    expect(startBtn).toBeDisabled();
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: /start stopwatch/i,
+      })
+    );
 
     act(() => {
       jest.advanceTimersByTime(8000);
     });
 
-    fireEvent.click(resetBtn);
+    expect(
+      screen.queryByRole("button", {
+        name: /start stopwatch/i,
+      })
+    ).not.toBeInTheDocument();
 
-    expect(screen.getByText("00:00:00")).toBeInTheDocument();
+    expect(screen.getByText(/00:00:08/i)).toBeInTheDocument();
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: /reset stopwatch/i,
+      })
+    );
+
+    expect(screen.getByText(/00:00:00/i)).toBeInTheDocument();
+
+    expect(
+      screen.queryByRole("button", {
+        name: /reset stopwatch/i,
+      })
+    ).not.toBeInTheDocument();
+
+    expect(
+      screen.getByRole("button", {
+        name: /start stopwatch/i,
+      })
+    ).toBeInTheDocument();
   });
 
   it("displays a done elem when the saved sets reach the target sets", () => {

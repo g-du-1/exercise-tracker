@@ -20,25 +20,25 @@ export const StopWatch = () => {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-      <IconButton
-        color="success"
-        size="large"
-        aria-label="Start Stopwatch"
-        disabled={swRunning}
-        onClick={startStopwatch}
-      >
-        <PlayArrowIcon />
-      </IconButton>
-
-      <IconButton
-        size="large"
-        color="error"
-        aria-label="Reset Stopwatch"
-        disabled={!swRunning}
-        onClick={resetStopwatch}
-      >
-        <RestartAltIcon />
-      </IconButton>
+      {swRunning ? (
+        <IconButton
+          size="large"
+          color="error"
+          aria-label="Reset Stopwatch"
+          onClick={resetStopwatch}
+        >
+          <RestartAltIcon />
+        </IconButton>
+      ) : (
+        <IconButton
+          color="success"
+          size="large"
+          aria-label="Start Stopwatch"
+          onClick={startStopwatch}
+        >
+          <PlayArrowIcon />
+        </IconButton>
+      )}
 
       <Box sx={{ ml: 1 }}>{formatSwTime(swElapsedTime)}</Box>
 
