@@ -20,6 +20,15 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
   const showCompletedExercises = useBoundStore(
     (state) => state.showCompletedExercises
   );
+  const setSelectedExercise = useBoundStore(
+    (state) => state.setSelectedExercise
+  );
+  const setModalOpen = useBoundStore((state) => state.setModalOpen);
+
+  const handleClick = (selectedExercise: Exercise) => {
+    setSelectedExercise(selectedExercise);
+    setModalOpen(true);
+  };
 
   return (
     <>
@@ -41,7 +50,11 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
             <Card sx={{ mb: 2 }}>
               <CardExerciseMedia exercise={exercise} />
 
-              <CardContent sx={{ p: 1, "&:last-child": { pb: 1 } }}>
+              <CardContent
+                sx={{ p: 1, cursor: "pointer", "&:last-child": { pb: 1 } }}
+                aria-label={`Open ${exercise.name} Modal`}
+                onClick={() => handleClick(exercise)}
+              >
                 <CardHeading
                   exercise={exercise}
                   exerciseCompleted={exerciseCompleted}

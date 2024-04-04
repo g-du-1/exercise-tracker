@@ -13,12 +13,12 @@ const DELETE_REPS = "Delete Reps";
 const renderExerciseTracker = () =>
   render(<ExerciseTracker exercises={mockExercises} />);
 
-const getModalOpenBtns = () => screen.getAllByLabelText("Open Modal");
+const getModalOpenTriggers = () => screen.getAllByLabelText(/^Open .* Modal$/);
 
-const clickOpenModalBtn = (idx: number) => {
-  const openModalBtns = getModalOpenBtns();
+const clickOpenModalTrigger = (idx: number) => {
+  const openModalTriggers = getModalOpenTriggers();
 
-  fireEvent.click(openModalBtns[idx]);
+  fireEvent.click(openModalTriggers[idx]);
 };
 
 const getRepsInput = () => {
@@ -45,16 +45,16 @@ describe("ExerciseTracker", () => {
     expect(result.container).toMatchSnapshot();
   });
 
-  it("displays modal open buttons next to each exercise", () => {
+  it("outputs open modal triggers for each exercise", () => {
     renderExerciseTracker();
 
-    expect(getModalOpenBtns()).toHaveLength(3);
+    expect(getModalOpenTriggers()).toHaveLength(3);
   });
 
-  it("open modal button opens a modal on click for the exercise", () => {
+  it("open modal trigger opens a modal on click for the exercise", () => {
     renderExerciseTracker();
 
-    fireEvent.click(getModalOpenBtns()[0]);
+    fireEvent.click(getModalOpenTriggers()[0]);
 
     expect(screen.getByText("Add GMB Wrist Prep Reps")).toBeDefined();
   });
@@ -90,18 +90,18 @@ describe("ExerciseTracker", () => {
   it("saves and resets sets of reps for an exercise", () => {
     renderExerciseTracker();
 
-    clickOpenModalBtn(1);
+    clickOpenModalTrigger(1);
 
     submitReps("7");
 
-    clickOpenModalBtn(1);
+    clickOpenModalTrigger(1);
 
     submitReps("6");
 
     expect(screen.getByText("7")).toBeInTheDocument();
     expect(screen.getByText("6")).toBeInTheDocument();
 
-    clickOpenModalBtn(1);
+    clickOpenModalTrigger(1);
 
     clickDeleteReps();
 
@@ -112,7 +112,7 @@ describe("ExerciseTracker", () => {
   it("saves reps on modal close", () => {
     renderExerciseTracker();
 
-    clickOpenModalBtn(1);
+    clickOpenModalTrigger(1);
 
     const repsInput = getRepsInput();
 
@@ -129,7 +129,7 @@ describe("ExerciseTracker", () => {
   it("does not save reps on cancel click", () => {
     renderExerciseTracker();
 
-    clickOpenModalBtn(1);
+    clickOpenModalTrigger(1);
 
     const repsInput = getRepsInput();
 
@@ -143,13 +143,13 @@ describe("ExerciseTracker", () => {
   it("only renders the delete reps icon if there are reps saved and closes the modal on save", () => {
     renderExerciseTracker();
 
-    clickOpenModalBtn(1);
+    clickOpenModalTrigger(1);
 
     expect(screen.queryByLabelText(DELETE_REPS)).not.toBeInTheDocument();
 
     submitReps("6");
 
-    clickOpenModalBtn(1);
+    clickOpenModalTrigger(1);
 
     expect(screen.getByLabelText(DELETE_REPS)).toBeInTheDocument();
 
@@ -161,7 +161,7 @@ describe("ExerciseTracker", () => {
   it("starts the stopwatch when saving reps", () => {
     renderExerciseTracker();
 
-    clickOpenModalBtn(1);
+    clickOpenModalTrigger(1);
 
     submitReps("6");
 
@@ -175,7 +175,7 @@ describe("ExerciseTracker", () => {
   it("does not start the stopwatch when saving a warmup", () => {
     renderExerciseTracker();
 
-    clickOpenModalBtn(0);
+    clickOpenModalTrigger(0);
 
     submitReps("6");
 
@@ -231,7 +231,7 @@ describe("ExerciseTracker", () => {
       screen.queryByLabelText("Exercise Completed")
     ).not.toBeInTheDocument();
 
-    clickOpenModalBtn(0);
+    clickOpenModalTrigger(0);
 
     submitReps("6");
 
@@ -243,7 +243,7 @@ describe("ExerciseTracker", () => {
 
     expect(screen.queryByAltText("Rest Time Passed")).not.toBeInTheDocument();
 
-    clickOpenModalBtn(1);
+    clickOpenModalTrigger(1);
 
     submitReps("6");
 
@@ -257,7 +257,7 @@ describe("ExerciseTracker", () => {
   it("resets the timer when reps are deleted", () => {
     renderExerciseTracker();
 
-    clickOpenModalBtn(1);
+    clickOpenModalTrigger(1);
 
     submitReps("6");
 
@@ -265,7 +265,7 @@ describe("ExerciseTracker", () => {
       jest.advanceTimersByTime(5000);
     });
 
-    clickOpenModalBtn(1);
+    clickOpenModalTrigger(1);
 
     clickDeleteReps();
 
@@ -283,7 +283,7 @@ describe("ExerciseTracker", () => {
   it("adds label for in range reps", () => {
     renderExerciseTracker();
 
-    clickOpenModalBtn(1);
+    clickOpenModalTrigger(1);
 
     submitReps("6");
 
@@ -295,7 +295,7 @@ describe("ExerciseTracker", () => {
   it("adds label for out of range reps - lower", () => {
     renderExerciseTracker();
 
-    clickOpenModalBtn(1);
+    clickOpenModalTrigger(1);
 
     submitReps("3");
 
@@ -307,7 +307,7 @@ describe("ExerciseTracker", () => {
   it("adds label for out of range reps - higher", () => {
     renderExerciseTracker();
 
-    clickOpenModalBtn(1);
+    clickOpenModalTrigger(1);
 
     submitReps("35");
 
@@ -319,7 +319,7 @@ describe("ExerciseTracker", () => {
   it("adds label for cases without max target step", () => {
     renderExerciseTracker();
 
-    clickOpenModalBtn(0);
+    clickOpenModalTrigger(0);
 
     submitReps("10");
 
@@ -335,7 +335,7 @@ describe("ExerciseTracker", () => {
     expect(screen.getByText("Arch Hangs")).toBeVisible();
     expect(screen.getByText("Parallel Bar Support Hold")).toBeVisible();
 
-    clickOpenModalBtn(0);
+    clickOpenModalTrigger(0);
 
     submitReps("8");
 
@@ -353,7 +353,7 @@ describe("ExerciseTracker", () => {
   it("saves and renders start time", () => {
     renderExerciseTracker();
 
-    clickOpenModalBtn(0);
+    clickOpenModalTrigger(0);
 
     submitReps("8");
 
@@ -365,7 +365,7 @@ describe("ExerciseTracker", () => {
       jest.advanceTimersByTime(500000);
     });
 
-    clickOpenModalBtn(1);
+    clickOpenModalTrigger(1);
 
     submitReps("6");
 

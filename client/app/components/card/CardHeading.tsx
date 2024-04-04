@@ -4,26 +4,13 @@ import Typography from "@mui/material/Typography";
 import DoneIcon from "@mui/icons-material/Done";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import IconButton from "@mui/material/IconButton";
-import { useBoundStore } from "../../store/store";
 
-export const CardHeading = ({
-  exercise,
-  exerciseCompleted,
-}: {
+type Props = {
   exercise: Exercise;
   exerciseCompleted: boolean;
-}) => {
-  const setSelectedExercise = useBoundStore(
-    (state) => state.setSelectedExercise
-  );
+};
 
-  const setModalOpen = useBoundStore((state) => state.setModalOpen);
-
-  const handleAddClick = (selectedExercise: Exercise) => {
-    setSelectedExercise(selectedExercise);
-    setModalOpen(true);
-  };
-
+export const CardHeading = ({ exercise, exerciseCompleted }: Props) => {
   return (
     <Typography
       variant="h2"
@@ -53,11 +40,7 @@ export const CardHeading = ({
         )}
       </Box>
 
-      <IconButton
-        size="large"
-        aria-label="Open Modal"
-        onClick={() => handleAddClick(exercise)}
-      >
+      <IconButton size="large">
         <OpenInNewIcon />
       </IconButton>
     </Typography>

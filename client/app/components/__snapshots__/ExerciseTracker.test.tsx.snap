@@ -147,7 +147,8 @@ exports[`ExerciseTracker matches snapshot 1`] = `
         </div>
       </div>
       <div
-        class="MuiCardContent-root css-1v7oru7-MuiCardContent-root"
+        aria-label="Open GMB Wrist Prep Modal"
+        class="MuiCardContent-root css-4220t3-MuiCardContent-root"
       >
         <div
           class="MuiTypography-root MuiTypography-h2 css-1f5et6c-MuiTypography-root"
@@ -171,7 +172,6 @@ exports[`ExerciseTracker matches snapshot 1`] = `
             </div>
           </div>
           <button
-            aria-label="Open Modal"
             class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-mf1cb5-MuiButtonBase-root-MuiIconButton-root"
             tabindex="0"
             type="button"
@@ -222,7 +222,8 @@ exports[`ExerciseTracker matches snapshot 1`] = `
         </div>
       </div>
       <div
-        class="MuiCardContent-root css-1v7oru7-MuiCardContent-root"
+        aria-label="Open Arch Hangs Modal"
+        class="MuiCardContent-root css-4220t3-MuiCardContent-root"
       >
         <div
           class="MuiTypography-root MuiTypography-h2 css-1f5et6c-MuiTypography-root"
@@ -246,7 +247,6 @@ exports[`ExerciseTracker matches snapshot 1`] = `
             </div>
           </div>
           <button
-            aria-label="Open Modal"
             class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-mf1cb5-MuiButtonBase-root-MuiIconButton-root"
             tabindex="0"
             type="button"
@@ -292,7 +292,8 @@ exports[`ExerciseTracker matches snapshot 1`] = `
         />
       </div>
       <div
-        class="MuiCardContent-root css-1v7oru7-MuiCardContent-root"
+        aria-label="Open Parallel Bar Support Hold Modal"
+        class="MuiCardContent-root css-4220t3-MuiCardContent-root"
       >
         <div
           class="MuiTypography-root MuiTypography-h2 css-1f5et6c-MuiTypography-root"
@@ -316,7 +317,6 @@ exports[`ExerciseTracker matches snapshot 1`] = `
             </div>
           </div>
           <button
-            aria-label="Open Modal"
             class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-mf1cb5-MuiButtonBase-root-MuiIconButton-root"
             tabindex="0"
             type="button"
