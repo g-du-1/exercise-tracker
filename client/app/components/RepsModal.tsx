@@ -11,7 +11,11 @@ import * as React from "react";
 import { getStartTime } from "../util/getStartTime";
 import { useBoundStore } from "../store/store";
 
-export const RepsModal = () => {
+type Props = {
+  exercises: Exercise[];
+};
+
+export const RepsModal = ({ exercises }: Props) => {
   const fieldValue = useBoundStore((state) => state.fieldValue);
   const modalOpen = useBoundStore((state) => state.modalOpen);
   const savedReps = useBoundStore((state) => state.savedReps);
@@ -45,7 +49,19 @@ export const RepsModal = () => {
 
       if (selectedExercise.category !== "warmup") {
         resetStopwatch();
-        startStopwatch();
+
+        const isLastExercise =
+          exercises[exercises.length - 1].id === selectedExercise.id;
+
+        const reachedTargetSets =
+          savedReps[selectedExercise.id]?.reps.length ===
+          selectedExercise.targetSets;
+
+        const shouldStartStopwatch = !(isLastExercise && reachedTargetSets);
+
+        if (shouldStartStopwatch) {
+          startStopwatch();
+        }
       }
 
       if (!savedStartTime) {

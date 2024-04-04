@@ -84,7 +84,7 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
 
       <StartTime />
 
-      <RepsModal />
+      <RepsModal exercises={exercises} />
     </>
   );
 };

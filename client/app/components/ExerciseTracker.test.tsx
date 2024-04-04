@@ -401,4 +401,21 @@ describe("ExerciseTracker", () => {
       )
     ).toBeInTheDocument();
   });
+
+  it("does not start the timer after the last exercise and last rep is done", () => {
+    renderExerciseTracker();
+
+    clickOpenModalTrigger(2);
+    submitReps("8");
+    clickOpenModalTrigger(2);
+    submitReps("7");
+    clickOpenModalTrigger(2);
+    submitReps("6");
+
+    act(() => {
+      jest.advanceTimersByTime(50000);
+    });
+
+    expect(screen.getByText("00:00:00")).toBeInTheDocument();
+  });
 });
