@@ -10,6 +10,7 @@ public class Exercise {
     private String name;
     private String category;
     private String type;
+    private int targetSets;
 
     public String getName() {
         return name;
@@ -35,10 +36,19 @@ public class Exercise {
         this.type = type;
     }
 
-    public Exercise(String name, String category, String type) {
+    public int getTargetSets() {
+        return targetSets;
+    }
+
+    public void setTargetSets(int targetSets) {
+        this.targetSets = targetSets;
+    }
+
+    public Exercise(String name, String category, String type, int targetSets) {
         this.name = name;
         this.category = category;
         this.type = type;
+        this.targetSets = targetSets;
     }
 
     public Exercise() {}

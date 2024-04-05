@@ -59,8 +59,8 @@ class ExerciseControllerTest {
     @Test
     void shouldGetAllExercises() {
         List<Exercise> exercises = List.of(
-            new Exercise("GMB Wrist Prep", "warmup", "warmup"),
-            new Exercise("Arch Hangs", "firstPair", "pullUp")
+            new Exercise("GMB Wrist Prep", "warmup", "warmup", 1),
+            new Exercise("Arch Hangs", "firstPair", "pullUp", 3)
         );
 
         exerciseRepository.saveAll(exercises);
@@ -74,6 +74,7 @@ class ExerciseControllerTest {
             .body(".", hasSize(2))
             .body("name", hasItems("GMB Wrist Prep", "Arch Hangs"))
             .body("category", hasItems("warmup", "firstPair"))
-            .body("type", hasItems("warmup", "pullUp"));
+            .body("type", hasItems("warmup", "pullUp"))
+            .body("targetSets", hasItems(1, 3));
     }
 }
