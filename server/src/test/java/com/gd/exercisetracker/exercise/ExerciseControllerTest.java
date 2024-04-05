@@ -1,6 +1,7 @@
 package com.gd.exercisetracker.exercise;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
 
 import io.restassured.RestAssured;
@@ -70,6 +71,7 @@ class ExerciseControllerTest {
             .get("/api/v1/exercises")
         .then()
             .statusCode(200)
-            .body(".", hasSize(2));
+            .body(".", hasSize(2))
+            .body("name", hasItems("Exercise 1", "Exercise 2"));
     }
 }
