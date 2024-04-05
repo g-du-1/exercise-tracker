@@ -14,7 +14,7 @@ public class Exercise {
     private String type;
     private int targetSets;
     private int targetRepsMin;
-    private int targetRepsMax;
+    private Integer targetRepsMax;
     private boolean isDuration;
     private int targetRest;
     private int additionalRest;
@@ -69,11 +69,11 @@ public class Exercise {
         this.targetRepsMin = targetRepsMin;
     }
 
-    public int getTargetRepsMax() {
+    public Integer getTargetRepsMax() {
         return targetRepsMax;
     }
 
-    public void setTargetRepsMax(int targetRepsMax) {
+    public void setTargetRepsMax(Integer targetRepsMax) {
         this.targetRepsMax = targetRepsMax;
     }
 
@@ -117,7 +117,7 @@ public class Exercise {
         this.comments = comments;
     }
 
-    public Exercise(String key ,String name, String category, String type, int targetSets, int targetRepsMin, int targetRepsMax, boolean isDuration, int targetRest, int additionalRest, String mediaLink, String comments) {
+    public Exercise(String key ,String name, String category, String type, int targetSets, int targetRepsMin, Integer targetRepsMax, boolean isDuration, int targetRest, int additionalRest, String mediaLink, String comments) {
         this.key = key;
         this.name = name;
         this.category = category;
