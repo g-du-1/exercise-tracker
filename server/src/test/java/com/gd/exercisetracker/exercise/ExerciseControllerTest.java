@@ -59,8 +59,8 @@ class ExerciseControllerTest {
     @Test
     void shouldGetAllExercises() {
         List<Exercise> exercises = List.of(
-            new Exercise("GMB Wrist Prep", "warmup", "warmup", 1, 30, 30, true, 0),
-            new Exercise("Arch Hangs", "firstPair", "pullUp", 3, 5, 8, false, 90)
+            new Exercise("GMB Wrist Prep", "warmup", "warmup", 1, 30, 30, true, 0, 0),
+            new Exercise("Arch Hangs", "firstPair", "pullUp", 3, 5, 8, false, 90, 90)
         );
 
         exerciseRepository.saveAll(exercises);
@@ -79,16 +79,13 @@ class ExerciseControllerTest {
             .body("targetRepsMin", hasItems(30, 5))
             .body("targetRepsMax", hasItems(30, 8))
             .body("isDuration", hasItems(true, false))
-            .body("targetRest", hasItems(0, 90));
+            .body("targetRest", hasItems(0, 90))
+            .body("additionalRest", hasItems(0, 90));
     }
 }
 
-    // additionalRest: 0,
-    // name: "Deadbugs (Alternating)",
     // thumbLink: "https://www.youtube.com/watch?v=HFv2WwgeVMk",
 
-    // additionalRest: 90,
-    // name: "Arch Hangs",
     // thumbLink: "https://www.youtube.com/watch?v=C995b3KLXS4&t=7s",
     // comments: `
     //   <ul>

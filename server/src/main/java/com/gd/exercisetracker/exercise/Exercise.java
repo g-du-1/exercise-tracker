@@ -15,6 +15,7 @@ public class Exercise {
     private int targetRepsMax;
     private boolean isDuration;
     private int targetRest;
+    private int additionalRest;
 
     public String getName() {
         return name;
@@ -80,7 +81,15 @@ public class Exercise {
         this.targetRest = targetRest;
     }
 
-    public Exercise(String name, String category, String type, int targetSets, int targetRepsMin, int targetRepsMax, boolean isDuration, int targetRest) {
+    public int getAdditionalRest() {
+        return additionalRest;
+    }
+
+    public void setAdditionalRest(int additionalRest) {
+        this.additionalRest = additionalRest;
+    }
+
+    public Exercise(String name, String category, String type, int targetSets, int targetRepsMin, int targetRepsMax, boolean isDuration, int targetRest, int additionalRest) {
         this.name = name;
         this.category = category;
         this.type = type;
@@ -89,6 +98,7 @@ public class Exercise {
         this.targetRepsMax = targetRepsMax;
         this.isDuration = isDuration;
         this.targetRest = targetRest;
+        this.additionalRest = additionalRest;
     }
 
     public Exercise() {}
