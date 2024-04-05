@@ -286,6 +286,22 @@ describe("ExerciseTracker", () => {
     expect(screen.getByLabelText("Rest Time Passed")).toBeInTheDocument();
   });
 
+  it("does not display rest time warning after adding reps to a warmup", () => {
+    renderExerciseTracker();
+
+    clickOpenModalTrigger(0);
+
+    submitReps("6");
+
+    fireEvent.click(screen.getByLabelText(/restart stopwatch/i));
+
+    act(() => {
+      jest.advanceTimersByTime(100000);
+    });
+
+    expect(screen.queryByLabelText("Rest Time Passed")).not.toBeInTheDocument();
+  });
+
   it("resets the timer when reps are deleted", () => {
     renderExerciseTracker();
 
