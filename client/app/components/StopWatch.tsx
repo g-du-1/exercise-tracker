@@ -15,6 +15,7 @@ export const StopWatch = () => {
 
   const restTimeExceeded =
     selectedExercise &&
+    selectedExercise.category !== "warmup" &&
     swElapsedTime > 0 &&
     swElapsedTime >= selectedExercise.targetRest;
 
@@ -45,9 +46,14 @@ export const StopWatch = () => {
       <Box sx={{ ml: 1 }}>{formatSwTime(swElapsedTime)}</Box>
 
       {restTimeExceeded && (
-        <IconButton size="large" color="warning" aria-label="Rest Time Passed">
-          <WarningIcon />
-        </IconButton>
+        <Box
+          ml={1}
+          display={"flex"}
+          alignItems={"center"}
+          aria-label="Rest Time Passed"
+        >
+          <WarningIcon color="warning" />
+        </Box>
       )}
     </Box>
   );
