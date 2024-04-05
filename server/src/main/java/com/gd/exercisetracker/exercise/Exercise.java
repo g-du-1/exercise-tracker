@@ -17,6 +17,7 @@ public class Exercise {
     private int targetRest;
     private int additionalRest;
     private String mediaLink;
+    private String comments;
 
     public String getName() {
         return name;
@@ -98,7 +99,15 @@ public class Exercise {
         this.mediaLink = mediaLink;
     }
 
-    public Exercise(String name, String category, String type, int targetSets, int targetRepsMin, int targetRepsMax, boolean isDuration, int targetRest, int additionalRest, String mediaLink) {
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public Exercise(String name, String category, String type, int targetSets, int targetRepsMin, int targetRepsMax, boolean isDuration, int targetRest, int additionalRest, String mediaLink, String comments) {
         this.name = name;
         this.category = category;
         this.type = type;
@@ -109,6 +118,7 @@ public class Exercise {
         this.targetRest = targetRest;
         this.additionalRest = additionalRest;
         this.mediaLink = mediaLink;
+        this.comments = comments;
     }
 
     public Exercise() {}

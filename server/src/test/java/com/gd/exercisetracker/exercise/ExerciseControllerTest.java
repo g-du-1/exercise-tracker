@@ -59,8 +59,8 @@ class ExerciseControllerTest {
     @Test
     void shouldGetAllExercises() {
         List<Exercise> exercises = List.of(
-            new Exercise("GMB Wrist Prep", "warmup", "warmup", 1, 30, 30, true, 0, 0, "https://www.youtube.com/watch?v=HFv2WwgeVMk"),
-            new Exercise("Arch Hangs", "firstPair", "pullUp", 3, 5, 8, false, 90, 90, "https://www.youtube.com/watch?v=C995b3KLXS4&t=7s")
+            new Exercise("GMB Wrist Prep", "warmup", "warmup", 1, 30, 30, true, 0, 0, "https://www.youtube.com/watch?v=HFv2WwgeVMk", null),
+            new Exercise("Arch Hangs", "firstPair", "pullUp", 3, 5, 8, false, 90, 90, "https://www.youtube.com/watch?v=C995b3KLXS4&t=7s", "<ul><li>Do as many reps as you want</li></ul>")
         );
 
         exerciseRepository.saveAll(exercises);
@@ -81,16 +81,7 @@ class ExerciseControllerTest {
             .body("isDuration", hasItems(true, false))
             .body("targetRest", hasItems(0, 90))
             .body("additionalRest", hasItems(0, 90))
-            .body("mediaLink", hasItems("https://www.youtube.com/watch?v=HFv2WwgeVMk", "https://www.youtube.com/watch?v=C995b3KLXS4&t=7s"));
+            .body("mediaLink", hasItems("https://www.youtube.com/watch?v=HFv2WwgeVMk", "https://www.youtube.com/watch?v=C995b3KLXS4&t=7s"))
+            .body("comments", hasItems(null, "<ul><li>Do as many reps as you want</li></ul>"));
     }
 }
-
-
-    // comments: `
-    //   <ul>
-    //     <li>Elbows should stay straight</li>
-    //     <li>Hold it for time/reps</li>
-    //     <li>Start at this <a href="https://www.youtube.com/watch?v=HoE-C85ZlCE">level</a></li>
-    //     <li>Progress towards a 90 degree in your shoulder. Like <a href="https://i.ytimg.com/vi/JusddCep6PA/hqdefault.jpg">this</a></li>
-    //   </ul>
-    // `,
