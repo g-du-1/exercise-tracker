@@ -13,6 +13,7 @@ public class Exercise {
     private int targetSets;
     private int targetRepsMin;
     private int targetRepsMax;
+    private boolean isDuration;
 
     public String getName() {
         return name;
@@ -62,13 +63,22 @@ public class Exercise {
         this.targetRepsMax = targetRepsMax;
     }
 
-    public Exercise(String name, String category, String type, int targetSets, int targetRepsMin, int targetRepsMax) {
+    public boolean getIsDuration() {
+        return isDuration;
+    }
+
+    public void setIsDuration(boolean isDuration) {
+        this.isDuration = isDuration;
+    }
+
+    public Exercise(String name, String category, String type, int targetSets, int targetRepsMin, int targetRepsMax, boolean isDuration) {
         this.name = name;
         this.category = category;
         this.type = type;
         this.targetSets = targetSets;
         this.targetRepsMin = targetRepsMin;
         this.targetRepsMax = targetRepsMax;
+        this.isDuration = isDuration;
     }
 
     public Exercise() {}
