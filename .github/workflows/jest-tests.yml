@@ -3,8 +3,12 @@ name: Run Jest Tests
 on:
   push:
     branches: [main]
+    paths:
+      - "client/**"
   pull_request:
     branches: [main]
+    paths:
+      - "client/**"
 
 jobs:
   test:
@@ -20,7 +24,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+      - name: Change to client directory
+        run: cd client
       - name: Install dependencies
         run: npm install
+        working-directory: ./client
       - name: Run Jest
         run: npm test
+        working-directory: ./client
