@@ -59,8 +59,8 @@ class ExerciseControllerTest {
     @Test
     void shouldGetAllExercises() {
         List<Exercise> exercises = List.of(
-            new Exercise("GMB Wrist Prep", "warmup", "warmup", 1, 30, 30, true, 0, 0),
-            new Exercise("Arch Hangs", "firstPair", "pullUp", 3, 5, 8, false, 90, 90)
+            new Exercise("GMB Wrist Prep", "warmup", "warmup", 1, 30, 30, true, 0, 0, "https://www.youtube.com/watch?v=HFv2WwgeVMk"),
+            new Exercise("Arch Hangs", "firstPair", "pullUp", 3, 5, 8, false, 90, 90, "https://www.youtube.com/watch?v=C995b3KLXS4&t=7s")
         );
 
         exerciseRepository.saveAll(exercises);
@@ -80,13 +80,12 @@ class ExerciseControllerTest {
             .body("targetRepsMax", hasItems(30, 8))
             .body("isDuration", hasItems(true, false))
             .body("targetRest", hasItems(0, 90))
-            .body("additionalRest", hasItems(0, 90));
+            .body("additionalRest", hasItems(0, 90))
+            .body("mediaLink", hasItems("https://www.youtube.com/watch?v=HFv2WwgeVMk", "https://www.youtube.com/watch?v=C995b3KLXS4&t=7s"));
     }
 }
 
-    // thumbLink: "https://www.youtube.com/watch?v=HFv2WwgeVMk",
 
-    // thumbLink: "https://www.youtube.com/watch?v=C995b3KLXS4&t=7s",
     // comments: `
     //   <ul>
     //     <li>Elbows should stay straight</li>

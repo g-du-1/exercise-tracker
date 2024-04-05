@@ -16,6 +16,7 @@ public class Exercise {
     private boolean isDuration;
     private int targetRest;
     private int additionalRest;
+    private String mediaLink;
 
     public String getName() {
         return name;
@@ -89,7 +90,15 @@ public class Exercise {
         this.additionalRest = additionalRest;
     }
 
-    public Exercise(String name, String category, String type, int targetSets, int targetRepsMin, int targetRepsMax, boolean isDuration, int targetRest, int additionalRest) {
+    public String getMediaLink() {
+        return mediaLink;
+    }
+
+    public void setMediaLink(String mediaLink) {
+        this.mediaLink = mediaLink;
+    }
+
+    public Exercise(String name, String category, String type, int targetSets, int targetRepsMin, int targetRepsMax, boolean isDuration, int targetRest, int additionalRest, String mediaLink) {
         this.name = name;
         this.category = category;
         this.type = type;
@@ -99,6 +108,7 @@ public class Exercise {
         this.isDuration = isDuration;
         this.targetRest = targetRest;
         this.additionalRest = additionalRest;
+        this.mediaLink = mediaLink;
     }
 
     public Exercise() {}

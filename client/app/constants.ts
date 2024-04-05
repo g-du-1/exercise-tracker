@@ -1,5 +1,7 @@
 import { Exercise } from "./types";
 
+// TODO: thumbLink is renamed to mediaLink in the API
+
 const warmUps: Exercise[] = [
   {
     id: 1,
