@@ -29,6 +29,7 @@ export type Exercise = {
   targetRepsMax?: number;
   isDuration?: boolean;
   targetRest: number;
+  additionalRest: number;
 };
 
 export type SavedReps = {

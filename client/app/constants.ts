@@ -9,6 +9,7 @@ const warmUps: Exercise[] = [
     targetRepsMin: 5,
     targetRepsMax: 10,
     targetRest: 0,
+    additionalRest: 0,
     name: "Yuri's Shoulder Band Warmup",
     thumbLink: "https://www.youtube.com/watch?v=6y_AU-aGhVE",
     comments: `
@@ -25,6 +26,7 @@ const warmUps: Exercise[] = [
     targetRepsMin: 5,
     targetRepsMax: 10,
     targetRest: 0,
+    additionalRest: 0,
     name: "Squat Sky Reaches",
     thumbLink: "https://www.youtube.com/watch?v=lbozu0DPcYI&t=42s",
   },
@@ -35,6 +37,7 @@ const warmUps: Exercise[] = [
     targetSets: 1,
     targetRepsMin: 10,
     targetRest: 0,
+    additionalRest: 0,
     name: "GMB Wrist Prep",
     thumbLink: "https://www.youtube.com/watch?v=mSZWSQSSEjE",
     comments: `
@@ -51,6 +54,7 @@ const warmUps: Exercise[] = [
     targetRepsMin: 30,
     isDuration: true,
     targetRest: 0,
+    additionalRest: 0,
     name: "Deadbugs (Alternating)",
     thumbLink: "https://www.youtube.com/watch?v=HFv2WwgeVMk",
   },
@@ -65,6 +69,7 @@ const firstPair: Exercise[] = [
     targetRepsMin: 5,
     targetRepsMax: 8,
     targetRest: 90,
+    additionalRest: 90,
     name: "Arch Hangs",
     thumbLink: "https://www.youtube.com/watch?v=C995b3KLXS4&t=7s",
     comments: `
@@ -84,6 +89,7 @@ const firstPair: Exercise[] = [
     targetRepsMin: 5,
     targetRepsMax: 8,
     targetRest: 90,
+    additionalRest: 90,
     name: "Bulgarian Split Squat",
     thumbLink: "https://www.youtube.com/watch?v=kkdmHTASZg8&t=75s",
     comments: `
@@ -103,6 +109,7 @@ const secondPair: Exercise[] = [
     targetSets: 3,
     targetRepsMin: 60,
     targetRest: 90,
+    additionalRest: 90,
     isDuration: true,
     name: "Parallel Bar Support Hold",
     thumbLink:
@@ -122,6 +129,7 @@ const secondPair: Exercise[] = [
     targetRepsMin: 5,
     targetRepsMax: 8,
     targetRest: 90,
+    additionalRest: 90,
     name: "Negative Hamstring Slide",
     thumbLink: "https://www.youtube.com/watch?v=OY8Jci5KJdM",
     comments: `
@@ -142,6 +150,7 @@ const thirdPair: Exercise[] = [
     targetRepsMin: 5,
     targetRepsMax: 8,
     targetRest: 90,
+    additionalRest: 90,
     name: "Incline Rows",
     thumbLink: "https://www.youtube.com/watch?v=LR2EnFWpVao",
     comments: `
@@ -158,6 +167,7 @@ const thirdPair: Exercise[] = [
     targetRepsMin: 5,
     targetRepsMax: 8,
     targetRest: 90,
+    additionalRest: 90,
     name: "Full Pushup",
     thumbLink: "https://www.youtube.com/watch?v=IODxDxX7oi4",
     comments: `
@@ -181,6 +191,7 @@ const coreTriplet: Exercise[] = [
     targetRepsMin: 8,
     targetRepsMax: 12,
     targetRest: 60,
+    additionalRest: 60,
     name: "Ring Ab Rollouts",
     thumbLink: "https://www.youtube.com/watch?v=LBUfnmugKLw",
     comments: `
@@ -200,6 +211,7 @@ const coreTriplet: Exercise[] = [
     targetRepsMin: 8,
     targetRepsMax: 12,
     targetRest: 60,
+    additionalRest: 60,
     name: "Assisted Knee Copenhagen Plank",
     thumbLink: "https://i.imgur.com/6vOLzTC.jpg",
     comments: `
@@ -218,6 +230,7 @@ const coreTriplet: Exercise[] = [
     targetRepsMin: 8,
     targetRepsMax: 12,
     targetRest: 60,
+    additionalRest: 60,
     name: "Reverse Hyperextension",
     thumbLink: "https://www.youtube.com/watch?v=ZeRsNzFcQLQ&",
     comments: `

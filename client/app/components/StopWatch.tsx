@@ -13,11 +13,16 @@ export const StopWatch = () => {
   const resetStopwatch = useBoundStore((state) => state.resetStopwatch);
   const formatSwTime = useBoundStore((state) => state.formatSwTime);
 
-  const restTimeExceeded =
+  const restTimePassed =
     selectedExercise &&
     selectedExercise.category !== "warmup" &&
     swElapsedTime > 0 &&
     swElapsedTime >= selectedExercise.targetRest;
+
+  const addtlRestTimePassed =
+    restTimePassed &&
+    swElapsedTime >=
+      selectedExercise.targetRest + selectedExercise.additionalRest;
 
   return (
     <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
@@ -45,14 +50,18 @@ export const StopWatch = () => {
 
       <Box sx={{ ml: 1 }}>{formatSwTime(swElapsedTime)}</Box>
 
-      {restTimeExceeded && (
+      {restTimePassed && (
         <Box
           ml={1}
           display={"flex"}
           alignItems={"center"}
-          aria-label="Rest Time Passed"
+          aria-label={
+            addtlRestTimePassed
+              ? "Additional Rest Time Passed"
+              : "Rest Time Passed"
+          }
         >
-          <WarningIcon color="warning" />
+          <WarningIcon color={addtlRestTimePassed ? "error" : "warning"} />
         </Box>
       )}
     </Box>
