@@ -141,6 +141,7 @@ exports[`ExerciseTracker matches snapshot 1`] = `
           <iframe
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen=""
+            loading="lazy"
             src="https://www.youtube.com/embed/mSZWSQSSEjE"
             title="GMB Wrist Prep Video"
           />
@@ -216,6 +217,7 @@ exports[`ExerciseTracker matches snapshot 1`] = `
           <iframe
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen=""
+            loading="lazy"
             src="https://www.youtube.com/embed/C995b3KLXS4"
             title="Arch Hangs Video"
           />
@@ -287,6 +289,7 @@ exports[`ExerciseTracker matches snapshot 1`] = `
       >
         <img
           alt="Parallel Bar Support Hold Image"
+          loading="lazy"
           src="https://antranik.org/wp-content/uploads/2014/01/antranik-holding-support-hold-on-parallel-bars.jpg"
           style="display: none;"
         />
