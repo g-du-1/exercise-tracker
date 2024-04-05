@@ -7,8 +7,8 @@ public class Exercise {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
+    private String category;
 
     public String getName() {
         return name;
@@ -18,8 +18,17 @@ public class Exercise {
         this.name = name;
     }
 
-    public Exercise(String name) {
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public Exercise(String name, String category) {
         this.name = name;
+        this.category = category;
     }
 
     public Exercise() {}
