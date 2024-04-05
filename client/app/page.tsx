@@ -1,13 +1,7 @@
 import { ExerciseTracker } from "./components/ExerciseTracker";
 import Box from "@mui/material/Box";
 import { Exercise } from "./types";
-
-const getExercises = async () => {
-  // TODO Make it an env var
-  const res = await fetch("http://localhost:8080/api/v1/exercises");
-
-  return res.json();
-};
+import { getExercises } from "./util/getExercises";
 
 export default async function Home() {
   const exercises: Exercise[] = await getExercises();
