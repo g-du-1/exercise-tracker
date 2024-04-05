@@ -186,18 +186,18 @@ describe("ExerciseTracker", () => {
     expect(screen.getByText("00:00:00")).toBeInTheDocument();
   });
 
-  it("starts and resets the stopwatch", () => {
+  it("starts and stops the stopwatch", () => {
     renderExerciseTracker();
 
     expect(
-      screen.queryByRole("button", {
-        name: /reset stopwatch/i,
+      screen.getByRole("button", {
+        name: /stop stopwatch/i,
       })
-    ).not.toBeInTheDocument();
+    ).toBeDisabled();
 
     fireEvent.click(
       screen.getByRole("button", {
-        name: /start stopwatch/i,
+        name: /restart stopwatch/i,
       })
     );
 
@@ -205,33 +205,55 @@ describe("ExerciseTracker", () => {
       jest.advanceTimersByTime(8000);
     });
 
-    expect(
-      screen.queryByRole("button", {
-        name: /start stopwatch/i,
-      })
-    ).not.toBeInTheDocument();
-
     expect(screen.getByText(/00:00:08/i)).toBeInTheDocument();
+
+    expect(
+      screen.getByRole("button", {
+        name: /stop stopwatch/i,
+      })
+    ).toBeEnabled();
 
     fireEvent.click(
       screen.getByRole("button", {
-        name: /reset stopwatch/i,
+        name: /stop stopwatch/i,
       })
     );
 
     expect(screen.getByText(/00:00:00/i)).toBeInTheDocument();
 
     expect(
-      screen.queryByRole("button", {
-        name: /reset stopwatch/i,
-      })
-    ).not.toBeInTheDocument();
-
-    expect(
       screen.getByRole("button", {
-        name: /start stopwatch/i,
+        name: /stop stopwatch/i,
       })
-    ).toBeInTheDocument();
+    ).toBeDisabled();
+  });
+
+  it("resets stopwatch", () => {
+    renderExerciseTracker();
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: /restart stopwatch/i,
+      })
+    );
+
+    act(() => {
+      jest.advanceTimersByTime(8000);
+    });
+
+    expect(screen.getByText(/00:00:08/i)).toBeInTheDocument();
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: /restart stopwatch/i,
+      })
+    );
+
+    act(() => {
+      jest.advanceTimersByTime(3000);
+    });
+
+    expect(screen.getByText(/00:00:03/i)).toBeInTheDocument();
   });
 
   it("displays a done elem when the saved sets reach the target sets", () => {

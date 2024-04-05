@@ -1,5 +1,5 @@
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import StopIcon from "@mui/icons-material/Stop";
 import WarningIcon from "@mui/icons-material/Warning";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
@@ -20,25 +20,27 @@ export const StopWatch = () => {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-      {swRunning ? (
-        <IconButton
-          size="large"
-          color="error"
-          aria-label="Reset Stopwatch"
-          onClick={resetStopwatch}
-        >
-          <RestartAltIcon />
-        </IconButton>
-      ) : (
-        <IconButton
-          color="success"
-          size="large"
-          aria-label="Start Stopwatch"
-          onClick={startStopwatch}
-        >
-          <PlayArrowIcon />
-        </IconButton>
-      )}
+      <IconButton
+        size="large"
+        color="success"
+        aria-label="Restart Stopwatch"
+        onClick={() => {
+          resetStopwatch();
+          startStopwatch();
+        }}
+      >
+        <RestartAltIcon />
+      </IconButton>
+
+      <IconButton
+        size="large"
+        color="error"
+        disabled={!swRunning}
+        aria-label="Stop Stopwatch"
+        onClick={resetStopwatch}
+      >
+        <StopIcon />
+      </IconButton>
 
       <Box sx={{ ml: 1 }}>{formatSwTime(swElapsedTime)}</Box>
 
