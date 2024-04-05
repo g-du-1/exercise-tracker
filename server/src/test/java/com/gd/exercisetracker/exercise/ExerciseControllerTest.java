@@ -59,8 +59,8 @@ class ExerciseControllerTest {
     @Test
     void shouldGetAllExercises() {
         List<Exercise> exercises = List.of(
-            new Exercise("GMB Wrist Prep", "warmup", "warmup", 1),
-            new Exercise("Arch Hangs", "firstPair", "pullUp", 3)
+            new Exercise("GMB Wrist Prep", "warmup", "warmup", 1, 30, 30),
+            new Exercise("Arch Hangs", "firstPair", "pullUp", 3, 5, 8)
         );
 
         exerciseRepository.saveAll(exercises);
@@ -75,6 +75,27 @@ class ExerciseControllerTest {
             .body("name", hasItems("GMB Wrist Prep", "Arch Hangs"))
             .body("category", hasItems("warmup", "firstPair"))
             .body("type", hasItems("warmup", "pullUp"))
-            .body("targetSets", hasItems(1, 3));
+            .body("targetSets", hasItems(1, 3))
+            .body("targetRepsMin", hasItems(30, 5))
+            .body("targetRepsMax", hasItems(30, 8));
     }
 }
+
+    // isDuration: true,
+    // targetRest: 0,
+    // additionalRest: 0,
+    // name: "Deadbugs (Alternating)",
+    // thumbLink: "https://www.youtube.com/watch?v=HFv2WwgeVMk",
+
+    // targetRest: 90,
+    // additionalRest: 90,
+    // name: "Arch Hangs",
+    // thumbLink: "https://www.youtube.com/watch?v=C995b3KLXS4&t=7s",
+    // comments: `
+    //   <ul>
+    //     <li>Elbows should stay straight</li>
+    //     <li>Hold it for time/reps</li>
+    //     <li>Start at this <a href="https://www.youtube.com/watch?v=HoE-C85ZlCE">level</a></li>
+    //     <li>Progress towards a 90 degree in your shoulder. Like <a href="https://i.ytimg.com/vi/JusddCep6PA/hqdefault.jpg">this</a></li>
+    //   </ul>
+    // `,

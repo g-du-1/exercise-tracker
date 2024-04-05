@@ -11,6 +11,8 @@ public class Exercise {
     private String category;
     private String type;
     private int targetSets;
+    private int targetRepsMin;
+    private int targetRepsMax;
 
     public String getName() {
         return name;
@@ -44,11 +46,29 @@ public class Exercise {
         this.targetSets = targetSets;
     }
 
-    public Exercise(String name, String category, String type, int targetSets) {
+    public int getTargetRepsMin() {
+        return targetRepsMin;
+    }
+
+    public void setTargetRepsMin(int targetRepsMin) {
+        this.targetRepsMin = targetRepsMin;
+    }
+
+    public int getTargetRepsMax() {
+        return targetRepsMax;
+    }
+
+    public void setTargetRepsMax(int targetRepsMax) {
+        this.targetRepsMax = targetRepsMax;
+    }
+
+    public Exercise(String name, String category, String type, int targetSets, int targetRepsMin, int targetRepsMax) {
         this.name = name;
         this.category = category;
         this.type = type;
         this.targetSets = targetSets;
+        this.targetRepsMin = targetRepsMin;
+        this.targetRepsMax = targetRepsMax;
     }
 
     public Exercise() {}
