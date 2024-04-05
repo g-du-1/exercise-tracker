@@ -8,6 +8,7 @@ export const mockExercises: Exercise[] = [
     targetSets: 1,
     targetRepsMin: 10,
     targetRest: 0,
+    additionalRest: 0,
     name: "GMB Wrist Prep",
     thumbLink: "https://www.youtube.com/watch?v=mSZWSQSSEjE",
     comments: `
@@ -24,6 +25,7 @@ export const mockExercises: Exercise[] = [
     targetRepsMin: 5,
     targetRepsMax: 8,
     targetRest: 90,
+    additionalRest: 90,
     name: "Arch Hangs",
     thumbLink: "https://www.youtube.com/watch?v=C995b3KLXS4&t=7s",
     comments: `
@@ -42,6 +44,7 @@ export const mockExercises: Exercise[] = [
     targetSets: 3,
     targetRepsMin: 30,
     targetRest: 90,
+    additionalRest: 90,
     isDuration: true,
     name: "Parallel Bar Support Hold",
     thumbLink:

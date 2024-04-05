@@ -275,6 +275,10 @@ describe("ExerciseTracker", () => {
 
     expect(screen.queryByAltText("Rest Time Passed")).not.toBeInTheDocument();
 
+    expect(
+      screen.queryByAltText("Additional Rest Time Passed")
+    ).not.toBeInTheDocument();
+
     clickOpenModalTrigger(1);
 
     submitReps("6");
@@ -284,6 +288,10 @@ describe("ExerciseTracker", () => {
     });
 
     expect(screen.getByLabelText("Rest Time Passed")).toBeInTheDocument();
+
+    expect(
+      screen.queryByLabelText("Additional Rest Time Passed")
+    ).not.toBeInTheDocument();
   });
 
   it("does not display rest time warning after adding reps to a warmup", () => {
@@ -300,6 +308,28 @@ describe("ExerciseTracker", () => {
     });
 
     expect(screen.queryByLabelText("Rest Time Passed")).not.toBeInTheDocument();
+
+    expect(
+      screen.queryByLabelText("Additional Rest Time Passed")
+    ).not.toBeInTheDocument();
+  });
+
+  it("displays a more severe warning when additional rest time is passed", () => {
+    renderExerciseTracker();
+
+    clickOpenModalTrigger(1);
+
+    submitReps("6");
+
+    act(() => {
+      jest.advanceTimersByTime(200000);
+    });
+
+    expect(screen.queryByLabelText("Rest Time Passed")).not.toBeInTheDocument();
+
+    expect(
+      screen.getByLabelText("Additional Rest Time Passed")
+    ).toBeInTheDocument();
   });
 
   it("resets the timer when reps are deleted", () => {
