@@ -2,7 +2,7 @@ import { Exercise } from "../../types";
 
 export const mockExercises: Exercise[] = [
   {
-    id: 3,
+    key: "gmb-wrist-prep",
     category: "warmup",
     type: "warmup",
     targetSets: 1,
@@ -18,7 +18,7 @@ export const mockExercises: Exercise[] = [
     `,
   },
   {
-    id: 5,
+    key: "arch-hangs",
     category: "firstPair",
     type: "pullUp",
     targetSets: 3,
@@ -38,7 +38,7 @@ export const mockExercises: Exercise[] = [
     `,
   },
   {
-    id: 7,
+    key: "parallel-bar-support-hold",
     category: "secondPair",
     type: "dip",
     targetSets: 3,

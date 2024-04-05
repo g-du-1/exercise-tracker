@@ -34,12 +34,12 @@ export const RepsModal = ({ exercises }: Props) => {
     if (selectedExercise && fieldValNum) {
       const newReps = { ...savedReps };
 
-      const exercise = newReps[selectedExercise.id];
+      const exercise = newReps[selectedExercise.key];
 
       if (exercise) {
         exercise.reps.push(parseInt(fieldValue));
       } else {
-        newReps[selectedExercise.id] = {
+        newReps[selectedExercise.key] = {
           name: selectedExercise.name,
           reps: [fieldValNum],
         };
@@ -51,10 +51,10 @@ export const RepsModal = ({ exercises }: Props) => {
         resetStopwatch();
 
         const isLastExercise =
-          exercises[exercises.length - 1].id === selectedExercise.id;
+          exercises[exercises.length - 1].key === selectedExercise.key;
 
         const reachedTargetSets =
-          savedReps[selectedExercise.id]?.reps.length ===
+          savedReps[selectedExercise.key]?.reps.length ===
           selectedExercise.targetSets;
 
         const shouldStartStopwatch = !(isLastExercise && reachedTargetSets);
@@ -76,7 +76,7 @@ export const RepsModal = ({ exercises }: Props) => {
   const handleDeleteRepsClick = (selectedExercise: Exercise) => {
     const newReps = { ...savedReps };
 
-    const existingExercise = newReps[selectedExercise.id];
+    const existingExercise = newReps[selectedExercise.key];
 
     if (existingExercise) {
       existingExercise.reps = [];
@@ -118,7 +118,7 @@ export const RepsModal = ({ exercises }: Props) => {
 
       <DialogActions>
         {selectedExercise &&
-          savedReps?.[selectedExercise.id]?.reps?.length > 0 && (
+          savedReps?.[selectedExercise.key]?.reps?.length > 0 && (
             <IconButton
               color="error"
               size="large"

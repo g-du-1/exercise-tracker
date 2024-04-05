@@ -18,7 +18,7 @@ type ExerciseType =
   | "extension";
 
 export type Exercise = {
-  id: number;
+  key: string;
   name: string;
   type: ExerciseType;
   category: ExerciseCategory;

@@ -44,7 +44,7 @@ export const SavedReps = ({ exercise }: { exercise: Exercise }) => {
         fontSize: "12px",
       }}
     >
-      {savedReps?.[exercise.id]?.reps.map((rep: number, idx: number) => {
+      {savedReps?.[exercise.key]?.reps.map((rep: number, idx: number) => {
         const colorMap: RepRangeMap = {
           lower: "red",
           inRange: "green",
@@ -59,7 +59,7 @@ export const SavedReps = ({ exercise }: { exercise: Exercise }) => {
 
         return (
           <Box
-            key={`${exercise.id}-${idx}`}
+            key={`${exercise.key}-${idx}`}
             sx={{
               display: "flex",
               flexDirection: "row",
