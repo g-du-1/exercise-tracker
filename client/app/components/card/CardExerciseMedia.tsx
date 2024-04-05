@@ -15,6 +15,7 @@ export const CardExerciseMedia = ({ exercise }: { exercise: Exercise }) => {
             sx={showMedia ? {} : { display: "none" }}
           >
             <iframe
+              loading="lazy"
               src={`https://www.youtube.com/embed/${getYtVidId(
                 exercise.thumbLink
               )}`}
@@ -25,6 +26,7 @@ export const CardExerciseMedia = ({ exercise }: { exercise: Exercise }) => {
           </Box>
         ) : exercise.thumbLink.endsWith("jpg") ? (
           <img
+            loading="lazy"
             src={exercise.thumbLink}
             alt={`${exercise.name} Image`}
             style={
