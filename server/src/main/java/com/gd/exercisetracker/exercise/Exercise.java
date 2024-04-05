@@ -9,6 +9,7 @@ public class Exercise {
     private Long id;
     private String name;
     private String category;
+    private String type;
 
     public String getName() {
         return name;
@@ -26,9 +27,18 @@ public class Exercise {
         this.category = category;
     }
 
-    public Exercise(String name, String category) {
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Exercise(String name, String category, String type) {
         this.name = name;
         this.category = category;
+        this.type = type;
     }
 
     public Exercise() {}
