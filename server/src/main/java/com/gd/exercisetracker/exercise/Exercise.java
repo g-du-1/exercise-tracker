@@ -7,6 +7,7 @@ public class Exercise {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String key;
     private String name;
     private String category;
     private String type;
@@ -18,6 +19,14 @@ public class Exercise {
     private int additionalRest;
     private String mediaLink;
     private String comments;
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
 
     public String getName() {
         return name;
@@ -107,7 +116,8 @@ public class Exercise {
         this.comments = comments;
     }
 
-    public Exercise(String name, String category, String type, int targetSets, int targetRepsMin, int targetRepsMax, boolean isDuration, int targetRest, int additionalRest, String mediaLink, String comments) {
+    public Exercise(String key ,String name, String category, String type, int targetSets, int targetRepsMin, int targetRepsMax, boolean isDuration, int targetRest, int additionalRest, String mediaLink, String comments) {
+        this.key = key;
         this.name = name;
         this.category = category;
         this.type = type;
