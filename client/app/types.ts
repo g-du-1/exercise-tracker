@@ -23,7 +23,7 @@ export type Exercise = {
   type: ExerciseType;
   category: ExerciseCategory;
   comments?: string;
-  thumbLink?: string;
+  mediaLink?: string;
   targetSets: number;
   targetRepsMin?: number;
   targetRepsMax?: number;

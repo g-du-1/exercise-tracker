@@ -10,7 +10,7 @@ export const mockExercises: Exercise[] = [
     targetRest: 0,
     additionalRest: 0,
     name: "GMB Wrist Prep",
-    thumbLink: "https://www.youtube.com/watch?v=mSZWSQSSEjE",
+    mediaLink: "https://www.youtube.com/watch?v=mSZWSQSSEjE",
     comments: `
       <ul>
         <li>Do as many reps as you want</li>
@@ -27,7 +27,7 @@ export const mockExercises: Exercise[] = [
     targetRest: 90,
     additionalRest: 90,
     name: "Arch Hangs",
-    thumbLink: "https://www.youtube.com/watch?v=C995b3KLXS4&t=7s",
+    mediaLink: "https://www.youtube.com/watch?v=C995b3KLXS4&t=7s",
     comments: `
       <ul>
         <li>Elbows should stay straight</li>
@@ -47,7 +47,7 @@ export const mockExercises: Exercise[] = [
     additionalRest: 90,
     isDuration: true,
     name: "Parallel Bar Support Hold",
-    thumbLink:
+    mediaLink:
       "https://antranik.org/wp-content/uploads/2014/01/antranik-holding-support-hold-on-parallel-bars.jpg",
     comments: `
       <ul>

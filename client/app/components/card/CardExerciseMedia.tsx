@@ -8,8 +8,8 @@ export const CardExerciseMedia = ({ exercise }: { exercise: Exercise }) => {
 
   return (
     <Box sx={{ borderBottom: "1px solid #e8e8e8" }}>
-      {exercise.thumbLink &&
-        (exercise.thumbLink.includes("youtube") ? (
+      {exercise.mediaLink &&
+        (exercise.mediaLink.includes("youtube") ? (
           <Box
             className="video-responsive"
             sx={showMedia ? {} : { display: "none" }}
@@ -17,17 +17,17 @@ export const CardExerciseMedia = ({ exercise }: { exercise: Exercise }) => {
             <iframe
               loading="lazy"
               src={`https://www.youtube.com/embed/${getYtVidId(
-                exercise.thumbLink
+                exercise.mediaLink
               )}`}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               title={`${exercise.name} Video`}
             />
           </Box>
-        ) : exercise.thumbLink.endsWith("jpg") ? (
+        ) : exercise.mediaLink.endsWith("jpg") ? (
           <img
             loading="lazy"
-            src={exercise.thumbLink}
+            src={exercise.mediaLink}
             alt={`${exercise.name} Image`}
             style={
               showMedia

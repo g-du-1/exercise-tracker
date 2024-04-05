@@ -1,7 +1,5 @@
 import { Exercise } from "./types";
 
-// TODO: thumbLink is renamed to mediaLink in the API
-
 const warmUps: Exercise[] = [
   {
     id: 1,
@@ -13,7 +11,7 @@ const warmUps: Exercise[] = [
     targetRest: 0,
     additionalRest: 0,
     name: "Yuri's Shoulder Band Warmup",
-    thumbLink: "https://www.youtube.com/watch?v=6y_AU-aGhVE",
+    mediaLink: "https://www.youtube.com/watch?v=6y_AU-aGhVE",
     comments: `
       <ul>
         <li>Can also be done with a tee-shirt</li>
@@ -30,7 +28,7 @@ const warmUps: Exercise[] = [
     targetRest: 0,
     additionalRest: 0,
     name: "Squat Sky Reaches",
-    thumbLink: "https://www.youtube.com/watch?v=lbozu0DPcYI&t=42s",
+    mediaLink: "https://www.youtube.com/watch?v=lbozu0DPcYI&t=42s",
   },
   {
     id: 3,
@@ -41,7 +39,7 @@ const warmUps: Exercise[] = [
     targetRest: 0,
     additionalRest: 0,
     name: "GMB Wrist Prep",
-    thumbLink: "https://www.youtube.com/watch?v=mSZWSQSSEjE",
+    mediaLink: "https://www.youtube.com/watch?v=mSZWSQSSEjE",
     comments: `
       <ul>
         <li>Do as many reps as you want</li>
@@ -58,7 +56,7 @@ const warmUps: Exercise[] = [
     targetRest: 0,
     additionalRest: 0,
     name: "Deadbugs (Alternating)",
-    thumbLink: "https://www.youtube.com/watch?v=HFv2WwgeVMk",
+    mediaLink: "https://www.youtube.com/watch?v=HFv2WwgeVMk",
   },
 ];
 
@@ -73,7 +71,7 @@ const firstPair: Exercise[] = [
     targetRest: 90,
     additionalRest: 90,
     name: "Arch Hangs",
-    thumbLink: "https://www.youtube.com/watch?v=C995b3KLXS4&t=7s",
+    mediaLink: "https://www.youtube.com/watch?v=C995b3KLXS4&t=7s",
     comments: `
       <ul>
         <li>Elbows should stay straight</li>
@@ -93,7 +91,7 @@ const firstPair: Exercise[] = [
     targetRest: 90,
     additionalRest: 90,
     name: "Bulgarian Split Squat",
-    thumbLink: "https://www.youtube.com/watch?v=kkdmHTASZg8&t=75s",
+    mediaLink: "https://www.youtube.com/watch?v=kkdmHTASZg8&t=75s",
     comments: `
       <ul>
         <li>Pretend the barbell doesn't exist.</li>
@@ -114,7 +112,7 @@ const secondPair: Exercise[] = [
     additionalRest: 90,
     isDuration: true,
     name: "Parallel Bar Support Hold",
-    thumbLink:
+    mediaLink:
       "https://antranik.org/wp-content/uploads/2014/01/antranik-holding-support-hold-on-parallel-bars.jpg",
     comments: `
       <ul>
@@ -133,7 +131,7 @@ const secondPair: Exercise[] = [
     targetRest: 90,
     additionalRest: 90,
     name: "Negative Hamstring Slide",
-    thumbLink: "https://www.youtube.com/watch?v=OY8Jci5KJdM",
+    mediaLink: "https://www.youtube.com/watch?v=OY8Jci5KJdM",
     comments: `
       <ul>
         <li>Start in the top position of a glute bridge, slide legs out under control until your butt touches the ground/knees are extended.</li>
@@ -154,7 +152,7 @@ const thirdPair: Exercise[] = [
     targetRest: 90,
     additionalRest: 90,
     name: "Incline Rows",
-    thumbLink: "https://www.youtube.com/watch?v=LR2EnFWpVao",
+    mediaLink: "https://www.youtube.com/watch?v=LR2EnFWpVao",
     comments: `
       <ul>
         <li>Perform a row, but with the body position somewhere between vertical and horizontal. Go closer to horizontal to make it harder.</li>
@@ -171,7 +169,7 @@ const thirdPair: Exercise[] = [
     targetRest: 90,
     additionalRest: 90,
     name: "Full Pushup",
-    thumbLink: "https://www.youtube.com/watch?v=IODxDxX7oi4",
+    mediaLink: "https://www.youtube.com/watch?v=IODxDxX7oi4",
     comments: `
       <ul>
         <li>Body in a straight line from head to toe: don't let the hips sag!</li>
@@ -195,7 +193,7 @@ const coreTriplet: Exercise[] = [
     targetRest: 60,
     additionalRest: 60,
     name: "Ring Ab Rollouts",
-    thumbLink: "https://www.youtube.com/watch?v=LBUfnmugKLw",
+    mediaLink: "https://www.youtube.com/watch?v=LBUfnmugKLw",
     comments: `
       <ul>
         <li>Elbows should stay straight</li>
@@ -215,7 +213,7 @@ const coreTriplet: Exercise[] = [
     targetRest: 60,
     additionalRest: 60,
     name: "Assisted Knee Copenhagen Plank",
-    thumbLink: "https://i.imgur.com/6vOLzTC.jpg",
+    mediaLink: "https://i.imgur.com/6vOLzTC.jpg",
     comments: `
       <ul>
         <li>Lower leg should give the minimum assistance you need.</li>
@@ -234,7 +232,7 @@ const coreTriplet: Exercise[] = [
     targetRest: 60,
     additionalRest: 60,
     name: "Reverse Hyperextension",
-    thumbLink: "https://www.youtube.com/watch?v=ZeRsNzFcQLQ&",
+    mediaLink: "https://www.youtube.com/watch?v=ZeRsNzFcQLQ&",
     comments: `
       <ul>
         <li>Keep your butt tucked</li>
