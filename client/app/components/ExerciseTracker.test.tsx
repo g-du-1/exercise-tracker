@@ -355,7 +355,7 @@ describe("ExerciseTracker", () => {
 
     expect(screen.getByText("1x10")).toBeInTheDocument();
     expect(screen.getByText("3x5-8")).toBeInTheDocument();
-    expect(screen.getByText("3x30s")).toBeInTheDocument();
+    expect(screen.getByText("3x60s")).toBeInTheDocument();
   });
 
   it("adds label for in range reps", () => {
