@@ -36,5 +36,6 @@ public class DataLoader implements ApplicationRunner {
 
         // Third Pair
         exerciseRepository.save(new Exercise("incline-rows", "Incline Rows", "thirdPair", "row", 3, 5, 8, false, 90, 90, "https://www.youtube.com/watch?v=LR2EnFWpVao", "<ul><li>Perform a row, but with the body position somewhere between vertical and horizontal. Go closer to horizontal to make it harder.</li></ul>"));
+        exerciseRepository.save(new Exercise("full-pushup", "Full Pushup", "thirdPair", "pushUp", 3, 5, 8, false, 90, 90, "https://www.youtube.com/watch?v=IODxDxX7oi4", "<ul><li>Body in a straight line from head to toe: don't let the hips sag!</li><li>Lock out arms and protract the shoulderblades (<a href=\"https://reddit.com/r/bodyweightfitness/wiki/kb/positioning\" rel=\"nofollow\">what does that even mean?</a>) at the top</li><li>Go down until chest nearly touches the ground</li><li>Keep the elbows in, don't let them flare out</li><li>Don't shrug up your shoulders to your ears, focus on depressing the shoulderblades (<a href=\"https://reddit.com/r/bodyweightfitness/wiki/kb/positioning\" rel=\"nofollow\">what does that even mean?</a>).</li></ul>"));
     }
 }
