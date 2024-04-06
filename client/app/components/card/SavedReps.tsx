@@ -7,14 +7,16 @@ type RepRangeMap = { [key in RepRange]: string };
 
 const getRepRange = (
   targetRepsMin: number = 0,
-  targetRepsMax: number = targetRepsMin,
+  targetRepsMax: number | null,
   rep: number
 ): RepRange | undefined => {
+  const repsMax = targetRepsMax ?? targetRepsMin;
+
   if (rep < targetRepsMin) {
     return "lower";
-  } else if (rep >= targetRepsMin && rep <= targetRepsMax) {
+  } else if (rep >= targetRepsMin && rep <= repsMax) {
     return "inRange";
-  } else if (rep > targetRepsMax) {
+  } else if (rep > repsMax) {
     return "higher";
   }
 };
@@ -44,7 +46,7 @@ export const SavedReps = ({ exercise }: { exercise: Exercise }) => {
         fontSize: "12px",
       }}
     >
-      {savedReps?.[exercise.id]?.reps.map((rep: number, idx: number) => {
+      {savedReps?.[exercise.key]?.reps.map((rep: number, idx: number) => {
         const colorMap: RepRangeMap = {
           lower: "red",
           inRange: "green",
@@ -59,7 +61,7 @@ export const SavedReps = ({ exercise }: { exercise: Exercise }) => {
 
         return (
           <Box
-            key={`${exercise.id}-${idx}`}
+            key={`${exercise.key}-${idx}`}
             sx={{
               display: "flex",
               flexDirection: "row",

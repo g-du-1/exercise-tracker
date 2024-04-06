@@ -18,16 +18,16 @@ type ExerciseType =
   | "extension";
 
 export type Exercise = {
-  id: number;
+  key: string;
   name: string;
   type: ExerciseType;
   category: ExerciseCategory;
-  comments?: string;
-  thumbLink?: string;
+  comments: string | null;
+  mediaLink: string;
   targetSets: number;
-  targetRepsMin?: number;
-  targetRepsMax?: number;
-  isDuration?: boolean;
+  targetRepsMin: number;
+  targetRepsMax: number | null;
+  isDuration: boolean;
   targetRest: number;
   additionalRest: number;
 };

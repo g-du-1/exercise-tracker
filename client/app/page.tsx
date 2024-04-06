@@ -1,8 +1,10 @@
 import { ExerciseTracker } from "./components/ExerciseTracker";
-import { exercises } from "./constants";
 import Box from "@mui/material/Box";
+import { exercises } from "./constants";
 
-export default function Home() {
+export default async function Home() {
+  // const exercises: Exercise[] = await getExercises();
+
   return (
     <Box
       sx={{

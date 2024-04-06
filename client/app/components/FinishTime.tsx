@@ -12,11 +12,11 @@ export const FinishTime = ({ exercises }: Props) => {
   const savedReps = useBoundStore((state) => state.savedReps);
 
   const isLastExercise =
-    exercises[exercises.length - 1].id === selectedExercise?.id;
+    exercises[exercises.length - 1].key === selectedExercise?.key;
 
   const reachedTargetSets =
     selectedExercise &&
-    savedReps[selectedExercise.id]?.reps.length === selectedExercise.targetSets;
+    savedReps[selectedExercise.key]?.reps.length === selectedExercise.targetSets;
 
   const workoutFinished = isLastExercise && reachedTargetSets;
 

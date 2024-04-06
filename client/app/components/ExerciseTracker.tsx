@@ -37,11 +37,11 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
 
       {exercises.map((exercise, idx) => {
         const exerciseCompleted =
-          savedReps?.[exercise.id]?.reps.length >= exercise.targetSets;
+          savedReps?.[exercise.key]?.reps.length >= exercise.targetSets;
 
         return (
           <Box
-            key={exercise.id}
+            key={exercise.key}
             sx={
               exerciseCompleted && !showCompletedExercises
                 ? { display: "none" }
