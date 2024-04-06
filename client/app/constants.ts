@@ -2,7 +2,7 @@ import { Exercise } from "./types";
 
 const warmUps: Exercise[] = [
   {
-    id: 1,
+    key: "yuris-shoulder-band-warmup",
     category: "warmup",
     type: "warmup",
     targetSets: 1,
@@ -19,7 +19,7 @@ const warmUps: Exercise[] = [
     `,
   },
   {
-    id: 2,
+    key: "squat-sky-reaches",
     category: "warmup",
     type: "warmup",
     targetSets: 1,
@@ -31,7 +31,7 @@ const warmUps: Exercise[] = [
     mediaLink: "https://www.youtube.com/watch?v=lbozu0DPcYI&t=42s",
   },
   {
-    id: 3,
+    key: "gmb-wrist-prep",
     category: "warmup",
     type: "warmup",
     targetSets: 1,
@@ -47,7 +47,7 @@ const warmUps: Exercise[] = [
     `,
   },
   {
-    id: 4,
+    key: "deadbugs-alternating",
     category: "warmup",
     type: "warmup",
     targetSets: 1,
@@ -62,7 +62,7 @@ const warmUps: Exercise[] = [
 
 const firstPair: Exercise[] = [
   {
-    id: 5,
+    key: "arch-hangs",
     category: "firstPair",
     type: "pullUp",
     targetSets: 3,
@@ -82,7 +82,7 @@ const firstPair: Exercise[] = [
     `,
   },
   {
-    id: 6,
+    key: "bulgarian-split-squat",
     category: "firstPair",
     type: "squat",
     targetSets: 3,
@@ -103,7 +103,7 @@ const firstPair: Exercise[] = [
 
 const secondPair: Exercise[] = [
   {
-    id: 7,
+    key: "parallel-bar-support-hold",
     category: "secondPair",
     type: "dip",
     targetSets: 3,
@@ -122,7 +122,7 @@ const secondPair: Exercise[] = [
     `,
   },
   {
-    id: 8,
+    key: "negative-hamstring-slide",
     category: "secondPair",
     type: "hinge",
     targetSets: 3,
@@ -143,7 +143,7 @@ const secondPair: Exercise[] = [
 
 const thirdPair: Exercise[] = [
   {
-    id: 9,
+    key: "incline-rows",
     category: "thirdPair",
     type: "row",
     targetSets: 3,
@@ -160,7 +160,7 @@ const thirdPair: Exercise[] = [
     `,
   },
   {
-    id: 10,
+    key: "full-pushup",
     category: "thirdPair",
     type: "pushUp",
     targetSets: 3,
@@ -184,7 +184,7 @@ const thirdPair: Exercise[] = [
 
 const coreTriplet: Exercise[] = [
   {
-    id: 11,
+    key: "ring-ab-rollouts",
     category: "coreTriplet",
     type: "antiExtension",
     targetSets: 3,
@@ -204,7 +204,7 @@ const coreTriplet: Exercise[] = [
     `,
   },
   {
-    id: 12,
+    key: "assisted-knee-copenhagen-plank",
     category: "coreTriplet",
     type: "antiRotation",
     targetSets: 3,
@@ -223,7 +223,7 @@ const coreTriplet: Exercise[] = [
     `,
   },
   {
-    id: 13,
+    key: "reverse-hyperextension",
     category: "coreTriplet",
     type: "extension",
     targetSets: 3,
