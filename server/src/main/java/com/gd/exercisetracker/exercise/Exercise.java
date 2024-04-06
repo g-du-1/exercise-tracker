@@ -19,6 +19,7 @@ public class Exercise {
     private int targetRest;
     private int additionalRest;
     private String mediaLink;
+    @Column(columnDefinition = "TEXT")
     private String comments;
 
     public String getKey() {
