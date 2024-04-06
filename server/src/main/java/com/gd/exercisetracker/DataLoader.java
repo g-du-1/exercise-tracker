@@ -33,5 +33,8 @@ public class DataLoader implements ApplicationRunner {
         // Second Pair
         exerciseRepository.save(new Exercise("parallel-bar-support-hold", "Parallel Bar Support Hold", "secondPair", "dip", 3, 60, 60, true, 90, 90, "https://antranik.org/wp-content/uploads/2014/01/antranik-holding-support-hold-on-parallel-bars.jpg", "<ul><li>Work up to 3 sets of 1 minute holds for this progression</li><li>If you can't hold yourself up at all, consider using bands or your feet to assist you until you gain the necessary strength.</li></ul>"));
         exerciseRepository.save(new Exercise("negative-hamstring-slide", "Negative Hamstring Slide", "secondPair", "hinge", 3, 5, 8, false, 90, 90, "https://www.youtube.com/watch?v=OY8Jci5KJdM", "<ul><li>Start in the top position of a glute bridge, slide legs out under control until your butt touches the ground/knees are extended.</li><li>Return to starting position and repeat for desired reps.</li></ul>"));
+
+        // Third Pair
+        exerciseRepository.save(new Exercise("incline-rows", "Incline Rows", "thirdPair", "row", 3, 5, 8, false, 90, 90, "https://www.youtube.com/watch?v=LR2EnFWpVao", "<ul><li>Perform a row, but with the body position somewhere between vertical and horizontal. Go closer to horizontal to make it harder.</li></ul>"));
     }
 }
