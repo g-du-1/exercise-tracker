@@ -41,5 +41,6 @@ public class DataLoader implements ApplicationRunner {
         // Core Triplet
         exerciseRepository.save(new Exercise("ring-ab-rollouts", "Ring Ab Rollouts", "coreTriplet", "antiExtension", 3, 8, 12, false, 60, 60, "https://www.youtube.com/watch?v=LBUfnmugKLw", "<ul><li>Elbows should stay straight</li><li>Remain in a hollow body position (ribs down, butt tucked)</li><li>Keep your hands as close as your overhead mobility will allow.</li><li>Higher ring position will make this easier. Elevating the feet will make it harder.</li></ul>"));
         exerciseRepository.save(new Exercise("assisted-knee-copenhagen-plank", "Assisted Knee Copenhagen Plank", "coreTriplet", "antiRotation", 3, 8, 12, false, 60, 60, "https://i.imgur.com/6vOLzTC.jpg", "<ul><li>Lower leg should give the minimum assistance you need.</li><li>Don't let the hips sag.</li><li>Can be performed on your hand instead of elbow.</li></ul>"));
+        exerciseRepository.save(new Exercise("reverse-hyperextension", "Reverse Hyperextension", "coreTriplet", "extension", 3, 8, 12, false, 60, 60, "https://www.youtube.com/watch?v=ZeRsNzFcQLQ&", "<ul><li>Keep your butt tucked</li></ul>"));
     }
 }
