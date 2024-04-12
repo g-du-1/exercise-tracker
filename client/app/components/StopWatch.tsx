@@ -4,6 +4,7 @@ import WarningIcon from "@mui/icons-material/Warning";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import { useBoundStore } from "../store/store";
+import { useEffect } from "react";
 
 export const StopWatch = () => {
   const selectedExercise = useBoundStore((state) => state.selectedExercise);
@@ -23,6 +24,18 @@ export const StopWatch = () => {
     restTimePassed &&
     swElapsedTime >=
       selectedExercise.targetRest + selectedExercise.additionalRest;
+
+  const alert = new Audio("/alert.mp3");
+
+  useEffect(() => {
+    if (restTimePassed) {
+      alert.play();
+    }
+
+    if (addtlRestTimePassed) {
+      alert.play();
+    }
+  }, [restTimePassed, addtlRestTimePassed]);
 
   return (
     <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>

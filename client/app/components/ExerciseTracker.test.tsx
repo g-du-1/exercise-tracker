@@ -511,4 +511,18 @@ describe("ExerciseTracker", () => {
 
     expect(screen.getByText("00:00:00")).toBeInTheDocument();
   });
+
+  it("plays alerts when rest times pass", () => {
+    renderExerciseTracker();
+
+    clickOpenModalTrigger(1);
+
+    submitReps("6");
+
+    act(() => {
+      jest.advanceTimersByTime(190000);
+    });
+
+    expect(window.HTMLMediaElement.prototype.play).toHaveBeenCalledTimes(2);
+  });
 });
