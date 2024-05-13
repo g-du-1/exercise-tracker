@@ -4,7 +4,7 @@ An exercise tracker for bodyweight exercises - https://www.reddit.com/r/bodyweig
 
 ## Motivation:
 
-There are a couple of apps that do this, however they are annoying to use and not specifically tailored for BWF so I've decided it was worth write my own.
+There are a couple of apps that do this, however they are annoying to use and not specifically tailored for BWF so I've decided it was worth writing my own.
 
 The goal was to have a web app that can be operated with as little interaction as possible to provide the best UX and to make it easier to track an exercise.
 
@@ -17,16 +17,17 @@ The front end is hosted on Vercel. Please bear in mind the design is mobile only
 https://exercise-tracker-iota-gules.vercel.app
 
 ## Features
-- Hiding and showing exercise videos / images
-- Hiding and showing exercise comments
-- Hiding and showing completed exercises
+
 - Stopwatch
-- An exercise timer that starts automatically when an exercise is completed
+- An exercise timer that starts automatically when an exercise is completed when applicable
 - Start and end time tracking
 - Visual cues and color coding depending on performance and exercise completeness
 - Warning icons and notifications for rest time
+- Hiding and showing exercise videos / images
+- Hiding and showing exercise comments
+- Hiding and showing completed exercises
 
-## Technologies / methods
+## Technologies / approach
 
 - TDD
 - React Testing Library
@@ -39,7 +40,7 @@ https://exercise-tracker-iota-gules.vercel.app
 - PostgreSQL (Docker)
 - Testcontainers
 - JUnit
-- RestAssured
+- REST Assured
 - CI / CD (GH Actions, Vercel)
 
 ## Future work:
