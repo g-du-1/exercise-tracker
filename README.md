@@ -18,11 +18,15 @@ https://exercise-tracker-iota-gules.vercel.app
 
 ## Features
 
+![](docs/exercise-tracker.gif)
+
+![](docs/rest-time-warning.png)
+
+- Warning icons and notifications for rest time
 - Stopwatch
 - An exercise timer that starts automatically when an exercise is completed when applicable
 - Start and end time tracking
 - Visual cues and color coding depending on performance and exercise completeness
-- Warning icons and notifications for rest time
 - Hiding and showing exercise videos / images
 - Hiding and showing exercise comments
 - Hiding and showing completed exercises
