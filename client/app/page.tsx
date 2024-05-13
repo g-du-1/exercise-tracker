@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import { exercises } from "./constants";
 
 export default async function Home() {
+  // TODO: Load exercises from the server when it's been set up
   // const exercises: Exercise[] = await getExercises();
 
   return (

@@ -38,6 +38,8 @@ const getDeleteRepsBtn = () => screen.getByLabelText(DELETE_REPS);
 
 const clickDeleteReps = () => fireEvent.click(getDeleteRepsBtn());
 
+// TODO: Make tests more maintainable
+
 describe("ExerciseTracker", () => {
   it("matches snapshot", () => {
     const result = renderExerciseTracker();
