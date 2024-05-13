@@ -20,9 +20,10 @@ https://exercise-tracker-iota-gules.vercel.app
 
 ![](docs/exercise-tracker.gif)
 
-![](docs/rest-time-warning.png)
-
 - Warning icons and notifications for rest time
+
+    ![](docs/rest-time-warning.png)
+
 - Stopwatch
 - An exercise timer that starts automatically when an exercise is completed when applicable
 - Start and end time tracking
