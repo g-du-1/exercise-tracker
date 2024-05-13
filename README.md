@@ -50,6 +50,7 @@ https://exercise-tracker-iota-gules.vercel.app
 
 ## Future work:
 
+- Reduce Readme gif size
 - Add a login system
 - Add a page where users can select their exercises
 - Host the server
