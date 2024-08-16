@@ -1,12 +1,12 @@
 package com.gd.exercisetracker.security.role;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.gd.exercisetracker.security.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.security.core.userdetails.User;
 
 import java.util.HashSet;
 import java.util.Set;
