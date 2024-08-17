@@ -23,7 +23,9 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(request -> request.requestMatchers("/public/**").permitAll().anyRequest().authenticated());
+        http.authorizeHttpRequests(request -> request
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .anyRequest().authenticated());
         http.csrf(AbstractHttpConfigurer::disable);
         http.httpBasic(withDefaults());
         return http.build();
