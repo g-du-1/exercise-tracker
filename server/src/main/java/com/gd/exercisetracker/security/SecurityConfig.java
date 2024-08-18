@@ -38,7 +38,10 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf((csrf) -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()));
+        http.csrf(csrf ->
+                csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                        .ignoringRequestMatchers("/api/auth/public/**")
+        );
         http.authorizeHttpRequests((requests)
                 -> requests
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
@@ -47,6 +50,7 @@ public class SecurityConfig {
                 .anyRequest().authenticated());
         http.exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler));
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.formLogin(withDefaults());
         http.httpBasic(withDefaults());
         return http.build();
     }
