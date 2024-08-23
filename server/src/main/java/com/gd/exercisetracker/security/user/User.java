@@ -3,6 +3,7 @@ package com.gd.exercisetracker.security.user;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gd.exercisetracker.security.role.Role;
+import com.gd.exercisetracker.userexercise.UserExercise;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -15,6 +16,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -63,6 +66,9 @@ public class User {
     @JsonBackReference
     @ToString.Exclude
     private Role role;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<UserExercise> exercises = new HashSet<>();
 
     @CreationTimestamp
     @Column(updatable = false)
