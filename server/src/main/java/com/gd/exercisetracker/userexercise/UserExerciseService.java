@@ -22,13 +22,12 @@ public class UserExerciseService {
     private UserExerciseRepository userExerciseRepository;
 
     public UserExercise saveUserExercise(Long userId, Long exerciseId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
 
-        Exercise exercise = exerciseRepository.findById(exerciseId)
-                .orElseThrow(() -> new RuntimeException("Exercise not found"));
+        Exercise exercise = exerciseRepository.findById(exerciseId).orElseThrow(() -> new RuntimeException("Exercise not found"));
 
         UserExercise userExercise = new UserExercise();
+        
         userExercise.setUser(user);
         userExercise.setExercise(exercise);
 

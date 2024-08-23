@@ -29,15 +29,19 @@ public class JwtUtils {
 
     public String getJwtFromHeader(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
+
         logger.debug("Authorization Header: {}", bearerToken);
+
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7); // Remove Bearer prefix
+            return bearerToken.substring(7);
         }
+
         return null;
     }
 
     public String generateTokenFromUsername(UserDetails userDetails) {
         String username = userDetails.getUsername();
+
         return Jwts.builder()
                 .subject(username)
                 .issuedAt(new Date())
@@ -60,7 +64,9 @@ public class JwtUtils {
     public boolean validateJwtToken(String authToken) {
         try {
             System.out.println("Validate");
+
             Jwts.parser().verifyWith((SecretKey) key()).build().parseSignedClaims(authToken);
+
             return true;
         } catch (MalformedJwtException e) {
             logger.error("Invalid JWT token: {}", e.getMessage());
@@ -71,6 +77,7 @@ public class JwtUtils {
         } catch (IllegalArgumentException e) {
             logger.error("JWT claims string is empty: {}", e.getMessage());
         }
+        
         return false;
     }
 }

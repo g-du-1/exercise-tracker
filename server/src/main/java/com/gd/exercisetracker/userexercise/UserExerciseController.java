@@ -7,17 +7,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/user-exercises")
+@RequestMapping("/api/v1/user-exercises")
 public class UserExerciseController {
 
     @Autowired
     private UserExerciseService userExerciseService;
 
     @PostMapping("/{userId}/save")
-    public ResponseEntity<UserExercise> saveUserExercise(
-            @PathVariable Long userId,
-            @RequestParam Long exerciseId) {
-
+    public ResponseEntity<UserExercise> saveUserExercise(@PathVariable Long userId, @RequestParam Long exerciseId) {
         UserExercise savedExercise = userExerciseService.saveUserExercise(userId, exerciseId);
 
         return ResponseEntity.ok(savedExercise);

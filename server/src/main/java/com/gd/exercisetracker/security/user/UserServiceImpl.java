@@ -48,14 +48,7 @@ public class UserServiceImpl implements UserService {
                 user.getUserId(),
                 user.getUserName(),
                 user.getEmail(),
-                user.isAccountNonLocked(),
-                user.isAccountNonExpired(),
-                user.isCredentialsNonExpired(),
                 user.isEnabled(),
-                user.getCredentialsExpiryDate(),
-                user.getAccountExpiryDate(),
-                user.getTwoFactorSecret(),
-                user.isTwoFactorEnabled(),
                 user.getSignUpMethod(),
                 user.getRole(),
                 user.getCreatedDate(),
@@ -66,6 +59,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByUsername(String username) {
         Optional<User> user = userRepository.findByUserName(username);
+        
         return user.orElseThrow(() -> new RuntimeException("User not found with username: " + username));
     }
 }

@@ -14,7 +14,6 @@ import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -49,16 +48,8 @@ public class User {
     @JsonIgnore
     private String password;
 
-    private boolean accountNonLocked = true;
-    private boolean accountNonExpired = true;
-    private boolean credentialsNonExpired = true;
     private boolean enabled = true;
 
-    private LocalDate credentialsExpiryDate;
-    private LocalDate accountExpiryDate;
-
-    private String twoFactorSecret;
-    private boolean isTwoFactorEnabled = false;
     private String signUpMethod;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
@@ -90,8 +81,14 @@ public class User {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
+        if (this == o) {
+            return true;
+        }
+
+        if (!(o instanceof User)) {
+            return false;
+        }
+        
         return userId != null && userId.equals(((User) o).getUserId());
     }
 
