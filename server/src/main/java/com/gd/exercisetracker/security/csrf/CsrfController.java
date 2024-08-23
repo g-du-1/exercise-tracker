@@ -1,4 +1,4 @@
-package com.gd.exercisetracker.security;
+package com.gd.exercisetracker.security.csrf;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.web.csrf.CsrfToken;

@@ -1,8 +1,5 @@
 package com.gd.exercisetracker.security.jwt;
 
-import com.gd.exercisetracker.security.MessageResponse;
-import com.gd.exercisetracker.security.SignupRequest;
-import com.gd.exercisetracker.security.UserInfoResponse;
 import com.gd.exercisetracker.security.role.AppRole;
 import com.gd.exercisetracker.security.role.Role;
 import com.gd.exercisetracker.security.role.RoleRepository;
@@ -133,7 +130,7 @@ public class AuthController {
                 .collect(Collectors.toList());
 
         UserInfoResponse response = new UserInfoResponse();
-        
+
         response.setId(user.getUserId());
         response.setUsername(user.getUserName());
         response.setEmail(user.getEmail());

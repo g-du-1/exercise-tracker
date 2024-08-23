@@ -1,4 +1,4 @@
-package com.gd.exercisetracker.security;
+package com.gd.exercisetracker.security.jwt;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

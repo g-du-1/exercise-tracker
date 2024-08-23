@@ -1,4 +1,4 @@
-package com.gd.exercisetracker.security;
+package com.gd.exercisetracker.security.jwt;
 
 import lombok.Getter;
 import lombok.Setter;
