@@ -35,11 +35,43 @@ public class DataLoader implements ApplicationRunner {
         shoulderBand.setAdditionalRest(0);
         shoulderBand.setMediaLink("https://www.youtube.com/watch?v=6y_AU-aGhVE");
         shoulderBand.setComments("<ul><li>Can also be done with a tee-shirt</li></ul>");
-        
+
         exerciseRepository.save(shoulderBand);
 
-//        exerciseRepository.save(new Exercise("squat-sky-reaches", "Squat Sky Reaches", "warmup", "warmup", 1, 5, 10, false, 0, 0, "https://www.youtube.com/watch?v=lbozu0DPcYI&t=42s", null));
-//        exerciseRepository.save(new Exercise("gmb-wrist-prep", "GMB Wrist Prep", "warmup", "warmup", 1, 10, null, false, 0, 0, "https://www.youtube.com/watch?v=mSZWSQSSEjE", "<ul><li>Do as many reps as you want</li></ul>"));
+        Exercise skySquat = new Exercise();
+
+        skySquat.setKey("squat-sky-reaches");
+        skySquat.setName("Squat Sky Reaches");
+        skySquat.setCategory("warmup");
+        skySquat.setType("warmup");
+        skySquat.setTargetSets(1);
+        skySquat.setTargetRepsMin(5);
+        skySquat.setTargetRepsMax(10);
+        skySquat.setDuration(false);
+        skySquat.setTargetRest(0);
+        skySquat.setAdditionalRest(0);
+        skySquat.setMediaLink("https://www.youtube.com/watch?v=lbozu0DPcYI&t=42s");
+        skySquat.setComments(null);
+
+        exerciseRepository.save(skySquat);
+
+        Exercise wristPrep = new Exercise();
+
+        wristPrep.setKey("gmb-wrist-prep");
+        wristPrep.setName("GMB Wrist Prep");
+        wristPrep.setCategory("warmup");
+        wristPrep.setType("warmup");
+        wristPrep.setTargetSets(1);
+        wristPrep.setTargetRepsMin(10);
+        wristPrep.setTargetRepsMax(null);
+        wristPrep.setDuration(false);
+        wristPrep.setTargetRest(0);
+        wristPrep.setAdditionalRest(0);
+        wristPrep.setMediaLink("https://www.youtube.com/watch?v=mSZWSQSSEjE");
+        wristPrep.setComments("<ul><li>Do as many reps as you want</li></ul>");
+
+        exerciseRepository.save(wristPrep);
+
 //        exerciseRepository.save(new Exercise("deadbugs-both-legs", "Deadbugs (Both Legs)", "warmup", "warmup", 1, 30, 30, true, 0, 0, "https://www.youtube.com/watch?v=HFv2WwgeVMk", null));
 //
 //        // First Pair
