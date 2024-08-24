@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: `/api`,
+  baseURL: `/api/v1`,
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -21,7 +21,7 @@ api.interceptors.request.use(
 
     if (!csrfToken) {
       try {
-        const response = await axios.get(`/api/csrf-token`, {
+        const response = await axios.get(`/api/v1/csrf-token`, {
           withCredentials: true,
         });
 

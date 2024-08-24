@@ -1,4 +1,4 @@
-import api from "app/services/api";
+import api from "../services/api";
 
 const handleLogin = async () => {
   try {
@@ -15,17 +15,17 @@ const handleLogin = async () => {
   } catch (error) {}
 };
 
-const handleGetUsers = async () => {
-  const usersResp = await api.get("/admin/getusers");
+const handleGetUser = async () => {
+  const resp = await api.get("/auth/user");
 
-  console.log(usersResp.data);
+  console.log(resp.data);
 };
 
 export const AuthExample = () => {
   return (
     <div>
       <button onClick={handleLogin}>LOG IN</button>
-      <button onClick={handleGetUsers}>GET USERS</button>
+      <button onClick={handleGetUser}>GET USER</button>
     </div>
   );
 };
