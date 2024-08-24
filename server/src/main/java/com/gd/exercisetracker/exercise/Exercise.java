@@ -16,8 +16,8 @@ public class Exercise {
     private String key;
 
     private String name;
-    private String category;
-    private String type;
+    private ExerciseCategory category;
+    private ExerciseType type;
     private int targetSets;
     private int targetRepsMin;
     private Integer targetRepsMax;
