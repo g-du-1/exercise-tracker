@@ -3,7 +3,7 @@ module.exports = {
     return [
       {
         source: "/:path*",
-        destination: `${process.env.NEXT_PUBLIC_SERVER_URL}/:path*`, // Proxy to Backend
+        destination: `${process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:8080"}/:path*`, // Proxy to Backend
       },
     ];
   },
