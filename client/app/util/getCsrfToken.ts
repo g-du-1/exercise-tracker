@@ -1,5 +1,8 @@
 export const getCsrfToken = async (baseUrl: string) => {
-  const response = await fetch(`${baseUrl}/csrf-token`, {
+  const csrfEndpoint =
+    process.env.NEXT_PUBLIC_API_CSRF_ENDPOINT || "/csrf-token";
+
+  const response = await fetch(`${baseUrl}${csrfEndpoint}`, {
     credentials: "include",
   });
 

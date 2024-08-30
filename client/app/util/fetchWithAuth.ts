@@ -1,10 +1,11 @@
 import { getCsrfToken } from "./getCsrfToken";
 
 export const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
-  const baseUrl = "/api/v1";
-  const authTokenName = "JWT_TOKEN";
-  const csrfTokenName = "CSRF_TOKEN";
-  const csrfHeaderName = "X-XSRF-TOKEN";
+  const baseUrl = process.env.NEXT_PUBLIC_API_PREFIX || "/api/v1";
+  const authTokenName = process.env.NEXT_PUBLIC_AUTH_TOKEN_NAME || "JWT_TOKEN";
+  const csrfTokenName = process.env.NEXT_PUBLIC_CSRF_TOKEN_NAME || "CSRF_TOKEN";
+  const csrfHeaderName =
+    process.env.NEXT_PUBLIC_CSRF_HEADER_NAME || "X-XSRF-TOKEN";
 
   options.credentials = "include";
 

@@ -2,15 +2,18 @@ import { User } from "app/types";
 import { fetchWithAuth } from "app/util/fetchWithAuth";
 
 const handleSignup = async () => {
-  const response = await fetchWithAuth("/auth/public/signup", {
-    method: "POST",
-    body: JSON.stringify({
-      username: "testuserreact",
-      email: "abc@example.com",
-      password: "testuser1",
-      role: ["user"],
-    }),
-  });
+  const response = await fetchWithAuth(
+    process.env.NEXT_PUBLIC_API_SIGN_UP_ENDPOINT || "/auth/public/signup",
+    {
+      method: "POST",
+      body: JSON.stringify({
+        username: "testuserreact",
+        email: "abc@example.com",
+        password: "testuser1",
+        role: ["user"],
+      }),
+    }
+  );
 
   const data = await response.json();
 
@@ -19,13 +22,16 @@ const handleSignup = async () => {
 
 const handleSignin = async () => {
   try {
-    const response = await fetchWithAuth("/auth/public/signin", {
-      method: "POST",
-      body: JSON.stringify({
-        username: "testuserreact",
-        password: "testuser1",
-      }),
-    });
+    const response = await fetchWithAuth(
+      process.env.NEXT_PUBLIC_API_SIGN_IN_ENDPOINT || "/auth/public/signin",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          username: "testuserreact",
+          password: "testuser1",
+        }),
+      }
+    );
 
     const data = await response.json();
 
