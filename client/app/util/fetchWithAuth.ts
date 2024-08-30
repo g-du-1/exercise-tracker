@@ -1,54 +1,42 @@
-type Options = {
-  headers?: Record<string, string>;
-  method?: "GET" | "POST";
-  body?: string;
-};
+import { getCsrfToken } from "./getCsrfToken";
 
-const baseURL = "/api/v1";
+export const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
+  const baseUrl = "/api/v1";
+  const authTokenName = "JWT_TOKEN";
+  const csrfTokenName = "CSRF_TOKEN";
+  const csrfHeaderName = "X-XSRF-TOKEN";
 
-export const fetchWithAuth = async (url: string, options: Options = {}) => {
-  let csrfToken = localStorage.getItem("CSRF_TOKEN");
+  options.credentials = "include";
 
-  if (!csrfToken) {
+  options.headers = {
+    ...(options.headers as Record<string, string>),
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  };
+
+  const token = localStorage.getItem(authTokenName);
+
+  if (token) {
+    options.headers.Authorization = `Bearer ${token}`;
+  }
+
+  const csrfToken = localStorage.getItem(csrfTokenName);
+
+  if (csrfToken) {
+    options.headers[csrfHeaderName] = csrfToken;
+  } else {
     try {
-      const response = await fetch(`${baseURL}/csrf-token`, {
-        method: "GET",
-        credentials: "include",
-      });
+      const newToken = await getCsrfToken(baseUrl);
 
-      const data = await response.json();
+      if (newToken) {
+        localStorage.setItem(csrfTokenName, newToken);
 
-      csrfToken = data.token;
-
-      if (csrfToken) {
-        localStorage.setItem("CSRF_TOKEN", csrfToken);
+        options.headers[csrfHeaderName] = newToken;
       }
     } catch (error) {
-      console.error("Failed to fetch CSRF token", error);
+      throw new Error("Couldn't get CSRF Token.");
     }
   }
 
-  const token = localStorage.getItem("JWT_TOKEN");
-
-  const headers: Record<string, string> = {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-    ...options.headers,
-  };
-
-  if (token) {
-    headers.Authorization = `Bearer ${token}`;
-  }
-
-  if (csrfToken) {
-    headers["X-XSRF-TOKEN"] = csrfToken;
-  }
-
-  console.log("X-XSRF-TOKEN " + csrfToken);
-
-  return fetch(`${baseURL}${url}`, {
-    credentials: "include",
-    ...options,
-    headers,
-  });
+  return fetch(`${baseUrl}${url}`, options);
 };
