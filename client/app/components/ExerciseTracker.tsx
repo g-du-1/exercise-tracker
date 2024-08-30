@@ -14,7 +14,6 @@ import { SavedReps } from "./card/SavedReps";
 import { CardComments } from "./card/CardComments";
 import { useBoundStore } from "../store/store";
 import { FinishTime } from "./FinishTime";
-import { AuthExample } from "./AuthExample";
 
 export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
   const showComments = useBoundStore((state) => state.showComments);
@@ -34,8 +33,6 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
 
   return (
     <>
-      <AuthExample />
-
       <TopBar />
 
       {exercises.map((exercise, idx) => {
