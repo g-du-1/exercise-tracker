@@ -73,27 +73,4 @@ public class User {
         this.email = email;
         this.password = password;
     }
-
-    public User(String userName, String email) {
-        this.userName = userName;
-        this.email = email;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (!(o instanceof User)) {
-            return false;
-        }
-        
-        return userId != null && userId.equals(((User) o).getUserId());
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }
