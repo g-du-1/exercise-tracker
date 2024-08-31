@@ -78,7 +78,7 @@ class ExerciseControllerTest {
     }
 
     @Test
-    void shouldGetAllExercises() {
+    void getsAllExercises() {
         String jwt = getTestJwt();
 
         Exercise exercise1 = new Exercise();
@@ -137,5 +137,26 @@ class ExerciseControllerTest {
                         hasItems("https://www.youtube.com/watch?v=HFv2WwgeVMk",
                                 "https://www.youtube.com/watch?v=C995b3KLXS4&t=7s"))
                 .body("comments", hasItems(null, "<ul><li>Do as many reps as you want</li></ul>"));
+    }
+
+    @Test
+    void returns401WhenNoAuthHeaderSent() {
+        given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get("/api/v1/exercises")
+                .then()
+                .statusCode(401);
+    }
+
+    @Test
+    void returns401WhenInvalidTokenSent() {
+        given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", "Bearer invalid-token")
+                .when()
+                .get("/api/v1/exercises")
+                .then()
+                .statusCode(401);
     }
 }

@@ -102,7 +102,7 @@ public class AuthController {
         } else {
             String roleStr = strRoles.iterator().next();
 
-            if (roleStr.equals("admin")) {
+            if (roleStr.equals("ADMIN")) {
                 role = roleRepository.findByRoleName(AppRole.ROLE_ADMIN)
                         .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
             } else {
