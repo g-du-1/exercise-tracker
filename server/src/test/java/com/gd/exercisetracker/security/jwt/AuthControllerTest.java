@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
@@ -37,6 +38,9 @@ class AuthControllerTest {
 
     @Autowired
     RoleRepository roleRepository;
+
+    @Autowired
+    BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     TestHelpers testHelpers;
@@ -247,5 +251,78 @@ class AuthControllerTest {
                 .get("/api/v1/auth/user")
                 .then()
                 .statusCode(401);
+    }
+
+    @Test
+    void returnsErrorForLoginWithWrongPassword() {
+        User user = new User("user", "user@example.com", passwordEncoder.encode("password"));
+
+        userRepository.save(user);
+
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setUsername("user");
+        loginRequest.setPassword("wrongPass");
+
+        given()
+                .contentType(ContentType.JSON)
+                .body(loginRequest)
+                .when()
+                .post("/api/v1/auth/public/signin")
+                .then()
+                .statusCode(404)
+                .body("message", equalTo("Bad credentials"))
+                .body("status", equalTo(false))
+        ;
+    }
+
+    @Test
+    void returnsErrorForLoginWithWrongUsername() {
+        User user = new User("user", "user@example.com", passwordEncoder.encode("password"));
+
+        userRepository.save(user);
+
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setUsername("wrong-user-name");
+        loginRequest.setPassword("password");
+
+        given()
+                .contentType(ContentType.JSON)
+                .body(loginRequest)
+                .when()
+                .post("/api/v1/auth/public/signin")
+                .then()
+                .statusCode(404)
+                .body("message", equalTo("Bad credentials"))
+                .body("status", equalTo(false))
+        ;
+    }
+
+    @Test
+    void signsUserIn() {
+        Role userRole = roleRepository.findByRoleName(AppRole.ROLE_USER).orElseGet(() -> roleRepository.save(new Role(AppRole.ROLE_USER)));
+
+        User user = new User("user", "user@example.com", passwordEncoder.encode("password"));
+
+        user.setEnabled(true);
+        user.setSignUpMethod("CLI Runner");
+        user.setRole(userRole);
+
+        userRepository.save(user);
+
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setUsername("user");
+        loginRequest.setPassword("password");
+
+        given()
+                .contentType(ContentType.JSON)
+                .body(loginRequest)
+                .when()
+                .post("/api/v1/auth/public/signin")
+                .then()
+                .statusCode(200)
+                .body("jwtToken", not(emptyOrNullString()))
+                .body("username", equalTo("user"))
+                .body("roles", hasItem("ROLE_USER"));
+        ;
     }
 }
