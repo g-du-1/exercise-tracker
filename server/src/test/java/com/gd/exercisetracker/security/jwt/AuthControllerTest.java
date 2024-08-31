@@ -1,5 +1,6 @@
 package com.gd.exercisetracker.security.jwt;
 
+import com.gd.exercisetracker.TestHelpers;
 import com.gd.exercisetracker.security.role.AppRole;
 import com.gd.exercisetracker.security.role.Role;
 import com.gd.exercisetracker.security.role.RoleRepository;
@@ -23,7 +24,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -36,6 +37,9 @@ class AuthControllerTest {
 
     @Autowired
     RoleRepository roleRepository;
+
+    @Autowired
+    TestHelpers testHelpers;
 
     @LocalServerPort
     private Integer port;
@@ -196,5 +200,52 @@ class AuthControllerTest {
         Role role = user.getRole();
 
         assertEquals(AppRole.ROLE_ADMIN, role.getRoleName());
+    }
+
+    @Test
+    void returnsUserDetailsIfReqHasToken() {
+        User user = new User();
+        user.setUserName("admin");
+        user.setEmail("test@test.com");
+        Role adminRole = roleRepository.findByRoleName(AppRole.ROLE_ADMIN).orElseGet(() -> roleRepository.save(new Role(AppRole.ROLE_ADMIN)));
+        user.setRole(adminRole);
+
+        userRepository.save(user);
+
+        String jwt = testHelpers.getTestJwt("admin");
+
+        given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", "Bearer " + jwt)
+                .when()
+                .get("/api/v1/auth/user")
+                .then()
+                .statusCode(200)
+                .body("id", isA(Number.class))
+                .body("username", equalTo("admin"))
+                .body("email", equalTo("test@test.com"))
+                .body("enabled", equalTo(true))
+                .body("roles", hasItem("ROLE_ADMIN"));
+    }
+
+    @Test
+    void doesNotLetUsersAccessOtherUsersData() {
+        User user = new User();
+        user.setUserName("admin");
+        user.setEmail("test@test.com");
+        Role adminRole = roleRepository.findByRoleName(AppRole.ROLE_ADMIN).orElseGet(() -> roleRepository.save(new Role(AppRole.ROLE_ADMIN)));
+        user.setRole(adminRole);
+
+        userRepository.save(user);
+
+        String jwt = testHelpers.getTestJwt("other-user");
+
+        given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", "Bearer " + jwt)
+                .when()
+                .get("/api/v1/auth/user")
+                .then()
+                .statusCode(401);
     }
 }

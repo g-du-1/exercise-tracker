@@ -1,8 +1,6 @@
 package com.gd.exercisetracker.exercise;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
+import com.gd.exercisetracker.TestHelpers;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.AfterAll;
@@ -10,15 +8,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
-
-import java.security.Key;
-import java.util.Date;
 
 import static com.gd.exercisetracker.exercise.ExerciseCategory.WARM_UP;
 import static com.gd.exercisetracker.exercise.ExerciseType.PULL_UP;
@@ -34,11 +28,8 @@ class ExerciseControllerTest {
     @Autowired
     ExerciseRepository exerciseRepository;
 
-    @Value("${spring.app.jwtSecret}")
-    private String jwtSecret;
-
-    @Value("${spring.app.jwtExpirationMs}")
-    private int jwtExpirationMs;
+    @Autowired
+    TestHelpers testHelpers;
 
     @LocalServerPort
     private Integer port;
@@ -66,20 +57,9 @@ class ExerciseControllerTest {
         exerciseRepository.deleteAll();
     }
 
-    private String getTestJwt() {
-        Key key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
-
-        return Jwts.builder()
-                .subject("admin")
-                .issuedAt(new Date())
-                .expiration(new Date((new Date()).getTime() + jwtExpirationMs))
-                .signWith(key)
-                .compact();
-    }
-
     @Test
     void getsAllExercises() {
-        String jwt = getTestJwt();
+        String jwt = testHelpers.getTestJwt("admin");
 
         Exercise exercise1 = new Exercise();
 
