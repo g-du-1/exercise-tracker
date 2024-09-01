@@ -20,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -35,16 +36,25 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf ->
-                csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                        .ignoringRequestMatchers("/api/v1/auth/public/**")
+        CookieCsrfTokenRepository tokenRepository = CookieCsrfTokenRepository.withHttpOnlyFalse();
+        CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
+
+        http.csrf((csrf) ->
+                csrf
+                    .csrfTokenRepository(tokenRepository)
+                    .csrfTokenRequestHandler(requestHandler)
+                    .ignoringRequestMatchers("/api/v1/auth/public/**")
         );
 
-        http.authorizeHttpRequests((requests)
-                -> requests
-                .requestMatchers("/api/v1/csrf-token").permitAll()
-                .requestMatchers("/api/v1/auth/public/**").permitAll()
-                .anyRequest().authenticated());
+        http.authorizeHttpRequests((requests) ->
+                requests
+                    .requestMatchers("/api/v1/csrf-token")
+                    .permitAll()
+                    .requestMatchers("/api/v1/auth/public/**")
+                    .permitAll()
+                    .anyRequest()
+                    .authenticated()
+        );
 
         http.exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler));
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
