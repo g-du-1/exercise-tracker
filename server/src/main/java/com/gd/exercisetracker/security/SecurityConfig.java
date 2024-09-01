@@ -15,12 +15,12 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -36,20 +36,15 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        CookieCsrfTokenRepository tokenRepository = CookieCsrfTokenRepository.withHttpOnlyFalse();
-        CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
-
-        http.csrf((csrf) ->
-                csrf
-                    .csrfTokenRepository(tokenRepository)
-                    .csrfTokenRequestHandler(requestHandler)
-                    .ignoringRequestMatchers("/api/v1/auth/public/**")
+        http.sessionManagement((session) ->
+                session
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         );
+
+        http.csrf(AbstractHttpConfigurer::disable);
 
         http.authorizeHttpRequests((requests) ->
                 requests
-                    .requestMatchers("/api/v1/csrf-token")
-                    .permitAll()
                     .requestMatchers("/api/v1/auth/public/**")
                     .permitAll()
                     .anyRequest()
