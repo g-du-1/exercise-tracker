@@ -1,4 +1,3 @@
-import { User } from "app/types";
 import { fetchWithAuth } from "app/util/fetchWithAuth";
 
 const handleSignup = async () => {
@@ -70,9 +69,7 @@ const handleLogout = () => {
 };
 
 const getUserExercises = async () => {
-  const user: User = await handleGetUser();
-
-  const resp = await fetchWithAuth(`/user-exercises/${user.id}`);
+  const resp = await fetchWithAuth(`/user-exercises`);
 
   const data = await resp.json();
 
@@ -80,8 +77,9 @@ const getUserExercises = async () => {
 };
 
 const saveSingleUserExercise = async () => {
-  const response = await fetchWithAuth("/user-exercises/3/save?exerciseId=11", {
+  const response = await fetchWithAuth("/user-exercises/save", {
     method: "POST",
+    body: JSON.stringify({ exerciseId: 1 }),
   });
 
   const data = await response.json();
