@@ -64,7 +64,6 @@ const getAllExercises = async () => {
 };
 
 const handleLogout = () => {
-  localStorage.setItem("CSRF_TOKEN", "");
   localStorage.setItem("JWT_TOKEN", "");
 
   console.log("Deleted local account state.");
