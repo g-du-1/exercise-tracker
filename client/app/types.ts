@@ -36,3 +36,16 @@ export type SavedReps = {
   name: string;
   reps: number[];
 };
+
+export enum Role {
+  ROLE_ADMIN,
+  ROLE_USER,
+}
+
+export type User = {
+  id: number;
+  username: string;
+  email: string;
+  enabled: boolean;
+  roles: Role[];
+};
