@@ -170,4 +170,25 @@ class UserExerciseControllerTest {
                 .statusCode(200)
                 .body("exercise.key", hasItems("test-exercise-1", "test-exercise-2"));
     }
+
+    @Test
+    void getUserExercisesReturns401WhenNoAuthHeaderSent() {
+        given()
+                .contentType(ContentType.JSON)
+        .when()
+                .get("/api/v1/user-exercises")
+        .then()
+                .statusCode(401);
+    }
+
+    @Test
+    void getUserExercisesReturns401WhenInvalidTokenSent() {
+        given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", "Bearer invalid-token")
+        .when()
+                .get("/api/v1/user-exercises")
+        .then()
+                .statusCode(401);
+    }
 }
