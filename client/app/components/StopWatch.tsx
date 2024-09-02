@@ -19,7 +19,7 @@ export const StopWatch = () => {
 
   const restTimePassed =
     selectedExercise &&
-    selectedExercise.category !== "warmup" &&
+    selectedExercise.category !== "WARM_UP" &&
     swElapsedTime > 0 &&
     swElapsedTime >= selectedExercise.targetRest;
 

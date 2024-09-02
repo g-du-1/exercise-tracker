@@ -47,7 +47,7 @@ export const RepsModal = ({ exercises }: Props) => {
 
       setSavedReps(newReps);
 
-      if (selectedExercise.category !== "warmup") {
+      if (selectedExercise.category !== "WARM_UP") {
         resetStopwatch();
 
         const isLastExercise =
