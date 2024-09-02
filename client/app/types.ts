@@ -1,23 +1,24 @@
 type ExerciseCategory =
-  | "warmup"
-  | "firstPair"
-  | "secondPair"
-  | "thirdPair"
-  | "coreTriplet";
+  | "WARM_UP"
+  | "FIRST_PAIR"
+  | "SECOND_PAIR"
+  | "THIRD_PAIR"
+  | "CORE_TRIPLET";
 
 type ExerciseType =
-  | "warmup"
-  | "pullUp"
-  | "squat"
-  | "dip"
-  | "hinge"
-  | "row"
-  | "pushUp"
-  | "antiExtension"
-  | "antiRotation"
-  | "extension";
+  | "WARM_UP"
+  | "PULL_UP"
+  | "SQUAT"
+  | "DIP"
+  | "HINGE"
+  | "ROW"
+  | "PUSH_UP"
+  | "ANTI_EXTENSION"
+  | "ANTI_ROTATION"
+  | "EXTENSION";
 
 export type Exercise = {
+  id: number;
   key: string;
   name: string;
   type: ExerciseType;
@@ -27,7 +28,7 @@ export type Exercise = {
   targetSets: number;
   targetRepsMin: number;
   targetRepsMax: number | null;
-  isDuration: boolean;
+  duration: boolean;
   targetRest: number;
   additionalRest: number;
 };

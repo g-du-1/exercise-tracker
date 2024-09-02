@@ -23,7 +23,7 @@ export const CardHeading = ({ exercise, exerciseCompleted }: Props) => {
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Box sx={{ mr: 1, fontSize: "12px", color: "#b9b9b9" }}>
-            {`${exercise.targetSets}x${exercise.targetRepsMin}${exercise.targetRepsMax && exercise.targetRepsMin !== exercise.targetRepsMax ? `-${exercise.targetRepsMax}` : ``}${exercise.isDuration ? `s` : ``}`}
+            {`${exercise.targetSets}x${exercise.targetRepsMin}${exercise.targetRepsMax && exercise.targetRepsMin !== exercise.targetRepsMax ? `-${exercise.targetRepsMax}` : ``}${exercise.duration ? `s` : ``}`}
           </Box>
 
           <Box sx={{ fontSize: "14px", fontWeight: 500 }}>{exercise.name}</Box>
