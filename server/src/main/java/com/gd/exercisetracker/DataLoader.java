@@ -231,6 +231,11 @@ public class DataLoader implements ApplicationRunner {
         hamstringSlide.setAdditionalRest(90);
         hamstringSlide.setMediaLink("https://www.youtube.com/watch?v=Dlazt593cuA");
         hamstringSlide.setComments(buildComments(List.of(
+                "This exercise can bridge the gap between SLDL and Nordic Curls",
+                "You will need a towel, socks, sliders, carpet etc. material which allows you to perform this movement smoothly",
+                "Keep PPT/Neutral Pelvis. Hands supporting at sides for support as needed",
+                "Ascend by squeezing glutes, pulling your ankles to your glutes, contracting your hamstrings",
+                "Descend by sliding ankles out under control",
                 "As before, but pull ankles back to glutes after eccentric movement, contracting the hamstrings and glutes"
         )));
 
@@ -369,23 +374,70 @@ public class DataLoader implements ApplicationRunner {
     }
 
     private void addAdditionalWarmups() {
-//        Exercise archHangsWarmup = new Exercise();
-//
-//        archHangsWarmup.setKey("arch-hangs-warmup");
-//        archHangsWarmup.setName("Arch Hangs (Warmup)");
-//        archHangsWarmup.setCategory(ExerciseCategory.WARM_UP);
-//        archHangsWarmup.setType(ExerciseType.WARM_UP);
-//        archHangsWarmup.setTargetSets(1);
-//        archHangsWarmup.setTargetRepsMin(10);
-//        archHangsWarmup.setTargetRepsMax(10);
-//        archHangsWarmup.setDuration(false);
-//        archHangsWarmup.setTargetRest(0);
-//        archHangsWarmup.setAdditionalRest(0);
-//        archHangsWarmup.setMediaLink("https://youtu.be/C995b3KLXS4?t=7s");
-//        String comments = buildComments(List.of("Add these after you reach Negative Pullups", "Beginner attempts will look more like <a href=\"https://www.youtube.com/watch?v=HoE-C85ZlCE\">this</a>"));
-//        archHangsWarmup.setComments(comments);
-//
-//        exerciseRepository.save(archHangsWarmup);
+        Exercise archHangsWarmup = new Exercise();
+
+        archHangsWarmup.setKey("arch-hangs-warmup");
+        archHangsWarmup.setName("Arch Hangs (Warmup)");
+        archHangsWarmup.setCategory(ExerciseCategory.WARM_UP);
+        archHangsWarmup.setType(ExerciseType.WARM_UP);
+        archHangsWarmup.setTargetSets(1);
+        archHangsWarmup.setTargetRepsMin(10);
+        archHangsWarmup.setTargetRepsMax(10);
+        archHangsWarmup.setDuration(false);
+        archHangsWarmup.setTargetRest(0);
+        archHangsWarmup.setAdditionalRest(0);
+        archHangsWarmup.setMediaLink("https://www.youtube.com/watch?v=C995b3KLXS4&t=7s");
+        archHangsWarmup.setComments(buildComments(List.of(
+                "Add these after you reach Negative Pullups",
+                "Beginner attempts will look more like <a href=\"https://www.youtube.com/watch?v=HoE-C85ZlCE\">this</a>"))
+        );
+
+        exerciseRepository.save(archHangsWarmup);
+
+        Exercise supportHoldWarmup = new Exercise();
+
+        supportHoldWarmup.setKey("support-hold-warmup");
+        supportHoldWarmup.setName("Parallel Bar Support Hold (Warmup)");
+        supportHoldWarmup.setCategory(ExerciseCategory.WARM_UP);
+        supportHoldWarmup.setType(ExerciseType.WARM_UP);
+        supportHoldWarmup.setTargetSets(1);
+        supportHoldWarmup.setTargetRepsMin(30);
+        supportHoldWarmup.setTargetRepsMax(30);
+        supportHoldWarmup.setDuration(true);
+        supportHoldWarmup.setTargetRest(0);
+        supportHoldWarmup.setAdditionalRest(0);
+        supportHoldWarmup.setMediaLink("https://antranik.org/wp-content/uploads/2014/01/antranik-holding-support-hold-on-parallel-bars.jpg");
+        supportHoldWarmup.setComments(buildComments(List.of(
+                "Arms straight",
+                "Body straight or slightly hollow",
+                "Depress the shoulderblades (<a href='https://www.reddit.com/r/bodyweightfitness/wiki/kb/positioning'>what does that even mean?</a>)",
+                "The stability of the PB allows you to build some strength and perfect your form. Have a minimum 60sec hold before moving on to the rings"
+        )));
+
+        exerciseRepository.save(supportHoldWarmup);
+
+        Exercise squatWarmup = new Exercise();
+
+        squatWarmup.setKey("squat-warmup");
+        squatWarmup.setName("Squat (Warmup)");
+        squatWarmup.setCategory(ExerciseCategory.WARM_UP);
+        squatWarmup.setType(ExerciseType.WARM_UP);
+        squatWarmup.setTargetSets(1);
+        squatWarmup.setTargetRepsMin(10);
+        squatWarmup.setTargetRepsMax(10);
+        squatWarmup.setDuration(false);
+        squatWarmup.setTargetRest(0);
+        squatWarmup.setAdditionalRest(0);
+        squatWarmup.setMediaLink("https://www.youtube.com/watch?v=zJBLDJMJiDE");
+        squatWarmup.setComments(buildComments(List.of(
+                "Stand up straight at the top",
+                "Go as low as you can, preferably until the hips are below the knees",
+                "Dig your big toe and heel into the ground",
+                "Keep your knee in-line with your toes",
+                "Don't let the knees come inward on either the descend or the ascend; think about pushing the knees out"
+        )));
+
+        exerciseRepository.save(squatWarmup);
     }
 
     private String buildComments(List<String> lines) {

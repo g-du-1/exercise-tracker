@@ -63,6 +63,55 @@ export const exercises: Exercise[] = [
   },
   {
     id: 5,
+    key: "arch-hangs-warmup",
+    name: "Arch Hangs (Warmup)",
+    category: "WARM_UP",
+    type: "WARM_UP",
+    targetSets: 1,
+    targetRepsMin: 10,
+    targetRepsMax: 10,
+    targetRest: 0,
+    additionalRest: 0,
+    mediaLink: "https://www.youtube.com/watch?v=C995b3KLXS4&t=7s",
+    comments:
+      '<ul><li>Add these after you reach Negative Pullups</li><li>Beginner attempts will look more like <a href="https://www.youtube.com/watch?v=HoE-C85ZlCE">this</a></li></ul>',
+    duration: false,
+  },
+  {
+    id: 6,
+    key: "support-hold-warmup",
+    name: "Parallel Bar Support Hold (Warmup)",
+    category: "WARM_UP",
+    type: "WARM_UP",
+    targetSets: 1,
+    targetRepsMin: 30,
+    targetRepsMax: 30,
+    targetRest: 0,
+    additionalRest: 0,
+    mediaLink:
+      "https://antranik.org/wp-content/uploads/2014/01/antranik-holding-support-hold-on-parallel-bars.jpg",
+    comments:
+      "<ul><li>Arms straight</li><li>Body straight or slightly hollow</li><li>Depress the shoulderblades (<a href='https://www.reddit.com/r/bodyweightfitness/wiki/kb/positioning'>what does that even mean?</a>)</li><li>The stability of the PB allows you to build some strength and perfect your form. Have a minimum 60sec hold before moving on to the rings</li></ul>",
+    duration: true,
+  },
+  {
+    id: 7,
+    key: "squat-warmup",
+    name: "Squat (Warmup)",
+    category: "WARM_UP",
+    type: "WARM_UP",
+    targetSets: 1,
+    targetRepsMin: 10,
+    targetRepsMax: 10,
+    targetRest: 0,
+    additionalRest: 0,
+    mediaLink: "https://www.youtube.com/watch?v=zJBLDJMJiDE",
+    comments:
+      "<ul><li>Stand up straight at the top</li><li>Go as low as you can, preferably until the hips are below the knees</li><li>Dig your big toe and heel into the ground</li><li>Keep your knee in-line with your toes</li><li>Don't let the knees come inward on either the descend or the ascend; think about pushing the knees out</li></ul>",
+    duration: false,
+  },
+  {
+    id: 8,
     key: "pull-up-negatives",
     name: "Pull-up Negatives",
     category: "FIRST_PAIR",
@@ -78,7 +127,7 @@ export const exercises: Exercise[] = [
     duration: false,
   },
   {
-    id: 6,
+    id: 9,
     key: "bulgarian-split-squats",
     name: "Bulgarian Split Squat",
     category: "FIRST_PAIR",
@@ -94,7 +143,7 @@ export const exercises: Exercise[] = [
     duration: false,
   },
   {
-    id: 7,
+    id: 10,
     key: "negative-dips",
     name: "Negative Dips",
     category: "SECOND_PAIR",
@@ -110,7 +159,7 @@ export const exercises: Exercise[] = [
     duration: false,
   },
   {
-    id: 8,
+    id: 11,
     key: "hamstring-slide",
     name: "Hamstring Slide",
     category: "SECOND_PAIR",
@@ -122,11 +171,11 @@ export const exercises: Exercise[] = [
     additionalRest: 90,
     mediaLink: "https://www.youtube.com/watch?v=Dlazt593cuA",
     comments:
-      "<ul><li>As before, but pull ankles back to glutes after eccentric movement, contracting the hamstrings and glutes</li></ul>",
+      "<ul><li>This exercise can bridge the gap between SLDL and Nordic Curls</li><li>You will need a towel, socks, sliders, carpet etc. material which allows you to perform this movement smoothly</li><li>Keep PPT/Neutral Pelvis. Hands supporting at sides for support as needed</li><li>Ascend by squeezing glutes, pulling your ankles to your glutes, contracting your hamstrings</li><li>Descend by sliding ankles out under control</li><li>As before, but pull ankles back to glutes after eccentric movement, contracting the hamstrings and glutes</li></ul>",
     duration: false,
   },
   {
-    id: 9,
+    id: 12,
     key: "incline-rows",
     name: "Incline Rows",
     category: "THIRD_PAIR",
@@ -142,7 +191,7 @@ export const exercises: Exercise[] = [
     duration: false,
   },
   {
-    id: 10,
+    id: 13,
     key: "diamond-pushup",
     name: "Diamond Pushup",
     category: "THIRD_PAIR",
@@ -158,7 +207,7 @@ export const exercises: Exercise[] = [
     duration: false,
   },
   {
-    id: 11,
+    id: 14,
     key: "ring-ab-rollouts",
     name: "Ring Ab Rollouts",
     category: "CORE_TRIPLET",
@@ -174,7 +223,7 @@ export const exercises: Exercise[] = [
     duration: false,
   },
   {
-    id: 12,
+    id: 15,
     key: "banded-pallof-press",
     name: "Banded Pallof Press",
     category: "CORE_TRIPLET",
@@ -190,7 +239,7 @@ export const exercises: Exercise[] = [
     duration: false,
   },
   {
-    id: 13,
+    id: 16,
     key: "reverse-hyperextension",
     name: "Reverse Hyperextension",
     category: "CORE_TRIPLET",
