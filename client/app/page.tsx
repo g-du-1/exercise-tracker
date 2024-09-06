@@ -3,25 +3,18 @@
 import { ExerciseTracker } from "./components/ExerciseTracker";
 import Box from "@mui/material/Box";
 import { getUserExercises } from "./util/api/getUserExercises";
-import { UserExercise } from "./types";
-import { useEffect, useState } from "react";
 import { CircularProgress } from "@mui/material";
 import Button from "@mui/material/Button";
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Home() {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [userExercises, setUserExercises] = useState<UserExercise[]>();
+  const { data: userExercises, isLoading: userExercisesLoading } = useQuery({
+    queryKey: ["getUserExercises"],
+    queryFn: getUserExercises,
+  });
 
-  useEffect(() => {
-    (async () => {
-      setLoading(false);
-      setUserExercises(await getUserExercises());
-      setLoading(false);
-    })();
-  }, []);
-
-  if (loading) {
+  if (userExercisesLoading) {
     return (
       <Box sx={{ display: "flex" }} justifyContent={"center"} mt={2}>
         <CircularProgress />

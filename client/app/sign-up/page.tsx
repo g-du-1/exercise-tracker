@@ -1,4 +1,4 @@
-import { signUp } from "../app/util/api/signUp";
+import { signUp } from "../util/api/signUp";
 
 const SignUp = () => {
   const handleSignUp = async () => {

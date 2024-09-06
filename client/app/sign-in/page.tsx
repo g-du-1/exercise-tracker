@@ -1,13 +1,13 @@
 "use client";
 
 import React, { FormEvent, useState } from "react";
-import { signIn } from "../app/util/api/signIn";
+import { signIn } from "../util/api/signIn";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
-const SignIn = () => {
+const SignInPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [usernameError, setUsernameError] = useState(false);
@@ -77,4 +77,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignInPage;
