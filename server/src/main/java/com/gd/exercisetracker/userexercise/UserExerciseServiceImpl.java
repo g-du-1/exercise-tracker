@@ -4,6 +4,7 @@ import com.gd.exercisetracker.exercise.Exercise;
 import com.gd.exercisetracker.exercise.ExerciseRepository;
 import com.gd.exercisetracker.security.user.User;
 import com.gd.exercisetracker.security.user.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,5 +39,11 @@ public class UserExerciseServiceImpl implements UserExerciseService {
     @Override
     public List<UserExercise> getUserExercises(Long userId) {
         return userExerciseRepository.findByUser_UserId(userId);
+    }
+
+    @Override
+    @Transactional
+    public void deleteUserExercise(Long userId, Long exerciseId) {
+        userExerciseRepository.deleteByUser_UserIdAndExerciseId(userId, exerciseId);
     }
 }
