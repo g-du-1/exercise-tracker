@@ -10,6 +10,7 @@ import { getUserExercises } from "../util/api/getUserExercises";
 import { CircularProgress } from "@mui/material";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { saveUserExercise } from "../util/api/saveUserExercise";
+import { deleteUserExercise } from "../util/api/deleteUserExercise";
 
 const isExerciseSavedAlready = (
   exerciseId: number,
@@ -31,7 +32,7 @@ const SettingsPage = () => {
     queryFn: getUserExercises,
   });
 
-  const mutation = useMutation({
+  const saveMutation = useMutation({
     mutationFn: async (exerciseId: number) => {
       return await saveUserExercise(exerciseId);
     },
@@ -40,6 +41,18 @@ const SettingsPage = () => {
     },
     onError: (error) => {
       console.error("Error adding exercise:", error);
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: async (exerciseId: number) => {
+      return await deleteUserExercise(exerciseId);
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["getUserExercises"] });
+    },
+    onError: (error) => {
+      console.error("Error deleting exercise:", error);
     },
   });
 
@@ -73,9 +86,16 @@ const SettingsPage = () => {
 
             <Button
               disabled={isExerciseSavedAlready(exercise.id, userExercises)}
-              onClick={() => mutation.mutate(exercise.id)}
+              onClick={() => saveMutation.mutate(exercise.id)}
             >
               Add
+            </Button>
+
+            <Button
+              disabled={!isExerciseSavedAlready(exercise.id, userExercises)}
+              onClick={() => deleteMutation.mutate(exercise.id)}
+            >
+              Delete
             </Button>
           </Box>
         ))}
