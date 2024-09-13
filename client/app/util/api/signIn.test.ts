@@ -48,7 +48,7 @@ describe("signIn", () => {
       body: '{"username":"testUser","password":"testPassword"}',
     });
 
-    expect(result).toStrictEqual({ status: 200 });
+    expect(result).toStrictEqual({ status: 200, message: undefined });
   });
 
   it("calls fetchWithAuth with default endpoint if none set in env", async () => {
