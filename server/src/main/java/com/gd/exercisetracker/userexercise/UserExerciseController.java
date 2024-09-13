@@ -41,4 +41,13 @@ public class UserExerciseController {
 
         return ResponseEntity.ok(new DeleteUserExerciseResponse("User exercise deleted."));
     }
+
+    @DeleteMapping("/all")
+    public ResponseEntity<DeleteAllExercisesForUserResponse> deleteAllExercisesForUser(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        Long userId = userDetails.getId();
+
+        userExerciseService.deleteAllExercisesForUser(userId);
+
+        return ResponseEntity.ok(new DeleteAllExercisesForUserResponse("All exercises deleted for user."));
+    }
 }

@@ -217,4 +217,51 @@ class UserExerciseControllerTest {
 
         assertEquals(0, userExercisesAfterDeletion.size());
     }
+
+    @Test
+    void deletesAllUserExercises() {
+        User user = saveTestUser();
+        String jwt = testHelpers.getTestJwt(user.getUserName());
+
+        Exercise exercise1 = new Exercise();
+        exercise1.setKey("test-exercise-1");
+
+        exerciseRepository.save(exercise1);
+
+        Exercise exercise2 = new Exercise();
+        exercise2.setKey("test-exercise-2");
+
+        exerciseRepository.save(exercise2);
+
+        UserExercise userExercise1 = new UserExercise();
+
+        userExercise1.setUser(user);
+        userExercise1.setExercise(exercise1);
+
+        userExerciseRepository.save(userExercise1);
+
+        UserExercise userExercise2 = new UserExercise();
+
+        userExercise2.setUser(user);
+        userExercise2.setExercise(exercise2);
+
+        userExerciseRepository.save(userExercise2);
+
+        List<UserExercise> userExercises = userExerciseRepository.findAll();
+
+        assertEquals(2, userExercises.size());
+
+        given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", "Bearer " + jwt)
+        .when()
+                .delete("/api/v1/user-exercises/all")
+        .then()
+                .statusCode(200)
+                .body("message", equalTo("All exercises deleted for user."));
+
+        List<UserExercise> userExercisesAfterDeletion = userExerciseRepository.findAll();
+
+        assertEquals(0, userExercisesAfterDeletion.size());
+    }
 }
