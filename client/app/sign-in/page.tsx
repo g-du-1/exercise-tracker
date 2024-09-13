@@ -8,6 +8,7 @@ import { ChangeEvent, useState } from "react";
 import { signIn } from "../util/api/signIn";
 import { useRouter } from "next/navigation";
 import { SignInResponse } from "../types";
+import { Alert } from "@mui/material";
 
 const SignInPage = () => {
   const [username, setUsername] = useState("");
@@ -69,7 +70,11 @@ const SignInPage = () => {
         Submit
       </Button>
 
-      {error && <Typography color="error">{error}</Typography>}
+      {error && (
+        <Alert severity="error" sx={{ my: 1 }}>
+          {error}
+        </Alert>
+      )}
     </Box>
   );
 };
