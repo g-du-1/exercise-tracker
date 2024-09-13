@@ -91,4 +91,48 @@ describe("SignInPage", () => {
       expect(mockPush).not.toHaveBeenCalled();
     });
   });
+
+  it("clears the error message on typing", async () => {
+    (signIn as jest.Mock).mockImplementation(() =>
+      Promise.resolve({ status: 401 }),
+    );
+
+    render(<SignInPage />);
+
+    const usernameInput = screen.getByLabelText("Username");
+    const passwordInput = screen.getByLabelText("Password");
+    const submitButton = screen.getByText("Submit");
+
+    await act(async () => {
+      fireEvent.click(submitButton);
+    });
+
+    expect(
+      screen.getByText("Login failed. Please try again."),
+    ).toBeInTheDocument();
+
+    await act(async () => {
+      fireEvent.change(usernameInput, { target: { value: "aaa" } });
+    });
+
+    expect(
+      screen.queryByText("Login failed. Please try again."),
+    ).not.toBeInTheDocument();
+
+    await act(async () => {
+      fireEvent.click(submitButton);
+    });
+
+    expect(
+      screen.getByText("Login failed. Please try again."),
+    ).toBeInTheDocument();
+
+    await act(async () => {
+      fireEvent.change(passwordInput, { target: { value: "ee" } });
+    });
+
+    expect(
+      screen.queryByText("Login failed. Please try again."),
+    ).not.toBeInTheDocument();
+  });
 });

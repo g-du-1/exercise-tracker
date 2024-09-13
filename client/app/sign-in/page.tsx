@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { signIn } from "../util/api/signIn";
 import { useRouter } from "next/navigation";
 import { SignInResponse } from "../types";
@@ -15,6 +15,16 @@ const SignInPage = () => {
   const [error, setError] = useState("");
 
   const router = useRouter();
+
+  const handleUserNameChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setError("");
+    setUsername(e.target.value);
+  };
+
+  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setError("");
+    setPassword(e.target.value);
+  };
 
   const handleSubmit = async () => {
     const resp: SignInResponse = await signIn(username, password);
@@ -42,14 +52,14 @@ const SignInPage = () => {
       </Typography>
 
       <TextField
-        onChange={(e) => setUsername(e.target.value)}
+        onChange={handleUserNameChange}
         label="Username"
         variant="standard"
         sx={{ my: 1 }}
       />
 
       <TextField
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={handlePasswordChange}
         label="Password"
         variant="standard"
         sx={{ my: 1 }}
