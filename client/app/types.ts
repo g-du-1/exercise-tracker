@@ -50,3 +50,9 @@ export type User = {
   enabled: boolean;
   roles: Role[];
 };
+
+export type SignInResponse = {
+  status: number;
+  jwtToken?: string;
+  message?: string;
+};
