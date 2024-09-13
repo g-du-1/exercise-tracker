@@ -2,16 +2,22 @@
  * @jest-environment jsdom
  */
 
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@testing-library/react";
 import SignInPage from "./page";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { signIn } from "../util/api/signIn";
 
 jest.mock("../util/api/signIn", () => ({
   signIn: jest.fn(),
 }));
 
-jest.mock("next/router", () => ({
+jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
 }));
 
@@ -55,6 +61,34 @@ describe("SignInPage", () => {
 
     await waitFor(() => {
       expect(mockPush).toHaveBeenCalledWith("/");
+    });
+  });
+
+  it("displays an error message on failed login", async () => {
+    (signIn as jest.Mock).mockImplementation(() =>
+      Promise.resolve({ status: 401 }),
+    );
+
+    render(<SignInPage />);
+
+    const usernameInput = screen.getByLabelText("Username");
+    const passwordInput = screen.getByLabelText("Password");
+    const submitButton = screen.getByText("Submit");
+
+    await act(async () => {
+      fireEvent.change(usernameInput, { target: { value: "testUser" } });
+      fireEvent.change(passwordInput, { target: { value: "wrongPassword" } });
+      fireEvent.click(submitButton);
+    });
+
+    expect(signIn).toHaveBeenNthCalledWith(1, "testUser", "wrongPassword");
+
+    expect(
+      screen.getByText("Login failed. Please try again."),
+    ).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(mockPush).not.toHaveBeenCalled();
     });
   });
 });

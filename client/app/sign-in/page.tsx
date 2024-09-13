@@ -6,12 +6,13 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import { signIn } from "../util/api/signIn";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { SignInResponse } from "../types";
 
 const SignInPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const router = useRouter();
 
@@ -19,7 +20,9 @@ const SignInPage = () => {
     const resp: SignInResponse = await signIn(username, password);
 
     if (resp.status === 200) {
-      await router.push("/");
+      router.push("/");
+    } else {
+      setError("Login failed. Please try again.");
     }
   };
 
@@ -55,6 +58,8 @@ const SignInPage = () => {
       <Button onClick={handleSubmit} sx={{ my: 1 }}>
         Submit
       </Button>
+
+      {error && <Typography color="error">{error}</Typography>}
     </Box>
   );
 };
