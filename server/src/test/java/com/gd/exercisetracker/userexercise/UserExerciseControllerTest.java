@@ -22,8 +22,11 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 
+import java.util.List;
+
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class UserExerciseControllerTest {
@@ -75,10 +78,7 @@ class UserExerciseControllerTest {
         userExerciseRepository.deleteAll();
     }
 
-    @Test
-    void savesExercisesForUser() {
-        // User
-
+    private User saveTestUser() {
         String username = "user";
 
         Role userRole = roleRepository.findByRoleName(AppRole.ROLE_USER).orElseGet(() -> roleRepository.save(new Role(AppRole.ROLE_USER)));
@@ -89,9 +89,13 @@ class UserExerciseControllerTest {
         user.setSignUpMethod("From Test");
         user.setRole(userRole);
 
-        userRepository.save(user);
+        return userRepository.save(user);
+    }
 
-        String jwt = testHelpers.getTestJwt(username);
+    @Test
+    void savesExercisesForUser() {
+        User user = saveTestUser();
+        String jwt = testHelpers.getTestJwt(user.getUserName());
 
         // Exercise
 
@@ -117,21 +121,8 @@ class UserExerciseControllerTest {
 
     @Test
     void getsUserExercises() {
-        // User
-
-        String username = "user";
-
-        Role userRole = roleRepository.findByRoleName(AppRole.ROLE_USER).orElseGet(() -> roleRepository.save(new Role(AppRole.ROLE_USER)));
-
-        User user = new User(username, "user@example.com", passwordEncoder.encode("password"));
-
-        user.setEnabled(true);
-        user.setSignUpMethod("From Test");
-        user.setRole(userRole);
-
-        userRepository.save(user);
-
-        String jwt = testHelpers.getTestJwt(username);
+        User user = saveTestUser();
+        String jwt = testHelpers.getTestJwt(user.getUserName());
 
         // Exercises
 
@@ -190,5 +181,40 @@ class UserExerciseControllerTest {
                 .get("/api/v1/user-exercises")
         .then()
                 .statusCode(401);
+    }
+
+    @Test
+    void deletesUserExercise() {
+        User user = saveTestUser();
+        String jwt = testHelpers.getTestJwt(user.getUserName());
+
+        Exercise exercise1 = new Exercise();
+        exercise1.setKey("test-exercise-1");
+
+        exerciseRepository.save(exercise1);
+
+        UserExercise userExercise1 = new UserExercise();
+
+        userExercise1.setUser(user);
+        userExercise1.setExercise(exercise1);
+
+        userExerciseRepository.save(userExercise1);
+
+        List<UserExercise> userExercises = userExerciseRepository.findAll();
+
+        assertEquals(1, userExercises.size());
+
+        given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", "Bearer " + jwt)
+        .when()
+                .delete("/api/v1/user-exercises/" + exercise1.getId())
+        .then()
+                .statusCode(200)
+                .body("message", equalTo("User exercise deleted."));
+
+        List<UserExercise> userExercisesAfterDeletion = userExerciseRepository.findAll();
+
+        assertEquals(0, userExercisesAfterDeletion.size());
     }
 }
