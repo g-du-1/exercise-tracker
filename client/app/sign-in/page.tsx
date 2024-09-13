@@ -6,13 +6,21 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import { signIn } from "../util/api/signIn";
+import { useRouter } from "next/router";
+import { SignInResponse } from "../types";
 
 const SignInPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const router = useRouter();
+
   const handleSubmit = async () => {
-    await signIn(username, password);
+    const resp: SignInResponse = await signIn(username, password);
+
+    if (resp.status === 200) {
+      await router.push("/");
+    }
   };
 
   return (

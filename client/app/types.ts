@@ -50,3 +50,7 @@ export type User = {
   enabled: boolean;
   roles: Role[];
 };
+
+export type SignInResponse = {
+  status: number;
+};

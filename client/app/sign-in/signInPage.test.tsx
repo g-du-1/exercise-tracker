@@ -2,17 +2,35 @@
  * @jest-environment jsdom
  */
 
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import SignInPage from "./page";
-
-const signInMock = jest.fn();
+import { useRouter } from "next/router";
+import { signIn } from "../util/api/signIn";
 
 jest.mock("../util/api/signIn", () => ({
-  signIn: (username: string, password: string) =>
-    signInMock(username, password),
+  signIn: jest.fn(),
+}));
+
+jest.mock("next/router", () => ({
+  useRouter: jest.fn(),
 }));
 
 describe("SignInPage", () => {
+  let mockPush = jest.fn();
+
+  beforeEach(() => {
+    jest.resetModules();
+    jest.clearAllMocks();
+
+    (signIn as jest.Mock).mockImplementation(() =>
+      Promise.resolve({ status: 200 }),
+    );
+
+    (useRouter as jest.Mock).mockImplementation(() => ({
+      push: mockPush,
+    }));
+  });
+
   it("renders", () => {
     render(<SignInPage />);
 
@@ -22,7 +40,7 @@ describe("SignInPage", () => {
     expect(screen.getByText("Submit")).toBeInTheDocument();
   });
 
-  it("calls the sign in handler with the correct details on login", () => {
+  it("redirects to home on successful login", async () => {
     render(<SignInPage />);
 
     const usernameInput = screen.getByLabelText("Username");
@@ -33,6 +51,10 @@ describe("SignInPage", () => {
     fireEvent.change(passwordInput, { target: { value: "testPassword" } });
     fireEvent.click(submitButton);
 
-    expect(signInMock).toHaveBeenCalledWith("testUser", "testPassword");
+    expect(signIn).toHaveBeenNthCalledWith(1, "testUser", "testPassword");
+
+    await waitFor(() => {
+      expect(mockPush).toHaveBeenCalledWith("/");
+    });
   });
 });
