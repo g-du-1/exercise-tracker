@@ -15,14 +15,18 @@ import { CardComments } from "./card/CardComments";
 import { useBoundStore } from "../store/store";
 import { FinishTime } from "./FinishTime";
 
-export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
+const CategoryHeader = ({ title }: { title: string }) => {
+  return <Box my={2}>{title}</Box>;
+};
+
+const Exercises = ({ exercises }: { exercises: Exercise[] }) => {
   const showComments = useBoundStore((state) => state.showComments);
   const savedReps = useBoundStore((state) => state.savedReps);
   const showCompletedExercises = useBoundStore(
-    (state) => state.showCompletedExercises
+    (state) => state.showCompletedExercises,
   );
   const setSelectedExercise = useBoundStore(
-    (state) => state.setSelectedExercise
+    (state) => state.setSelectedExercise,
   );
   const setModalOpen = useBoundStore((state) => state.setModalOpen);
 
@@ -33,8 +37,6 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
 
   return (
     <>
-      <TopBar />
-
       {exercises.map((exercise, idx) => {
         const exerciseCompleted =
           savedReps?.[exercise.key]?.reps.length >= exercise.targetSets;
@@ -82,11 +84,53 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
           </Box>
         );
       })}
+    </>
+  );
+};
 
+export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
+  const warmups = exercises.filter((ex) => ex.category === "WARM_UP");
+  const firstPair = exercises.filter((ex) => ex.category === "FIRST_PAIR");
+  const secondPair = exercises.filter((ex) => ex.category === "SECOND_PAIR");
+  const thirdPair = exercises.filter((ex) => ex.category === "THIRD_PAIR");
+  const coreTriplet = exercises.filter((ex) => ex.category === "CORE_TRIPLET");
+
+  return (
+    <>
+      <TopBar />
+      {warmups && warmups.length > 0 && (
+        <>
+          <CategoryHeader title={"Warmup"} />
+          <Exercises exercises={warmups} />
+        </>
+      )}
+      {firstPair && firstPair.length > 0 && (
+        <>
+          <CategoryHeader title={"First Pair"} />
+          <Exercises exercises={firstPair} />
+        </>
+      )}
+      {secondPair && secondPair.length > 0 && (
+        <>
+          <CategoryHeader title={"Second Pair"} />
+          <Exercises exercises={secondPair} />
+        </>
+      )}
+      {thirdPair && thirdPair.length > 0 && (
+        <>
+          <CategoryHeader title={"Third Pair"} />
+          <Exercises exercises={thirdPair} />
+        </>
+      )}
+      {coreTriplet && coreTriplet.length > 0 && (
+        <>
+          <CategoryHeader title={"Core Triplet"} />
+          <Exercises exercises={coreTriplet} />
+        </>
+      )}
+      `
       <StartTime />
-
       <FinishTime exercises={exercises} />
-
       <RepsModal exercises={exercises} />
     </>
   );
