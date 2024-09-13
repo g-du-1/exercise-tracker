@@ -1,4 +1,5 @@
 import { fetchWithAuth } from "../fetchWithAuth";
+import { SignInResponse } from "../../types";
 
 export const signIn = async (username: string, password: string) => {
   const response = await fetchWithAuth(
@@ -12,7 +13,7 @@ export const signIn = async (username: string, password: string) => {
     },
   );
 
-  const data = await response.json();
+  const data: SignInResponse = await response.json();
 
   if (response.status === 200 && data.jwtToken) {
     localStorage.setItem("JWT_TOKEN", data.jwtToken);
@@ -20,5 +21,6 @@ export const signIn = async (username: string, password: string) => {
 
   return {
     status: response.status,
+    message: data.message,
   };
 };

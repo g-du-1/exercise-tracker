@@ -53,4 +53,6 @@ export type User = {
 
 export type SignInResponse = {
   status: number;
+  jwtToken?: string;
+  message?: string;
 };

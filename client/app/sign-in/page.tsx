@@ -33,7 +33,7 @@ const SignInPage = () => {
     if (resp.status === 200) {
       router.push("/");
     } else {
-      setError("Login failed. Please try again.");
+      setError(resp.message || "Unknown error");
     }
   };
 
@@ -63,6 +63,7 @@ const SignInPage = () => {
         onChange={handlePasswordChange}
         label="Password"
         variant="standard"
+        type="password"
         sx={{ my: 1 }}
       />
 
