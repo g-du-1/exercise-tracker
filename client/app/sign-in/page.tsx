@@ -1,79 +1,82 @@
 "use client";
 
-import React, { FormEvent, useState } from "react";
-import { signIn } from "../util/api/signIn";
-import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Link from "next/link";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import { ChangeEvent, useState } from "react";
+import { signIn } from "../util/api/signIn";
 import { useRouter } from "next/navigation";
+import { SignInResponse } from "../types";
+import { Alert } from "@mui/material";
 
 const SignInPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [usernameError, setUsernameError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
+  const [error, setError] = useState("");
 
   const router = useRouter();
 
-  const handleSubmit = async (event: FormEvent) => {
-    event.preventDefault();
+  const handleUserNameChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setError("");
+    setUsername(e.target.value);
+  };
 
-    setUsernameError(false);
-    setPasswordError(false);
+  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setError("");
+    setPassword(e.target.value);
+  };
 
-    if (username == "") {
-      setUsernameError(true);
-    }
-    if (password == "") {
-      setPasswordError(true);
-    }
+  const handleSubmit = async () => {
+    const resp: SignInResponse = await signIn(username, password);
 
-    if (username && password) {
-      await signIn(username, password);
-      await router.push("/");
+    if (resp.status === 200) {
+      router.push("/");
+    } else {
+      setError(resp.message || "Unknown error");
     }
   };
 
   return (
-    <React.Fragment>
-      <form autoComplete="off" onSubmit={handleSubmit}>
-        <h2>Login Form</h2>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        maxWidth: "250px",
+        margin: "auto",
+        padding: 2,
+      }}
+    >
+      <Typography variant="h6" component="h1" textAlign="center" mb={1}>
+        Sign In
+      </Typography>
 
-        <TextField
-          label="Username"
-          onChange={(e) => setUsername(e.target.value)}
-          required
-          variant="outlined"
-          color="secondary"
-          type="text"
-          sx={{ mb: 3 }}
-          fullWidth
-          value={username}
-          error={usernameError}
-        />
+      <TextField
+        onChange={handleUserNameChange}
+        label="Username"
+        variant="standard"
+        sx={{ my: 1 }}
+      />
 
-        <TextField
-          label="Password"
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          variant="outlined"
-          color="secondary"
-          type="password"
-          value={password}
-          error={passwordError}
-          fullWidth
-          sx={{ mb: 3 }}
-        />
+      <TextField
+        onChange={handlePasswordChange}
+        label="Password"
+        variant="standard"
+        type="password"
+        sx={{ my: 1 }}
+      />
 
-        <Button variant="outlined" color="secondary" type="submit">
-          Login
-        </Button>
-      </form>
+      <Button onClick={handleSubmit} sx={{ my: 1 }}>
+        Submit
+      </Button>
 
-      <small>
-        Need an account? <Link href="/sign-up">Register here</Link>
-      </small>
-    </React.Fragment>
+      {error && (
+        <Alert severity="error" sx={{ my: 1 }}>
+          {error}
+        </Alert>
+      )}
+    </Box>
   );
 };
 

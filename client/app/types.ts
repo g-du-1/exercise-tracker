@@ -56,6 +56,8 @@ export type User = {
   roles: Role[];
 };
 
-export type SignupResponse = {
-  message: string;
+export type SignInResponse = {
+  status: number;
+  jwtToken?: string;
+  message?: string;
 };
