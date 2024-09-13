@@ -4,22 +4,22 @@ import com.gd.exercisetracker.exercise.Exercise;
 import com.gd.exercisetracker.exercise.ExerciseRepository;
 import com.gd.exercisetracker.security.user.User;
 import com.gd.exercisetracker.security.user.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class UserExerciseServiceImpl implements UserExerciseService {
+    private final UserRepository userRepository;
+    private final ExerciseRepository exerciseRepository;
+    private final UserExerciseRepository userExerciseRepository;
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private ExerciseRepository exerciseRepository;
-
-    @Autowired
-    private UserExerciseRepository userExerciseRepository;
+    public UserExerciseServiceImpl(UserRepository userRepository, ExerciseRepository exerciseRepository, UserExerciseRepository userExerciseRepository) {
+        this.userRepository = userRepository;
+        this.exerciseRepository = exerciseRepository;
+        this.userExerciseRepository = userExerciseRepository;
+    }
 
     @Override
     public UserExercise saveUserExercise(Long userId, Long exerciseId) {
@@ -38,5 +38,17 @@ public class UserExerciseServiceImpl implements UserExerciseService {
     @Override
     public List<UserExercise> getUserExercises(Long userId) {
         return userExerciseRepository.findByUser_UserId(userId);
+    }
+
+    @Override
+    @Transactional
+    public void deleteUserExercise(Long userId, Long exerciseId) {
+        userExerciseRepository.deleteByUser_UserIdAndExerciseId(userId, exerciseId);
+    }
+
+    @Override
+    @Transactional
+    public void deleteAllExercisesForUser(Long userId) {
+        userExerciseRepository.deleteByUser_UserId(userId);
     }
 }
