@@ -4,8 +4,17 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import { useState } from "react";
+import { signIn } from "../util/api/signIn";
 
 const SignInPage = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async () => {
+    await signIn(username, password);
+  };
+
   return (
     <Box
       sx={{
@@ -21,10 +30,23 @@ const SignInPage = () => {
         Sign In
       </Typography>
 
-      <TextField label="Username" variant="standard" sx={{ my: 1 }} />
-      <TextField label="Password" variant="standard" sx={{ my: 1 }} />
+      <TextField
+        onChange={(e) => setUsername(e.target.value)}
+        label="Username"
+        variant="standard"
+        sx={{ my: 1 }}
+      />
 
-      <Button sx={{ my: 1 }}>Submit</Button>
+      <TextField
+        onChange={(e) => setPassword(e.target.value)}
+        label="Password"
+        variant="standard"
+        sx={{ my: 1 }}
+      />
+
+      <Button onClick={handleSubmit} sx={{ my: 1 }}>
+        Submit
+      </Button>
     </Box>
   );
 };
