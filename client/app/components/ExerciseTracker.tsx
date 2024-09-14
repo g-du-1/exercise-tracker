@@ -14,17 +14,31 @@ import { SavedReps } from "./card/SavedReps";
 import { CardComments } from "./card/CardComments";
 import { useBoundStore } from "../store/store";
 import { FinishTime } from "./FinishTime";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
   const showComments = useBoundStore((state) => state.showComments);
   const savedReps = useBoundStore((state) => state.savedReps);
   const showCompletedExercises = useBoundStore(
-    (state) => state.showCompletedExercises
+    (state) => state.showCompletedExercises,
   );
   const setSelectedExercise = useBoundStore(
-    (state) => state.setSelectedExercise
+    (state) => state.setSelectedExercise,
   );
   const setModalOpen = useBoundStore((state) => state.setModalOpen);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    (async () => {
+      const token = localStorage.getItem("JWT_TOKEN");
+
+      if (!token) {
+        router.push("/sign-in");
+      }
+    })();
+  }, []);
 
   const handleClick = (selectedExercise: Exercise) => {
     setSelectedExercise(selectedExercise);
