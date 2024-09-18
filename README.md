@@ -109,3 +109,9 @@ docker exec -it exercise-tracker-postgres psql -U postgres -c "CREATE DATABASE e
 ```
 
 More info in `server/README.md`
+
+### Linux
+
+Export env vars in the terminal before running IntelliJ from the same session.
+
+`export $(cat .env | xargs)`
