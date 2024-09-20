@@ -36,7 +36,9 @@ const SettingsPage = () => {
       </Typography>
 
       {loading ? (
-        <CircularProgress />
+        <Box mx="auto" my={2}>
+          <CircularProgress />
+        </Box>
       ) : (
         <Box>
           {allExercises.map((ex: Exercise) => (
