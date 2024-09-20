@@ -33,6 +33,11 @@ export type Exercise = {
   additionalRest: number;
 };
 
+export type UserExercise = {
+  id: number;
+  exercise: Exercise;
+};
+
 export type SavedReps = {
   name: string;
   reps: number[];
