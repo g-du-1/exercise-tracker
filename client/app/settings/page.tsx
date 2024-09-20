@@ -5,6 +5,8 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { Exercise } from "../types";
 import { getAllExercises } from "../util/api/getAllExercises";
 import { useEffect, useState } from "react";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 const SettingsPage = () => {
   const [loading, setLoading] = useState(false);
@@ -20,15 +22,35 @@ const SettingsPage = () => {
   }, []);
 
   return (
-    <Box>
-      <Box>Settings</Box>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        margin: "auto",
+        padding: 2,
+      }}
+    >
+      <Typography variant="h6" component="h1" textAlign="center" mb={1}>
+        Settings
+      </Typography>
 
       {loading ? (
         <CircularProgress />
       ) : (
         <Box>
           {allExercises.map((ex: Exercise) => (
-            <Box key={ex.id}>{ex.name}</Box>
+            <Box
+              key={ex.id}
+              my={2}
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+            >
+              <Box>{ex.name}</Box>
+
+              <Button aria-label={`Add ${ex.name}`}>Add</Button>
+            </Box>
           ))}
         </Box>
       )}

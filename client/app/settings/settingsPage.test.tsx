@@ -50,13 +50,13 @@ describe("SignInPage", () => {
     jest.clearAllMocks();
 
     (getAllExercises as jest.Mock).mockImplementation(() =>
-      Promise.resolve(mockExercises)
+      Promise.resolve(mockExercises),
     );
   });
 
   it("displays a spinner while loading", async () => {
     (getAllExercises as jest.Mock).mockImplementation(
-      () => new Promise(() => {})
+      () => new Promise(() => {}),
     );
 
     await act(async () => {
@@ -68,7 +68,7 @@ describe("SignInPage", () => {
     expect(screen.queryByText("Diamond Pushup")).not.toBeInTheDocument();
 
     expect(
-      screen.queryByText("Reverse Hyperextension")
+      screen.queryByText("Reverse Hyperextension"),
     ).not.toBeInTheDocument();
   });
 
@@ -79,7 +79,9 @@ describe("SignInPage", () => {
 
     expect(screen.getByText("Settings")).toBeInTheDocument();
     expect(screen.queryByRole("progressbar")).not.toBeInTheDocument();
-    expect(screen.getByText("Diamond Pushup")).toBeInTheDocument();
-    expect(screen.getByText("Reverse Hyperextension")).toBeInTheDocument();
+    expect(screen.getByLabelText("Add Diamond Pushup")).toBeInTheDocument();
+    expect(
+      screen.getByLabelText("Add Reverse Hyperextension"),
+    ).toBeInTheDocument();
   });
 });
