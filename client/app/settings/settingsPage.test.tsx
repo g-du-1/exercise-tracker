@@ -2,9 +2,10 @@
  * @jest-environment jsdom
  */
 
-import { act, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import SettingsPage from "./page";
 import { getAllExercises } from "../util/api/getAllExercises";
+import { saveUserExercise } from "../util/api/saveUserExercise";
 
 const mockExercises = [
   {
@@ -42,6 +43,10 @@ const mockExercises = [
 
 jest.mock("../util/api/getAllExercises", () => ({
   getAllExercises: jest.fn(),
+}));
+
+jest.mock("../util/api/saveUserExercise", () => ({
+  saveUserExercise: jest.fn(),
 }));
 
 describe("SignInPage", () => {
@@ -83,5 +88,15 @@ describe("SignInPage", () => {
     expect(
       screen.getByLabelText("Add Reverse Hyperextension"),
     ).toBeInTheDocument();
+  });
+
+  it("adds a user exercise", async () => {
+    await act(async () => {
+      render(<SettingsPage />);
+    });
+
+    fireEvent.click(screen.getByLabelText("Add Diamond Pushup"));
+
+    expect(saveUserExercise).toHaveBeenNthCalledWith(1, 13);
   });
 });

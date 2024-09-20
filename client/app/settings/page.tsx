@@ -7,6 +7,7 @@ import { getAllExercises } from "../util/api/getAllExercises";
 import { useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { saveUserExercise } from "../util/api/saveUserExercise";
 
 const SettingsPage = () => {
   const [loading, setLoading] = useState(false);
@@ -51,7 +52,12 @@ const SettingsPage = () => {
             >
               <Box>{ex.name}</Box>
 
-              <Button aria-label={`Add ${ex.name}`}>Add</Button>
+              <Button
+                onClick={async () => await saveUserExercise(ex.id)}
+                aria-label={`Add ${ex.name}`}
+              >
+                Add
+              </Button>
             </Box>
           ))}
         </Box>
