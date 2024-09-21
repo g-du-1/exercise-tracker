@@ -51,6 +51,4 @@ afterEach(() => {
       resetFn();
     });
   });
-
-  vi.useFakeTimers();
 });
