@@ -1,17 +1,18 @@
 import { fetchWithAuth } from "../fetchWithAuth";
 import { signIn } from "./signIn";
 import { localStorageMock } from "../../tests/localStorageMock";
+import { Mock } from "vitest";
 
-jest.mock("../fetchWithAuth", () => ({
-  fetchWithAuth: jest.fn(),
+vi.mock("../fetchWithAuth", () => ({
+  fetchWithAuth: vi.fn(),
 }));
 
 describe("signIn", () => {
   const OLD_ENV = process.env;
 
   beforeEach(() => {
-    jest.resetModules();
-    jest.clearAllMocks();
+    vi.resetModules();
+    vi.clearAllMocks();
 
     Object.defineProperty(window, "localStorage", {
       value: localStorageMock,
@@ -19,7 +20,7 @@ describe("signIn", () => {
 
     localStorage.setItem("JWT_TOKEN", "");
 
-    (fetchWithAuth as jest.Mock).mockImplementation(() =>
+    (fetchWithAuth as Mock).mockImplementation(() =>
       Promise.resolve({
         status: 200,
         json: () =>
@@ -28,7 +29,7 @@ describe("signIn", () => {
             username: "user1",
             roles: ["ROLE_USER"],
           }),
-      }),
+      })
     );
 
     process.env = { ...OLD_ENV };
@@ -69,7 +70,7 @@ describe("signIn", () => {
   });
 
   it("does not set the jwt on unsuccessful login", async () => {
-    (fetchWithAuth as jest.Mock).mockImplementation(() =>
+    (fetchWithAuth as Mock).mockImplementation(() =>
       Promise.resolve({
         status: 401,
         json: () =>
@@ -77,7 +78,7 @@ describe("signIn", () => {
             message: "Bad credentials",
             status: false,
           }),
-      }),
+      })
     );
 
     await signIn("testUser", "testPassword");

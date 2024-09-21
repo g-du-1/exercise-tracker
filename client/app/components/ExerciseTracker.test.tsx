@@ -1,12 +1,7 @@
-/**
- * @jest-environment jsdom
- */
 import { render, fireEvent, screen, act } from "@testing-library/react";
 import { ExerciseTracker } from "./ExerciseTracker";
 import { getFormattedTime } from "../util/getFormattedTime";
 import { mockExercises } from "./fixtures/mockExercises";
-
-jest.useFakeTimers();
 
 const DELETE_REPS = "Delete Reps";
 
@@ -41,6 +36,14 @@ const clickDeleteReps = () => fireEvent.click(getDeleteRepsBtn());
 // TODO: Make tests more maintainable
 
 describe("ExerciseTracker", () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   it("matches snapshot", () => {
     const result = renderExerciseTracker();
 
@@ -168,7 +171,7 @@ describe("ExerciseTracker", () => {
     submitReps("6");
 
     act(() => {
-      jest.advanceTimersByTime(5000);
+      vi.advanceTimersByTime(5000);
     });
 
     expect(screen.getByText("00:00:05")).toBeInTheDocument();
@@ -182,7 +185,7 @@ describe("ExerciseTracker", () => {
     submitReps("6");
 
     act(() => {
-      jest.advanceTimersByTime(5000);
+      vi.advanceTimersByTime(5000);
     });
 
     expect(screen.getByText("00:00:00")).toBeInTheDocument();
@@ -204,7 +207,7 @@ describe("ExerciseTracker", () => {
     );
 
     act(() => {
-      jest.advanceTimersByTime(8000);
+      vi.advanceTimersByTime(8000);
     });
 
     expect(screen.getByText(/00:00:08/i)).toBeInTheDocument();
@@ -240,7 +243,7 @@ describe("ExerciseTracker", () => {
     );
 
     act(() => {
-      jest.advanceTimersByTime(8000);
+      vi.advanceTimersByTime(8000);
     });
 
     expect(screen.getByText(/00:00:08/i)).toBeInTheDocument();
@@ -252,7 +255,7 @@ describe("ExerciseTracker", () => {
     );
 
     act(() => {
-      jest.advanceTimersByTime(3000);
+      vi.advanceTimersByTime(3000);
     });
 
     expect(screen.getByText(/00:00:03/i)).toBeInTheDocument();
@@ -286,7 +289,7 @@ describe("ExerciseTracker", () => {
     submitReps("6");
 
     act(() => {
-      jest.advanceTimersByTime(90000);
+      vi.advanceTimersByTime(90000);
     });
 
     expect(screen.getByLabelText("Rest Time Passed")).toBeInTheDocument();
@@ -306,7 +309,7 @@ describe("ExerciseTracker", () => {
     fireEvent.click(screen.getByLabelText(/restart stopwatch/i));
 
     act(() => {
-      jest.advanceTimersByTime(100000);
+      vi.advanceTimersByTime(100000);
     });
 
     expect(screen.queryByLabelText("Rest Time Passed")).not.toBeInTheDocument();
@@ -324,7 +327,7 @@ describe("ExerciseTracker", () => {
     submitReps("6");
 
     act(() => {
-      jest.advanceTimersByTime(200000);
+      vi.advanceTimersByTime(200000);
     });
 
     expect(screen.queryByLabelText("Rest Time Passed")).not.toBeInTheDocument();
@@ -342,7 +345,7 @@ describe("ExerciseTracker", () => {
     submitReps("6");
 
     act(() => {
-      jest.advanceTimersByTime(5000);
+      vi.advanceTimersByTime(5000);
     });
 
     clickOpenModalTrigger(1);
@@ -442,7 +445,7 @@ describe("ExerciseTracker", () => {
     expect(screen.getByText(`Started: ${startTime}`)).toBeInTheDocument();
 
     act(() => {
-      jest.advanceTimersByTime(500000);
+      vi.advanceTimersByTime(500000);
     });
 
     clickOpenModalTrigger(1);
@@ -508,7 +511,7 @@ describe("ExerciseTracker", () => {
     submitReps("6");
 
     act(() => {
-      jest.advanceTimersByTime(50000);
+      vi.advanceTimersByTime(50000);
     });
 
     expect(screen.getByText("00:00:00")).toBeInTheDocument();
@@ -522,7 +525,7 @@ describe("ExerciseTracker", () => {
     submitReps("6");
 
     act(() => {
-      jest.advanceTimersByTime(190000);
+      vi.advanceTimersByTime(190000);
     });
 
     expect(window.HTMLMediaElement.prototype.play).toHaveBeenCalledTimes(2);
