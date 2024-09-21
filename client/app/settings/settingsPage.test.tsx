@@ -104,14 +104,18 @@ describe("SignInPage", () => {
     ).toBeInTheDocument();
   });
 
-  it("adds a user exercise", async () => {
+  it("adds a user exercise and disables add", async () => {
     await act(async () => {
       render(<SettingsPage />);
     });
 
-    fireEvent.click(screen.getByLabelText("Add Diamond Pushup"));
+    await act(async () => {
+      fireEvent.click(screen.getByLabelText("Add Diamond Pushup"));
+    });
 
     expect(saveUserExercise).toHaveBeenNthCalledWith(1, 13);
+
+    expect(screen.getByLabelText("Add Diamond Pushup")).toBeDisabled();
   });
 
   it("deletes all exercises for user", async () => {
@@ -124,7 +128,7 @@ describe("SignInPage", () => {
     expect(deleteAllExercisesForUser).toHaveBeenCalledTimes(1);
   });
 
-  it("disables add if the user already has the exercise", async () => {
+  it("disables add on load if the user already has the exercise", async () => {
     (getUserExercises as jest.Mock).mockImplementation(() =>
       Promise.resolve([
         {

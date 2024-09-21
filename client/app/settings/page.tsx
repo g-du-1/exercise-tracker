@@ -2,7 +2,7 @@
 
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
-import { Exercise, UserExercise } from "../types";
+import { Exercise } from "../types";
 import { getAllExercises } from "../util/api/getAllExercises";
 import { useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
@@ -11,14 +11,10 @@ import { saveUserExercise } from "../util/api/saveUserExercise";
 import { deleteAllExercisesForUser } from "../util/api/deleteAllExercisesForUser";
 import { getUserExercises } from "../util/api/getUserExercises";
 
-const userHasExercise = (exerciseId: number, userExercises: UserExercise[]) => {
-  return userExercises?.some((ue) => ue.exercise.id === exerciseId);
-};
-
 const SettingsPage = () => {
   const [loading, setLoading] = useState(false);
   const [allExercises, setAllExercises] = useState<Exercise[]>([]);
-  const [userExercises, setUserExercises] = useState<UserExercise[]>([]);
+  const [usersExerciseIds, setUsersExerciseIds] = useState<number[]>([]);
 
   useEffect(() => {
     (async () => {
@@ -30,7 +26,7 @@ const SettingsPage = () => {
       ]);
 
       setAllExercises(allExercises);
-      setUserExercises(allUserExercises);
+      setUsersExerciseIds(allUserExercises.map((ue) => ue.exercise.id));
 
       setLoading(false);
     })();
@@ -78,9 +74,12 @@ const SettingsPage = () => {
                 <Box>{ex.name}</Box>
 
                 <Button
-                  onClick={async () => await saveUserExercise(ex.id)}
+                  onClick={async () => {
+                    await saveUserExercise(ex.id);
+                    setUsersExerciseIds([...usersExerciseIds, ex.id]);
+                  }}
                   aria-label={`Add ${ex.name}`}
-                  disabled={userHasExercise(ex.id, userExercises)}
+                  disabled={usersExerciseIds.includes(ex.id)}
                 >
                   Add
                 </Button>
