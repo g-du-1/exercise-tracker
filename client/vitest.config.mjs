@@ -9,6 +9,7 @@ export default defineConfig({
       all: true,
       include: ["app/**/*.{ts,tsx,js,jsx}"],
       exclude: [
+        "**/*.test.*",
         "node_modules/",
         "**/types.ts",
         "**/theme.ts",
