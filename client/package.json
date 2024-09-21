@@ -6,7 +6,7 @@
     "build": "next build",
     "start": "next start",
     "test": "vitest",
-    "test:coverage": "vitest --coverage",
+    "test:coverage": "vitest --coverage"
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",
