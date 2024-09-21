@@ -1,106 +1,95 @@
 "use client";
 
-import React from "react";
-import Link from "next/link";
-import { getAllExercises } from "../util/api/getAllExercises";
-import { UserExercise } from "../types";
-import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import { getUserExercises } from "../util/api/getUserExercises";
-import { CircularProgress } from "@mui/material";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import CircularProgress from "@mui/material/CircularProgress";
+import { Exercise } from "../types";
+import { getAllExercises } from "../util/api/getAllExercises";
+import { useEffect, useState } from "react";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 import { saveUserExercise } from "../util/api/saveUserExercise";
-import { deleteUserExercise } from "../util/api/deleteUserExercise";
-
-const isExerciseSavedAlready = (
-  exerciseId: number,
-  userExercises: UserExercise[] | undefined,
-) => {
-  return userExercises?.some((ue) => ue.exercise.id === exerciseId);
-};
+import { deleteAllExercisesForUser } from "../util/api/deleteAllExercisesForUser";
+import { getUserExercises } from "../util/api/getUserExercises";
 
 const SettingsPage = () => {
-  const queryClient = useQueryClient();
+  const [loading, setLoading] = useState(true);
+  const [allExercises, setAllExercises] = useState<Exercise[]>([]);
+  const [usersExerciseIds, setUsersExerciseIds] = useState<number[]>([]);
 
-  const { data: exercises, isLoading: allExercisesLoading } = useQuery({
-    queryKey: ["getAllExercises"],
-    queryFn: getAllExercises,
-  });
+  useEffect(() => {
+    (async () => {
+      const [allExercises, allUserExercises] = await Promise.all([
+        getAllExercises(),
+        getUserExercises(),
+      ]);
 
-  const { data: userExercises, isLoading: userExercisesLoading } = useQuery({
-    queryKey: ["getUserExercises"],
-    queryFn: getUserExercises,
-  });
+      setAllExercises(allExercises);
+      setUsersExerciseIds(allUserExercises.map((ue) => ue.exercise.id));
 
-  const saveMutation = useMutation({
-    mutationFn: async (exerciseId: number) => {
-      return await saveUserExercise(exerciseId);
-    },
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["getUserExercises"] });
-    },
-    onError: (error) => {
-      console.error("Error adding exercise:", error);
-    },
-  });
-
-  const deleteMutation = useMutation({
-    mutationFn: async (exerciseId: number) => {
-      return await deleteUserExercise(exerciseId);
-    },
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["getUserExercises"] });
-    },
-    onError: (error) => {
-      console.error("Error deleting exercise:", error);
-    },
-  });
-
-  const loading = allExercisesLoading || userExercisesLoading;
-
-  if (loading) {
-    return (
-      <Box sx={{ display: "flex" }} justifyContent={"center"} mt={2}>
-        <CircularProgress />
-      </Box>
-    );
-  }
+      setLoading(false);
+    })();
+  }, []);
 
   return (
-    <div>
-      <Link href="/">
-        <Box mb={2}>
-          <Button variant="contained">Home</Button>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        margin: "auto",
+        padding: 2,
+      }}
+    >
+      <Typography variant="h6" component="h1" textAlign="center" mb={1}>
+        Settings
+      </Typography>
+
+      {loading ? (
+        <Box mx="auto" my={2}>
+          <CircularProgress />
         </Box>
-      </Link>
-
-      <Box>
-        {exercises?.map((exercise) => (
-          <Box
-            display={"flex"}
-            alignItems="center"
-            justifyContent={"space-between"}
-            key={exercise.id}
-          >
-            <Box>{exercise.name}</Box>
-
+      ) : (
+        <Box display="flex" flexDirection="column">
+          <Box ml="auto">
             <Button
-              disabled={isExerciseSavedAlready(exercise.id, userExercises)}
-              onClick={() => saveMutation.mutate(exercise.id)}
+              onClick={async () => {
+                await deleteAllExercisesForUser();
+                setUsersExerciseIds([]);
+              }}
+              color="error"
+              aria-label="Delete All Of My Exercises"
             >
-              Add
-            </Button>
-
-            <Button
-              disabled={!isExerciseSavedAlready(exercise.id, userExercises)}
-              onClick={() => deleteMutation.mutate(exercise.id)}
-            >
-              Delete
+              Delete All
             </Button>
           </Box>
-        ))}
-      </Box>
-    </div>
+
+          <Box>
+            {allExercises.map((ex: Exercise) => (
+              <Box
+                key={ex.id}
+                my={2}
+                display="flex"
+                alignItems="center"
+                justifyContent="space-between"
+              >
+                <Box>{ex.name}</Box>
+
+                <Button
+                  onClick={async () => {
+                    await saveUserExercise(ex.id);
+                    setUsersExerciseIds([...usersExerciseIds, ex.id]);
+                  }}
+                  aria-label={`Add ${ex.name}`}
+                  disabled={usersExerciseIds.includes(ex.id)}
+                >
+                  Add
+                </Button>
+              </Box>
+            ))}
+          </Box>
+        </Box>
+      )}
+    </Box>
   );
 };
 
