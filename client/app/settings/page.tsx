@@ -12,14 +12,12 @@ import { deleteAllExercisesForUser } from "../util/api/deleteAllExercisesForUser
 import { getUserExercises } from "../util/api/getUserExercises";
 
 const SettingsPage = () => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [allExercises, setAllExercises] = useState<Exercise[]>([]);
   const [usersExerciseIds, setUsersExerciseIds] = useState<number[]>([]);
 
   useEffect(() => {
     (async () => {
-      setLoading(true);
-
       const [allExercises, allUserExercises] = await Promise.all([
         getAllExercises(),
         getUserExercises(),
