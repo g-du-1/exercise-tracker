@@ -7,6 +7,7 @@ import SettingsPage from "./page";
 import { getAllExercises } from "../util/api/getAllExercises";
 import { saveUserExercise } from "../util/api/saveUserExercise";
 import { deleteAllExercisesForUser } from "../util/api/deleteAllExercisesForUser";
+import { getUserExercises } from "../util/api/getUserExercises";
 
 const mockExercises = [
   {
@@ -46,6 +47,10 @@ jest.mock("../util/api/getAllExercises", () => ({
   getAllExercises: jest.fn(),
 }));
 
+jest.mock("../util/api/getUserExercises", () => ({
+  getUserExercises: jest.fn(),
+}));
+
 jest.mock("../util/api/saveUserExercise", () => ({
   saveUserExercise: jest.fn(),
 }));
@@ -61,6 +66,10 @@ describe("SignInPage", () => {
 
     (getAllExercises as jest.Mock).mockImplementation(() =>
       Promise.resolve(mockExercises)
+    );
+
+    (getUserExercises as jest.Mock).mockImplementation(() =>
+      Promise.resolve([])
     );
   });
 
@@ -113,5 +122,37 @@ describe("SignInPage", () => {
     fireEvent.click(screen.getByLabelText("Delete All Of My Exercises"));
 
     expect(deleteAllExercisesForUser).toHaveBeenCalledTimes(1);
+  });
+
+  it("disables add if the user already has the exercise", async () => {
+    (getUserExercises as jest.Mock).mockImplementation(() =>
+      Promise.resolve([
+        {
+          id: 2,
+          exercise: {
+            id: 13,
+            key: "diamond-pushup",
+            name: "Diamond Pushup",
+            category: "THIRD_PAIR",
+            type: "PUSH_UP",
+            targetSets: 3,
+            targetRepsMin: 5,
+            targetRepsMax: 8,
+            targetRest: 90,
+            additionalRest: 90,
+            mediaLink: "https://www.youtube.com/watch?v=J0DnG1_S92I",
+            comments:
+              "<ul><li>Put your hands close together so the thumbs and index fingers touch, then perform a pushup</li><li>If this is too difficult or feels uncomfortable, put your hands just a bit closer than in a normal pushup. Work on moving the hands closer together over time until you reach diamond pushups</li></ul>",
+            duration: false,
+          },
+        },
+      ])
+    );
+
+    await act(async () => {
+      render(<SettingsPage />);
+    });
+
+    expect(screen.getByLabelText("Add Diamond Pushup")).toBeDisabled();
   });
 });

@@ -2,23 +2,36 @@
 
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
-import { Exercise } from "../types";
+import { Exercise, UserExercise } from "../types";
 import { getAllExercises } from "../util/api/getAllExercises";
 import { useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { saveUserExercise } from "../util/api/saveUserExercise";
 import { deleteAllExercisesForUser } from "../util/api/deleteAllExercisesForUser";
+import { getUserExercises } from "../util/api/getUserExercises";
+
+const userHasExercise = (exerciseId: number, userExercises: UserExercise[]) => {
+  return userExercises?.some((ue) => ue.exercise.id === exerciseId);
+};
 
 const SettingsPage = () => {
   const [loading, setLoading] = useState(false);
   const [allExercises, setAllExercises] = useState<Exercise[]>([]);
+  const [userExercises, setUserExercises] = useState<UserExercise[]>([]);
 
   useEffect(() => {
     (async () => {
       setLoading(true);
-      const allExercises = await getAllExercises();
+
+      const [allExercises, allUserExercises] = await Promise.all([
+        getAllExercises(),
+        getUserExercises(),
+      ]);
+
       setAllExercises(allExercises);
+      setUserExercises(allUserExercises);
+
       setLoading(false);
     })();
   }, []);
@@ -67,6 +80,7 @@ const SettingsPage = () => {
                 <Button
                   onClick={async () => await saveUserExercise(ex.id)}
                   aria-label={`Add ${ex.name}`}
+                  disabled={userHasExercise(ex.id, userExercises)}
                 >
                   Add
                 </Button>
