@@ -6,6 +6,7 @@ import { act, fireEvent, render, screen } from "@testing-library/react";
 import SettingsPage from "./page";
 import { getAllExercises } from "../util/api/getAllExercises";
 import { saveUserExercise } from "../util/api/saveUserExercise";
+import { deleteAllExercisesForUser } from "../util/api/deleteAllExercisesForUser";
 
 const mockExercises = [
   {
@@ -49,19 +50,23 @@ jest.mock("../util/api/saveUserExercise", () => ({
   saveUserExercise: jest.fn(),
 }));
 
+jest.mock("../util/api/deleteAllExercisesForUser", () => ({
+  deleteAllExercisesForUser: jest.fn(),
+}));
+
 describe("SignInPage", () => {
   beforeEach(() => {
     jest.resetModules();
     jest.clearAllMocks();
 
     (getAllExercises as jest.Mock).mockImplementation(() =>
-      Promise.resolve(mockExercises),
+      Promise.resolve(mockExercises)
     );
   });
 
   it("displays a spinner while loading", async () => {
     (getAllExercises as jest.Mock).mockImplementation(
-      () => new Promise(() => {}),
+      () => new Promise(() => {})
     );
 
     await act(async () => {
@@ -73,7 +78,7 @@ describe("SignInPage", () => {
     expect(screen.queryByText("Diamond Pushup")).not.toBeInTheDocument();
 
     expect(
-      screen.queryByText("Reverse Hyperextension"),
+      screen.queryByText("Reverse Hyperextension")
     ).not.toBeInTheDocument();
   });
 
@@ -86,7 +91,7 @@ describe("SignInPage", () => {
     expect(screen.queryByRole("progressbar")).not.toBeInTheDocument();
     expect(screen.getByLabelText("Add Diamond Pushup")).toBeInTheDocument();
     expect(
-      screen.getByLabelText("Add Reverse Hyperextension"),
+      screen.getByLabelText("Add Reverse Hyperextension")
     ).toBeInTheDocument();
   });
 
@@ -98,5 +103,15 @@ describe("SignInPage", () => {
     fireEvent.click(screen.getByLabelText("Add Diamond Pushup"));
 
     expect(saveUserExercise).toHaveBeenNthCalledWith(1, 13);
+  });
+
+  it("deletes all exercises for user", async () => {
+    await act(async () => {
+      render(<SettingsPage />);
+    });
+
+    fireEvent.click(screen.getByLabelText("Delete All Of My Exercises"));
+
+    expect(deleteAllExercisesForUser).toHaveBeenCalledTimes(1);
   });
 });

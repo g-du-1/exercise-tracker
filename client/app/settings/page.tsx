@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { saveUserExercise } from "../util/api/saveUserExercise";
+import { deleteAllExercisesForUser } from "../util/api/deleteAllExercisesForUser";
 
 const SettingsPage = () => {
   const [loading, setLoading] = useState(false);
@@ -41,25 +42,37 @@ const SettingsPage = () => {
           <CircularProgress />
         </Box>
       ) : (
-        <Box>
-          {allExercises.map((ex: Exercise) => (
-            <Box
-              key={ex.id}
-              my={2}
-              display="flex"
-              alignItems="center"
-              justifyContent="space-between"
+        <Box display="flex" flexDirection="column">
+          <Box ml="auto">
+            <Button
+              onClick={async () => await deleteAllExercisesForUser()}
+              color="error"
+              aria-label="Delete All Of My Exercises"
             >
-              <Box>{ex.name}</Box>
+              Delete All
+            </Button>
+          </Box>
 
-              <Button
-                onClick={async () => await saveUserExercise(ex.id)}
-                aria-label={`Add ${ex.name}`}
+          <Box>
+            {allExercises.map((ex: Exercise) => (
+              <Box
+                key={ex.id}
+                my={2}
+                display="flex"
+                alignItems="center"
+                justifyContent="space-between"
               >
-                Add
-              </Button>
-            </Box>
-          ))}
+                <Box>{ex.name}</Box>
+
+                <Button
+                  onClick={async () => await saveUserExercise(ex.id)}
+                  aria-label={`Add ${ex.name}`}
+                >
+                  Add
+                </Button>
+              </Box>
+            ))}
+          </Box>
         </Box>
       )}
     </Box>
