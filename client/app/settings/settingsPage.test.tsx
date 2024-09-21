@@ -119,13 +119,63 @@ describe("SignInPage", () => {
   });
 
   it("deletes all exercises for user", async () => {
+    (getUserExercises as jest.Mock).mockImplementation(() =>
+      Promise.resolve([
+        {
+          id: 1,
+          exercise: {
+            id: 16,
+            key: "reverse-hyperextension",
+            name: "Reverse Hyperextension",
+            category: "CORE_TRIPLET",
+            type: "EXTENSION",
+            targetSets: 3,
+            targetRepsMin: 8,
+            targetRepsMax: 12,
+            targetRest: 60,
+            additionalRest: 60,
+            mediaLink: "https://www.youtube.com/watch?v=ZeRsNzFcQLQ&",
+            comments: "<ul><li>Keep your butt tucked</li></ul>",
+            duration: false,
+          },
+        },
+        {
+          id: 2,
+          exercise: {
+            id: 13,
+            key: "diamond-pushup",
+            name: "Diamond Pushup",
+            category: "THIRD_PAIR",
+            type: "PUSH_UP",
+            targetSets: 3,
+            targetRepsMin: 5,
+            targetRepsMax: 8,
+            targetRest: 90,
+            additionalRest: 90,
+            mediaLink: "https://www.youtube.com/watch?v=J0DnG1_S92I",
+            comments:
+              "<ul><li>Put your hands close together so the thumbs and index fingers touch, then perform a pushup</li><li>If this is too difficult or feels uncomfortable, put your hands just a bit closer than in a normal pushup. Work on moving the hands closer together over time until you reach diamond pushups</li></ul>",
+            duration: false,
+          },
+        },
+      ])
+    );
+
     await act(async () => {
       render(<SettingsPage />);
     });
 
-    fireEvent.click(screen.getByLabelText("Delete All Of My Exercises"));
+    expect(screen.getByLabelText("Add Reverse Hyperextension")).toBeDisabled();
+    expect(screen.getByLabelText("Add Diamond Pushup")).toBeDisabled();
+
+    await act(async () => {
+      fireEvent.click(screen.getByLabelText("Delete All Of My Exercises"));
+    });
 
     expect(deleteAllExercisesForUser).toHaveBeenCalledTimes(1);
+
+    expect(screen.getByLabelText("Add Reverse Hyperextension")).toBeEnabled();
+    expect(screen.getByLabelText("Add Diamond Pushup")).toBeEnabled();
   });
 
   it("disables add on load if the user already has the exercise", async () => {

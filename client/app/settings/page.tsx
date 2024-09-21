@@ -54,7 +54,10 @@ const SettingsPage = () => {
         <Box display="flex" flexDirection="column">
           <Box ml="auto">
             <Button
-              onClick={async () => await deleteAllExercisesForUser()}
+              onClick={async () => {
+                await deleteAllExercisesForUser();
+                setUsersExerciseIds([]);
+              }}
               color="error"
               aria-label="Delete All Of My Exercises"
             >
