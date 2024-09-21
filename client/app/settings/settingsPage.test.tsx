@@ -1,13 +1,10 @@
-/**
- * @jest-environment jsdom
- */
-
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import SettingsPage from "./page";
 import { getAllExercises } from "../util/api/getAllExercises";
 import { saveUserExercise } from "../util/api/saveUserExercise";
 import { deleteAllExercisesForUser } from "../util/api/deleteAllExercisesForUser";
 import { getUserExercises } from "../util/api/getUserExercises";
+import { Mock } from "vitest";
 
 const mockExercises = [
   {
@@ -43,40 +40,36 @@ const mockExercises = [
   },
 ];
 
-jest.mock("../util/api/getAllExercises", () => ({
-  getAllExercises: jest.fn(),
+vi.mock("../util/api/getAllExercises", () => ({
+  getAllExercises: vi.fn(),
 }));
 
-jest.mock("../util/api/getUserExercises", () => ({
-  getUserExercises: jest.fn(),
+vi.mock("../util/api/getUserExercises", () => ({
+  getUserExercises: vi.fn(),
 }));
 
-jest.mock("../util/api/saveUserExercise", () => ({
-  saveUserExercise: jest.fn(),
+vi.mock("../util/api/saveUserExercise", () => ({
+  saveUserExercise: vi.fn(),
 }));
 
-jest.mock("../util/api/deleteAllExercisesForUser", () => ({
-  deleteAllExercisesForUser: jest.fn(),
+vi.mock("../util/api/deleteAllExercisesForUser", () => ({
+  deleteAllExercisesForUser: vi.fn(),
 }));
 
 describe("SignInPage", () => {
   beforeEach(() => {
-    jest.resetModules();
-    jest.clearAllMocks();
+    vi.resetModules();
+    vi.clearAllMocks();
 
-    (getAllExercises as jest.Mock).mockImplementation(() =>
+    (getAllExercises as Mock).mockImplementation(() =>
       Promise.resolve(mockExercises)
     );
 
-    (getUserExercises as jest.Mock).mockImplementation(() =>
-      Promise.resolve([])
-    );
+    (getUserExercises as Mock).mockImplementation(() => Promise.resolve([]));
   });
 
   it("displays a spinner while loading", async () => {
-    (getAllExercises as jest.Mock).mockImplementation(
-      () => new Promise(() => {})
-    );
+    (getAllExercises as Mock).mockImplementation(() => new Promise(() => {}));
 
     await act(async () => {
       render(<SettingsPage />);
@@ -119,7 +112,7 @@ describe("SignInPage", () => {
   });
 
   it("deletes all exercises for user", async () => {
-    (getUserExercises as jest.Mock).mockImplementation(() =>
+    (getUserExercises as Mock).mockImplementation(() =>
       Promise.resolve([
         {
           id: 1,
@@ -179,7 +172,7 @@ describe("SignInPage", () => {
   });
 
   it("disables add on load if the user already has the exercise", async () => {
-    (getUserExercises as jest.Mock).mockImplementation(() =>
+    (getUserExercises as Mock).mockImplementation(() =>
       Promise.resolve([
         {
           id: 2,

@@ -1,18 +1,19 @@
 import { getAllExercises } from "./getAllExercises";
 import { fetchWithAuth } from "../fetchWithAuth";
+import { Mock } from "vitest";
 
-jest.mock("../fetchWithAuth", () => ({
-  fetchWithAuth: jest.fn(),
+vi.mock("../fetchWithAuth", () => ({
+  fetchWithAuth: vi.fn(),
 }));
 
 describe("getAllExercises", () => {
   const OLD_ENV = process.env;
 
   beforeEach(() => {
-    jest.resetModules();
-    jest.clearAllMocks();
+    vi.resetModules();
+    vi.clearAllMocks();
 
-    (fetchWithAuth as jest.Mock).mockImplementation(() =>
+    (fetchWithAuth as Mock).mockImplementation(() =>
       Promise.resolve({
         status: 200,
         json: () =>
@@ -49,7 +50,7 @@ describe("getAllExercises", () => {
               duration: false,
             },
           ]),
-      }),
+      })
     );
 
     process.env = { ...OLD_ENV };
@@ -109,23 +110,23 @@ describe("getAllExercises", () => {
 
     expect(fetchWithAuth).toHaveBeenNthCalledWith(
       1,
-      "/get-all-exercises-endpoint",
+      "/get-all-exercises-endpoint"
     );
   });
 
   it("throws an error on a failed request", async () => {
-    (fetchWithAuth as jest.Mock).mockImplementation(() =>
+    (fetchWithAuth as Mock).mockImplementation(() =>
       Promise.resolve({
         status: 500,
         json: () =>
           Promise.resolve({
             message: "Internal Server Error",
           }),
-      }),
+      })
     );
 
     await expect(getAllExercises()).rejects.toThrow(
-      "Failed to get all exercises.",
+      "Failed to get all exercises."
     );
   });
 });

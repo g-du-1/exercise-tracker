@@ -3,7 +3,7 @@ import * as zustand from "zustand";
 import { act } from "@testing-library/react";
 
 const { create: actualCreate, createStore: actualCreateStore } =
-  jest.requireActual<typeof zustand>("zustand");
+  await vi.importActual<typeof zustand>("zustand");
 
 // a variable to hold reset functions for all stores declared in the app
 export const storeResetFns = new Set<() => void>();
@@ -52,5 +52,5 @@ afterEach(() => {
     });
   });
 
-  jest.useFakeTimers();
+  vi.useFakeTimers();
 });

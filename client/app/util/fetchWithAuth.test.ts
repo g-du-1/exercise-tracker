@@ -1,11 +1,11 @@
 import { localStorageMock } from "../tests/localStorageMock";
 import { fetchWithAuth } from "./fetchWithAuth";
 
-const mockFetch = jest.fn();
+const mockFetch = vi.fn();
 
 describe("fetchWithAuthToken", () => {
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
 
     Object.defineProperty(window, "localStorage", {
       value: localStorageMock,

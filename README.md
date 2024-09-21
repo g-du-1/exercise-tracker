@@ -36,7 +36,7 @@ https://exercise-tracker-iota-gules.vercel.app
 
 - TDD
 - React Testing Library
-- Jest
+- Vitest
 - TypeScript
 - Nextjs
 - zustand

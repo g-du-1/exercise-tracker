@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 import {
   act,
   fireEvent,
@@ -12,27 +8,26 @@ import {
 import SignInPage from "./page";
 import { useRouter } from "next/navigation";
 import { signIn } from "../util/api/signIn";
+import { Mock } from "vitest";
 
-jest.mock("../util/api/signIn", () => ({
-  signIn: jest.fn(),
+vi.mock("../util/api/signIn", () => ({
+  signIn: vi.fn(),
 }));
 
-jest.mock("next/navigation", () => ({
-  useRouter: jest.fn(),
+vi.mock("next/navigation", () => ({
+  useRouter: vi.fn(),
 }));
 
 describe("SignInPage", () => {
-  let mockPush = jest.fn();
+  let mockPush = vi.fn();
 
   beforeEach(() => {
-    jest.resetModules();
-    jest.clearAllMocks();
+    vi.resetModules();
+    vi.clearAllMocks();
 
-    (signIn as jest.Mock).mockImplementation(() =>
-      Promise.resolve({ status: 200 }),
-    );
+    (signIn as Mock).mockImplementation(() => Promise.resolve({ status: 200 }));
 
-    (useRouter as jest.Mock).mockImplementation(() => ({
+    (useRouter as Mock).mockImplementation(() => ({
       push: mockPush,
     }));
   });
@@ -65,8 +60,8 @@ describe("SignInPage", () => {
   });
 
   it("displays an error message on failed login", async () => {
-    (signIn as jest.Mock).mockImplementation(() =>
-      Promise.resolve({ status: 401, message: "Bad credentials" }),
+    (signIn as Mock).mockImplementation(() =>
+      Promise.resolve({ status: 401, message: "Bad credentials" })
     );
 
     render(<SignInPage />);
@@ -91,8 +86,8 @@ describe("SignInPage", () => {
   });
 
   it("clears the error message on typing", async () => {
-    (signIn as jest.Mock).mockImplementation(() =>
-      Promise.resolve({ status: 401, message: "Bad credentials" }),
+    (signIn as Mock).mockImplementation(() =>
+      Promise.resolve({ status: 401, message: "Bad credentials" })
     );
 
     render(<SignInPage />);

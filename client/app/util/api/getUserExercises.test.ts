@@ -1,18 +1,19 @@
+import { Mock } from "vitest";
 import { fetchWithAuth } from "../fetchWithAuth";
 import { getUserExercises } from "./getUserExercises";
 
-jest.mock("../fetchWithAuth", () => ({
-  fetchWithAuth: jest.fn(),
+vi.mock("../fetchWithAuth", () => ({
+  fetchWithAuth: vi.fn(),
 }));
 
 describe("getUserExercises", () => {
   const OLD_ENV = process.env;
 
   beforeEach(() => {
-    jest.resetModules();
-    jest.clearAllMocks();
+    vi.resetModules();
+    vi.clearAllMocks();
 
-    (fetchWithAuth as jest.Mock).mockImplementation(() =>
+    (fetchWithAuth as Mock).mockImplementation(() =>
       Promise.resolve({
         status: 200,
         json: () =>
