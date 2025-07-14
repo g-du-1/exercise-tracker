@@ -15,7 +15,11 @@ import { CardComments } from "./card/CardComments";
 import { useBoundStore } from "../store/store";
 import { FinishTime } from "./FinishTime";
 
-export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
+export const ExerciseTracker = ({
+  exercises,
+}: {
+  exercises: Exercise[] | undefined;
+}) => {
   const showComments = useBoundStore((state) => state.showComments);
   const savedReps = useBoundStore((state) => state.savedReps);
   const showCompletedExercises = useBoundStore(
@@ -30,6 +34,8 @@ export const ExerciseTracker = ({ exercises }: { exercises: Exercise[] }) => {
     setSelectedExercise(selectedExercise);
     setModalOpen(true);
   };
+
+  if (!exercises) return null;
 
   return (
     <Box
