@@ -1,5 +1,5 @@
-import { TrackerWrapper } from "./components/TrackerWrapper";
+import { TrackerApp } from "./components/TrackerApp";
 
 export default async function Home() {
-  return <TrackerWrapper />;
+  return <TrackerApp />;
 }
