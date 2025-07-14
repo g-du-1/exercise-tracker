@@ -1,5 +1,5 @@
-import { TrackerApp } from "./components/TrackerApp";
+import { ExerciseTracker } from "./components/ExerciseTracker";
 
 export default async function Home() {
-  return <TrackerApp />;
+  return <ExerciseTracker />;
 }

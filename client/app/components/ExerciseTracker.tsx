@@ -14,20 +14,23 @@ import { SavedReps } from "./card/SavedReps";
 import { CardComments } from "./card/CardComments";
 import { useBoundStore } from "../store/store";
 import { FinishTime } from "./FinishTime";
+import { useGetUserExercises } from "../hooks/useGetUserExercises";
+import CircularProgress from "@mui/material/CircularProgress";
 
-export const ExerciseTracker = ({
-  exercises,
-}: {
-  exercises: Exercise[] | undefined;
-}) => {
+export const ExerciseTracker = ({}) => {
+  const { data: exercises, isLoading } = useGetUserExercises();
+
   const showComments = useBoundStore((state) => state.showComments);
   const savedReps = useBoundStore((state) => state.savedReps);
+
   const showCompletedExercises = useBoundStore(
     (state) => state.showCompletedExercises,
   );
+
   const setSelectedExercise = useBoundStore(
     (state) => state.setSelectedExercise,
   );
+
   const setModalOpen = useBoundStore((state) => state.setModalOpen);
 
   const handleClick = (selectedExercise: Exercise) => {
@@ -35,7 +38,13 @@ export const ExerciseTracker = ({
     setModalOpen(true);
   };
 
-  if (!exercises) return null;
+  if (isLoading) {
+    return (
+      <Box mx="auto" my={2} textAlign={"center"}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <Box
@@ -46,59 +55,69 @@ export const ExerciseTracker = ({
       <Box sx={{ mt: 7 }}>
         <TopBar />
 
-        {exercises.map((exercise, idx) => {
-          const exerciseCompleted =
-            savedReps?.[exercise.key]?.reps.length >= exercise.targetSets;
+        {!exercises || exercises.length === 0 ? (
+          <Box textAlign="center">No exercises.</Box>
+        ) : (
+          <>
+            {exercises.map((exercise, idx) => {
+              const exerciseCompleted =
+                savedReps?.[exercise.key]?.reps.length >= exercise.targetSets;
 
-          return (
-            <Box
-              key={exercise.key}
-              sx={
-                exerciseCompleted && !showCompletedExercises
-                  ? { display: "none" }
-                  : {}
-              }
-            >
-              <Card sx={{ mb: 2 }}>
-                <CardExerciseMedia exercise={exercise} />
-
-                <CardContent
-                  sx={{ p: 1, cursor: "pointer", "&:last-child": { pb: 1 } }}
-                  aria-label={`Open ${exercise.name} Modal`}
-                  onClick={() => handleClick(exercise)}
+              return (
+                <Box
+                  key={exercise.key}
+                  sx={
+                    exerciseCompleted && !showCompletedExercises
+                      ? { display: "none" }
+                      : {}
+                  }
                 >
-                  <CardHeading
-                    exercise={exercise}
-                    exerciseCompleted={exerciseCompleted}
-                  />
+                  <Card sx={{ mb: 2 }}>
+                    <CardExerciseMedia exercise={exercise} />
 
-                  <SavedReps exercise={exercise} />
+                    <CardContent
+                      sx={{
+                        p: 1,
+                        cursor: "pointer",
+                        "&:last-child": { pb: 1 },
+                      }}
+                      aria-label={`Open ${exercise.name} Modal`}
+                      onClick={() => handleClick(exercise)}
+                    >
+                      <CardHeading
+                        exercise={exercise}
+                        exerciseCompleted={exerciseCompleted}
+                      />
 
-                  {showComments && exercise.comments && (
-                    <CardComments comments={exercise.comments} />
-                  )}
-                </CardContent>
-              </Card>
+                      <SavedReps exercise={exercise} />
 
-              {exercises[idx + 1] &&
-                exercise.category !== exercises[idx + 1].category && (
-                  <Divider
-                    flexItem
-                    sx={{
-                      mb: 2,
-                      borderBottomWidth: 2,
-                    }}
-                  />
-                )}
-            </Box>
-          );
-        })}
+                      {showComments && exercise.comments && (
+                        <CardComments comments={exercise.comments} />
+                      )}
+                    </CardContent>
+                  </Card>
 
-        <StartTime />
+                  {exercises[idx + 1] &&
+                    exercise.category !== exercises[idx + 1].category && (
+                      <Divider
+                        flexItem
+                        sx={{
+                          mb: 2,
+                          borderBottomWidth: 2,
+                        }}
+                      />
+                    )}
+                </Box>
+              );
+            })}
 
-        <FinishTime exercises={exercises} />
+            <StartTime />
 
-        <RepsModal exercises={exercises} />
+            <FinishTime exercises={exercises} />
+
+            <RepsModal exercises={exercises} />
+          </>
+        )}
       </Box>
     </Box>
   );
