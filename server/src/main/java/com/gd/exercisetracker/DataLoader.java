@@ -49,22 +49,22 @@ public class DataLoader implements ApplicationRunner {
 
         exerciseRepository.save(ringAbRollouts);
 
-//        Exercise assistedKneeCoppenhagenPlank = new Exercise();
-//
-//        assistedKneeCoppenhagenPlank.setKey("assisted-knee-copenhagen-plank");
-//        assistedKneeCoppenhagenPlank.setName("Assisted Knee Copenhagen Plank");
-//        assistedKneeCoppenhagenPlank.setCategory(ExerciseCategory.CORE_TRIPLET);
-//        assistedKneeCoppenhagenPlank.setType(ExerciseType.ANTI_ROTATION);
-//        assistedKneeCoppenhagenPlank.setTargetSets(3);
-//        assistedKneeCoppenhagenPlank.setTargetRepsMin(8);
-//        assistedKneeCoppenhagenPlank.setTargetRepsMax(12);
-//        assistedKneeCoppenhagenPlank.setDuration(false);
-//        assistedKneeCoppenhagenPlank.setTargetRest(60);
-//        assistedKneeCoppenhagenPlank.setAdditionalRest(60);
-//        assistedKneeCoppenhagenPlank.setMediaLink("https://i.imgur.com/6vOLzTC.jpg");
-//        assistedKneeCoppenhagenPlank.setComments("<ul><li>Lower leg should give the minimum assistance you need.</li><li>Don't let the hips sag.</li><li>Can be performed on your hand instead of elbow.</li></ul>");
-//
-//        exerciseRepository.save(assistedKneeCoppenhagenPlank);
+        Exercise assistedKneeCoppenhagenPlank = new Exercise();
+
+        assistedKneeCoppenhagenPlank.setKey("assisted-knee-copenhagen-plank");
+        assistedKneeCoppenhagenPlank.setName("Assisted Knee Copenhagen Plank");
+        assistedKneeCoppenhagenPlank.setCategory(ExerciseCategory.CORE_TRIPLET);
+        assistedKneeCoppenhagenPlank.setType(ExerciseType.ANTI_ROTATION);
+        assistedKneeCoppenhagenPlank.setTargetSets(3);
+        assistedKneeCoppenhagenPlank.setTargetRepsMin(8);
+        assistedKneeCoppenhagenPlank.setTargetRepsMax(12);
+        assistedKneeCoppenhagenPlank.setDuration(false);
+        assistedKneeCoppenhagenPlank.setTargetRest(60);
+        assistedKneeCoppenhagenPlank.setAdditionalRest(60);
+        assistedKneeCoppenhagenPlank.setMediaLink("https://i.imgur.com/6vOLzTC.jpg");
+        assistedKneeCoppenhagenPlank.setComments("<ul><li>Lower leg should give the minimum assistance you need.</li><li>Don't let the hips sag.</li><li>Can be performed on your hand instead of elbow.</li></ul>");
+
+        exerciseRepository.save(assistedKneeCoppenhagenPlank);
 
         Exercise bandedPallofPress = new Exercise();
 
@@ -121,22 +121,22 @@ public class DataLoader implements ApplicationRunner {
 
         exerciseRepository.save(inclineRows);
 
-//        Exercise fullPushUp = new Exercise();
-//
-//        fullPushUp.setKey("full-pushup");
-//        fullPushUp.setName("Full Pushup");
-//        fullPushUp.setCategory(ExerciseCategory.THIRD_PAIR);
-//        fullPushUp.setType(ExerciseType.PUSH_UP);
-//        fullPushUp.setTargetSets(3);
-//        fullPushUp.setTargetRepsMin(5);
-//        fullPushUp.setTargetRepsMax(8);
-//        fullPushUp.setDuration(false);
-//        fullPushUp.setTargetRest(90);
-//        fullPushUp.setAdditionalRest(90);
-//        fullPushUp.setMediaLink("https://www.youtube.com/watch?v=IODxDxX7oi4");
-//        fullPushUp.setComments("<ul><li>Body in a straight line from head to toe: don't let the hips sag!</li><li>Lock out arms and protract the shoulderblades (<a href=\"https://reddit.com/r/bodyweightfitness/wiki/kb/positioning\" rel=\"nofollow\">what does that even mean?</a>) at the top</li><li>Go down until chest nearly touches the ground</li><li>Keep the elbows in, don't let them flare out</li><li>Don't shrug up your shoulders to your ears, focus on depressing the shoulderblades (<a href=\"https://reddit.com/r/bodyweightfitness/wiki/kb/positioning\" rel=\"nofollow\">what does that even mean?</a>).</li></ul>");
-//
-//        exerciseRepository.save(fullPushUp);
+        Exercise fullPushUp = new Exercise();
+
+        fullPushUp.setKey("full-pushup");
+        fullPushUp.setName("Full Pushup");
+        fullPushUp.setCategory(ExerciseCategory.THIRD_PAIR);
+        fullPushUp.setType(ExerciseType.PUSH_UP);
+        fullPushUp.setTargetSets(3);
+        fullPushUp.setTargetRepsMin(5);
+        fullPushUp.setTargetRepsMax(8);
+        fullPushUp.setDuration(false);
+        fullPushUp.setTargetRest(90);
+        fullPushUp.setAdditionalRest(90);
+        fullPushUp.setMediaLink("https://www.youtube.com/watch?v=IODxDxX7oi4");
+        fullPushUp.setComments("<ul><li>Body in a straight line from head to toe: don't let the hips sag!</li><li>Lock out arms and protract the shoulderblades (<a href=\"https://reddit.com/r/bodyweightfitness/wiki/kb/positioning\" rel=\"nofollow\">what does that even mean?</a>) at the top</li><li>Go down until chest nearly touches the ground</li><li>Keep the elbows in, don't let them flare out</li><li>Don't shrug up your shoulders to your ears, focus on depressing the shoulderblades (<a href=\"https://reddit.com/r/bodyweightfitness/wiki/kb/positioning\" rel=\"nofollow\">what does that even mean?</a>).</li></ul>");
+
+        exerciseRepository.save(fullPushUp);
 
         Exercise diamondPushup = new Exercise();
 
@@ -160,22 +160,22 @@ public class DataLoader implements ApplicationRunner {
     }
 
     private void addSecondPair() {
-//        Exercise parallelBarSupportHold = new Exercise();
-//
-//        parallelBarSupportHold.setKey("parallel-bar-support-hold");
-//        parallelBarSupportHold.setName("Parallel Bar Support Hold");
-//        parallelBarSupportHold.setCategory(ExerciseCategory.SECOND_PAIR);
-//        parallelBarSupportHold.setType(ExerciseType.DIP);
-//        parallelBarSupportHold.setTargetSets(3);
-//        parallelBarSupportHold.setTargetRepsMin(60);
-//        parallelBarSupportHold.setTargetRepsMax(60);
-//        parallelBarSupportHold.setDuration(true);
-//        parallelBarSupportHold.setTargetRest(90);
-//        parallelBarSupportHold.setAdditionalRest(90);
-//        parallelBarSupportHold.setMediaLink("https://antranik.org/wp-content/uploads/2014/01/antranik-holding-support-hold-on-parallel-bars.jpg");
-//        parallelBarSupportHold.setComments("<ul><li>Work up to 3 sets of 1 minute holds for this progression</li><li>If you can't hold yourself up at all, consider using bands or your feet to assist you until you gain the necessary strength.</li></ul>");
-//
-//        exerciseRepository.save(parallelBarSupportHold);
+        Exercise parallelBarSupportHold = new Exercise();
+
+        parallelBarSupportHold.setKey("parallel-bar-support-hold");
+        parallelBarSupportHold.setName("Parallel Bar Support Hold");
+        parallelBarSupportHold.setCategory(ExerciseCategory.SECOND_PAIR);
+        parallelBarSupportHold.setType(ExerciseType.DIP);
+        parallelBarSupportHold.setTargetSets(3);
+        parallelBarSupportHold.setTargetRepsMin(60);
+        parallelBarSupportHold.setTargetRepsMax(60);
+        parallelBarSupportHold.setDuration(true);
+        parallelBarSupportHold.setTargetRest(90);
+        parallelBarSupportHold.setAdditionalRest(90);
+        parallelBarSupportHold.setMediaLink("https://antranik.org/wp-content/uploads/2014/01/antranik-holding-support-hold-on-parallel-bars.jpg");
+        parallelBarSupportHold.setComments("<ul><li>Work up to 3 sets of 1 minute holds for this progression</li><li>If you can't hold yourself up at all, consider using bands or your feet to assist you until you gain the necessary strength.</li></ul>");
+
+        exerciseRepository.save(parallelBarSupportHold);
 
         Exercise negativeDips = new Exercise();
 
@@ -200,22 +200,22 @@ public class DataLoader implements ApplicationRunner {
 
         exerciseRepository.save(negativeDips);
 
-//        Exercise negativeHamstringSlide = new Exercise();
-//
-//        negativeHamstringSlide.setKey("negative-hamstring-slide");
-//        negativeHamstringSlide.setName("Negative Hamstring Slide");
-//        negativeHamstringSlide.setCategory(ExerciseCategory.SECOND_PAIR);
-//        negativeHamstringSlide.setType(ExerciseType.HINGE);
-//        negativeHamstringSlide.setTargetSets(3);
-//        negativeHamstringSlide.setTargetRepsMin(5);
-//        negativeHamstringSlide.setTargetRepsMax(8);
-//        negativeHamstringSlide.setDuration(false);
-//        negativeHamstringSlide.setTargetRest(90);
-//        negativeHamstringSlide.setAdditionalRest(90);
-//        negativeHamstringSlide.setMediaLink("https://www.youtube.com/watch?v=OY8Jci5KJdM");
-//        negativeHamstringSlide.setComments("<ul><li>Start in the top position of a glute bridge, slide legs out under control until your butt touches the ground/knees are extended.</li><li>Return to starting position and repeat for desired reps.</li></ul>");
-//
-//        exerciseRepository.save(negativeHamstringSlide);
+        Exercise negativeHamstringSlide = new Exercise();
+
+        negativeHamstringSlide.setKey("negative-hamstring-slide");
+        negativeHamstringSlide.setName("Negative Hamstring Slide");
+        negativeHamstringSlide.setCategory(ExerciseCategory.SECOND_PAIR);
+        negativeHamstringSlide.setType(ExerciseType.HINGE);
+        negativeHamstringSlide.setTargetSets(3);
+        negativeHamstringSlide.setTargetRepsMin(5);
+        negativeHamstringSlide.setTargetRepsMax(8);
+        negativeHamstringSlide.setDuration(false);
+        negativeHamstringSlide.setTargetRest(90);
+        negativeHamstringSlide.setAdditionalRest(90);
+        negativeHamstringSlide.setMediaLink("https://www.youtube.com/watch?v=OY8Jci5KJdM");
+        negativeHamstringSlide.setComments("<ul><li>Start in the top position of a glute bridge, slide legs out under control until your butt touches the ground/knees are extended.</li><li>Return to starting position and repeat for desired reps.</li></ul>");
+
+        exerciseRepository.save(negativeHamstringSlide);
 
         Exercise hamstringSlide = new Exercise();
 
@@ -243,22 +243,22 @@ public class DataLoader implements ApplicationRunner {
     }
 
     private void addFirstPair() {
-//        Exercise archHangs = new Exercise();
-//
-//        archHangs.setKey("arch-hangs");
-//        archHangs.setName("Arch Hangs");
-//        archHangs.setCategory(ExerciseCategory.FIRST_PAIR);
-//        archHangs.setType(ExerciseType.PULL_UP);
-//        archHangs.setTargetSets(3);
-//        archHangs.setTargetRepsMin(5);
-//        archHangs.setTargetRepsMax(8);
-//        archHangs.setDuration(false);
-//        archHangs.setTargetRest(90);
-//        archHangs.setAdditionalRest(90);
-//        archHangs.setMediaLink("https://www.youtube.com/watch?v=C995b3KLXS4&t=7s");
-//        archHangs.setComments("<ul><li>Elbows should stay straight</li><li>Hold it for time/reps</li><li>Start at this <a href=\"https://www.youtube.com/watch?v=HoE-C85ZlCE\">level</a></li><li>Progress towards a 90 degree in your shoulder. Like <a href=\"https://i.ytimg.com/vi/JusddCep6PA/hqdefault.jpg\">this</a></li></ul>");
-//
-//        exerciseRepository.save(archHangs);
+        Exercise archHangs = new Exercise();
+
+        archHangs.setKey("arch-hangs");
+        archHangs.setName("Arch Hangs");
+        archHangs.setCategory(ExerciseCategory.FIRST_PAIR);
+        archHangs.setType(ExerciseType.PULL_UP);
+        archHangs.setTargetSets(3);
+        archHangs.setTargetRepsMin(5);
+        archHangs.setTargetRepsMax(8);
+        archHangs.setDuration(false);
+        archHangs.setTargetRest(90);
+        archHangs.setAdditionalRest(90);
+        archHangs.setMediaLink("https://www.youtube.com/watch?v=C995b3KLXS4&t=7s");
+        archHangs.setComments("<ul><li>Elbows should stay straight</li><li>Hold it for time/reps</li><li>Start at this <a href=\"https://www.youtube.com/watch?v=HoE-C85ZlCE\">level</a></li><li>Progress towards a 90 degree in your shoulder. Like <a href=\"https://i.ytimg.com/vi/JusddCep6PA/hqdefault.jpg\">this</a></li></ul>");
+
+        exerciseRepository.save(archHangs);
 
         Exercise pullUpNegatives = new Exercise();
 

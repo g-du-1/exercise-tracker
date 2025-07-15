@@ -16,5 +16,11 @@ export const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
     options.headers.Authorization = `Bearer ${token}`;
   }
 
-  return fetch(`${baseUrl}${url}`, options);
+  const resp = await fetch(`${baseUrl}${url}`, options);
+
+  if (resp?.status === 401) {
+    window.location.href = "/sign-in";
+  }
+
+  return resp;
 };
