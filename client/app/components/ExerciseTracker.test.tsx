@@ -1,12 +1,13 @@
-import { render, fireEvent, screen, act } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { ExerciseTracker } from "./ExerciseTracker";
 import { getFormattedTime } from "../util/getFormattedTime";
 import { mockExercises } from "./fixtures/mockExercises";
+import { useQuery } from "@tanstack/react-query";
+import { Mock, vi } from "vitest";
 
 const DELETE_REPS = "Delete Reps";
 
-const renderExerciseTracker = () =>
-  render(<ExerciseTracker exercises={mockExercises} />);
+const renderExerciseTracker = () => render(<ExerciseTracker />);
 
 const getModalOpenTriggers = () => screen.getAllByLabelText(/^Open .* Modal$/);
 
@@ -38,10 +39,20 @@ const clickDeleteReps = () => fireEvent.click(getDeleteRepsBtn());
 describe("ExerciseTracker", () => {
   beforeEach(() => {
     vi.useFakeTimers();
+
+    process.env.NEXT_PUBLIC_ENABLE_API_CONNECTION = "true";
+
+    (useQuery as Mock).mockImplementation(() => ({
+      data: mockExercises,
+      isLoading: false,
+      error: null,
+    }));
   });
 
   afterEach(() => {
     vi.useRealTimers();
+    vi.resetModules();
+    vi.clearAllMocks();
   });
 
   it("matches snapshot", () => {
@@ -70,7 +81,7 @@ describe("ExerciseTracker", () => {
     expect(screen.queryByTitle("GMB Wrist Prep Video")).not.toBeVisible();
     expect(screen.queryByTitle("Arch Hangs Video")).not.toBeVisible();
     expect(
-      screen.queryByAltText("Parallel Bar Support Hold Image")
+      screen.queryByAltText("Parallel Bar Support Hold Image"),
     ).not.toBeVisible();
   });
 
@@ -82,7 +93,7 @@ describe("ExerciseTracker", () => {
     expect(screen.getByTitle("GMB Wrist Prep Video")).toBeVisible();
     expect(screen.getByTitle("Arch Hangs Video")).toBeVisible();
     expect(
-      screen.getByAltText("Parallel Bar Support Hold Image")
+      screen.getByAltText("Parallel Bar Support Hold Image"),
     ).toBeVisible();
   });
 
@@ -197,13 +208,13 @@ describe("ExerciseTracker", () => {
     expect(
       screen.getByRole("button", {
         name: /stop stopwatch/i,
-      })
+      }),
     ).toBeDisabled();
 
     fireEvent.click(
       screen.getByRole("button", {
         name: /restart stopwatch/i,
-      })
+      }),
     );
 
     act(() => {
@@ -215,13 +226,13 @@ describe("ExerciseTracker", () => {
     expect(
       screen.getByRole("button", {
         name: /stop stopwatch/i,
-      })
+      }),
     ).toBeEnabled();
 
     fireEvent.click(
       screen.getByRole("button", {
         name: /stop stopwatch/i,
-      })
+      }),
     );
 
     expect(screen.getByText(/00:00:00/i)).toBeInTheDocument();
@@ -229,7 +240,7 @@ describe("ExerciseTracker", () => {
     expect(
       screen.getByRole("button", {
         name: /stop stopwatch/i,
-      })
+      }),
     ).toBeDisabled();
   });
 
@@ -239,7 +250,7 @@ describe("ExerciseTracker", () => {
     fireEvent.click(
       screen.getByRole("button", {
         name: /restart stopwatch/i,
-      })
+      }),
     );
 
     act(() => {
@@ -251,7 +262,7 @@ describe("ExerciseTracker", () => {
     fireEvent.click(
       screen.getByRole("button", {
         name: /restart stopwatch/i,
-      })
+      }),
     );
 
     act(() => {
@@ -265,7 +276,7 @@ describe("ExerciseTracker", () => {
     renderExerciseTracker();
 
     expect(
-      screen.queryByLabelText("Exercise Completed")
+      screen.queryByLabelText("Exercise Completed"),
     ).not.toBeInTheDocument();
 
     clickOpenModalTrigger(0);
@@ -281,7 +292,7 @@ describe("ExerciseTracker", () => {
     expect(screen.queryByAltText("Rest Time Passed")).not.toBeInTheDocument();
 
     expect(
-      screen.queryByAltText("Additional Rest Time Passed")
+      screen.queryByAltText("Additional Rest Time Passed"),
     ).not.toBeInTheDocument();
 
     clickOpenModalTrigger(1);
@@ -295,7 +306,7 @@ describe("ExerciseTracker", () => {
     expect(screen.getByLabelText("Rest Time Passed")).toBeInTheDocument();
 
     expect(
-      screen.queryByLabelText("Additional Rest Time Passed")
+      screen.queryByLabelText("Additional Rest Time Passed"),
     ).not.toBeInTheDocument();
   });
 
@@ -315,7 +326,7 @@ describe("ExerciseTracker", () => {
     expect(screen.queryByLabelText("Rest Time Passed")).not.toBeInTheDocument();
 
     expect(
-      screen.queryByLabelText("Additional Rest Time Passed")
+      screen.queryByLabelText("Additional Rest Time Passed"),
     ).not.toBeInTheDocument();
   });
 
@@ -333,7 +344,7 @@ describe("ExerciseTracker", () => {
     expect(screen.queryByLabelText("Rest Time Passed")).not.toBeInTheDocument();
 
     expect(
-      screen.getByLabelText("Additional Rest Time Passed")
+      screen.getByLabelText("Additional Rest Time Passed"),
     ).toBeInTheDocument();
   });
 
@@ -371,7 +382,7 @@ describe("ExerciseTracker", () => {
     submitReps("6");
 
     expect(
-      screen.getByLabelText("Arch Hangs 6 Reps In Range")
+      screen.getByLabelText("Arch Hangs 6 Reps In Range"),
     ).toBeInTheDocument();
   });
 
@@ -383,7 +394,7 @@ describe("ExerciseTracker", () => {
     submitReps("3");
 
     expect(
-      screen.getByLabelText("Arch Hangs 3 Reps Lower Than Range")
+      screen.getByLabelText("Arch Hangs 3 Reps Lower Than Range"),
     ).toBeInTheDocument();
   });
 
@@ -395,7 +406,7 @@ describe("ExerciseTracker", () => {
     submitReps("35");
 
     expect(
-      screen.getByLabelText("Arch Hangs 35 Reps Higher Than Range")
+      screen.getByLabelText("Arch Hangs 35 Reps Higher Than Range"),
     ).toBeInTheDocument();
   });
 
@@ -407,7 +418,7 @@ describe("ExerciseTracker", () => {
     submitReps("10");
 
     expect(
-      screen.getByLabelText("GMB Wrist Prep 10 Reps In Range")
+      screen.getByLabelText("GMB Wrist Prep 10 Reps In Range"),
     ).toBeInTheDocument();
   });
 
@@ -466,7 +477,7 @@ describe("ExerciseTracker", () => {
     submitReps("8");
 
     expect(
-      screen.getByText(`Finished: ${getFormattedTime()}`)
+      screen.getByText(`Finished: ${getFormattedTime()}`),
     ).toBeInTheDocument();
   });
 
@@ -474,17 +485,17 @@ describe("ExerciseTracker", () => {
     renderExerciseTracker();
 
     expect(
-      screen.queryByText("Do as many reps as you want")
+      screen.queryByText("Do as many reps as you want"),
     ).not.toBeInTheDocument();
 
     expect(
-      screen.queryByText("Elbows should stay straight")
+      screen.queryByText("Elbows should stay straight"),
     ).not.toBeInTheDocument();
 
     expect(
       screen.queryByText(
-        "Work up to 3 sets of 1 minute holds for this progression"
-      )
+        "Work up to 3 sets of 1 minute holds for this progression",
+      ),
     ).not.toBeInTheDocument();
 
     fireEvent.click(screen.getByLabelText("Toggle Comments"));
@@ -495,8 +506,8 @@ describe("ExerciseTracker", () => {
 
     expect(
       screen.getByText(
-        "Work up to 3 sets of 1 minute holds for this progression"
-      )
+        "Work up to 3 sets of 1 minute holds for this progression",
+      ),
     ).toBeInTheDocument();
   });
 
@@ -529,5 +540,29 @@ describe("ExerciseTracker", () => {
     });
 
     expect(window.HTMLMediaElement.prototype.play).toHaveBeenCalledTimes(2);
+  });
+
+  it("displays spinner while loading", () => {
+    (useQuery as Mock).mockImplementation(() => ({
+      data: [],
+      isLoading: true,
+      isError: false,
+    }));
+
+    renderExerciseTracker();
+
+    expect(screen.getByRole("progressbar")).toBeInTheDocument();
+  });
+
+  it("displays a message when there are no exercises", () => {
+    (useQuery as Mock).mockImplementation(() => ({
+      data: [],
+      isLoading: false,
+      isError: false,
+    }));
+
+    renderExerciseTracker();
+
+    expect(screen.getByText("No exercises.")).toBeInTheDocument();
   });
 });

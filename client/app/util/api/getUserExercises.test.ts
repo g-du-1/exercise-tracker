@@ -1,6 +1,7 @@
 import { Mock } from "vitest";
 import { fetchWithAuth } from "../fetchWithAuth";
 import { getUserExercises } from "./getUserExercises";
+import { exercises } from "../../constants";
 
 vi.mock("../fetchWithAuth", () => ({
   fetchWithAuth: vi.fn(),
@@ -12,6 +13,8 @@ describe("getUserExercises", () => {
   beforeEach(() => {
     vi.resetModules();
     vi.clearAllMocks();
+
+    process.env.NEXT_PUBLIC_ENABLE_API_CONNECTION = "true";
 
     (fetchWithAuth as Mock).mockImplementation(() =>
       Promise.resolve({
@@ -57,7 +60,7 @@ describe("getUserExercises", () => {
               },
             },
           ]),
-      })
+      }),
     );
 
     process.env = { ...OLD_ENV };
@@ -114,5 +117,14 @@ describe("getUserExercises", () => {
     expect(fetchWithAuth).toHaveBeenNthCalledWith(1, "/user-exercises");
 
     expect(result).toStrictEqual(expected);
+  });
+
+  it("returns hardcoded exercises when API connection is disabled", async () => {
+    process.env.NEXT_PUBLIC_ENABLE_API_CONNECTION = "false";
+
+    const result = await getUserExercises();
+
+    expect(result).toStrictEqual(exercises);
+    expect(fetchWithAuth).not.toHaveBeenCalled();
   });
 });

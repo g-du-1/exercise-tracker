@@ -49,4 +49,22 @@ describe("fetchWithAuthToken", () => {
       },
     });
   });
+
+  it("redirects to sign in on 401", async () => {
+    const mockLocation = { href: "" };
+
+    Object.defineProperty(window, "location", {
+      value: mockLocation,
+      writable: true,
+    });
+
+    mockFetch.mockResolvedValue({
+      status: 401,
+    });
+
+    await fetchWithAuth("/exercises");
+
+    expect(mockFetch).toHaveBeenCalledTimes(1);
+    expect(mockLocation.href).toBe("/sign-in");
+  });
 });
