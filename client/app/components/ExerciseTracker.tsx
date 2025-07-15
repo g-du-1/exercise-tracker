@@ -18,7 +18,8 @@ import { useGetUserExercises } from "../hooks/useGetUserExercises";
 import CircularProgress from "@mui/material/CircularProgress";
 
 export const ExerciseTracker = ({}) => {
-  const { data: exercises, isLoading } = useGetUserExercises();
+  const { data: exercisesWithIds, isLoading } = useGetUserExercises();
+  const exercises = exercisesWithIds?.map(({ exercise }) => exercise);
 
   const showComments = useBoundStore((state) => state.showComments);
   const savedReps = useBoundStore((state) => state.savedReps);
