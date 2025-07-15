@@ -14,11 +14,16 @@ import { SavedReps } from "./card/SavedReps";
 import { CardComments } from "./card/CardComments";
 import { useBoundStore } from "../store/store";
 import { FinishTime } from "./FinishTime";
-import { useGetUserExercises } from "../hooks/useGetUserExercises";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useQuery } from "@tanstack/react-query";
+import { getUserExercises } from "../util/api/getUserExercises";
 
 export const ExerciseTracker = ({}) => {
-  const { data: exercisesWithIds, isLoading } = useGetUserExercises();
+  const { data: exercisesWithIds, isLoading } = useQuery({
+    queryKey: ["getUserExercises"],
+    queryFn: getUserExercises,
+  });
+
   const exercises = exercisesWithIds?.map(({ exercise }) => exercise);
 
   const showComments = useBoundStore((state) => state.showComments);

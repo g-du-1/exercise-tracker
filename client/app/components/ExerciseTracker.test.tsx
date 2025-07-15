@@ -2,12 +2,8 @@ import { act, fireEvent, render, screen } from "@testing-library/react";
 import { ExerciseTracker } from "./ExerciseTracker";
 import { getFormattedTime } from "../util/getFormattedTime";
 import { mockExercises } from "./fixtures/mockExercises";
-import { useGetUserExercises } from "../hooks/useGetUserExercises";
+import { useQuery } from "@tanstack/react-query";
 import { Mock, vi } from "vitest";
-
-vi.mock("../hooks/useGetUserExercises", () => ({
-  useGetUserExercises: vi.fn(),
-}));
 
 const DELETE_REPS = "Delete Reps";
 
@@ -44,7 +40,9 @@ describe("ExerciseTracker", () => {
   beforeEach(() => {
     vi.useFakeTimers();
 
-    (useGetUserExercises as Mock).mockImplementation(() => ({
+    process.env.NEXT_PUBLIC_ENABLE_API_CONNECTION = "true";
+
+    (useQuery as Mock).mockImplementation(() => ({
       data: mockExercises,
       isLoading: false,
       error: null,
@@ -545,7 +543,7 @@ describe("ExerciseTracker", () => {
   });
 
   it("displays spinner while loading", () => {
-    (useGetUserExercises as Mock).mockImplementation(() => ({
+    (useQuery as Mock).mockImplementation(() => ({
       data: [],
       isLoading: true,
       isError: false,
@@ -557,7 +555,7 @@ describe("ExerciseTracker", () => {
   });
 
   it("displays a message when there are no exercises", () => {
-    (useGetUserExercises as Mock).mockImplementation(() => ({
+    (useQuery as Mock).mockImplementation(() => ({
       data: [],
       isLoading: false,
       isError: false,
