@@ -56,9 +56,11 @@ describe("ExerciseTracker", () => {
   });
 
   it("matches snapshot", () => {
-    const result = renderExerciseTracker();
+    renderExerciseTracker();
 
-    expect(result.container).toMatchSnapshot();
+    fireEvent.click(screen.getByLabelText("Open Menu"));
+
+    expect(document.body).toMatchSnapshot();
   });
 
   it("outputs open modal triggers for each exercise", () => {
@@ -88,6 +90,7 @@ describe("ExerciseTracker", () => {
   it("displays media when toggle media is clicked", () => {
     renderExerciseTracker();
 
+    fireEvent.click(screen.getByLabelText("Open Menu"));
     fireEvent.click(screen.getByLabelText("Toggle Media"));
 
     expect(screen.getByTitle("GMB Wrist Prep Video")).toBeVisible();
@@ -433,6 +436,7 @@ describe("ExerciseTracker", () => {
 
     submitReps("8");
 
+    fireEvent.click(screen.getByLabelText("Open Menu"));
     const checkbox = screen.getByLabelText("Show Completed Exercises");
     expect(checkbox).toBeChecked();
 
@@ -498,6 +502,7 @@ describe("ExerciseTracker", () => {
       ),
     ).not.toBeInTheDocument();
 
+    fireEvent.click(screen.getByLabelText("Open Menu"));
     fireEvent.click(screen.getByLabelText("Toggle Comments"));
 
     expect(screen.getByText("Do as many reps as you want")).toBeInTheDocument();
