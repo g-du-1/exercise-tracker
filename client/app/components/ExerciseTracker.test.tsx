@@ -15,6 +15,21 @@ import nock from "nock";
 
 const mockPush = vi.fn();
 
+const mockPlay = vi.fn().mockResolvedValue(undefined);
+
+global.Audio = vi.fn().mockImplementation(() => ({
+  play: mockPlay,
+}));
+
+Object.defineProperty(window, "HTMLMediaElement", {
+  writable: true,
+  value: {
+    prototype: {
+      play: mockPlay,
+    },
+  },
+});
+
 vi.mock("next/navigation", () => ({
   useRouter: vi.fn(),
 }));
@@ -78,7 +93,16 @@ const renderExerciseTracker = async () => {
 
 describe("ExerciseTracker", async () => {
   beforeEach(() => {
-    // vi.useFakeTimers();
+    vi.useFakeTimers({
+      shouldAdvanceTime: true,
+      toFake: [
+        "setTimeout",
+        "clearTimeout",
+        "setInterval",
+        "clearInterval",
+        "Date",
+      ],
+    });
 
     process.env.NEXT_PUBLIC_ENABLE_API_CONNECTION = "true";
     process.env.NEXT_PUBLIC_API_PREFIX = "http://localhost:3000/api/v1";
@@ -93,7 +117,7 @@ describe("ExerciseTracker", async () => {
   });
 
   afterEach(() => {
-    // vi.useRealTimers();
+    vi.useRealTimers();
     vi.resetModules();
     vi.clearAllMocks();
     nock.cleanAll();
@@ -608,7 +632,7 @@ describe("ExerciseTracker", async () => {
       vi.advanceTimersByTime(190000);
     });
 
-    expect(window.HTMLMediaElement.prototype.play).toHaveBeenCalledTimes(2);
+    expect(mockPlay).toHaveBeenCalledTimes(2);
   });
 
   it("displays spinner while loading", async () => {
