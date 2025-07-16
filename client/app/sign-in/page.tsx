@@ -35,7 +35,7 @@ const SignInPage = () => {
       if (resp.status === 200) {
         router.push("/");
       }
-    } catch (error) {
+    } catch (error: any) {
       setError(error.message);
     }
   };
