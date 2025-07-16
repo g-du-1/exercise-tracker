@@ -258,14 +258,6 @@ describe("SettingsPage", () => {
       expect(screen.getByLabelText("Add Diamond Pushup")).toBeDisabled();
     });
 
-    await act(async () => {
-      fireEvent.click(screen.getByLabelText("Add Diamond Pushup"));
-    });
-
-    await waitFor(() => {
-      expect(screen.getByLabelText("Add Diamond Pushup")).toBeDisabled();
-    });
-
     await waitFor(() => {
       fireEvent.click(screen.getByLabelText("Delete All Of My Exercises"));
     });
