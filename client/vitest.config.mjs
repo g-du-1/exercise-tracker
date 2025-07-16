@@ -15,6 +15,7 @@ export default defineConfig({
         "**/theme.ts",
         "**/layout.tsx",
         "**/constants.ts",
+        "**/examples/",
       ],
       thresholds: {
         lines: 80,
