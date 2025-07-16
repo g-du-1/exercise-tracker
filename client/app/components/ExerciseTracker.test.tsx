@@ -4,6 +4,13 @@ import { getFormattedTime } from "../util/getFormattedTime";
 import { mockExercises } from "./fixtures/mockExercises";
 import { useQuery } from "@tanstack/react-query";
 import { Mock, vi } from "vitest";
+import { useRouter } from "next/navigation";
+
+const mockPush = vi.fn();
+
+vi.mock("next/navigation", () => ({
+  useRouter: vi.fn(),
+}));
 
 const DELETE_REPS = "Delete Reps";
 
@@ -42,6 +49,10 @@ describe("ExerciseTracker", () => {
 
     process.env.NEXT_PUBLIC_ENABLE_API_CONNECTION = "true";
 
+    (useRouter as Mock).mockImplementation(() => ({
+      push: mockPush,
+    }));
+
     (useQuery as Mock).mockImplementation(() => ({
       data: mockExercises,
       isLoading: false,
@@ -56,9 +67,11 @@ describe("ExerciseTracker", () => {
   });
 
   it("matches snapshot", () => {
-    const result = renderExerciseTracker();
+    renderExerciseTracker();
 
-    expect(result.container).toMatchSnapshot();
+    fireEvent.click(screen.getByLabelText("Open Menu"));
+
+    expect(document.body).toMatchSnapshot();
   });
 
   it("outputs open modal triggers for each exercise", () => {
@@ -88,6 +101,7 @@ describe("ExerciseTracker", () => {
   it("displays media when toggle media is clicked", () => {
     renderExerciseTracker();
 
+    fireEvent.click(screen.getByLabelText("Open Menu"));
     fireEvent.click(screen.getByLabelText("Toggle Media"));
 
     expect(screen.getByTitle("GMB Wrist Prep Video")).toBeVisible();
@@ -433,6 +447,7 @@ describe("ExerciseTracker", () => {
 
     submitReps("8");
 
+    fireEvent.click(screen.getByLabelText("Open Menu"));
     const checkbox = screen.getByLabelText("Show Completed Exercises");
     expect(checkbox).toBeChecked();
 
@@ -498,6 +513,7 @@ describe("ExerciseTracker", () => {
       ),
     ).not.toBeInTheDocument();
 
+    fireEvent.click(screen.getByLabelText("Open Menu"));
     fireEvent.click(screen.getByLabelText("Toggle Comments"));
 
     expect(screen.getByText("Do as many reps as you want")).toBeInTheDocument();
@@ -564,5 +580,23 @@ describe("ExerciseTracker", () => {
     renderExerciseTracker();
 
     expect(screen.getByText("No exercises.")).toBeInTheDocument();
+  });
+
+  it("navigates to the settings page when clicking settings in the side menu", () => {
+    renderExerciseTracker();
+
+    fireEvent.click(screen.getByLabelText("Open Menu"));
+    fireEvent.click(screen.getByLabelText("Settings Page"));
+
+    expect(mockPush).toHaveBeenCalledExactlyOnceWith("/settings");
+  });
+
+  it("navigates to the home page when clicking home in the side menu", () => {
+    renderExerciseTracker();
+
+    fireEvent.click(screen.getByLabelText("Open Menu"));
+    fireEvent.click(screen.getByLabelText("Home Page"));
+
+    expect(mockPush).toHaveBeenCalledExactlyOnceWith("/");
   });
 });
