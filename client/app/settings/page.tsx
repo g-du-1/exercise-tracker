@@ -2,33 +2,26 @@
 
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
-import { Exercise } from "../types";
-import { getAllExercises } from "../util/api/getAllExercises";
-import { useEffect, useState } from "react";
+import { Exercise, UserExercise } from "../types";
 import Button from "@mui/material/Button";
-import { saveUserExercise } from "../util/api/saveUserExercise";
-import { deleteAllExercisesForUser } from "../util/api/deleteAllExercisesForUser";
-import { getUserExercises } from "../util/api/getUserExercises";
 import { TopBar } from "../components/TopBar";
+import { useGetUserExercises } from "../hooks/useGetUserExercises";
+import { useGetAllExercises } from "../hooks/useGetAllExercises";
+import { useDeleteAllExercisesForUser } from "../hooks/useDeleteAllExercisesForUser";
+import { useSaveUserExercise } from "../hooks/useSaveUserExercise";
 
 const SettingsPage = () => {
-  const [loading, setLoading] = useState(true);
-  const [allExercises, setAllExercises] = useState<Exercise[]>([]);
-  const [usersExerciseIds, setUsersExerciseIds] = useState<number[]>([]);
+  const { data: allExercises } = useGetAllExercises();
+  const { data: userExercises } = useGetUserExercises();
 
-  useEffect(() => {
-    (async () => {
-      const [allExercises, allUserExercises] = await Promise.all([
-        getAllExercises(),
-        getUserExercises(),
-      ]);
+  const deleteAllUserExercisesMutation = useDeleteAllExercisesForUser();
+  const saveUserExerciseMutation = useSaveUserExercise();
 
-      setAllExercises(allExercises);
-      setUsersExerciseIds(allUserExercises.map((ue) => ue.exercise.id));
+  const usersExerciseIds = userExercises?.map(
+    (ex: UserExercise) => ex.exercise.id,
+  );
 
-      setLoading(false);
-    })();
-  }, []);
+  const loading = !allExercises;
 
   return (
     <>
@@ -52,9 +45,8 @@ const SettingsPage = () => {
           <Box display="flex" flexDirection="column">
             <Box ml="auto">
               <Button
-                onClick={async () => {
-                  await deleteAllExercisesForUser();
-                  setUsersExerciseIds([]);
+                onClick={() => {
+                  deleteAllUserExercisesMutation.mutate();
                 }}
                 color="error"
                 aria-label="Delete All Of My Exercises"
@@ -75,12 +67,11 @@ const SettingsPage = () => {
                   <Box>{ex.name}</Box>
 
                   <Button
-                    onClick={async () => {
-                      await saveUserExercise(ex.id);
-                      setUsersExerciseIds([...usersExerciseIds, ex.id]);
+                    onClick={() => {
+                      saveUserExerciseMutation.mutate(ex.id);
                     }}
                     aria-label={`Add ${ex.name}`}
-                    disabled={usersExerciseIds.includes(ex.id)}
+                    disabled={usersExerciseIds?.includes(ex.id)}
                   >
                     Add
                   </Button>
