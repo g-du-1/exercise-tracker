@@ -1,11 +1,22 @@
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@testing-library/react";
 import SettingsPage from "./page";
-import { getAllExercises } from "../util/api/getAllExercises";
-import { saveUserExercise } from "../util/api/saveUserExercise";
-import { deleteAllExercisesForUser } from "../util/api/deleteAllExercisesForUser";
-import { getUserExercises } from "../util/api/getUserExercises";
 import { Mock } from "vitest";
 import { useRouter } from "next/navigation";
+import { useGetAllExercises } from "../hooks/useGetAllExercises";
+import { useGetUserExercises } from "../hooks/useGetUserExercises";
+import { useDeleteAllExercisesForUser } from "../hooks/useDeleteAllExercisesForUser";
+import { useSaveUserExercise } from "../hooks/useSaveUserExercise";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const mockPush = vi.fn();
+const mockDeleteAllExercisesForUser = vi.fn();
+const mockSaveUserExercise = vi.fn();
 
 const mockExercises = [
   {
@@ -41,23 +52,25 @@ const mockExercises = [
   },
 ];
 
-vi.mock("../util/api/getAllExercises", () => ({
-  getAllExercises: vi.fn(),
+vi.mock("../hooks/useGetAllExercises", () => ({
+  useGetAllExercises: vi.fn(),
 }));
 
-vi.mock("../util/api/getUserExercises", () => ({
-  getUserExercises: vi.fn(),
+vi.mock("../hooks/useGetUserExercises", () => ({
+  useGetUserExercises: vi.fn(),
 }));
 
-vi.mock("../util/api/saveUserExercise", () => ({
-  saveUserExercise: vi.fn(),
+vi.mock("../hooks/useSaveUserExercise", () => ({
+  useSaveUserExercise: vi.fn(),
 }));
 
-vi.mock("../util/api/deleteAllExercisesForUser", () => ({
-  deleteAllExercisesForUser: vi.fn(),
+vi.mock("../hooks/useDeleteAllExercisesForUser", () => ({
+  useDeleteAllExercisesForUser: vi.fn(),
 }));
 
-const mockPush = vi.fn();
+vi.mock("../hooks/useSaveUserExercise", () => ({
+  useSaveUserExercise: vi.fn(),
+}));
 
 vi.mock("next/navigation", () => ({
   useRouter: vi.fn(),
@@ -72,19 +85,41 @@ describe("SignInPage", () => {
       push: mockPush,
     }));
 
-    (getAllExercises as Mock).mockImplementation(() =>
-      Promise.resolve(mockExercises),
-    );
+    (useGetAllExercises as Mock).mockImplementation(() => ({
+      data: mockExercises,
+      isLoading: false,
+      error: null,
+    }));
 
-    (getUserExercises as Mock).mockImplementation(() => Promise.resolve([]));
+    (useGetUserExercises as Mock).mockImplementation(() => ({
+      data: [],
+      isLoading: false,
+      error: null,
+    }));
+
+    (useDeleteAllExercisesForUser as Mock).mockImplementation(() => ({
+      mutate: mockDeleteAllExercisesForUser,
+    }));
+
+    (useSaveUserExercise as Mock).mockImplementation(() => ({
+      mutate: mockSaveUserExercise,
+    }));
   });
 
   it("displays a spinner while loading", async () => {
-    (getAllExercises as Mock).mockImplementation(() => new Promise(() => {}));
+    (useGetAllExercises as Mock).mockImplementation(() => ({
+      data: null,
+      isLoading: false,
+      error: null,
+    }));
 
-    await act(async () => {
-      render(<SettingsPage />);
-    });
+    const queryClient = new QueryClient();
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <SettingsPage />
+      </QueryClientProvider>,
+    );
 
     expect(screen.getByRole("progressbar")).toBeInTheDocument();
 
@@ -96,9 +131,13 @@ describe("SignInPage", () => {
   });
 
   it("renders with all exercises", async () => {
-    await act(async () => {
-      render(<SettingsPage />);
-    });
+    const queryClient = new QueryClient();
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <SettingsPage />
+      </QueryClientProvider>,
+    );
 
     expect(screen.queryByRole("progressbar")).not.toBeInTheDocument();
     expect(screen.getByLabelText("Add Diamond Pushup")).toBeInTheDocument();
@@ -116,14 +155,14 @@ describe("SignInPage", () => {
       fireEvent.click(screen.getByLabelText("Add Diamond Pushup"));
     });
 
-    expect(saveUserExercise).toHaveBeenNthCalledWith(1, 13);
+    expect(useSaveUserExercise).toHaveBeenNthCalledWith(1, 13);
 
     expect(screen.getByLabelText("Add Diamond Pushup")).toBeDisabled();
   });
 
   it("deletes all exercises for user", async () => {
-    (getUserExercises as Mock).mockImplementation(() =>
-      Promise.resolve([
+    (useGetUserExercises as Mock).mockImplementation(() => ({
+      data: [
         {
           id: 1,
           exercise: {
@@ -161,12 +200,18 @@ describe("SignInPage", () => {
             duration: false,
           },
         },
-      ]),
-    );
+      ],
+      isLoading: false,
+      error: null,
+    }));
 
-    await act(async () => {
-      render(<SettingsPage />);
-    });
+    const queryClient = new QueryClient();
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <SettingsPage />
+      </QueryClientProvider>,
+    );
 
     expect(screen.getByLabelText("Add Reverse Hyperextension")).toBeDisabled();
     expect(screen.getByLabelText("Add Diamond Pushup")).toBeDisabled();
@@ -175,15 +220,20 @@ describe("SignInPage", () => {
       fireEvent.click(screen.getByLabelText("Delete All Of My Exercises"));
     });
 
-    expect(deleteAllExercisesForUser).toHaveBeenCalledTimes(1);
+    expect(useDeleteAllExercisesForUser).toHaveBeenCalledTimes(1);
 
-    expect(screen.getByLabelText("Add Reverse Hyperextension")).toBeEnabled();
-    expect(screen.getByLabelText("Add Diamond Pushup")).toBeEnabled();
+    await waitFor(() => {
+      expect(screen.getByLabelText("Add Reverse Hyperextension")).toBeEnabled();
+    });
+
+    await waitFor(() => {
+      expect(screen.getByLabelText("Add Diamond Pushup")).toBeEnabled();
+    });
   });
 
   it("disables add on load if the user already has the exercise", async () => {
-    (getUserExercises as Mock).mockImplementation(() =>
-      Promise.resolve([
+    (useGetUserExercises as Mock).mockImplementation(() => ({
+      data: [
         {
           id: 2,
           exercise: {
@@ -203,12 +253,18 @@ describe("SignInPage", () => {
             duration: false,
           },
         },
-      ]),
-    );
+      ],
+      isLoading: false,
+      error: null,
+    }));
 
-    await act(async () => {
-      render(<SettingsPage />);
-    });
+    const queryClient = new QueryClient();
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <SettingsPage />
+      </QueryClientProvider>,
+    );
 
     expect(screen.getByLabelText("Add Diamond Pushup")).toBeDisabled();
   });
