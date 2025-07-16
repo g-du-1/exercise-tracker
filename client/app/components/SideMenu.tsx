@@ -14,6 +14,7 @@ import NotesIcon from "@mui/icons-material/Notes";
 import Checkbox from "@mui/material/Checkbox";
 import { useRouter } from "next/navigation";
 import Divider from "@mui/material/Divider";
+import HouseIcon from "@mui/icons-material/House";
 
 export const SideMenu = () => {
   const router = useRouter();
@@ -42,6 +43,41 @@ export const SideMenu = () => {
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
+        <ListItem key={"Home Page"} disablePadding>
+          <ListItemButton
+            aria-label="Home Page"
+            onClick={() => {
+              router.push("/");
+            }}
+          >
+            <ListItemIcon sx={{ justifyContent: "center" }}>
+              <HouseIcon />
+            </ListItemIcon>
+
+            <ListItemText primary={"Home Page"} sx={{ paddingLeft: ".5rem" }} />
+          </ListItemButton>
+        </ListItem>
+
+        <ListItem key={"Settings Page"} disablePadding>
+          <ListItemButton
+            aria-label="Settings Page"
+            onClick={() => {
+              router.push("/settings");
+            }}
+          >
+            <ListItemIcon sx={{ justifyContent: "center" }}>
+              <SettingsIcon />
+            </ListItemIcon>
+
+            <ListItemText
+              primary={"Settings Page"}
+              sx={{ paddingLeft: ".5rem" }}
+            />
+          </ListItemButton>
+        </ListItem>
+
+        <Divider />
+
         <ListItem key={"Show Completed"} disablePadding>
           <ListItemButton
             id={"test"}
@@ -92,26 +128,6 @@ export const SideMenu = () => {
 
             <ListItemText
               primary={"Toggle Media"}
-              sx={{ paddingLeft: ".5rem" }}
-            />
-          </ListItemButton>
-        </ListItem>
-
-        <Divider />
-
-        <ListItem key={"Settings Page"} disablePadding>
-          <ListItemButton
-            aria-label="Settings Page"
-            onClick={() => {
-              router.push("/settings");
-            }}
-          >
-            <ListItemIcon sx={{ justifyContent: "center" }}>
-              <SettingsIcon />
-            </ListItemIcon>
-
-            <ListItemText
-              primary={"Settings Page"}
               sx={{ paddingLeft: ".5rem" }}
             />
           </ListItemButton>

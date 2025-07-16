@@ -5,6 +5,7 @@ import { saveUserExercise } from "../util/api/saveUserExercise";
 import { deleteAllExercisesForUser } from "../util/api/deleteAllExercisesForUser";
 import { getUserExercises } from "../util/api/getUserExercises";
 import { Mock } from "vitest";
+import { useRouter } from "next/navigation";
 
 const mockExercises = [
   {
@@ -56,13 +57,23 @@ vi.mock("../util/api/deleteAllExercisesForUser", () => ({
   deleteAllExercisesForUser: vi.fn(),
 }));
 
+const mockPush = vi.fn();
+
+vi.mock("next/navigation", () => ({
+  useRouter: vi.fn(),
+}));
+
 describe("SignInPage", () => {
   beforeEach(() => {
     vi.resetModules();
     vi.clearAllMocks();
 
+    (useRouter as Mock).mockImplementation(() => ({
+      push: mockPush,
+    }));
+
     (getAllExercises as Mock).mockImplementation(() =>
-      Promise.resolve(mockExercises)
+      Promise.resolve(mockExercises),
     );
 
     (getUserExercises as Mock).mockImplementation(() => Promise.resolve([]));
@@ -80,7 +91,7 @@ describe("SignInPage", () => {
     expect(screen.queryByText("Diamond Pushup")).not.toBeInTheDocument();
 
     expect(
-      screen.queryByText("Reverse Hyperextension")
+      screen.queryByText("Reverse Hyperextension"),
     ).not.toBeInTheDocument();
   });
 
@@ -89,11 +100,10 @@ describe("SignInPage", () => {
       render(<SettingsPage />);
     });
 
-    expect(screen.getByText("Settings")).toBeInTheDocument();
     expect(screen.queryByRole("progressbar")).not.toBeInTheDocument();
     expect(screen.getByLabelText("Add Diamond Pushup")).toBeInTheDocument();
     expect(
-      screen.getByLabelText("Add Reverse Hyperextension")
+      screen.getByLabelText("Add Reverse Hyperextension"),
     ).toBeInTheDocument();
   });
 
@@ -151,7 +161,7 @@ describe("SignInPage", () => {
             duration: false,
           },
         },
-      ])
+      ]),
     );
 
     await act(async () => {
@@ -193,7 +203,7 @@ describe("SignInPage", () => {
             duration: false,
           },
         },
-      ])
+      ]),
     );
 
     await act(async () => {

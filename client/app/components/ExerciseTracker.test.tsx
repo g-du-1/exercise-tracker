@@ -590,4 +590,13 @@ describe("ExerciseTracker", () => {
 
     expect(mockPush).toHaveBeenCalledExactlyOnceWith("/settings");
   });
+
+  it("navigates to the home page when clicking home in the side menu", () => {
+    renderExerciseTracker();
+
+    fireEvent.click(screen.getByLabelText("Open Menu"));
+    fireEvent.click(screen.getByLabelText("Home Page"));
+
+    expect(mockPush).toHaveBeenCalledExactlyOnceWith("/");
+  });
 });
