@@ -1,6 +1,5 @@
 import { fetchWithAuth } from "../fetchWithAuth";
 import { signIn } from "./signIn";
-import { localStorageMock } from "../../tests/localStorageMock";
 import { Mock } from "vitest";
 
 vi.mock("../fetchWithAuth", () => ({
@@ -14,18 +13,11 @@ describe("signIn", () => {
     vi.resetModules();
     vi.clearAllMocks();
 
-    Object.defineProperty(window, "localStorage", {
-      value: localStorageMock,
-    });
-
-    localStorage.setItem("JWT_TOKEN", "");
-
     (fetchWithAuth as Mock).mockImplementation(() =>
       Promise.resolve({
         status: 200,
         json: () =>
           Promise.resolve({
-            jwtToken: "token",
             username: "user1",
             roles: ["ROLE_USER"],
           }),
@@ -61,15 +53,7 @@ describe("signIn", () => {
     });
   });
 
-  it("sets the jwt in localstorage on successful login", async () => {
-    await signIn("testUser", "testPassword");
-
-    const mockJwtInStorage = localStorageMock.getItem("JWT_TOKEN");
-
-    expect(mockJwtInStorage).toEqual("token");
-  });
-
-  it("does not set the jwt on unsuccessful login", async () => {
+  it("returns error status and message on unsuccessful login", async () => {
     (fetchWithAuth as Mock).mockImplementation(() =>
       Promise.resolve({
         status: 401,
@@ -81,10 +65,31 @@ describe("signIn", () => {
       })
     );
 
-    await signIn("testUser", "testPassword");
+    const result = await signIn("testUser", "testPassword");
 
-    const mockJwtInStorage = localStorageMock.getItem("JWT_TOKEN");
+    expect(result).toStrictEqual({
+      status: 401,
+      message: "Bad credentials",
+    });
+  });
 
-    expect(mockJwtInStorage).toEqual("");
+  it("handles successful login response", async () => {
+    (fetchWithAuth as Mock).mockImplementation(() =>
+      Promise.resolve({
+        status: 200,
+        json: () =>
+          Promise.resolve({
+            username: "testUser",
+            roles: ["ROLE_USER"],
+          }),
+      })
+    );
+
+    const result = await signIn("testUser", "testPassword");
+
+    expect(result).toStrictEqual({
+      status: 200,
+      message: undefined,
+    });
   });
 });

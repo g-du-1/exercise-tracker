@@ -6,6 +6,8 @@ import com.gd.exercisetracker.security.role.RoleRepository;
 import com.gd.exercisetracker.security.user.User;
 import com.gd.exercisetracker.security.user.UserRepository;
 import com.gd.exercisetracker.security.user.UserService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,7 +52,7 @@ public class AuthController {
     PasswordEncoder encoder;
 
     @PostMapping("/public/signin")
-    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest, HttpServletResponse response) {
         Authentication authentication;
 
         try {
@@ -69,13 +71,20 @@ public class AuthController {
 
         String jwtToken = jwtUtils.generateTokenFromUsername(userDetails);
 
+        Cookie jwtCookie = new Cookie("JWT_TOKEN", jwtToken);
+        jwtCookie.setHttpOnly(true);
+        jwtCookie.setSecure(false);
+        jwtCookie.setPath("/");
+        jwtCookie.setMaxAge(24 * 60 * 60);
+        response.addCookie(jwtCookie);
+
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
-        LoginResponse response = new LoginResponse(userDetails.getUsername(), roles, jwtToken);
+        LoginResponse loginResponse = new LoginResponse(userDetails.getUsername(), roles);
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(loginResponse);
     }
 
     @PostMapping("/public/signup")

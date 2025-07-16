@@ -320,9 +320,59 @@ class AuthControllerTest {
                 .post("/api/v1/auth/public/signin")
                 .then()
                 .statusCode(200)
-                .body("jwtToken", not(emptyOrNullString()))
                 .body("username", equalTo("user"))
                 .body("roles", hasItem("ROLE_USER"));
         ;
+    }
+
+    @Test
+    void authenticatesUserWithCookie() {
+        User user = new User();
+        user.setUserName("admin");
+        user.setEmail("test@test.com");
+
+        Role adminRole = roleRepository.findByRoleName(AppRole.ROLE_ADMIN)
+                .orElseGet(() -> roleRepository.save(new Role(AppRole.ROLE_ADMIN)));
+
+        user.setRole(adminRole);
+
+        userRepository.save(user);
+
+        String jwt = testHelpers.getTestJwt("admin");
+
+        given()
+                .contentType(ContentType.JSON)
+                .cookie("JWT_TOKEN", jwt)
+                .when()
+                .get("/api/v1/auth/user")
+                .then()
+                .statusCode(200)
+                .body("id", isA(Number.class))
+                .body("username", equalTo("admin"))
+                .body("email", equalTo("test@test.com"))
+                .body("enabled", equalTo(true))
+                .body("roles", hasItem("ROLE_ADMIN"));
+    }
+
+    @Test
+    void deniesAccessIfJwtCookieNotPresentAmongstOthers() {
+        User user = new User();
+        user.setUserName("admin");
+        user.setEmail("test@test.com");
+
+        Role adminRole = roleRepository.findByRoleName(AppRole.ROLE_ADMIN)
+                .orElseGet(() -> roleRepository.save(new Role(AppRole.ROLE_ADMIN)));
+
+        user.setRole(adminRole);
+
+        userRepository.save(user);
+
+        given()
+                .contentType(ContentType.JSON)
+                .cookie("other-token", "other-token-value")
+                .when()
+                .get("/api/v1/auth/user")
+                .then()
+                .statusCode(401);
     }
 }
