@@ -320,7 +320,6 @@ class AuthControllerTest {
                 .post("/api/v1/auth/public/signin")
                 .then()
                 .statusCode(200)
-                .body("jwtToken", not(emptyOrNullString()))
                 .body("username", equalTo("user"))
                 .body("roles", hasItem("ROLE_USER"));
         ;

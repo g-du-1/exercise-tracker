@@ -10,14 +10,10 @@ export const signIn = async (username: string, password: string) => {
         username,
         password,
       }),
-    },
+    }
   );
 
   const data: SignInResponse = await response.json();
-
-  if (response.status === 200 && data.jwtToken) {
-    localStorage.setItem("JWT_TOKEN", data.jwtToken);
-  }
 
   return {
     status: response.status,
