@@ -5,12 +5,13 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { ChangeEvent, useState } from "react";
-import { signIn } from "../util/api/signIn";
 import { useRouter } from "next/navigation";
-import { SignInResponse } from "../types";
 import { Alert } from "@mui/material";
+import { useSignIn } from "../hooks/useSignIn";
 
 const SignInPage = () => {
+  const signIn = useSignIn();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -28,12 +29,14 @@ const SignInPage = () => {
   };
 
   const handleSubmit = async () => {
-    const resp: SignInResponse = await signIn(username, password);
+    try {
+      const resp = await signIn.mutateAsync({ username, password });
 
-    if (resp.status === 200) {
-      router.push("/");
-    } else {
-      setError(resp.message || "Unknown error");
+      if (resp.status === 200) {
+        router.push("/");
+      }
+    } catch (error) {
+      setError(error.message);
     }
   };
 
