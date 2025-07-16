@@ -1,19 +1,11 @@
-import { localStorageMock } from "../tests/localStorageMock";
 import { fetchWithAuth } from "./fetchWithAuth";
 
 const mockFetch = vi.fn();
 
-describe("fetchWithAuthToken", () => {
+describe("fetchWithAuth", () => {
   beforeEach(() => {
     vi.resetAllMocks();
-
-    Object.defineProperty(window, "localStorage", {
-      value: localStorageMock,
-    });
-
     global.fetch = mockFetch;
-
-    localStorage.setItem("JWT_TOKEN", "");
   });
 
   it("supports setting extra options", () => {
@@ -33,9 +25,7 @@ describe("fetchWithAuthToken", () => {
     });
   });
 
-  it("adds the auth token to headers if locally present", () => {
-    localStorage.setItem("JWT_TOKEN", "token");
-
+  it("includes credentials for cookie-based auth", () => {
     fetchWithAuth("/exercises");
 
     expect(mockFetch).toHaveBeenCalledTimes(1);
@@ -45,7 +35,6 @@ describe("fetchWithAuthToken", () => {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization: "Bearer token",
       },
     });
   });
