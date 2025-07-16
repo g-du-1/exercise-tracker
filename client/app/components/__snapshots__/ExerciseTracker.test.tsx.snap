@@ -1,7 +1,9 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ExerciseTracker > matches snapshot 1`] = `
-<div>
+exports[`ExerciseTracker > matches menu drawer snapshot 1`] = `
+<div
+  aria-hidden="true"
+>
   <div
     class="MuiBox-root css-hpgf8j"
   >
@@ -10,7 +12,7 @@ exports[`ExerciseTracker > matches snapshot 1`] = `
     >
       <header
         class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionFixed mui-fixed css-1k80zg0-MuiPaper-root-MuiAppBar-root"
-        style="--Paper-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12);"
+        style="--Paper-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12); padding-right: 1024px;"
       >
         <div
           class="MuiBox-root css-u4p24i"
@@ -58,68 +60,24 @@ exports[`ExerciseTracker > matches snapshot 1`] = `
             00:00:00
           </div>
         </div>
-        <div
-          class="MuiBox-root css-0"
+        <button
+          aria-label="Open Menu"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-154kngp-MuiButtonBase-root-MuiIconButton-root"
+          tabindex="0"
+          type="button"
         >
-          <span
-            class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorDefault MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorDefault MuiCheckbox-sizeMedium Mui-checked MuiCheckbox-root MuiCheckbox-colorDefault MuiCheckbox-sizeMedium css-11uodz6-MuiButtonBase-root-MuiSwitchBase-root-MuiCheckbox-root"
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+            data-testid="SettingsIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
           >
-            <input
-              aria-label="Show Completed Exercises"
-              checked=""
-              class="PrivateSwitchBase-input css-12xagqm-MuiSwitchBase-root"
-              data-indeterminate="false"
-              type="checkbox"
+            <path
+              d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6"
             />
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-              data-testid="CheckBoxIcon"
-              focusable="false"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
-              />
-            </svg>
-          </span>
-          <button
-            aria-label="Toggle Comments"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-154kngp-MuiButtonBase-root-MuiIconButton-root"
-            tabindex="0"
-            type="button"
-          >
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-              data-testid="NotesIcon"
-              focusable="false"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M3 18h12v-2H3zM3 6v2h18V6zm0 7h18v-2H3z"
-              />
-            </svg>
-          </button>
-          <button
-            aria-label="Toggle Media"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-154kngp-MuiButtonBase-root-MuiIconButton-root"
-            tabindex="0"
-            type="button"
-          >
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-              data-testid="PermMediaIcon"
-              focusable="false"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M2 6H0v5h.01L0 20c0 1.1.9 2 2 2h18v-2H2zm20-2h-8l-2-2H6c-1.1 0-1.99.9-1.99 2L4 16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2M7 15l4.5-6 3.5 4.51 2.5-3.01L21 15z"
-              />
-            </svg>
-          </button>
-        </div>
+          </svg>
+        </button>
       </header>
       <div
         class="MuiBox-root css-0"
@@ -338,4 +296,1204 @@ exports[`ExerciseTracker > matches snapshot 1`] = `
     </div>
   </div>
 </div>
+`;
+
+exports[`ExerciseTracker > matches snapshot 1`] = `
+<body
+  style="padding-right: 1024px; overflow: hidden;"
+>
+  <div
+    aria-hidden="true"
+  >
+    <div
+      class="MuiBox-root css-hpgf8j"
+    >
+      <div
+        class="MuiBox-root css-i2n2aa"
+      >
+        <header
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionFixed mui-fixed css-1k80zg0-MuiPaper-root-MuiAppBar-root"
+          style="--Paper-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12); padding-right: 1024px;"
+        >
+          <div
+            class="MuiBox-root css-u4p24i"
+          >
+            <button
+              aria-label="Restart Stopwatch"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorSuccess MuiIconButton-sizeLarge css-rmxi14-MuiButtonBase-root-MuiIconButton-root"
+              tabindex="0"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                data-testid="RestartAltIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 5V2L8 6l4 4V7c3.31 0 6 2.69 6 6 0 2.97-2.17 5.43-5 5.91v2.02c3.95-.49 7-3.85 7-7.93 0-4.42-3.58-8-8-8m-6 8c0-1.65.67-3.15 1.76-4.24L6.34 7.34C4.9 8.79 4 10.79 4 13c0 4.08 3.05 7.44 7 7.93v-2.02c-2.83-.48-5-2.94-5-5.91"
+                />
+              </svg>
+            </button>
+            <button
+              aria-label="Stop Stopwatch"
+              class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-colorError MuiIconButton-sizeLarge css-clr1b-MuiButtonBase-root-MuiIconButton-root"
+              disabled=""
+              tabindex="-1"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                data-testid="StopIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M6 6h12v12H6z"
+                />
+              </svg>
+            </button>
+            <div
+              class="MuiBox-root css-1isemmb"
+            >
+              00:00:00
+            </div>
+          </div>
+          <button
+            aria-label="Open Menu"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-154kngp-MuiButtonBase-root-MuiIconButton-root"
+            tabindex="0"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+              data-testid="SettingsIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6"
+              />
+            </svg>
+          </button>
+        </header>
+        <div
+          class="MuiBox-root css-0"
+        >
+          <div
+            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1ypifsw-MuiPaper-root-MuiCard-root"
+            style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+          >
+            <div
+              class="MuiBox-root css-1nsk1m1"
+            >
+              <div
+                class="video-responsive MuiBox-root css-1hyfx7x"
+              >
+                <iframe
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen=""
+                  loading="lazy"
+                  src="https://www.youtube.com/embed/mSZWSQSSEjE"
+                  title="GMB Wrist Prep Video"
+                />
+              </div>
+            </div>
+            <div
+              aria-label="Open GMB Wrist Prep Modal"
+              class="MuiCardContent-root css-n98m59-MuiCardContent-root"
+            >
+              <div
+                class="MuiTypography-root MuiTypography-h2 css-6cxg8n-MuiTypography-root"
+              >
+                <div
+                  class="MuiBox-root css-70qvj9"
+                >
+                  <div
+                    class="MuiBox-root css-70qvj9"
+                  >
+                    <div
+                      class="MuiBox-root css-12yyoxx"
+                    >
+                      1x10
+                    </div>
+                    <div
+                      class="MuiBox-root css-bg3st0"
+                    >
+                      GMB Wrist Prep
+                    </div>
+                  </div>
+                </div>
+                <button
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-154kngp-MuiButtonBase-root-MuiIconButton-root"
+                  tabindex="0"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    data-testid="OpenInNewIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3z"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div
+                class="MuiBox-root css-1n9ud6n"
+              />
+            </div>
+          </div>
+          <hr
+            class="MuiDivider-root MuiDivider-fullWidth MuiDivider-flexItem css-agt9us-MuiDivider-root"
+          />
+        </div>
+        <div
+          class="MuiBox-root css-0"
+        >
+          <div
+            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1ypifsw-MuiPaper-root-MuiCard-root"
+            style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+          >
+            <div
+              class="MuiBox-root css-1nsk1m1"
+            >
+              <div
+                class="video-responsive MuiBox-root css-1hyfx7x"
+              >
+                <iframe
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen=""
+                  loading="lazy"
+                  src="https://www.youtube.com/embed/C995b3KLXS4"
+                  title="Arch Hangs Video"
+                />
+              </div>
+            </div>
+            <div
+              aria-label="Open Arch Hangs Modal"
+              class="MuiCardContent-root css-n98m59-MuiCardContent-root"
+            >
+              <div
+                class="MuiTypography-root MuiTypography-h2 css-6cxg8n-MuiTypography-root"
+              >
+                <div
+                  class="MuiBox-root css-70qvj9"
+                >
+                  <div
+                    class="MuiBox-root css-70qvj9"
+                  >
+                    <div
+                      class="MuiBox-root css-12yyoxx"
+                    >
+                      3x5-8
+                    </div>
+                    <div
+                      class="MuiBox-root css-bg3st0"
+                    >
+                      Arch Hangs
+                    </div>
+                  </div>
+                </div>
+                <button
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-154kngp-MuiButtonBase-root-MuiIconButton-root"
+                  tabindex="0"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    data-testid="OpenInNewIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3z"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div
+                class="MuiBox-root css-1n9ud6n"
+              />
+            </div>
+          </div>
+          <hr
+            class="MuiDivider-root MuiDivider-fullWidth MuiDivider-flexItem css-agt9us-MuiDivider-root"
+          />
+        </div>
+        <div
+          class="MuiBox-root css-0"
+        >
+          <div
+            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1ypifsw-MuiPaper-root-MuiCard-root"
+            style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+          >
+            <div
+              class="MuiBox-root css-1nsk1m1"
+            >
+              <img
+                alt="Parallel Bar Support Hold Image"
+                loading="lazy"
+                src="https://antranik.org/wp-content/uploads/2014/01/antranik-holding-support-hold-on-parallel-bars.jpg"
+                style="display: none;"
+              />
+            </div>
+            <div
+              aria-label="Open Parallel Bar Support Hold Modal"
+              class="MuiCardContent-root css-n98m59-MuiCardContent-root"
+            >
+              <div
+                class="MuiTypography-root MuiTypography-h2 css-6cxg8n-MuiTypography-root"
+              >
+                <div
+                  class="MuiBox-root css-70qvj9"
+                >
+                  <div
+                    class="MuiBox-root css-70qvj9"
+                  >
+                    <div
+                      class="MuiBox-root css-12yyoxx"
+                    >
+                      3x60s
+                    </div>
+                    <div
+                      class="MuiBox-root css-bg3st0"
+                    >
+                      Parallel Bar Support Hold
+                    </div>
+                  </div>
+                </div>
+                <button
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-154kngp-MuiButtonBase-root-MuiIconButton-root"
+                  tabindex="0"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    data-testid="OpenInNewIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3z"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div
+                class="MuiBox-root css-1n9ud6n"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="MuiDrawer-root MuiDrawer-anchorRight MuiDrawer-modal MuiModal-root css-2soe65-MuiModal-root-MuiDrawer-root"
+    role="presentation"
+  >
+    <div
+      aria-hidden="true"
+      class="MuiBackdrop-root MuiModal-backdrop css-4nmryk-MuiBackdrop-root-MuiModal-backdrop"
+      style="opacity: 1; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+    />
+    <div
+      data-testid="sentinelStart"
+      tabindex="0"
+    />
+    <div
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation16 MuiDrawer-paper MuiDrawer-paperAnchorRight css-y7ab46-MuiPaper-root-MuiDrawer-paper"
+      style="--Paper-shadow: 0px 8px 10px -5px rgba(0,0,0,0.2),0px 16px 24px 2px rgba(0,0,0,0.14),0px 6px 30px 5px rgba(0,0,0,0.12); -webkit-transform: none; transform: none; transition: transform 225ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;"
+      tabindex="-1"
+    >
+      <div
+        class="MuiBox-root css-1hskriy"
+        role="presentation"
+      >
+        <ul
+          class="MuiList-root MuiList-padding css-b7dj7n-MuiList-root"
+        >
+          <li
+            class="MuiListItem-root MuiListItem-gutters css-19f6boz-MuiListItem-root"
+          >
+            <div
+              class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-4bx69l-MuiButtonBase-root-MuiListItemButton-root"
+              id="test"
+              role="button"
+              tabindex="0"
+            >
+              <div
+                class="MuiListItemIcon-root css-8gfta9-MuiListItemIcon-root"
+              >
+                <span
+                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorDefault MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorDefault MuiCheckbox-sizeMedium Mui-checked MuiCheckbox-root MuiCheckbox-colorDefault MuiCheckbox-sizeMedium css-11uodz6-MuiButtonBase-root-MuiSwitchBase-root-MuiCheckbox-root"
+                >
+                  <input
+                    aria-label="Show Completed Exercises"
+                    checked=""
+                    class="PrivateSwitchBase-input css-12xagqm-MuiSwitchBase-root"
+                    data-indeterminate="false"
+                    type="checkbox"
+                  />
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    data-testid="CheckBoxIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                    />
+                  </svg>
+                </span>
+              </div>
+              <div
+                class="MuiListItemText-root css-1i4r5sg-MuiListItemText-root"
+              >
+                <span
+                  class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-rizt0-MuiTypography-root"
+                >
+                  Show Completed
+                </span>
+              </div>
+            </div>
+          </li>
+          <li
+            class="MuiListItem-root MuiListItem-gutters css-19f6boz-MuiListItem-root"
+          >
+            <div
+              aria-label="Toggle Comments"
+              class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-4bx69l-MuiButtonBase-root-MuiListItemButton-root"
+              role="button"
+              tabindex="0"
+            >
+              <div
+                class="MuiListItemIcon-root css-8gfta9-MuiListItemIcon-root"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                  data-testid="NotesIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M3 18h12v-2H3zM3 6v2h18V6zm0 7h18v-2H3z"
+                  />
+                </svg>
+              </div>
+              <div
+                class="MuiListItemText-root css-1i4r5sg-MuiListItemText-root"
+              >
+                <span
+                  class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-rizt0-MuiTypography-root"
+                >
+                  Toggle Comments
+                </span>
+              </div>
+            </div>
+          </li>
+          <li
+            class="MuiListItem-root MuiListItem-gutters css-19f6boz-MuiListItem-root"
+          >
+            <div
+              aria-label="Toggle Media"
+              class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-4bx69l-MuiButtonBase-root-MuiListItemButton-root"
+              role="button"
+              tabindex="0"
+            >
+              <div
+                class="MuiListItemIcon-root css-8gfta9-MuiListItemIcon-root"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                  data-testid="PermMediaIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M2 6H0v5h.01L0 20c0 1.1.9 2 2 2h18v-2H2zm20-2h-8l-2-2H6c-1.1 0-1.99.9-1.99 2L4 16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2M7 15l4.5-6 3.5 4.51 2.5-3.01L21 15z"
+                  />
+                </svg>
+              </div>
+              <div
+                class="MuiListItemText-root css-1i4r5sg-MuiListItemText-root"
+              >
+                <span
+                  class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-rizt0-MuiTypography-root"
+                >
+                  Toggle Media
+                </span>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div
+      data-testid="sentinelEnd"
+      tabindex="0"
+    />
+  </div>
+</body>
+`;
+
+exports[`ExerciseTracker > matches snapshot when menu drawer is open 1`] = `
+<div
+  aria-hidden="true"
+>
+  <div
+    class="MuiBox-root css-hpgf8j"
+  >
+    <div
+      class="MuiBox-root css-i2n2aa"
+    >
+      <header
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionFixed mui-fixed css-1k80zg0-MuiPaper-root-MuiAppBar-root"
+        style="--Paper-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12); padding-right: 1024px;"
+      >
+        <div
+          class="MuiBox-root css-u4p24i"
+        >
+          <button
+            aria-label="Restart Stopwatch"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorSuccess MuiIconButton-sizeLarge css-rmxi14-MuiButtonBase-root-MuiIconButton-root"
+            tabindex="0"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+              data-testid="RestartAltIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M12 5V2L8 6l4 4V7c3.31 0 6 2.69 6 6 0 2.97-2.17 5.43-5 5.91v2.02c3.95-.49 7-3.85 7-7.93 0-4.42-3.58-8-8-8m-6 8c0-1.65.67-3.15 1.76-4.24L6.34 7.34C4.9 8.79 4 10.79 4 13c0 4.08 3.05 7.44 7 7.93v-2.02c-2.83-.48-5-2.94-5-5.91"
+              />
+            </svg>
+          </button>
+          <button
+            aria-label="Stop Stopwatch"
+            class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-colorError MuiIconButton-sizeLarge css-clr1b-MuiButtonBase-root-MuiIconButton-root"
+            disabled=""
+            tabindex="-1"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+              data-testid="StopIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M6 6h12v12H6z"
+              />
+            </svg>
+          </button>
+          <div
+            class="MuiBox-root css-1isemmb"
+          >
+            00:00:00
+          </div>
+        </div>
+        <button
+          aria-label="Open Menu"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-154kngp-MuiButtonBase-root-MuiIconButton-root"
+          tabindex="0"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+            data-testid="SettingsIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6"
+            />
+          </svg>
+        </button>
+      </header>
+      <div
+        class="MuiBox-root css-0"
+      >
+        <div
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1ypifsw-MuiPaper-root-MuiCard-root"
+          style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+        >
+          <div
+            class="MuiBox-root css-1nsk1m1"
+          >
+            <div
+              class="video-responsive MuiBox-root css-1hyfx7x"
+            >
+              <iframe
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen=""
+                loading="lazy"
+                src="https://www.youtube.com/embed/mSZWSQSSEjE"
+                title="GMB Wrist Prep Video"
+              />
+            </div>
+          </div>
+          <div
+            aria-label="Open GMB Wrist Prep Modal"
+            class="MuiCardContent-root css-n98m59-MuiCardContent-root"
+          >
+            <div
+              class="MuiTypography-root MuiTypography-h2 css-6cxg8n-MuiTypography-root"
+            >
+              <div
+                class="MuiBox-root css-70qvj9"
+              >
+                <div
+                  class="MuiBox-root css-70qvj9"
+                >
+                  <div
+                    class="MuiBox-root css-12yyoxx"
+                  >
+                    1x10
+                  </div>
+                  <div
+                    class="MuiBox-root css-bg3st0"
+                  >
+                    GMB Wrist Prep
+                  </div>
+                </div>
+              </div>
+              <button
+                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-154kngp-MuiButtonBase-root-MuiIconButton-root"
+                tabindex="0"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                  data-testid="OpenInNewIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div
+              class="MuiBox-root css-1n9ud6n"
+            />
+          </div>
+        </div>
+        <hr
+          class="MuiDivider-root MuiDivider-fullWidth MuiDivider-flexItem css-agt9us-MuiDivider-root"
+        />
+      </div>
+      <div
+        class="MuiBox-root css-0"
+      >
+        <div
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1ypifsw-MuiPaper-root-MuiCard-root"
+          style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+        >
+          <div
+            class="MuiBox-root css-1nsk1m1"
+          >
+            <div
+              class="video-responsive MuiBox-root css-1hyfx7x"
+            >
+              <iframe
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen=""
+                loading="lazy"
+                src="https://www.youtube.com/embed/C995b3KLXS4"
+                title="Arch Hangs Video"
+              />
+            </div>
+          </div>
+          <div
+            aria-label="Open Arch Hangs Modal"
+            class="MuiCardContent-root css-n98m59-MuiCardContent-root"
+          >
+            <div
+              class="MuiTypography-root MuiTypography-h2 css-6cxg8n-MuiTypography-root"
+            >
+              <div
+                class="MuiBox-root css-70qvj9"
+              >
+                <div
+                  class="MuiBox-root css-70qvj9"
+                >
+                  <div
+                    class="MuiBox-root css-12yyoxx"
+                  >
+                    3x5-8
+                  </div>
+                  <div
+                    class="MuiBox-root css-bg3st0"
+                  >
+                    Arch Hangs
+                  </div>
+                </div>
+              </div>
+              <button
+                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-154kngp-MuiButtonBase-root-MuiIconButton-root"
+                tabindex="0"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                  data-testid="OpenInNewIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div
+              class="MuiBox-root css-1n9ud6n"
+            />
+          </div>
+        </div>
+        <hr
+          class="MuiDivider-root MuiDivider-fullWidth MuiDivider-flexItem css-agt9us-MuiDivider-root"
+        />
+      </div>
+      <div
+        class="MuiBox-root css-0"
+      >
+        <div
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1ypifsw-MuiPaper-root-MuiCard-root"
+          style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+        >
+          <div
+            class="MuiBox-root css-1nsk1m1"
+          >
+            <img
+              alt="Parallel Bar Support Hold Image"
+              loading="lazy"
+              src="https://antranik.org/wp-content/uploads/2014/01/antranik-holding-support-hold-on-parallel-bars.jpg"
+              style="display: none;"
+            />
+          </div>
+          <div
+            aria-label="Open Parallel Bar Support Hold Modal"
+            class="MuiCardContent-root css-n98m59-MuiCardContent-root"
+          >
+            <div
+              class="MuiTypography-root MuiTypography-h2 css-6cxg8n-MuiTypography-root"
+            >
+              <div
+                class="MuiBox-root css-70qvj9"
+              >
+                <div
+                  class="MuiBox-root css-70qvj9"
+                >
+                  <div
+                    class="MuiBox-root css-12yyoxx"
+                  >
+                    3x60s
+                  </div>
+                  <div
+                    class="MuiBox-root css-bg3st0"
+                  >
+                    Parallel Bar Support Hold
+                  </div>
+                </div>
+              </div>
+              <button
+                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-154kngp-MuiButtonBase-root-MuiIconButton-root"
+                tabindex="0"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                  data-testid="OpenInNewIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div
+              class="MuiBox-root css-1n9ud6n"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ExerciseTracker > matches the menu drawer snapshot 1`] = `
+<body
+  style="padding-right: 1024px; overflow: hidden;"
+>
+  <div
+    aria-hidden="true"
+  >
+    <div
+      class="MuiBox-root css-hpgf8j"
+    >
+      <div
+        class="MuiBox-root css-i2n2aa"
+      >
+        <header
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionFixed mui-fixed css-1k80zg0-MuiPaper-root-MuiAppBar-root"
+          style="--Paper-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12); padding-right: 1024px;"
+        >
+          <div
+            class="MuiBox-root css-u4p24i"
+          >
+            <button
+              aria-label="Restart Stopwatch"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorSuccess MuiIconButton-sizeLarge css-rmxi14-MuiButtonBase-root-MuiIconButton-root"
+              tabindex="0"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                data-testid="RestartAltIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 5V2L8 6l4 4V7c3.31 0 6 2.69 6 6 0 2.97-2.17 5.43-5 5.91v2.02c3.95-.49 7-3.85 7-7.93 0-4.42-3.58-8-8-8m-6 8c0-1.65.67-3.15 1.76-4.24L6.34 7.34C4.9 8.79 4 10.79 4 13c0 4.08 3.05 7.44 7 7.93v-2.02c-2.83-.48-5-2.94-5-5.91"
+                />
+              </svg>
+            </button>
+            <button
+              aria-label="Stop Stopwatch"
+              class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-colorError MuiIconButton-sizeLarge css-clr1b-MuiButtonBase-root-MuiIconButton-root"
+              disabled=""
+              tabindex="-1"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                data-testid="StopIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M6 6h12v12H6z"
+                />
+              </svg>
+            </button>
+            <div
+              class="MuiBox-root css-1isemmb"
+            >
+              00:00:00
+            </div>
+          </div>
+          <button
+            aria-label="Open Menu"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-154kngp-MuiButtonBase-root-MuiIconButton-root"
+            tabindex="0"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+              data-testid="SettingsIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6"
+              />
+            </svg>
+          </button>
+        </header>
+        <div
+          class="MuiBox-root css-0"
+        >
+          <div
+            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1ypifsw-MuiPaper-root-MuiCard-root"
+            style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+          >
+            <div
+              class="MuiBox-root css-1nsk1m1"
+            >
+              <div
+                class="video-responsive MuiBox-root css-1hyfx7x"
+              >
+                <iframe
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen=""
+                  loading="lazy"
+                  src="https://www.youtube.com/embed/mSZWSQSSEjE"
+                  title="GMB Wrist Prep Video"
+                />
+              </div>
+            </div>
+            <div
+              aria-label="Open GMB Wrist Prep Modal"
+              class="MuiCardContent-root css-n98m59-MuiCardContent-root"
+            >
+              <div
+                class="MuiTypography-root MuiTypography-h2 css-6cxg8n-MuiTypography-root"
+              >
+                <div
+                  class="MuiBox-root css-70qvj9"
+                >
+                  <div
+                    class="MuiBox-root css-70qvj9"
+                  >
+                    <div
+                      class="MuiBox-root css-12yyoxx"
+                    >
+                      1x10
+                    </div>
+                    <div
+                      class="MuiBox-root css-bg3st0"
+                    >
+                      GMB Wrist Prep
+                    </div>
+                  </div>
+                </div>
+                <button
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-154kngp-MuiButtonBase-root-MuiIconButton-root"
+                  tabindex="0"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    data-testid="OpenInNewIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3z"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div
+                class="MuiBox-root css-1n9ud6n"
+              />
+            </div>
+          </div>
+          <hr
+            class="MuiDivider-root MuiDivider-fullWidth MuiDivider-flexItem css-agt9us-MuiDivider-root"
+          />
+        </div>
+        <div
+          class="MuiBox-root css-0"
+        >
+          <div
+            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1ypifsw-MuiPaper-root-MuiCard-root"
+            style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+          >
+            <div
+              class="MuiBox-root css-1nsk1m1"
+            >
+              <div
+                class="video-responsive MuiBox-root css-1hyfx7x"
+              >
+                <iframe
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen=""
+                  loading="lazy"
+                  src="https://www.youtube.com/embed/C995b3KLXS4"
+                  title="Arch Hangs Video"
+                />
+              </div>
+            </div>
+            <div
+              aria-label="Open Arch Hangs Modal"
+              class="MuiCardContent-root css-n98m59-MuiCardContent-root"
+            >
+              <div
+                class="MuiTypography-root MuiTypography-h2 css-6cxg8n-MuiTypography-root"
+              >
+                <div
+                  class="MuiBox-root css-70qvj9"
+                >
+                  <div
+                    class="MuiBox-root css-70qvj9"
+                  >
+                    <div
+                      class="MuiBox-root css-12yyoxx"
+                    >
+                      3x5-8
+                    </div>
+                    <div
+                      class="MuiBox-root css-bg3st0"
+                    >
+                      Arch Hangs
+                    </div>
+                  </div>
+                </div>
+                <button
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-154kngp-MuiButtonBase-root-MuiIconButton-root"
+                  tabindex="0"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    data-testid="OpenInNewIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3z"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div
+                class="MuiBox-root css-1n9ud6n"
+              />
+            </div>
+          </div>
+          <hr
+            class="MuiDivider-root MuiDivider-fullWidth MuiDivider-flexItem css-agt9us-MuiDivider-root"
+          />
+        </div>
+        <div
+          class="MuiBox-root css-0"
+        >
+          <div
+            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1ypifsw-MuiPaper-root-MuiCard-root"
+            style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+          >
+            <div
+              class="MuiBox-root css-1nsk1m1"
+            >
+              <img
+                alt="Parallel Bar Support Hold Image"
+                loading="lazy"
+                src="https://antranik.org/wp-content/uploads/2014/01/antranik-holding-support-hold-on-parallel-bars.jpg"
+                style="display: none;"
+              />
+            </div>
+            <div
+              aria-label="Open Parallel Bar Support Hold Modal"
+              class="MuiCardContent-root css-n98m59-MuiCardContent-root"
+            >
+              <div
+                class="MuiTypography-root MuiTypography-h2 css-6cxg8n-MuiTypography-root"
+              >
+                <div
+                  class="MuiBox-root css-70qvj9"
+                >
+                  <div
+                    class="MuiBox-root css-70qvj9"
+                  >
+                    <div
+                      class="MuiBox-root css-12yyoxx"
+                    >
+                      3x60s
+                    </div>
+                    <div
+                      class="MuiBox-root css-bg3st0"
+                    >
+                      Parallel Bar Support Hold
+                    </div>
+                  </div>
+                </div>
+                <button
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-154kngp-MuiButtonBase-root-MuiIconButton-root"
+                  tabindex="0"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    data-testid="OpenInNewIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3z"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div
+                class="MuiBox-root css-1n9ud6n"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="MuiDrawer-root MuiDrawer-anchorRight MuiDrawer-modal MuiModal-root css-2soe65-MuiModal-root-MuiDrawer-root"
+    role="presentation"
+  >
+    <div
+      aria-hidden="true"
+      class="MuiBackdrop-root MuiModal-backdrop css-4nmryk-MuiBackdrop-root-MuiModal-backdrop"
+      style="opacity: 1; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+    />
+    <div
+      data-testid="sentinelStart"
+      tabindex="0"
+    />
+    <div
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation16 MuiDrawer-paper MuiDrawer-paperAnchorRight css-y7ab46-MuiPaper-root-MuiDrawer-paper"
+      style="--Paper-shadow: 0px 8px 10px -5px rgba(0,0,0,0.2),0px 16px 24px 2px rgba(0,0,0,0.14),0px 6px 30px 5px rgba(0,0,0,0.12); -webkit-transform: none; transform: none; transition: transform 225ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;"
+      tabindex="-1"
+    >
+      <div
+        class="MuiBox-root css-1hskriy"
+        role="presentation"
+      >
+        <ul
+          class="MuiList-root MuiList-padding css-b7dj7n-MuiList-root"
+        >
+          <li
+            class="MuiListItem-root MuiListItem-gutters css-19f6boz-MuiListItem-root"
+          >
+            <div
+              class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-4bx69l-MuiButtonBase-root-MuiListItemButton-root"
+              id="test"
+              role="button"
+              tabindex="0"
+            >
+              <div
+                class="MuiListItemIcon-root css-8gfta9-MuiListItemIcon-root"
+              >
+                <span
+                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorDefault MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorDefault MuiCheckbox-sizeMedium Mui-checked MuiCheckbox-root MuiCheckbox-colorDefault MuiCheckbox-sizeMedium css-11uodz6-MuiButtonBase-root-MuiSwitchBase-root-MuiCheckbox-root"
+                >
+                  <input
+                    aria-label="Show Completed Exercises"
+                    checked=""
+                    class="PrivateSwitchBase-input css-12xagqm-MuiSwitchBase-root"
+                    data-indeterminate="false"
+                    type="checkbox"
+                  />
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    data-testid="CheckBoxIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                    />
+                  </svg>
+                </span>
+              </div>
+              <div
+                class="MuiListItemText-root css-1i4r5sg-MuiListItemText-root"
+              >
+                <span
+                  class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-rizt0-MuiTypography-root"
+                >
+                  Show Completed
+                </span>
+              </div>
+            </div>
+          </li>
+          <li
+            class="MuiListItem-root MuiListItem-gutters css-19f6boz-MuiListItem-root"
+          >
+            <div
+              aria-label="Toggle Comments"
+              class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-4bx69l-MuiButtonBase-root-MuiListItemButton-root"
+              role="button"
+              tabindex="0"
+            >
+              <div
+                class="MuiListItemIcon-root css-8gfta9-MuiListItemIcon-root"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                  data-testid="NotesIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M3 18h12v-2H3zM3 6v2h18V6zm0 7h18v-2H3z"
+                  />
+                </svg>
+              </div>
+              <div
+                class="MuiListItemText-root css-1i4r5sg-MuiListItemText-root"
+              >
+                <span
+                  class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-rizt0-MuiTypography-root"
+                >
+                  Toggle Comments
+                </span>
+              </div>
+            </div>
+          </li>
+          <li
+            class="MuiListItem-root MuiListItem-gutters css-19f6boz-MuiListItem-root"
+          >
+            <div
+              aria-label="Toggle Media"
+              class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-4bx69l-MuiButtonBase-root-MuiListItemButton-root"
+              role="button"
+              tabindex="0"
+            >
+              <div
+                class="MuiListItemIcon-root css-8gfta9-MuiListItemIcon-root"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                  data-testid="PermMediaIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M2 6H0v5h.01L0 20c0 1.1.9 2 2 2h18v-2H2zm20-2h-8l-2-2H6c-1.1 0-1.99.9-1.99 2L4 16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2M7 15l4.5-6 3.5 4.51 2.5-3.01L21 15z"
+                  />
+                </svg>
+              </div>
+              <div
+                class="MuiListItemText-root css-1i4r5sg-MuiListItemText-root"
+              >
+                <span
+                  class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-rizt0-MuiTypography-root"
+                >
+                  Toggle Media
+                </span>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div
+      data-testid="sentinelEnd"
+      tabindex="0"
+    />
+  </div>
+</body>
 `;
