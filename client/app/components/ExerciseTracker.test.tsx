@@ -692,15 +692,17 @@ describe("ExerciseTracker", async () => {
     expect(screen.queryByText("Fake Exercise")).not.toBeInTheDocument();
   });
 
-  // it("displays error if exercises failed to load", async () => {
-  //   nock.cleanAll();
-  //
-  //   nock("http://localhost:3000").get("/api/v1/user-exercises").reply(500, {});
-  //
-  //   await renderExerciseTracker();
-  //
-  //   expect(
-  //     screen.getByText("Failed to get all exercises."),
-  //   ).toBeInTheDocument();
-  // });
+  it("displays an error if the exercises failed to load", async () => {
+    nock.cleanAll();
+
+    nock("http://localhost:3000")
+      .get("/api/v1/user-exercises")
+      .reply(500, "Internal Server Error");
+
+    await render(<ExerciseTracker />, { wrapper });
+
+    await waitFor(() => {
+      expect(screen.getByText("Something went wrong.")).toBeInTheDocument();
+    });
+  });
 });

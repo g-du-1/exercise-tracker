@@ -16,6 +16,7 @@ import { useBoundStore } from "../store/store";
 import { FinishTime } from "./FinishTime";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useGetUserExercises } from "../hooks/useGetUserExercises";
+import { Alert } from "@mui/material";
 
 export const ExerciseTracker = ({}) => {
   const { data: exercisesWithIds, isLoading, error } = useGetUserExercises();
@@ -47,10 +48,6 @@ export const ExerciseTracker = ({}) => {
       </Box>
     );
   }
-  //
-  // if (error?.message === "Failed to get exercises.") {
-  //   return <Box>Failed to get exercises.</Box>;
-  // }
 
   return (
     <Box
@@ -60,6 +57,12 @@ export const ExerciseTracker = ({}) => {
     >
       <Box sx={{ mt: 7 }}>
         <TopBar />
+
+        {error?.message === "Something went wrong." && (
+          <Alert severity="error" sx={{ marginY: 2 }}>
+            Something went wrong.
+          </Alert>
+        )}
 
         {!exercises || exercises.length === 0 ? (
           <Box textAlign="center">No exercises.</Box>

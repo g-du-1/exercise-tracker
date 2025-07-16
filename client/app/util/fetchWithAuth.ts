@@ -15,5 +15,9 @@ export const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
     throw new Error("401: Unauthorised");
   }
 
+  if (resp?.status !== 200) {
+    throw new Error("Something went wrong.");
+  }
+
   return resp;
 };
