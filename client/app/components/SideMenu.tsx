@@ -12,8 +12,12 @@ import PermMediaIcon from "@mui/icons-material/PermMedia";
 import { useBoundStore } from "../store/store";
 import NotesIcon from "@mui/icons-material/Notes";
 import Checkbox from "@mui/material/Checkbox";
+import { useRouter } from "next/navigation";
+import Divider from "@mui/material/Divider";
 
 export const SideMenu = () => {
+  const router = useRouter();
+
   const setShowMedia = useBoundStore((state) => state.setShowMedia);
   const showMedia = useBoundStore((state) => state.showMedia);
   const setShowComments = useBoundStore((state) => state.setShowComments);
@@ -88,6 +92,26 @@ export const SideMenu = () => {
 
             <ListItemText
               primary={"Toggle Media"}
+              sx={{ paddingLeft: ".5rem" }}
+            />
+          </ListItemButton>
+        </ListItem>
+
+        <Divider />
+
+        <ListItem key={"Settings Page"} disablePadding>
+          <ListItemButton
+            aria-label="Settings Page"
+            onClick={() => {
+              router.push("/settings");
+            }}
+          >
+            <ListItemIcon sx={{ justifyContent: "center" }}>
+              <SettingsIcon />
+            </ListItemIcon>
+
+            <ListItemText
+              primary={"Settings Page"}
               sx={{ paddingLeft: ".5rem" }}
             />
           </ListItemButton>

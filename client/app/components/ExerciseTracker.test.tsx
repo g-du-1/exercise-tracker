@@ -4,6 +4,13 @@ import { getFormattedTime } from "../util/getFormattedTime";
 import { mockExercises } from "./fixtures/mockExercises";
 import { useQuery } from "@tanstack/react-query";
 import { Mock, vi } from "vitest";
+import { useRouter } from "next/navigation";
+
+const mockPush = vi.fn();
+
+vi.mock("next/navigation", () => ({
+  useRouter: vi.fn(),
+}));
 
 const DELETE_REPS = "Delete Reps";
 
@@ -41,6 +48,10 @@ describe("ExerciseTracker", () => {
     vi.useFakeTimers();
 
     process.env.NEXT_PUBLIC_ENABLE_API_CONNECTION = "true";
+
+    (useRouter as Mock).mockImplementation(() => ({
+      push: mockPush,
+    }));
 
     (useQuery as Mock).mockImplementation(() => ({
       data: mockExercises,
@@ -569,5 +580,14 @@ describe("ExerciseTracker", () => {
     renderExerciseTracker();
 
     expect(screen.getByText("No exercises.")).toBeInTheDocument();
+  });
+
+  it("navigates to the settings page when clicking settings in the side menu", () => {
+    renderExerciseTracker();
+
+    fireEvent.click(screen.getByLabelText("Open Menu"));
+    fireEvent.click(screen.getByLabelText("Settings Page"));
+
+    expect(mockPush).toHaveBeenCalledExactlyOnceWith("/settings");
   });
 });
