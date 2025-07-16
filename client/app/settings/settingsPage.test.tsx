@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import nock from "nock";
 import SettingsPage from "./page";
@@ -101,5 +101,23 @@ describe("SettingsPage", () => {
     ).toBeInTheDocument();
 
     expect(screen.queryByRole("progressbar")).not.toBeInTheDocument();
+  });
+
+  it("adds a user exercise and disables add", async () => {
+    nock("http://localhost:3000")
+      .get("/api/v1/exercises")
+      .reply(200, mockExercises);
+
+    render(<SettingsPage />, { wrapper });
+
+    await waitFor(() => {
+      expect(screen.getByText("Diamond Pushup")).toBeInTheDocument();
+    });
+
+    await fireEvent.click(screen.getByLabelText("Add Diamond Pushup"));
+
+    await waitFor(() => {
+      expect(screen.getByLabelText("Add Diamond Pushup")).toBeDisabled();
+    });
   });
 });
