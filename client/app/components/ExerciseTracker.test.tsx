@@ -132,27 +132,7 @@ describe("ExerciseTracker", async () => {
   });
 
   it("outputs open modal triggers for each exercise", async () => {
-    // nock("http://localhost:3000")
-    //   .get("/api/v1/user-exercises")
-    //   .reply(200, mockExercises);
-
-    render(<ExerciseTracker />, { wrapper });
-
-    // Wait for loading to complete
-    await waitFor(
-      () => {
-        expect(screen.queryByRole("progressbar")).not.toBeInTheDocument();
-      },
-      { timeout: 10000 },
-    );
-
-    // Wait for the exercise data to be rendered
-    await waitFor(
-      () => {
-        expect(screen.getByText("GMB Wrist Prep")).toBeInTheDocument();
-      },
-      { timeout: 10000 },
-    );
+    await renderExerciseTracker();
 
     expect(getModalOpenTriggers()).toHaveLength(3);
   });
