@@ -9,21 +9,6 @@ import { useRouter } from "next/navigation";
 
 const mockExercises = [
   {
-    id: 16,
-    key: "reverse-hyperextension",
-    name: "Reverse Hyperextension",
-    category: "CORE_TRIPLET",
-    type: "EXTENSION",
-    targetSets: 3,
-    targetRepsMin: 8,
-    targetRepsMax: 12,
-    targetRest: 60,
-    additionalRest: 60,
-    mediaLink: "https://www.youtube.com/watch?v=ZeRsNzFcQLQ&",
-    comments: "<ul><li>Keep your butt tucked</li></ul>",
-    duration: false,
-  },
-  {
     id: 13,
     key: "diamond-pushup",
     name: "Diamond Pushup",
@@ -37,6 +22,37 @@ const mockExercises = [
     mediaLink: "https://www.youtube.com/watch?v=J0DnG1_S92I",
     comments:
       "<ul><li>Put your hands close together so the thumbs and index fingers touch, then perform a pushup</li><li>If this is too difficult or feels uncomfortable, put your hands just a bit closer than in a normal pushup. Work on moving the hands closer together over time until you reach diamond pushups</li></ul>",
+    duration: false,
+  },
+  {
+    id: 15,
+    key: "banded-pallof-press",
+    name: "Banded Pallof Press",
+    category: "CORE_TRIPLET",
+    type: "ANTI_ROTATION",
+    targetSets: 3,
+    targetRepsMin: 8,
+    targetRepsMax: 12,
+    targetRest: 60,
+    additionalRest: 60,
+    mediaLink: "https://www.youtube.com/watch?v=AH_QZLm_0-s",
+    comments:
+      "<ul><li>These are performed under control with a short pause when your arms are fully extended</li></ul>",
+    duration: false,
+  },
+  {
+    id: 16,
+    key: "reverse-hyperextension",
+    name: "Reverse Hyperextension",
+    category: "CORE_TRIPLET",
+    type: "EXTENSION",
+    targetSets: 3,
+    targetRepsMin: 8,
+    targetRepsMax: 12,
+    targetRest: 60,
+    additionalRest: 60,
+    mediaLink: "https://www.youtube.com/watch?v=ZeRsNzFcQLQ&",
+    comments: "<ul><li>Keep your butt tucked</li></ul>",
     duration: false,
   },
 ];
@@ -78,6 +94,8 @@ describe("SignInPage", () => {
 
     (getUserExercises as Mock).mockImplementation(() => Promise.resolve([]));
   });
+
+  it.todo("snapshot");
 
   it("displays a spinner while loading", async () => {
     (getAllExercises as Mock).mockImplementation(() => new Promise(() => {}));
@@ -211,5 +229,9 @@ describe("SignInPage", () => {
     });
 
     expect(screen.getByLabelText("Add Diamond Pushup")).toBeDisabled();
+  });
+
+  it("displays all categories and subcategories", async () => {
+    (getAllExercises as Mock).mockImplementation(() => new Promise(() => {}));
   });
 });

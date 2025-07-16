@@ -10,11 +10,40 @@ import { saveUserExercise } from "../util/api/saveUserExercise";
 import { deleteAllExercisesForUser } from "../util/api/deleteAllExercisesForUser";
 import { getUserExercises } from "../util/api/getUserExercises";
 import { TopBar } from "../components/TopBar";
+import Divider from "@mui/material/Divider";
+import { MainHeader } from "./components/MainHeader";
+import { SubHeader } from "./components/SubHeader";
+import { AddableItem } from "./components/AddableItem";
 
 const SettingsPage = () => {
   const [loading, setLoading] = useState(true);
   const [allExercises, setAllExercises] = useState<Exercise[]>([]);
   const [usersExerciseIds, setUsersExerciseIds] = useState<number[]>([]);
+
+  const warmups = allExercises.filter((ex) => ex.category === "WARM_UP");
+
+  const firstPairs = allExercises.filter((ex) => ex.category === "FIRST_PAIR");
+  const pullUps = firstPairs.filter((ex) => ex.type === "PULL_UP");
+  const squats = firstPairs.filter((ex) => ex.type === "SQUAT");
+
+  const secondPairs = allExercises.filter(
+    (ex) => ex.category === "SECOND_PAIR",
+  );
+  const dips = secondPairs.filter((ex) => ex.type === "DIP");
+  const hinge = secondPairs.filter((ex) => ex.type === "HINGE");
+
+  const thirdPairs = allExercises.filter((ex) => ex.category === "THIRD_PAIR");
+  const row = thirdPairs.filter((ex) => ex.type === "ROW");
+  const pushUp = thirdPairs.filter((ex) => ex.type === "PUSH_UP");
+
+  const coreTriplets = allExercises.filter(
+    (ex) => ex.category === "CORE_TRIPLET",
+  );
+  const antiExtension = coreTriplets.filter(
+    (ex) => ex.type === "ANTI_EXTENSION",
+  );
+  const antiRotation = coreTriplets.filter((ex) => ex.type === "ANTI_ROTATION");
+  const extension = coreTriplets.filter((ex) => ex.type === "EXTENSION");
 
   useEffect(() => {
     (async () => {
@@ -29,6 +58,18 @@ const SettingsPage = () => {
       setLoading(false);
     })();
   }, []);
+
+  const saveExercise = async (ex: Exercise) => {
+    await saveUserExercise(ex.id);
+    setUsersExerciseIds([...usersExerciseIds, ex.id]);
+  };
+
+  const arr = [
+    {
+      mainHeader: "Warmup",
+      subSections: {},
+    },
+  ];
 
   return (
     <>
@@ -64,28 +105,129 @@ const SettingsPage = () => {
             </Box>
 
             <Box>
-              {allExercises.map((ex: Exercise) => (
-                <Box
-                  key={ex.id}
-                  my={2}
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="space-between"
-                >
-                  <Box>{ex.name}</Box>
+              <MainHeader text={"Warmup"} />
 
-                  <Button
-                    onClick={async () => {
-                      await saveUserExercise(ex.id);
-                      setUsersExerciseIds([...usersExerciseIds, ex.id]);
-                    }}
-                    aria-label={`Add ${ex.name}`}
-                    disabled={usersExerciseIds.includes(ex.id)}
-                  >
-                    Add
-                  </Button>
-                </Box>
+              {warmups.map((ex: Exercise) => (
+                <AddableItem
+                  key={ex.id}
+                  exercise={ex}
+                  onClick={() => saveExercise(ex)}
+                  usersExerciseIds={usersExerciseIds}
+                />
               ))}
+
+              <Divider sx={{ marginY: 4 }} />
+
+              <MainHeader text={"First Pair"} />
+              <SubHeader text={"Pull Ups"} />
+
+              {pullUps.map((ex: Exercise) => (
+                <AddableItem
+                  key={ex.id}
+                  exercise={ex}
+                  onClick={() => saveExercise(ex)}
+                  usersExerciseIds={usersExerciseIds}
+                />
+              ))}
+
+              <SubHeader text={"Squats"} />
+
+              {squats.map((ex: Exercise) => (
+                <AddableItem
+                  key={ex.id}
+                  exercise={ex}
+                  onClick={() => saveExercise(ex)}
+                  usersExerciseIds={usersExerciseIds}
+                />
+              ))}
+
+              <Divider sx={{ marginY: 4 }} />
+
+              <MainHeader text={"Second Pair"} />
+              <SubHeader text={"Dip"} />
+
+              {dips.map((ex: Exercise) => (
+                <AddableItem
+                  key={ex.id}
+                  exercise={ex}
+                  onClick={() => saveExercise(ex)}
+                  usersExerciseIds={usersExerciseIds}
+                />
+              ))}
+
+              <SubHeader text={"Hinge"} />
+
+              {hinge.map((ex: Exercise) => (
+                <AddableItem
+                  key={ex.id}
+                  exercise={ex}
+                  onClick={() => saveExercise(ex)}
+                  usersExerciseIds={usersExerciseIds}
+                />
+              ))}
+
+              <Divider sx={{ marginY: 4 }} />
+
+              <MainHeader text={"Third Pair"} />
+              <SubHeader text={"Row"} />
+
+              {row.map((ex: Exercise) => (
+                <AddableItem
+                  key={ex.id}
+                  exercise={ex}
+                  onClick={() => saveExercise(ex)}
+                  usersExerciseIds={usersExerciseIds}
+                />
+              ))}
+
+              <SubHeader text={"Push Up"} />
+
+              {pushUp.map((ex: Exercise) => (
+                <AddableItem
+                  key={ex.id}
+                  exercise={ex}
+                  onClick={() => saveExercise(ex)}
+                  usersExerciseIds={usersExerciseIds}
+                />
+              ))}
+
+              <Divider sx={{ marginY: 4 }} />
+
+              <MainHeader text={"Core Triplet"} />
+              <SubHeader text={"Anti Extension"} />
+
+              {antiExtension.map((ex: Exercise) => (
+                <AddableItem
+                  key={ex.id}
+                  exercise={ex}
+                  onClick={() => saveExercise(ex)}
+                  usersExerciseIds={usersExerciseIds}
+                />
+              ))}
+
+              <SubHeader text={"Anti Rotation"} />
+
+              {antiRotation.map((ex: Exercise) => (
+                <AddableItem
+                  key={ex.id}
+                  exercise={ex}
+                  onClick={() => saveExercise(ex)}
+                  usersExerciseIds={usersExerciseIds}
+                />
+              ))}
+
+              <SubHeader text={"Extension"} />
+
+              {extension.map((ex: Exercise) => (
+                <AddableItem
+                  key={ex.id}
+                  exercise={ex}
+                  onClick={() => saveExercise(ex)}
+                  usersExerciseIds={usersExerciseIds}
+                />
+              ))}
+
+              <Divider sx={{ marginY: 4 }} />
             </Box>
           </Box>
         )}
