@@ -648,4 +648,59 @@ describe("ExerciseTracker", async () => {
 
     expect(mockPush).toHaveBeenCalledExactlyOnceWith("/");
   });
+
+  it("redirects to sign-in if the api response is 401", async () => {
+    nock.cleanAll();
+
+    nock("http://localhost:3000").get("/api/v1/user-exercises").reply(401, []);
+
+    await renderExerciseTracker();
+
+    expect(mockPush).toHaveBeenCalledExactlyOnceWith("/sign-in");
+  });
+
+  it("does not call the api if the flag is off", async () => {
+    process.env.NEXT_PUBLIC_ENABLE_API_CONNECTION = "false";
+
+    nock.cleanAll();
+
+    nock("http://localhost:3000")
+      .get("/api/v1/user-exercises")
+      .reply(200, [
+        {
+          id: 2,
+          exercise: {
+            id: 2,
+            key: "fake-exercise",
+            name: "Fake Exercise",
+            category: "FIRST_PAIR",
+            type: "PULL_UP",
+            targetSets: 3,
+            targetRepsMin: 5,
+            targetRepsMax: 8,
+            duration: false,
+            targetRest: 90,
+            additionalRest: 90,
+            mediaLink: "",
+            comments: "",
+          },
+        },
+      ]);
+
+    await renderExerciseTracker();
+
+    expect(screen.queryByText("Fake Exercise")).not.toBeInTheDocument();
+  });
+
+  // it("displays error if exercises failed to load", async () => {
+  //   nock.cleanAll();
+  //
+  //   nock("http://localhost:3000").get("/api/v1/user-exercises").reply(500, {});
+  //
+  //   await renderExerciseTracker();
+  //
+  //   expect(
+  //     screen.getByText("Failed to get all exercises."),
+  //   ).toBeInTheDocument();
+  // });
 });

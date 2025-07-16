@@ -15,14 +15,10 @@ import { CardComments } from "./card/CardComments";
 import { useBoundStore } from "../store/store";
 import { FinishTime } from "./FinishTime";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useQuery } from "@tanstack/react-query";
-import { getUserExercises } from "../util/api/getUserExercises";
+import { useGetUserExercises } from "../hooks/useGetUserExercises";
 
 export const ExerciseTracker = ({}) => {
-  const { data: exercisesWithIds, isLoading } = useQuery({
-    queryKey: ["getUserExercises"],
-    queryFn: getUserExercises,
-  });
+  const { data: exercisesWithIds, isLoading, error } = useGetUserExercises();
 
   const exercises = exercisesWithIds?.map(({ exercise }) => exercise);
 
@@ -51,6 +47,10 @@ export const ExerciseTracker = ({}) => {
       </Box>
     );
   }
+  //
+  // if (error?.message === "Failed to get exercises.") {
+  //   return <Box>Failed to get exercises.</Box>;
+  // }
 
   return (
     <Box

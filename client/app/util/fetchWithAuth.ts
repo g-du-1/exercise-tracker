@@ -12,7 +12,7 @@ export const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
   const resp = await fetch(`${baseUrl}${url}`, options);
 
   if (resp?.status === 401) {
-    window.location.href = "/sign-in";
+    throw new Error("401: Unauthorised");
   }
 
   return resp;
