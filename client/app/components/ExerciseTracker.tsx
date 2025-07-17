@@ -58,9 +58,9 @@ export const ExerciseTracker = ({}) => {
       <Box sx={{ mt: 7 }}>
         <TopBar />
 
-        {error?.message === "Something went wrong." && (
+        {error && error.message !== "" && (
           <Alert severity="error" sx={{ marginY: 2 }}>
-            Something went wrong.
+            {error.message}
           </Alert>
         )}
 
