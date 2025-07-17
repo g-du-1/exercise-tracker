@@ -95,12 +95,6 @@ export const SideMenu = () => {
                 {...showCompletedLabel}
                 color="default"
                 checked={showCompletedExercises}
-                onChange={() =>
-                  mutation.mutate({
-                    ...userSettings,
-                    showCompletedExercises: !showCompletedExercises,
-                  })
-                }
               />
             </ListItemIcon>
 

@@ -12,9 +12,11 @@ export const useSaveUserSettings = () => {
         body: JSON.stringify(userSettings),
       });
     },
+    onMutate: (newUserSettings) => {
+      queryClient.setQueryData(["getUserSettings"], newUserSettings);
+    },
     onSuccess: (data) => {
       queryClient.setQueryData(["getUserSettings"], data);
-      queryClient.invalidateQueries({ queryKey: ["getUserSettings"] });
     },
   });
 };
