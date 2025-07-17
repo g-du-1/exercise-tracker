@@ -1,3 +1,4 @@
+import { mockUserExercises } from "./components/fixtures/mockUserExercises";
 import { mockExercises } from "./components/fixtures/mockExercises";
 
 export const nockBaseUrl = "http://localhost:3000";
@@ -24,7 +25,7 @@ export const userExercises = {
   path: "/api/v1/user-exercises", // GET
   success: {
     status: 200,
-    response: mockExercises,
+    response: mockUserExercises,
   },
   noExercises: {
     status: 200,
@@ -42,5 +43,30 @@ export const userExercises = {
   internalServerError: {
     status: 500,
     response: undefined,
+  },
+};
+
+export const allExercises = {
+  path: "/api/v1/exercises", // GET
+  success: {
+    status: 200,
+    response: mockExercises,
+  },
+};
+
+export const saveExercise = {
+  path: "/api/v1/user-exercises/save", // POST
+  success: {
+    status: 200,
+  },
+};
+
+export const deleteAllExercises = {
+  path: "/api/v1/user-exercises/all", // DELETE
+  success: {
+    status: 200,
+    response: {
+      message: "All exercises deleted for user.",
+    },
   },
 };

@@ -4,40 +4,13 @@ import nock from "nock";
 import SettingsPage from "./page";
 import { useRouter } from "next/navigation";
 import { Mock } from "vitest";
-
-const mockExercises = [
-  {
-    id: 16,
-    key: "reverse-hyperextension",
-    name: "Reverse Hyperextension",
-    category: "CORE_TRIPLET",
-    type: "EXTENSION",
-    targetSets: 3,
-    targetRepsMin: 8,
-    targetRepsMax: 12,
-    targetRest: 60,
-    additionalRest: 60,
-    mediaLink: "https://www.youtube.com/watch?v=ZeRsNzFcQLQ&",
-    comments: "<ul><li>Keep your butt tucked</li></ul>",
-    duration: false,
-  },
-  {
-    id: 13,
-    key: "diamond-pushup",
-    name: "Diamond Pushup",
-    category: "THIRD_PAIR",
-    type: "PUSH_UP",
-    targetSets: 3,
-    targetRepsMin: 5,
-    targetRepsMax: 8,
-    targetRest: 90,
-    additionalRest: 90,
-    mediaLink: "https://www.youtube.com/watch?v=J0DnG1_S92I",
-    comments:
-      "<ul><li>Put your hands close together so the thumbs and index fingers touch, then perform a pushup</li><li>If this is too difficult or feels uncomfortable, put your hands just a bit closer than in a normal pushup. Work on moving the hands closer together over time until you reach diamond pushups</li></ul>",
-    duration: false,
-  },
-];
+import {
+  allExercises,
+  deleteAllExercises,
+  nockBaseUrl,
+  saveExercise,
+  userExercises,
+} from "../nockFixtures";
 
 const mockPush = vi.fn();
 
@@ -77,9 +50,9 @@ describe("SettingsPage", () => {
   });
 
   it("displays a spinner and loads exercises", async () => {
-    nock("http://localhost:3000")
-      .get("/api/v1/exercises")
-      .reply(200, mockExercises);
+    nock(nockBaseUrl)
+      .get(allExercises.path)
+      .reply(allExercises.success.status, allExercises.success.response);
 
     render(<SettingsPage />, { wrapper });
 
@@ -106,13 +79,13 @@ describe("SettingsPage", () => {
   });
 
   it("adds a user exercise and disables add", async () => {
-    nock("http://localhost:3000")
-      .get("/api/v1/exercises")
-      .reply(200, mockExercises)
-      .get("/api/v1/user-exercises")
-      .reply(200, [])
-      .post("/api/v1/user-exercises/save")
-      .reply(200, {
+    nock(nockBaseUrl)
+      .get(allExercises.path)
+      .reply(allExercises.success.status, allExercises.success.response)
+      .get(userExercises.path)
+      .reply(userExercises.success.status, [])
+      .post(saveExercise.path)
+      .reply(saveExercise.success.status, {
         id: 6,
         exercise: {
           id: 13,
@@ -131,8 +104,8 @@ describe("SettingsPage", () => {
           duration: false,
         },
       })
-      .get("/api/v1/user-exercises")
-      .reply(200, [
+      .get(userExercises.path)
+      .reply(userExercises.success.status, [
         {
           id: 6,
           exercise: {
@@ -170,11 +143,11 @@ describe("SettingsPage", () => {
   });
 
   it("deletes all exercises for user", async () => {
-    nock("http://localhost:3000")
-      .get("/api/v1/exercises")
-      .reply(200, mockExercises)
-      .get("/api/v1/user-exercises")
-      .reply(200, [
+    nock(nockBaseUrl)
+      .get(allExercises.path)
+      .reply(allExercises.success.status, allExercises.success.response)
+      .get(userExercises.path)
+      .reply(userExercises.success.status, [
         {
           id: 6,
           exercise: {
@@ -195,12 +168,15 @@ describe("SettingsPage", () => {
           },
         },
       ])
-      .delete("/api/v1/user-exercises/all")
-      .reply(200, { message: "All exercises deleted for user." })
-      .get("/api/v1/user-exercises")
-      .reply(200, [])
-      .post("/api/v1/user-exercises/save")
-      .reply(200, {
+      .delete(deleteAllExercises.path)
+      .reply(
+        deleteAllExercises.success.status,
+        deleteAllExercises.success.response,
+      )
+      .get(userExercises.path)
+      .reply(userExercises.success.status, [])
+      .post(saveExercise.path)
+      .reply(saveExercise.success.status, {
         id: 6,
         exercise: {
           id: 13,
@@ -219,8 +195,8 @@ describe("SettingsPage", () => {
           duration: false,
         },
       })
-      .get("/api/v1/user-exercises")
-      .reply(200, [
+      .get(userExercises.path)
+      .reply(userExercises.success.status, [
         {
           id: 6,
           exercise: {
