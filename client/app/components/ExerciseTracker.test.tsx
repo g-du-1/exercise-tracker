@@ -11,7 +11,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Mock, vi } from "vitest";
 import { useRouter } from "next/navigation";
 import nock from "nock";
-import { nockBaseUrl, userExercises } from "../nockFixtures";
+import { nockBaseUrl, userExercises, userSettings } from "../nockFixtures";
 
 const mockPush = vi.fn();
 
@@ -718,6 +718,30 @@ describe("ExerciseTracker", async () => {
       expect(
         screen.getByText("Unexpected end of JSON input"),
       ).toBeInTheDocument();
+    });
+  });
+
+  it("gets the user settings", async () => {
+    nock(nockBaseUrl)
+      .get(userSettings.path)
+      .reply(userSettings.success.status, userSettings.success.response);
+
+    await renderExerciseTracker();
+
+    fireEvent.click(screen.getByLabelText("Open Menu"));
+
+    await waitFor(() => {
+      expect(
+        screen.getByLabelText("Show completed exercises is on"),
+      ).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(screen.getByLabelText("Show comments is on")).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(screen.getByLabelText("Show media is on")).toBeInTheDocument();
     });
   });
 });

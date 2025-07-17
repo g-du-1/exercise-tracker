@@ -21,6 +21,18 @@ export const signIn = {
   },
 };
 
+export const userSettings = {
+  path: "/api/v1/user-settings", // GET
+  success: {
+    status: 200,
+    response: {
+      showCompletedExercises: true,
+      showComments: true,
+      showMedia: true,
+    },
+  },
+};
+
 export const userExercises = {
   path: "/api/v1/user-exercises", // GET
   success: {

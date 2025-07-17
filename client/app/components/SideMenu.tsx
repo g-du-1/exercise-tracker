@@ -15,9 +15,12 @@ import Checkbox from "@mui/material/Checkbox";
 import { useRouter } from "next/navigation";
 import Divider from "@mui/material/Divider";
 import HouseIcon from "@mui/icons-material/House";
+import { useGetUserSettings } from "../hooks/useGetUserSettings";
 
 export const SideMenu = () => {
   const router = useRouter();
+
+  const { data: userSettings } = useGetUserSettings();
 
   const setShowMedia = useBoundStore((state) => state.setShowMedia);
   const showMedia = useBoundStore((state) => state.showMedia);
@@ -37,7 +40,9 @@ export const SideMenu = () => {
   };
 
   const showCompletedLabel = {
-    inputProps: { "aria-label": "Show Completed Exercises" },
+    inputProps: {
+      "aria-label": `Show completed exercises is ${userSettings?.showCompletedExercises ? "on" : "off"}`,
+    },
   };
 
   const DrawerList = (
@@ -87,7 +92,7 @@ export const SideMenu = () => {
               <Checkbox
                 {...showCompletedLabel}
                 color="default"
-                checked={showCompletedExercises}
+                checked={userSettings?.showCompletedExercises}
                 onChange={() =>
                   setShowCompletedExercises(!showCompletedExercises)
                 }
@@ -101,9 +106,9 @@ export const SideMenu = () => {
           </ListItemButton>
         </ListItem>
 
-        <ListItem key={"Toggle Comments"} disablePadding>
+        <ListItem key={"Show Comments"} disablePadding>
           <ListItemButton
-            aria-label="Toggle Comments"
+            aria-label={`Show comments is ${userSettings?.showComments ? "on" : "off"}`}
             onClick={() => setShowComments(!showComments)}
           >
             <ListItemIcon sx={{ justifyContent: "center" }}>
@@ -111,7 +116,7 @@ export const SideMenu = () => {
             </ListItemIcon>
 
             <ListItemText
-              primary={"Toggle Comments"}
+              primary={"Show Comments"}
               sx={{ paddingLeft: ".5rem" }}
             />
           </ListItemButton>
@@ -119,7 +124,7 @@ export const SideMenu = () => {
 
         <ListItem key={"Toggle Media"} disablePadding>
           <ListItemButton
-            aria-label="Toggle Media"
+            aria-label={`Show media is ${userSettings?.showMedia ? "on" : "off"}`}
             onClick={() => setShowMedia(!showMedia)}
           >
             <ListItemIcon sx={{ justifyContent: "center" }}>
