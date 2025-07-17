@@ -123,7 +123,7 @@ export const SideMenu = () => {
           </ListItemButton>
         </ListItem>
 
-        <ListItem key={"Toggle Media"} disablePadding>
+        <ListItem key={"Show Media"} disablePadding>
           <ListItemButton
             aria-label={`Show media is ${showMedia ? "on" : "off"}`}
             onClick={() =>
@@ -135,7 +135,7 @@ export const SideMenu = () => {
             </ListItemIcon>
 
             <ListItemText
-              primary={"Toggle Media"}
+              primary={"Show Media"}
               sx={{ paddingLeft: ".5rem" }}
             />
           </ListItemButton>

@@ -176,7 +176,7 @@ describe("ExerciseTracker", async () => {
     ).not.toBeVisible();
   });
 
-  it("displays media when toggle media is clicked", async () => {
+  it("displays media when show media is clicked", async () => {
     nock.cleanAll();
 
     nock(nockBaseUrl)

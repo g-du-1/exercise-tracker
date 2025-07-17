@@ -547,7 +547,7 @@ exports[`ExerciseTracker > matches snapshot 1`] = `
                 <span
                   class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-rizt0-MuiTypography-root"
                 >
-                  Toggle Media
+                  Show Media
                 </span>
               </div>
             </div>
