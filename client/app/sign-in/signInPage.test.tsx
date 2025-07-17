@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { Mock, vi } from "vitest";
 import nock from "nock";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { nockBaseUrl, signIn } from "../nock";
+import { nockBaseUrl, signIn } from "../nockFixtures";
 
 vi.mock("next/navigation", () => ({
   useRouter: vi.fn(),
