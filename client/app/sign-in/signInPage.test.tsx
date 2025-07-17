@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { Mock, vi } from "vitest";
 import nock from "nock";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { nockBaseUrl, signIn } from "../nock";
 
 vi.mock("next/navigation", () => ({
   useRouter: vi.fn(),
@@ -37,12 +38,9 @@ describe("SignInPage", () => {
   let mockPush = vi.fn();
 
   beforeEach(() => {
-    nock("http://localhost:3000")
-      .post("/api/v1/auth/public/signin")
-      .reply(200, {
-        username: "testUser",
-        roles: ["ROLE_USER"],
-      });
+    nock(nockBaseUrl)
+      .post(signIn.path)
+      .reply(signIn.success.status, signIn.success.response);
 
     (useRouter as Mock).mockImplementation(() => ({
       push: mockPush,
@@ -83,9 +81,9 @@ describe("SignInPage", () => {
   it("displays an error message on failed login", async () => {
     nock.cleanAll();
 
-    nock("http://localhost:3000")
-      .post("/api/v1/auth/public/signin")
-      .reply(401, { message: "Bad Credentials", status: false });
+    nock(nockBaseUrl)
+      .post(signIn.path)
+      .reply(signIn.badCredentials.status, signIn.badCredentials.response);
 
     render(<SignInPage />, { wrapper });
 
@@ -104,7 +102,7 @@ describe("SignInPage", () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText("Bad Credentials")).toBeInTheDocument();
+      expect(screen.getByText("Bad credentials")).toBeInTheDocument();
     });
 
     await waitFor(() => {
@@ -115,17 +113,17 @@ describe("SignInPage", () => {
   it("clears the error message on typing", async () => {
     nock.cleanAll();
 
-    nock("http://localhost:3000")
-      .post("/api/v1/auth/public/signin", {
+    nock(nockBaseUrl)
+      .post(signIn.path, {
         username: "",
         password: "",
       })
-      .reply(404, { message: "Bad credentials", status: false })
-      .post("/api/v1/auth/public/signin", {
+      .reply(signIn.badCredentials.status, signIn.badCredentials.response)
+      .post(signIn.path, {
         username: "aaa",
         password: "",
       })
-      .reply(404, { message: "Bad credentials", status: false });
+      .reply(signIn.badCredentials.status, signIn.badCredentials.response);
 
     render(<SignInPage />, { wrapper });
 
