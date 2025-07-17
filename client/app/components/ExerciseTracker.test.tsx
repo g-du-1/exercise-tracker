@@ -555,10 +555,10 @@ describe("ExerciseTracker", async () => {
     submitReps("8");
 
     fireEvent.click(screen.getByLabelText("Open Menu"));
-    const checkbox = screen.getByLabelText("Show completed exercises is on");
+    const checkbox = screen.getByLabelText("Show completed exercises checkbox");
     expect(checkbox).toBeChecked();
 
-    fireEvent.click(checkbox);
+    fireEvent.click(screen.getByLabelText("Show completed exercises is on"));
 
     await waitFor(() => {
       expect(checkbox).not.toBeChecked();

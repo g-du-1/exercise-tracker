@@ -8,8 +8,6 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import SettingsIcon from "@mui/icons-material/Settings";
 import IconButton from "@mui/material/IconButton";
-import PermMediaIcon from "@mui/icons-material/PermMedia";
-import NotesIcon from "@mui/icons-material/Notes";
 import Checkbox from "@mui/material/Checkbox";
 import { useRouter } from "next/navigation";
 import Divider from "@mui/material/Divider";
@@ -36,12 +34,6 @@ export const SideMenu = () => {
 
   const { showCompletedExercises, showMedia, showComments } =
     userSettings || {};
-
-  const showCompletedLabel = {
-    inputProps: {
-      "aria-label": `Show completed exercises is ${showCompletedExercises ? "on" : "off"}`,
-    },
-  };
 
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
@@ -83,6 +75,7 @@ export const SideMenu = () => {
 
         <ListItem key={"Show Completed"} disablePadding>
           <ListItemButton
+            aria-label={`Show completed exercises is ${showCompletedExercises ? "on" : "off"}`}
             onClick={() =>
               mutation.mutate({
                 ...userSettings,
@@ -92,7 +85,11 @@ export const SideMenu = () => {
           >
             <ListItemIcon sx={{ justifyContent: "center" }}>
               <Checkbox
-                {...showCompletedLabel}
+                slotProps={{
+                  input: {
+                    "aria-label": "Show completed exercises checkbox",
+                  },
+                }}
                 color="default"
                 checked={showCompletedExercises}
               />
@@ -113,7 +110,15 @@ export const SideMenu = () => {
             }
           >
             <ListItemIcon sx={{ justifyContent: "center" }}>
-              <NotesIcon />
+              <Checkbox
+                slotProps={{
+                  input: {
+                    "aria-label": "Show comments checkbox",
+                  },
+                }}
+                color="default"
+                checked={showComments}
+              />
             </ListItemIcon>
 
             <ListItemText
@@ -131,7 +136,15 @@ export const SideMenu = () => {
             }
           >
             <ListItemIcon sx={{ justifyContent: "center" }}>
-              <PermMediaIcon />
+              <Checkbox
+                slotProps={{
+                  input: {
+                    "aria-label": "Show showMedia checkbox",
+                  },
+                }}
+                color="default"
+                checked={showMedia}
+              />
             </ListItemIcon>
 
             <ListItemText
