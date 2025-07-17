@@ -20,12 +20,12 @@ public class UserSettingsController {
     }
 
     @GetMapping
-    public ResponseEntity<GetUserSettingsResponse> getUserSettings(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<UserSettingsDTO> getUserSettings(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         Long userId = userDetails.getId();
 
         UserSettings userSettings = userSettingsService.getUserSettings(userId);
 
-        GetUserSettingsResponse response = new GetUserSettingsResponse();
+        UserSettingsDTO response = new UserSettingsDTO();
         BeanUtils.copyProperties(userSettings, response);
 
         return ResponseEntity.ok(response);
