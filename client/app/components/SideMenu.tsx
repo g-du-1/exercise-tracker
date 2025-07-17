@@ -9,29 +9,20 @@ import ListItemText from "@mui/material/ListItemText";
 import SettingsIcon from "@mui/icons-material/Settings";
 import IconButton from "@mui/material/IconButton";
 import PermMediaIcon from "@mui/icons-material/PermMedia";
-import { useBoundStore } from "../store/store";
 import NotesIcon from "@mui/icons-material/Notes";
 import Checkbox from "@mui/material/Checkbox";
 import { useRouter } from "next/navigation";
 import Divider from "@mui/material/Divider";
 import HouseIcon from "@mui/icons-material/House";
 import { useGetUserSettings } from "../hooks/useGetUserSettings";
+import { useSaveUserSettings } from "../hooks/useSaveUserSettings";
 
 export const SideMenu = () => {
   const router = useRouter();
 
   const { data: userSettings } = useGetUserSettings();
 
-  const setShowMedia = useBoundStore((state) => state.setShowMedia);
-  const showMedia = useBoundStore((state) => state.showMedia);
-  const setShowComments = useBoundStore((state) => state.setShowComments);
-  const showComments = useBoundStore((state) => state.showComments);
-  const showCompletedExercises = useBoundStore(
-    (state) => state.showCompletedExercises,
-  );
-  const setShowCompletedExercises = useBoundStore(
-    (state) => state.setShowCompletedExercises,
-  );
+  const mutation = useSaveUserSettings();
 
   const [open, setOpen] = React.useState(false);
 
@@ -39,9 +30,16 @@ export const SideMenu = () => {
     setOpen(newOpen);
   };
 
+  if (!userSettings) {
+    return null;
+  }
+
+  const { showCompletedExercises, showMedia, showComments } =
+    userSettings || {};
+
   const showCompletedLabel = {
     inputProps: {
-      "aria-label": `Show completed exercises is ${userSettings?.showCompletedExercises ? "on" : "off"}`,
+      "aria-label": `Show completed exercises is ${showCompletedExercises ? "on" : "off"}`,
     },
   };
 
@@ -85,16 +83,23 @@ export const SideMenu = () => {
 
         <ListItem key={"Show Completed"} disablePadding>
           <ListItemButton
-            id={"test"}
-            onClick={() => setShowCompletedExercises(!showCompletedExercises)}
+            onClick={() =>
+              mutation.mutate({
+                ...userSettings,
+                showCompletedExercises: !showCompletedExercises,
+              })
+            }
           >
             <ListItemIcon sx={{ justifyContent: "center" }}>
               <Checkbox
                 {...showCompletedLabel}
                 color="default"
-                checked={userSettings?.showCompletedExercises}
+                checked={showCompletedExercises}
                 onChange={() =>
-                  setShowCompletedExercises(!showCompletedExercises)
+                  mutation.mutate({
+                    ...userSettings,
+                    showCompletedExercises: !showCompletedExercises,
+                  })
                 }
               />
             </ListItemIcon>
@@ -108,8 +113,10 @@ export const SideMenu = () => {
 
         <ListItem key={"Show Comments"} disablePadding>
           <ListItemButton
-            aria-label={`Show comments is ${userSettings?.showComments ? "on" : "off"}`}
-            onClick={() => setShowComments(!showComments)}
+            aria-label={`Show comments is ${showComments ? "on" : "off"}`}
+            onClick={() =>
+              mutation.mutate({ ...userSettings, showComments: !showComments })
+            }
           >
             <ListItemIcon sx={{ justifyContent: "center" }}>
               <NotesIcon />
@@ -124,8 +131,10 @@ export const SideMenu = () => {
 
         <ListItem key={"Toggle Media"} disablePadding>
           <ListItemButton
-            aria-label={`Show media is ${userSettings?.showMedia ? "on" : "off"}`}
-            onClick={() => setShowMedia(!showMedia)}
+            aria-label={`Show media is ${showMedia ? "on" : "off"}`}
+            onClick={() =>
+              mutation.mutate({ ...userSettings, showMedia: !showMedia })
+            }
           >
             <ListItemIcon sx={{ justifyContent: "center" }}>
               <PermMediaIcon />
