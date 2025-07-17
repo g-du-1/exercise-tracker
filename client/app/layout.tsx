@@ -9,8 +9,8 @@ import QueryProvider from "./providers/query-provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Exercise Tracker",
-  description: "BWF Exercise Tracker",
+  title: "BWF Tracker",
+  description: "BWF Tracker",
 };
 
 export default function RootLayout({
