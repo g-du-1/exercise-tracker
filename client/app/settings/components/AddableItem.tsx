@@ -9,8 +9,8 @@ export const AddableItem = ({
   usersExerciseIds,
 }: {
   exercise: Exercise;
-  onClick: () => Promise<void>;
-  usersExerciseIds: number[];
+  onClick: () => void;
+  usersExerciseIds: number[] | undefined;
 }) => (
   <Box my={1} display="flex" alignItems="center" justifyContent="space-between">
     <Typography fontSize={14}>{exercise.name}</Typography>
@@ -18,7 +18,7 @@ export const AddableItem = ({
     <Button
       onClick={onClick}
       aria-label={`Add ${exercise.name}`}
-      disabled={usersExerciseIds.includes(exercise.id)}
+      disabled={usersExerciseIds?.includes(exercise.id)}
     >
       Add
     </Button>

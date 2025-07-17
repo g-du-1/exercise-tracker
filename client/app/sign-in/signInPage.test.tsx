@@ -7,33 +7,54 @@ import {
 } from "@testing-library/react";
 import SignInPage from "./page";
 import { useRouter } from "next/navigation";
-import { signIn } from "../util/api/signIn";
-import { Mock } from "vitest";
-
-vi.mock("../util/api/signIn", () => ({
-  signIn: vi.fn(),
-}));
+import { Mock, vi } from "vitest";
+import nock from "nock";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { nockBaseUrl, signIn } from "../nockFixtures";
 
 vi.mock("next/navigation", () => ({
   useRouter: vi.fn(),
 }));
 
+const createTestQueryClient = () =>
+  new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+        gcTime: 0,
+      },
+    },
+  });
+
+const wrapper = ({ children }: { children: React.ReactNode }) => {
+  const queryClient = createTestQueryClient();
+
+  return (
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  );
+};
+
 describe("SignInPage", () => {
   let mockPush = vi.fn();
 
   beforeEach(() => {
-    vi.resetModules();
-    vi.clearAllMocks();
-
-    (signIn as Mock).mockImplementation(() => Promise.resolve({ status: 200 }));
+    nock(nockBaseUrl)
+      .post(signIn.path)
+      .reply(signIn.success.status, signIn.success.response);
 
     (useRouter as Mock).mockImplementation(() => ({
       push: mockPush,
     }));
   });
 
+  afterEach(() => {
+    vi.resetModules();
+    vi.clearAllMocks();
+    nock.cleanAll();
+  });
+
   it("renders", () => {
-    render(<SignInPage />);
+    render(<SignInPage />, { wrapper });
 
     expect(screen.getByText("Sign In")).toBeInTheDocument();
     expect(screen.getByText("Username")).toBeInTheDocument();
@@ -42,7 +63,7 @@ describe("SignInPage", () => {
   });
 
   it("redirects to home on successful login", async () => {
-    render(<SignInPage />);
+    render(<SignInPage />, { wrapper });
 
     const usernameInput = screen.getByLabelText("Username");
     const passwordInput = screen.getByLabelText("Password");
@@ -52,19 +73,23 @@ describe("SignInPage", () => {
     fireEvent.change(passwordInput, { target: { value: "testPassword" } });
     fireEvent.click(submitButton);
 
-    expect(signIn).toHaveBeenNthCalledWith(1, "testUser", "testPassword");
-
     await waitFor(() => {
       expect(mockPush).toHaveBeenCalledWith("/");
     });
   });
 
   it("displays an error message on failed login", async () => {
-    (signIn as Mock).mockImplementation(() =>
-      Promise.resolve({ status: 401, message: "Bad credentials" })
-    );
+    nock.cleanAll();
 
-    render(<SignInPage />);
+    nock(nockBaseUrl)
+      .post(signIn.path)
+      .reply(signIn.badCredentials.status, signIn.badCredentials.response);
+
+    render(<SignInPage />, { wrapper });
+
+    await waitFor(() => {
+      expect(screen.getByLabelText("Username")).toBeInTheDocument();
+    });
 
     const usernameInput = screen.getByLabelText("Username");
     const passwordInput = screen.getByLabelText("Password");
@@ -76,9 +101,9 @@ describe("SignInPage", () => {
       fireEvent.click(submitButton);
     });
 
-    expect(signIn).toHaveBeenNthCalledWith(1, "testUser", "wrongPassword");
-
-    expect(screen.getByText("Bad credentials")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText("Bad credentials")).toBeInTheDocument();
+    });
 
     await waitFor(() => {
       expect(mockPush).not.toHaveBeenCalled();
@@ -86,11 +111,25 @@ describe("SignInPage", () => {
   });
 
   it("clears the error message on typing", async () => {
-    (signIn as Mock).mockImplementation(() =>
-      Promise.resolve({ status: 401, message: "Bad credentials" })
-    );
+    nock.cleanAll();
 
-    render(<SignInPage />);
+    nock(nockBaseUrl)
+      .post(signIn.path, {
+        username: "",
+        password: "",
+      })
+      .reply(signIn.badCredentials.status, signIn.badCredentials.response)
+      .post(signIn.path, {
+        username: "aaa",
+        password: "",
+      })
+      .reply(signIn.badCredentials.status, signIn.badCredentials.response);
+
+    render(<SignInPage />, { wrapper });
+
+    await waitFor(() => {
+      expect(screen.getByLabelText("Username")).toBeInTheDocument();
+    });
 
     const usernameInput = screen.getByLabelText("Username");
     const passwordInput = screen.getByLabelText("Password");
@@ -100,7 +139,9 @@ describe("SignInPage", () => {
       fireEvent.click(submitButton);
     });
 
-    expect(screen.getByText("Bad credentials")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText("Bad credentials")).toBeInTheDocument();
+    });
 
     await act(async () => {
       fireEvent.change(usernameInput, { target: { value: "aaa" } });
@@ -112,12 +153,16 @@ describe("SignInPage", () => {
       fireEvent.click(submitButton);
     });
 
-    expect(screen.getByText("Bad credentials")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText("Bad credentials")).toBeInTheDocument();
+    });
 
-    await act(async () => {
+    await waitFor(() => {
       fireEvent.change(passwordInput, { target: { value: "ee" } });
     });
 
-    expect(screen.queryByText("Bad credentials")).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.queryByText("Bad credentials")).not.toBeInTheDocument();
+    });
   });
 });

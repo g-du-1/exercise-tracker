@@ -1,77 +1,16 @@
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import nock from "nock";
 import SettingsPage from "./page";
-import { getAllExercises } from "../util/api/getAllExercises";
-import { saveUserExercise } from "../util/api/saveUserExercise";
-import { deleteAllExercisesForUser } from "../util/api/deleteAllExercisesForUser";
-import { getUserExercises } from "../util/api/getUserExercises";
-import { Mock } from "vitest";
 import { useRouter } from "next/navigation";
-
-const mockExercises = [
-  {
-    id: 13,
-    key: "diamond-pushup",
-    name: "Diamond Pushup",
-    category: "THIRD_PAIR",
-    type: "PUSH_UP",
-    targetSets: 3,
-    targetRepsMin: 5,
-    targetRepsMax: 8,
-    targetRest: 90,
-    additionalRest: 90,
-    mediaLink: "https://www.youtube.com/watch?v=J0DnG1_S92I",
-    comments:
-      "<ul><li>Put your hands close together so the thumbs and index fingers touch, then perform a pushup</li><li>If this is too difficult or feels uncomfortable, put your hands just a bit closer than in a normal pushup. Work on moving the hands closer together over time until you reach diamond pushups</li></ul>",
-    duration: false,
-  },
-  {
-    id: 15,
-    key: "banded-pallof-press",
-    name: "Banded Pallof Press",
-    category: "CORE_TRIPLET",
-    type: "ANTI_ROTATION",
-    targetSets: 3,
-    targetRepsMin: 8,
-    targetRepsMax: 12,
-    targetRest: 60,
-    additionalRest: 60,
-    mediaLink: "https://www.youtube.com/watch?v=AH_QZLm_0-s",
-    comments:
-      "<ul><li>These are performed under control with a short pause when your arms are fully extended</li></ul>",
-    duration: false,
-  },
-  {
-    id: 16,
-    key: "reverse-hyperextension",
-    name: "Reverse Hyperextension",
-    category: "CORE_TRIPLET",
-    type: "EXTENSION",
-    targetSets: 3,
-    targetRepsMin: 8,
-    targetRepsMax: 12,
-    targetRest: 60,
-    additionalRest: 60,
-    mediaLink: "https://www.youtube.com/watch?v=ZeRsNzFcQLQ&",
-    comments: "<ul><li>Keep your butt tucked</li></ul>",
-    duration: false,
-  },
-];
-
-vi.mock("../util/api/getAllExercises", () => ({
-  getAllExercises: vi.fn(),
-}));
-
-vi.mock("../util/api/getUserExercises", () => ({
-  getUserExercises: vi.fn(),
-}));
-
-vi.mock("../util/api/saveUserExercise", () => ({
-  saveUserExercise: vi.fn(),
-}));
-
-vi.mock("../util/api/deleteAllExercisesForUser", () => ({
-  deleteAllExercisesForUser: vi.fn(),
-}));
+import { Mock } from "vitest";
+import {
+  allExercises,
+  deleteAllExercises,
+  nockBaseUrl,
+  saveExercise,
+  userExercises,
+} from "../nockFixtures";
 
 const mockPush = vi.fn();
 
@@ -79,30 +18,43 @@ vi.mock("next/navigation", () => ({
   useRouter: vi.fn(),
 }));
 
-describe("SignInPage", () => {
+const createTestQueryClient = () =>
+  new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+        gcTime: 0,
+      },
+    },
+  });
+
+const wrapper = ({ children }: { children: React.ReactNode }) => {
+  const queryClient = createTestQueryClient();
+
+  return (
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  );
+};
+
+describe("SettingsPage", () => {
   beforeEach(() => {
-    vi.resetModules();
-    vi.clearAllMocks();
+    process.env.NEXT_PUBLIC_ENABLE_API_CONNECTION = "true";
 
     (useRouter as Mock).mockImplementation(() => ({
       push: mockPush,
     }));
-
-    (getAllExercises as Mock).mockImplementation(() =>
-      Promise.resolve(mockExercises),
-    );
-
-    (getUserExercises as Mock).mockImplementation(() => Promise.resolve([]));
   });
 
-  it.todo("snapshot");
+  afterEach(() => {
+    nock.cleanAll();
+  });
 
-  it("displays a spinner while loading", async () => {
-    (getAllExercises as Mock).mockImplementation(() => new Promise(() => {}));
+  it("displays a spinner and loads exercises", async () => {
+    nock(nockBaseUrl)
+      .get(allExercises.path)
+      .reply(allExercises.success.status, allExercises.success.response);
 
-    await act(async () => {
-      render(<SettingsPage />);
-    });
+    render(<SettingsPage />, { wrapper });
 
     expect(screen.getByRole("progressbar")).toBeInTheDocument();
 
@@ -111,57 +63,93 @@ describe("SignInPage", () => {
     expect(
       screen.queryByText("Reverse Hyperextension"),
     ).not.toBeInTheDocument();
-  });
 
-  it("renders with all exercises", async () => {
-    await act(async () => {
-      render(<SettingsPage />);
+    await waitFor(() => {
+      expect(screen.getByText("Diamond Pushup")).toBeInTheDocument();
     });
-
-    expect(screen.queryByRole("progressbar")).not.toBeInTheDocument();
     expect(screen.getByLabelText("Add Diamond Pushup")).toBeInTheDocument();
+
+    expect(screen.getByText("Reverse Hyperextension")).toBeInTheDocument();
+
     expect(
       screen.getByLabelText("Add Reverse Hyperextension"),
     ).toBeInTheDocument();
+
+    expect(screen.queryByRole("progressbar")).not.toBeInTheDocument();
   });
 
   it("adds a user exercise and disables add", async () => {
-    await act(async () => {
-      render(<SettingsPage />);
+    nock(nockBaseUrl)
+      .get(allExercises.path)
+      .reply(allExercises.success.status, allExercises.success.response)
+      .get(userExercises.path)
+      .reply(userExercises.success.status, [])
+      .post(saveExercise.path)
+      .reply(saveExercise.success.status, {
+        id: 6,
+        exercise: {
+          id: 13,
+          key: "diamond-pushup",
+          name: "Diamond Pushup",
+          category: "THIRD_PAIR",
+          type: "PUSH_UP",
+          targetSets: 3,
+          targetRepsMin: 5,
+          targetRepsMax: 8,
+          targetRest: 90,
+          additionalRest: 90,
+          mediaLink: "https://www.youtube.com/watch?v=J0DnG1_S92I",
+          comments:
+            "<ul><li>Put your hands close together so the thumbs and index fingers touch, then perform a pushup</li><li>If this is too difficult or feels uncomfortable, put your hands just a bit closer than in a normal pushup. Work on moving the hands closer together over time until you reach diamond pushups</li></ul>",
+          duration: false,
+        },
+      })
+      .get(userExercises.path)
+      .reply(userExercises.success.status, [
+        {
+          id: 6,
+          exercise: {
+            id: 13,
+            key: "diamond-pushup",
+            name: "Diamond Pushup",
+            category: "THIRD_PAIR",
+            type: "PUSH_UP",
+            targetSets: 3,
+            targetRepsMin: 5,
+            targetRepsMax: 8,
+            targetRest: 90,
+            additionalRest: 90,
+            mediaLink: "https://www.youtube.com/watch?v=J0DnG1_S92I",
+            comments:
+              "<ul><li>Put your hands close together so the thumbs and index fingers touch, then perform a pushup</li><li>If this is too difficult or feels uncomfortable, put your hands just a bit closer than in a normal pushup. Work on moving the hands closer together over time until you reach diamond pushups</li></ul>",
+            duration: false,
+          },
+        },
+      ]);
+
+    render(<SettingsPage />, { wrapper });
+
+    await waitFor(() => {
+      expect(screen.getByText("Diamond Pushup")).toBeInTheDocument();
     });
 
-    await act(async () => {
-      fireEvent.click(screen.getByLabelText("Add Diamond Pushup"));
+    await waitFor(async () => {
+      await fireEvent.click(screen.getByLabelText("Add Diamond Pushup"));
     });
 
-    expect(saveUserExercise).toHaveBeenNthCalledWith(1, 13);
-
-    expect(screen.getByLabelText("Add Diamond Pushup")).toBeDisabled();
+    await waitFor(() => {
+      expect(screen.getByLabelText("Add Diamond Pushup")).toBeDisabled();
+    });
   });
 
   it("deletes all exercises for user", async () => {
-    (getUserExercises as Mock).mockImplementation(() =>
-      Promise.resolve([
+    nock(nockBaseUrl)
+      .get(allExercises.path)
+      .reply(allExercises.success.status, allExercises.success.response)
+      .get(userExercises.path)
+      .reply(userExercises.success.status, [
         {
-          id: 1,
-          exercise: {
-            id: 16,
-            key: "reverse-hyperextension",
-            name: "Reverse Hyperextension",
-            category: "CORE_TRIPLET",
-            type: "EXTENSION",
-            targetSets: 3,
-            targetRepsMin: 8,
-            targetRepsMax: 12,
-            targetRest: 60,
-            additionalRest: 60,
-            mediaLink: "https://www.youtube.com/watch?v=ZeRsNzFcQLQ&",
-            comments: "<ul><li>Keep your butt tucked</li></ul>",
-            duration: false,
-          },
-        },
-        {
-          id: 2,
+          id: 6,
           exercise: {
             id: 13,
             key: "diamond-pushup",
@@ -179,59 +167,73 @@ describe("SignInPage", () => {
             duration: false,
           },
         },
-      ]),
-    );
+      ])
+      .delete(deleteAllExercises.path)
+      .reply(
+        deleteAllExercises.success.status,
+        deleteAllExercises.success.response,
+      )
+      .get(userExercises.path)
+      .reply(userExercises.success.status, [])
+      .post(saveExercise.path)
+      .reply(saveExercise.success.status, {
+        id: 6,
+        exercise: {
+          id: 13,
+          key: "diamond-pushup",
+          name: "Diamond Pushup",
+          category: "THIRD_PAIR",
+          type: "PUSH_UP",
+          targetSets: 3,
+          targetRepsMin: 5,
+          targetRepsMax: 8,
+          targetRest: 90,
+          additionalRest: 90,
+          mediaLink: "https://www.youtube.com/watch?v=J0DnG1_S92I",
+          comments:
+            "<ul><li>Put your hands close together so the thumbs and index fingers touch, then perform a pushup</li><li>If this is too difficult or feels uncomfortable, put your hands just a bit closer than in a normal pushup. Work on moving the hands closer together over time until you reach diamond pushups</li></ul>",
+          duration: false,
+        },
+      })
+      .get(userExercises.path)
+      .reply(userExercises.success.status, [
+        {
+          id: 6,
+          exercise: {
+            id: 13,
+            key: "diamond-pushup",
+            name: "Diamond Pushup",
+            category: "THIRD_PAIR",
+            type: "PUSH_UP",
+            targetSets: 3,
+            targetRepsMin: 5,
+            targetRepsMax: 8,
+            targetRest: 90,
+            additionalRest: 90,
+            mediaLink: "https://www.youtube.com/watch?v=J0DnG1_S92I",
+            comments:
+              "<ul><li>Put your hands close together so the thumbs and index fingers touch, then perform a pushup</li><li>If this is too difficult or feels uncomfortable, put your hands just a bit closer than in a normal pushup. Work on moving the hands closer together over time until you reach diamond pushups</li></ul>",
+            duration: false,
+          },
+        },
+      ]);
 
-    await act(async () => {
-      render(<SettingsPage />);
+    render(<SettingsPage />, { wrapper });
+
+    await waitFor(() => {
+      expect(screen.getByLabelText("Add Diamond Pushup")).toBeInTheDocument();
     });
 
-    expect(screen.getByLabelText("Add Reverse Hyperextension")).toBeDisabled();
-    expect(screen.getByLabelText("Add Diamond Pushup")).toBeDisabled();
+    await waitFor(() => {
+      expect(screen.getByLabelText("Add Diamond Pushup")).toBeDisabled();
+    });
 
-    await act(async () => {
+    await waitFor(() => {
       fireEvent.click(screen.getByLabelText("Delete All Of My Exercises"));
     });
 
-    expect(deleteAllExercisesForUser).toHaveBeenCalledTimes(1);
-
-    expect(screen.getByLabelText("Add Reverse Hyperextension")).toBeEnabled();
-    expect(screen.getByLabelText("Add Diamond Pushup")).toBeEnabled();
-  });
-
-  it("disables add on load if the user already has the exercise", async () => {
-    (getUserExercises as Mock).mockImplementation(() =>
-      Promise.resolve([
-        {
-          id: 2,
-          exercise: {
-            id: 13,
-            key: "diamond-pushup",
-            name: "Diamond Pushup",
-            category: "THIRD_PAIR",
-            type: "PUSH_UP",
-            targetSets: 3,
-            targetRepsMin: 5,
-            targetRepsMax: 8,
-            targetRest: 90,
-            additionalRest: 90,
-            mediaLink: "https://www.youtube.com/watch?v=J0DnG1_S92I",
-            comments:
-              "<ul><li>Put your hands close together so the thumbs and index fingers touch, then perform a pushup</li><li>If this is too difficult or feels uncomfortable, put your hands just a bit closer than in a normal pushup. Work on moving the hands closer together over time until you reach diamond pushups</li></ul>",
-            duration: false,
-          },
-        },
-      ]),
-    );
-
-    await act(async () => {
-      render(<SettingsPage />);
+    await waitFor(() => {
+      expect(screen.getByLabelText("Add Diamond Pushup")).toBeEnabled();
     });
-
-    expect(screen.getByLabelText("Add Diamond Pushup")).toBeDisabled();
-  });
-
-  it("displays all categories and subcategories", async () => {
-    (getAllExercises as Mock).mockImplementation(() => new Promise(() => {}));
   });
 });

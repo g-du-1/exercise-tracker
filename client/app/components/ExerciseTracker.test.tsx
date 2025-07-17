@@ -1,20 +1,40 @@
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@testing-library/react";
 import { ExerciseTracker } from "./ExerciseTracker";
 import { getFormattedTime } from "../util/getFormattedTime";
-import { mockExercises } from "./fixtures/mockExercises";
-import { useQuery } from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Mock, vi } from "vitest";
 import { useRouter } from "next/navigation";
+import nock from "nock";
+import { nockBaseUrl, userExercises } from "../nockFixtures";
 
 const mockPush = vi.fn();
+
+const mockPlay = vi.fn().mockResolvedValue(undefined);
+
+global.Audio = vi.fn().mockImplementation(() => ({
+  play: mockPlay,
+}));
+
+Object.defineProperty(window, "HTMLMediaElement", {
+  writable: true,
+  value: {
+    prototype: {
+      play: mockPlay,
+    },
+  },
+});
 
 vi.mock("next/navigation", () => ({
   useRouter: vi.fn(),
 }));
 
 const DELETE_REPS = "Delete Reps";
-
-const renderExerciseTracker = () => render(<ExerciseTracker />);
 
 const getModalOpenTriggers = () => screen.getAllByLabelText(/^Open .* Modal$/);
 
@@ -41,55 +61,92 @@ const getDeleteRepsBtn = () => screen.getByLabelText(DELETE_REPS);
 
 const clickDeleteReps = () => fireEvent.click(getDeleteRepsBtn());
 
+const createTestQueryClient = () =>
+  new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+        gcTime: 0,
+      },
+    },
+  });
+
+const wrapper = ({ children }: { children: React.ReactNode }) => {
+  const queryClient = createTestQueryClient();
+
+  return (
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  );
+};
+
+const renderExerciseTracker = async () => {
+  const renderResult = render(<ExerciseTracker />, { wrapper });
+
+  await waitFor(() => {
+    expect(screen.getByLabelText("Open Menu")).toBeInTheDocument();
+  });
+
+  return renderResult;
+};
+
 // TODO: Make tests more maintainable
 
-describe("ExerciseTracker", () => {
+describe("ExerciseTracker", async () => {
   beforeEach(() => {
-    vi.useFakeTimers();
+    vi.useFakeTimers({
+      shouldAdvanceTime: true,
+      toFake: [
+        "setTimeout",
+        "clearTimeout",
+        "setInterval",
+        "clearInterval",
+        "Date",
+      ],
+    });
 
     process.env.NEXT_PUBLIC_ENABLE_API_CONNECTION = "true";
+    process.env.NEXT_PUBLIC_API_PREFIX = "http://localhost:3000/api/v1";
 
     (useRouter as Mock).mockImplementation(() => ({
       push: mockPush,
     }));
 
-    (useQuery as Mock).mockImplementation(() => ({
-      data: mockExercises,
-      isLoading: false,
-      error: null,
-    }));
+    nock(nockBaseUrl)
+      .get(userExercises.path)
+      .reply(userExercises.success.status, userExercises.success.response);
   });
 
   afterEach(() => {
     vi.useRealTimers();
     vi.resetModules();
     vi.clearAllMocks();
+    nock.cleanAll();
   });
 
-  it("matches snapshot", () => {
-    renderExerciseTracker();
+  it("matches snapshot", async () => {
+    await renderExerciseTracker();
 
     fireEvent.click(screen.getByLabelText("Open Menu"));
 
     expect(document.body).toMatchSnapshot();
   });
 
-  it("outputs open modal triggers for each exercise", () => {
-    renderExerciseTracker();
+  it("outputs open modal triggers for each exercise", async () => {
+    await renderExerciseTracker();
 
     expect(getModalOpenTriggers()).toHaveLength(3);
   });
 
-  it("open modal trigger opens a modal on click for the exercise", () => {
-    renderExerciseTracker();
+  it("open modal trigger opens a modal on click for the exercise", async () => {
+    await renderExerciseTracker();
 
     fireEvent.click(getModalOpenTriggers()[0]);
 
     expect(screen.getByText("Add GMB Wrist Prep Reps")).toBeDefined();
   });
 
-  it("does not display media by default", () => {
-    renderExerciseTracker();
+  it("does not display media by default", async () => {
+    await renderExerciseTracker();
 
     expect(screen.queryByTitle("GMB Wrist Prep Video")).not.toBeVisible();
     expect(screen.queryByTitle("Arch Hangs Video")).not.toBeVisible();
@@ -98,8 +155,8 @@ describe("ExerciseTracker", () => {
     ).not.toBeVisible();
   });
 
-  it("displays media when toggle media is clicked", () => {
-    renderExerciseTracker();
+  it("displays media when toggle media is clicked", async () => {
+    await renderExerciseTracker();
 
     fireEvent.click(screen.getByLabelText("Open Menu"));
     fireEvent.click(screen.getByLabelText("Toggle Media"));
@@ -111,14 +168,14 @@ describe("ExerciseTracker", () => {
     ).toBeVisible();
   });
 
-  it("renders category separators when category changes", () => {
-    renderExerciseTracker();
+  it("renders category separators when category changes", async () => {
+    await renderExerciseTracker();
 
     expect(screen.getAllByRole("separator")).toHaveLength(2);
   });
 
-  it("saves and resets sets of reps for an exercise", () => {
-    renderExerciseTracker();
+  it("saves and resets sets of reps for an exercise", async () => {
+    await renderExerciseTracker();
 
     clickOpenModalTrigger(1);
 
@@ -139,8 +196,8 @@ describe("ExerciseTracker", () => {
     expect(screen.queryByText("6")).not.toBeInTheDocument();
   });
 
-  it("saves reps on modal close", () => {
-    renderExerciseTracker();
+  it("saves reps on modal close", async () => {
+    await renderExerciseTracker();
 
     clickOpenModalTrigger(1);
 
@@ -156,8 +213,8 @@ describe("ExerciseTracker", () => {
     expect(screen.getByText("8")).toBeInTheDocument();
   });
 
-  it("does not save reps on cancel click", () => {
-    renderExerciseTracker();
+  it("does not save reps on cancel click", async () => {
+    await renderExerciseTracker();
 
     clickOpenModalTrigger(1);
 
@@ -170,8 +227,8 @@ describe("ExerciseTracker", () => {
     expect(screen.queryByText("8")).not.toBeInTheDocument();
   });
 
-  it("only renders the delete reps icon if there are reps saved and closes the modal on save", () => {
-    renderExerciseTracker();
+  it("only renders the delete reps icon if there are reps saved and closes the modal on save", async () => {
+    await renderExerciseTracker();
 
     clickOpenModalTrigger(1);
 
@@ -188,8 +245,8 @@ describe("ExerciseTracker", () => {
     expect(screen.queryByText("Add Arch Hangs Reps")).not.toBeVisible();
   });
 
-  it("starts the stopwatch when saving reps", () => {
-    renderExerciseTracker();
+  it("starts the stopwatch when saving reps", async () => {
+    await renderExerciseTracker();
 
     clickOpenModalTrigger(1);
 
@@ -202,8 +259,8 @@ describe("ExerciseTracker", () => {
     expect(screen.getByText("00:00:05")).toBeInTheDocument();
   });
 
-  it("does not start the stopwatch when saving a warmup", () => {
-    renderExerciseTracker();
+  it("does not start the stopwatch when saving a warmup", async () => {
+    await renderExerciseTracker();
 
     clickOpenModalTrigger(0);
 
@@ -216,8 +273,8 @@ describe("ExerciseTracker", () => {
     expect(screen.getByText("00:00:00")).toBeInTheDocument();
   });
 
-  it("starts and stops the stopwatch", () => {
-    renderExerciseTracker();
+  it("starts and stops the stopwatch", async () => {
+    await renderExerciseTracker();
 
     expect(
       screen.getByRole("button", {
@@ -258,8 +315,8 @@ describe("ExerciseTracker", () => {
     ).toBeDisabled();
   });
 
-  it("resets stopwatch", () => {
-    renderExerciseTracker();
+  it("resets stopwatch", async () => {
+    await renderExerciseTracker();
 
     fireEvent.click(
       screen.getByRole("button", {
@@ -286,8 +343,8 @@ describe("ExerciseTracker", () => {
     expect(screen.getByText(/00:00:03/i)).toBeInTheDocument();
   });
 
-  it("displays a done elem when the saved sets reach the target sets", () => {
-    renderExerciseTracker();
+  it("displays a done elem when the saved sets reach the target sets", async () => {
+    await renderExerciseTracker();
 
     expect(
       screen.queryByLabelText("Exercise Completed"),
@@ -300,8 +357,8 @@ describe("ExerciseTracker", () => {
     expect(screen.getByLabelText("Exercise Completed")).toBeInTheDocument();
   });
 
-  it("displays warning after the target rest has passed", () => {
-    renderExerciseTracker();
+  it("displays warning after the target rest has passed", async () => {
+    await renderExerciseTracker();
 
     expect(screen.queryByAltText("Rest Time Passed")).not.toBeInTheDocument();
 
@@ -324,8 +381,8 @@ describe("ExerciseTracker", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("does not display rest time warning after adding reps to a warmup", () => {
-    renderExerciseTracker();
+  it("does not display rest time warning after adding reps to a warmup", async () => {
+    await renderExerciseTracker();
 
     clickOpenModalTrigger(0);
 
@@ -344,8 +401,8 @@ describe("ExerciseTracker", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("displays a more severe warning when additional rest time is passed", () => {
-    renderExerciseTracker();
+  it("displays a more severe warning when additional rest time is passed", async () => {
+    await renderExerciseTracker();
 
     clickOpenModalTrigger(1);
 
@@ -362,8 +419,8 @@ describe("ExerciseTracker", () => {
     ).toBeInTheDocument();
   });
 
-  it("resets the timer when reps are deleted", () => {
-    renderExerciseTracker();
+  it("resets the timer when reps are deleted", async () => {
+    await renderExerciseTracker();
 
     clickOpenModalTrigger(1);
 
@@ -380,16 +437,16 @@ describe("ExerciseTracker", () => {
     expect(screen.getByText("00:00:00")).toBeInTheDocument();
   });
 
-  it("displays target sets", () => {
-    renderExerciseTracker();
+  it("displays target sets", async () => {
+    await renderExerciseTracker();
 
     expect(screen.getByText("1x10")).toBeInTheDocument();
     expect(screen.getByText("3x5-8")).toBeInTheDocument();
     expect(screen.getByText("3x60s")).toBeInTheDocument();
   });
 
-  it("adds label for in range reps", () => {
-    renderExerciseTracker();
+  it("adds label for in range reps", async () => {
+    await renderExerciseTracker();
 
     clickOpenModalTrigger(1);
 
@@ -400,8 +457,8 @@ describe("ExerciseTracker", () => {
     ).toBeInTheDocument();
   });
 
-  it("adds label for out of range reps - lower", () => {
-    renderExerciseTracker();
+  it("adds label for out of range reps - lower", async () => {
+    await renderExerciseTracker();
 
     clickOpenModalTrigger(1);
 
@@ -412,8 +469,8 @@ describe("ExerciseTracker", () => {
     ).toBeInTheDocument();
   });
 
-  it("adds label for out of range reps - higher", () => {
-    renderExerciseTracker();
+  it("adds label for out of range reps - higher", async () => {
+    await renderExerciseTracker();
 
     clickOpenModalTrigger(1);
 
@@ -424,8 +481,8 @@ describe("ExerciseTracker", () => {
     ).toBeInTheDocument();
   });
 
-  it("adds label for cases without max target step", () => {
-    renderExerciseTracker();
+  it("adds label for cases without max target step", async () => {
+    await renderExerciseTracker();
 
     clickOpenModalTrigger(0);
 
@@ -436,8 +493,8 @@ describe("ExerciseTracker", () => {
     ).toBeInTheDocument();
   });
 
-  it("hides completed exercises if hiding is turned on", () => {
-    renderExerciseTracker();
+  it("hides completed exercises if hiding is turned on", async () => {
+    await renderExerciseTracker();
 
     expect(screen.getByText("GMB Wrist Prep")).toBeVisible();
     expect(screen.getByText("Arch Hangs")).toBeVisible();
@@ -459,8 +516,8 @@ describe("ExerciseTracker", () => {
     expect(screen.getByText("Parallel Bar Support Hold")).toBeVisible();
   });
 
-  it("saves and renders start time", () => {
-    renderExerciseTracker();
+  it("saves and renders start time", async () => {
+    await renderExerciseTracker();
 
     clickOpenModalTrigger(0);
 
@@ -481,8 +538,8 @@ describe("ExerciseTracker", () => {
     expect(screen.getByText(`Started: ${startTime}`)).toBeInTheDocument();
   });
 
-  it("saves and renders finish time after completing the last exercise", () => {
-    renderExerciseTracker();
+  it("saves and renders finish time after completing the last exercise", async () => {
+    await renderExerciseTracker();
 
     clickOpenModalTrigger(2);
     submitReps("8");
@@ -496,8 +553,8 @@ describe("ExerciseTracker", () => {
     ).toBeInTheDocument();
   });
 
-  it("shows comments when they are turned on", () => {
-    renderExerciseTracker();
+  it("shows comments when they are turned on", async () => {
+    await renderExerciseTracker();
 
     expect(
       screen.queryByText("Do as many reps as you want"),
@@ -527,8 +584,8 @@ describe("ExerciseTracker", () => {
     ).toBeInTheDocument();
   });
 
-  it("does not start the timer after the last exercise and last rep is done", () => {
-    renderExerciseTracker();
+  it("does not start the timer after the last exercise and last rep is done", async () => {
+    await renderExerciseTracker();
 
     clickOpenModalTrigger(2);
     submitReps("8");
@@ -544,8 +601,8 @@ describe("ExerciseTracker", () => {
     expect(screen.getByText("00:00:00")).toBeInTheDocument();
   });
 
-  it("plays alerts when rest times pass", () => {
-    renderExerciseTracker();
+  it("plays alerts when rest times pass", async () => {
+    await renderExerciseTracker();
 
     clickOpenModalTrigger(1);
 
@@ -555,35 +612,32 @@ describe("ExerciseTracker", () => {
       vi.advanceTimersByTime(190000);
     });
 
-    expect(window.HTMLMediaElement.prototype.play).toHaveBeenCalledTimes(2);
+    expect(mockPlay).toHaveBeenCalledTimes(2);
   });
 
-  it("displays spinner while loading", () => {
-    (useQuery as Mock).mockImplementation(() => ({
-      data: [],
-      isLoading: true,
-      isError: false,
-    }));
-
-    renderExerciseTracker();
+  it("displays spinner while loading", async () => {
+    render(<ExerciseTracker />, { wrapper });
 
     expect(screen.getByRole("progressbar")).toBeInTheDocument();
   });
 
-  it("displays a message when there are no exercises", () => {
-    (useQuery as Mock).mockImplementation(() => ({
-      data: [],
-      isLoading: false,
-      isError: false,
-    }));
+  it("displays a message when there are no exercises", async () => {
+    nock.cleanAll();
 
-    renderExerciseTracker();
+    nock(nockBaseUrl)
+      .get(userExercises.path)
+      .reply(
+        userExercises.noExercises.status,
+        userExercises.noExercises.response,
+      );
+
+    await renderExerciseTracker();
 
     expect(screen.getByText("No exercises.")).toBeInTheDocument();
   });
 
-  it("navigates to the settings page when clicking settings in the side menu", () => {
-    renderExerciseTracker();
+  it("navigates to the settings page when clicking settings in the side menu", async () => {
+    await renderExerciseTracker();
 
     fireEvent.click(screen.getByLabelText("Open Menu"));
     fireEvent.click(screen.getByLabelText("Settings Page"));
@@ -591,12 +645,79 @@ describe("ExerciseTracker", () => {
     expect(mockPush).toHaveBeenCalledExactlyOnceWith("/settings");
   });
 
-  it("navigates to the home page when clicking home in the side menu", () => {
-    renderExerciseTracker();
+  it("navigates to the home page when clicking home in the side menu", async () => {
+    await renderExerciseTracker();
 
     fireEvent.click(screen.getByLabelText("Open Menu"));
     fireEvent.click(screen.getByLabelText("Home Page"));
 
     expect(mockPush).toHaveBeenCalledExactlyOnceWith("/");
+  });
+
+  it("redirects to sign-in if the api response is 401", async () => {
+    nock.cleanAll();
+
+    nock(nockBaseUrl)
+      .get(userExercises.path)
+      .reply(
+        userExercises.unauthorised.status,
+        userExercises.unauthorised.response,
+      );
+
+    await renderExerciseTracker();
+
+    expect(mockPush).toHaveBeenCalledExactlyOnceWith("/sign-in");
+  });
+
+  it("does not call the api if the flag is off", async () => {
+    process.env.NEXT_PUBLIC_ENABLE_API_CONNECTION = "false";
+
+    nock.cleanAll();
+
+    nock(nockBaseUrl)
+      .get(userExercises.path)
+      .reply(userExercises.success.status, [
+        {
+          id: 2,
+          exercise: {
+            id: 2,
+            key: "fake-exercise",
+            name: "Fake Exercise",
+            category: "FIRST_PAIR",
+            type: "PULL_UP",
+            targetSets: 3,
+            targetRepsMin: 5,
+            targetRepsMax: 8,
+            duration: false,
+            targetRest: 90,
+            additionalRest: 90,
+            mediaLink: "",
+            comments: "",
+          },
+        },
+      ]);
+
+    await renderExerciseTracker();
+
+    expect(screen.queryByText("Fake Exercise")).not.toBeInTheDocument();
+  });
+
+  it("displays an error if the exercises failed to load", async () => {
+    nock.cleanAll();
+
+    nock(nockBaseUrl)
+      .get(userExercises.path)
+      .reply(
+        userExercises.internalServerError.status,
+        userExercises.internalServerError.response,
+      );
+
+    await render(<ExerciseTracker />, { wrapper });
+
+    await waitFor(() => {
+      expect(
+        screen.getByText("Unexpected end of JSON input"),
+      ).toBeInTheDocument();
+    });
   });
 });

@@ -2,74 +2,56 @@
 
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
-import { Exercise } from "../types";
-import { getAllExercises } from "../util/api/getAllExercises";
-import { useEffect, useState } from "react";
+import { Exercise, UserExercise } from "../types";
 import Button from "@mui/material/Button";
-import { saveUserExercise } from "../util/api/saveUserExercise";
-import { deleteAllExercisesForUser } from "../util/api/deleteAllExercisesForUser";
-import { getUserExercises } from "../util/api/getUserExercises";
 import { TopBar } from "../components/TopBar";
+import { useGetUserExercises } from "../hooks/useGetUserExercises";
+import { useGetAllExercises } from "../hooks/useGetAllExercises";
+import { useDeleteAllExercisesForUser } from "../hooks/useDeleteAllExercisesForUser";
+import { useSaveUserExercise } from "../hooks/useSaveUserExercise";
 import Divider from "@mui/material/Divider";
 import { MainHeader } from "./components/MainHeader";
 import { SubHeader } from "./components/SubHeader";
 import { AddableItem } from "./components/AddableItem";
 
 const SettingsPage = () => {
-  const [loading, setLoading] = useState(true);
-  const [allExercises, setAllExercises] = useState<Exercise[]>([]);
-  const [usersExerciseIds, setUsersExerciseIds] = useState<number[]>([]);
+  const { data: allExercises } = useGetAllExercises();
+  const { data: userExercises } = useGetUserExercises();
 
-  const warmups = allExercises.filter((ex) => ex.category === "WARM_UP");
+  const usersExerciseIds = userExercises?.map(
+    (ex: UserExercise) => ex.exercise.id,
+  );
 
-  const firstPairs = allExercises.filter((ex) => ex.category === "FIRST_PAIR");
-  const pullUps = firstPairs.filter((ex) => ex.type === "PULL_UP");
-  const squats = firstPairs.filter((ex) => ex.type === "SQUAT");
+  const deleteAllUserExercisesMutation = useDeleteAllExercisesForUser();
+  const saveUserExerciseMutation = useSaveUserExercise();
+  const warmups = allExercises?.filter((ex) => ex.category === "WARM_UP");
 
-  const secondPairs = allExercises.filter(
+  const firstPairs = allExercises?.filter((ex) => ex.category === "FIRST_PAIR");
+  const pullUps = firstPairs?.filter((ex) => ex.type === "PULL_UP");
+  const squats = firstPairs?.filter((ex) => ex.type === "SQUAT");
+
+  const secondPairs = allExercises?.filter(
     (ex) => ex.category === "SECOND_PAIR",
   );
-  const dips = secondPairs.filter((ex) => ex.type === "DIP");
-  const hinge = secondPairs.filter((ex) => ex.type === "HINGE");
+  const dips = secondPairs?.filter((ex) => ex.type === "DIP");
+  const hinge = secondPairs?.filter((ex) => ex.type === "HINGE");
 
-  const thirdPairs = allExercises.filter((ex) => ex.category === "THIRD_PAIR");
-  const row = thirdPairs.filter((ex) => ex.type === "ROW");
-  const pushUp = thirdPairs.filter((ex) => ex.type === "PUSH_UP");
+  const thirdPairs = allExercises?.filter((ex) => ex.category === "THIRD_PAIR");
+  const row = thirdPairs?.filter((ex) => ex.type === "ROW");
+  const pushUp = thirdPairs?.filter((ex) => ex.type === "PUSH_UP");
 
-  const coreTriplets = allExercises.filter(
+  const coreTriplets = allExercises?.filter(
     (ex) => ex.category === "CORE_TRIPLET",
   );
-  const antiExtension = coreTriplets.filter(
+  const antiExtension = coreTriplets?.filter(
     (ex) => ex.type === "ANTI_EXTENSION",
   );
-  const antiRotation = coreTriplets.filter((ex) => ex.type === "ANTI_ROTATION");
-  const extension = coreTriplets.filter((ex) => ex.type === "EXTENSION");
+  const antiRotation = coreTriplets?.filter(
+    (ex) => ex.type === "ANTI_ROTATION",
+  );
+  const extension = coreTriplets?.filter((ex) => ex.type === "EXTENSION");
 
-  useEffect(() => {
-    (async () => {
-      const [allExercises, allUserExercises] = await Promise.all([
-        getAllExercises(),
-        getUserExercises(),
-      ]);
-
-      setAllExercises(allExercises);
-      setUsersExerciseIds(allUserExercises.map((ue) => ue.exercise.id));
-
-      setLoading(false);
-    })();
-  }, []);
-
-  const saveExercise = async (ex: Exercise) => {
-    await saveUserExercise(ex.id);
-    setUsersExerciseIds([...usersExerciseIds, ex.id]);
-  };
-
-  const arr = [
-    {
-      mainHeader: "Warmup",
-      subSections: {},
-    },
-  ];
+  const loading = !allExercises;
 
   return (
     <>
@@ -93,9 +75,8 @@ const SettingsPage = () => {
           <Box display="flex" flexDirection="column">
             <Box ml="auto">
               <Button
-                onClick={async () => {
-                  await deleteAllExercisesForUser();
-                  setUsersExerciseIds([]);
+                onClick={() => {
+                  deleteAllUserExercisesMutation.mutate();
                 }}
                 color="error"
                 aria-label="Delete All Of My Exercises"
@@ -107,11 +88,13 @@ const SettingsPage = () => {
             <Box>
               <MainHeader text={"Warmup"} />
 
-              {warmups.map((ex: Exercise) => (
+              {warmups?.map((ex: Exercise) => (
                 <AddableItem
                   key={ex.id}
                   exercise={ex}
-                  onClick={() => saveExercise(ex)}
+                  onClick={() => {
+                    saveUserExerciseMutation.mutate(ex.id);
+                  }}
                   usersExerciseIds={usersExerciseIds}
                 />
               ))}
@@ -121,22 +104,26 @@ const SettingsPage = () => {
               <MainHeader text={"First Pair"} />
               <SubHeader text={"Pull Ups"} />
 
-              {pullUps.map((ex: Exercise) => (
+              {pullUps?.map((ex: Exercise) => (
                 <AddableItem
                   key={ex.id}
                   exercise={ex}
-                  onClick={() => saveExercise(ex)}
+                  onClick={() => {
+                    saveUserExerciseMutation.mutate(ex.id);
+                  }}
                   usersExerciseIds={usersExerciseIds}
                 />
               ))}
 
               <SubHeader text={"Squats"} />
 
-              {squats.map((ex: Exercise) => (
+              {squats?.map((ex: Exercise) => (
                 <AddableItem
                   key={ex.id}
                   exercise={ex}
-                  onClick={() => saveExercise(ex)}
+                  onClick={() => {
+                    saveUserExerciseMutation.mutate(ex.id);
+                  }}
                   usersExerciseIds={usersExerciseIds}
                 />
               ))}
@@ -146,22 +133,26 @@ const SettingsPage = () => {
               <MainHeader text={"Second Pair"} />
               <SubHeader text={"Dip"} />
 
-              {dips.map((ex: Exercise) => (
+              {dips?.map((ex: Exercise) => (
                 <AddableItem
                   key={ex.id}
                   exercise={ex}
-                  onClick={() => saveExercise(ex)}
+                  onClick={() => {
+                    saveUserExerciseMutation.mutate(ex.id);
+                  }}
                   usersExerciseIds={usersExerciseIds}
                 />
               ))}
 
               <SubHeader text={"Hinge"} />
 
-              {hinge.map((ex: Exercise) => (
+              {hinge?.map((ex: Exercise) => (
                 <AddableItem
                   key={ex.id}
                   exercise={ex}
-                  onClick={() => saveExercise(ex)}
+                  onClick={() => {
+                    saveUserExerciseMutation.mutate(ex.id);
+                  }}
                   usersExerciseIds={usersExerciseIds}
                 />
               ))}
@@ -171,22 +162,26 @@ const SettingsPage = () => {
               <MainHeader text={"Third Pair"} />
               <SubHeader text={"Row"} />
 
-              {row.map((ex: Exercise) => (
+              {row?.map((ex: Exercise) => (
                 <AddableItem
                   key={ex.id}
                   exercise={ex}
-                  onClick={() => saveExercise(ex)}
+                  onClick={() => {
+                    saveUserExerciseMutation.mutate(ex.id);
+                  }}
                   usersExerciseIds={usersExerciseIds}
                 />
               ))}
 
               <SubHeader text={"Push Up"} />
 
-              {pushUp.map((ex: Exercise) => (
+              {pushUp?.map((ex: Exercise) => (
                 <AddableItem
                   key={ex.id}
                   exercise={ex}
-                  onClick={() => saveExercise(ex)}
+                  onClick={() => {
+                    saveUserExerciseMutation.mutate(ex.id);
+                  }}
                   usersExerciseIds={usersExerciseIds}
                 />
               ))}
@@ -196,33 +191,39 @@ const SettingsPage = () => {
               <MainHeader text={"Core Triplet"} />
               <SubHeader text={"Anti Extension"} />
 
-              {antiExtension.map((ex: Exercise) => (
+              {antiExtension?.map((ex: Exercise) => (
                 <AddableItem
                   key={ex.id}
                   exercise={ex}
-                  onClick={() => saveExercise(ex)}
+                  onClick={() => {
+                    saveUserExerciseMutation.mutate(ex.id);
+                  }}
                   usersExerciseIds={usersExerciseIds}
                 />
               ))}
 
               <SubHeader text={"Anti Rotation"} />
 
-              {antiRotation.map((ex: Exercise) => (
+              {antiRotation?.map((ex: Exercise) => (
                 <AddableItem
                   key={ex.id}
                   exercise={ex}
-                  onClick={() => saveExercise(ex)}
+                  onClick={() => {
+                    saveUserExerciseMutation.mutate(ex.id);
+                  }}
                   usersExerciseIds={usersExerciseIds}
                 />
               ))}
 
               <SubHeader text={"Extension"} />
 
-              {extension.map((ex: Exercise) => (
+              {extension?.map((ex: Exercise) => (
                 <AddableItem
                   key={ex.id}
                   exercise={ex}
-                  onClick={() => saveExercise(ex)}
+                  onClick={() => {
+                    saveUserExerciseMutation.mutate(ex.id);
+                  }}
                   usersExerciseIds={usersExerciseIds}
                 />
               ))}

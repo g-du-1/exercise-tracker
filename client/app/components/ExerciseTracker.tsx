@@ -15,14 +15,11 @@ import { CardComments } from "./card/CardComments";
 import { useBoundStore } from "../store/store";
 import { FinishTime } from "./FinishTime";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useQuery } from "@tanstack/react-query";
-import { getUserExercises } from "../util/api/getUserExercises";
+import { useGetUserExercises } from "../hooks/useGetUserExercises";
+import { Alert } from "@mui/material";
 
 export const ExerciseTracker = ({}) => {
-  const { data: exercisesWithIds, isLoading } = useQuery({
-    queryKey: ["getUserExercises"],
-    queryFn: getUserExercises,
-  });
+  const { data: exercisesWithIds, isLoading, error } = useGetUserExercises();
 
   const exercises = exercisesWithIds?.map(({ exercise }) => exercise);
 
@@ -60,6 +57,12 @@ export const ExerciseTracker = ({}) => {
     >
       <Box sx={{ mt: 7 }}>
         <TopBar />
+
+        {error && error.message !== "" && (
+          <Alert severity="error" sx={{ marginY: 2 }}>
+            {error.message}
+          </Alert>
+        )}
 
         {!exercises || exercises.length === 0 ? (
           <Box textAlign="center">No exercises.</Box>
