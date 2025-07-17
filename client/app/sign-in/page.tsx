@@ -32,7 +32,7 @@ const SignInPage = () => {
     try {
       const resp = await signIn.mutateAsync({ username, password });
 
-      if (resp.status === 200) {
+      if (resp) {
         router.push("/");
       }
     } catch (error: any) {

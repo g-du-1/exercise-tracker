@@ -4,8 +4,7 @@ import { exercises } from "../../constants";
 
 export const getUserExercises = async (): Promise<UserExercise[]> => {
   if (process.env.NEXT_PUBLIC_ENABLE_API_CONNECTION === "true") {
-    const resp = await fetchWithAuth(`/user-exercises`);
-    return resp.json();
+    return await fetchWithAuth(`/user-exercises`);
   } else {
     return exercises;
   }

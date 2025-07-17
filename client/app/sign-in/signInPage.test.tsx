@@ -85,7 +85,7 @@ describe("SignInPage", () => {
 
     nock("http://localhost:3000")
       .post("/api/v1/auth/public/signin")
-      .reply(401, { message: "Bad credentials", status: false });
+      .reply(401, { message: "Bad Credentials", status: false });
 
     render(<SignInPage />, { wrapper });
 
@@ -104,7 +104,7 @@ describe("SignInPage", () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText("401: Unauthorised")).toBeInTheDocument();
+      expect(screen.getByText("Bad Credentials")).toBeInTheDocument();
     });
 
     await waitFor(() => {
@@ -142,21 +142,21 @@ describe("SignInPage", () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText("Something went wrong.")).toBeInTheDocument();
+      expect(screen.getByText("Bad credentials")).toBeInTheDocument();
     });
 
     await act(async () => {
       fireEvent.change(usernameInput, { target: { value: "aaa" } });
     });
 
-    expect(screen.queryByText("Something went wrong.")).not.toBeInTheDocument();
+    expect(screen.queryByText("Bad credentials")).not.toBeInTheDocument();
 
     await act(async () => {
       fireEvent.click(submitButton);
     });
 
     await waitFor(() => {
-      expect(screen.getByText("Something went wrong.")).toBeInTheDocument();
+      expect(screen.getByText("Bad credentials")).toBeInTheDocument();
     });
 
     await waitFor(() => {
@@ -164,9 +164,7 @@ describe("SignInPage", () => {
     });
 
     await waitFor(() => {
-      expect(
-        screen.queryByText("Something went wrong."),
-      ).not.toBeInTheDocument();
+      expect(screen.queryByText("Bad credentials")).not.toBeInTheDocument();
     });
   });
 });

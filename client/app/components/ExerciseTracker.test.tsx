@@ -697,12 +697,12 @@ describe("ExerciseTracker", async () => {
 
     nock("http://localhost:3000")
       .get("/api/v1/user-exercises")
-      .reply(500, "Internal Server Error");
+      .reply(500, { message: "Internal Server Error" });
 
     await render(<ExerciseTracker />, { wrapper });
 
     await waitFor(() => {
-      expect(screen.getByText("Something went wrong.")).toBeInTheDocument();
+      expect(screen.getByText("Internal Server Error")).toBeInTheDocument();
     });
   });
 });

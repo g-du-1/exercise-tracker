@@ -1,3 +1,5 @@
+import { APIError } from "../errors/APIError";
+
 export const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
   const baseUrl = process.env.NEXT_PUBLIC_API_PREFIX || "/api/v1";
 
@@ -10,14 +12,11 @@ export const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
   };
 
   const resp = await fetch(`${baseUrl}${url}`, options);
+  const result = await resp.json();
 
-  if (resp?.status === 401) {
-    throw new Error("401: Unauthorised");
+  if (!resp.ok) {
+    throw new APIError(result.message || "API Error", resp.status, result);
   }
 
-  if (resp?.status !== 200) {
-    throw new Error("Something went wrong.");
-  }
-
-  return resp;
+  return result;
 };
