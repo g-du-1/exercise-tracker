@@ -147,9 +147,6 @@ exports[`ExerciseTracker > matches snapshot 1`] = `
                   </svg>
                 </button>
               </div>
-              <div
-                class="MuiBox-root css-1n9ud6n"
-              />
             </div>
           </div>
           <hr
@@ -221,9 +218,6 @@ exports[`ExerciseTracker > matches snapshot 1`] = `
                   </svg>
                 </button>
               </div>
-              <div
-                class="MuiBox-root css-1n9ud6n"
-              />
             </div>
           </div>
           <hr
@@ -290,9 +284,6 @@ exports[`ExerciseTracker > matches snapshot 1`] = `
                   </svg>
                 </button>
               </div>
-              <div
-                class="MuiBox-root css-1n9ud6n"
-              />
             </div>
           </div>
         </div>
