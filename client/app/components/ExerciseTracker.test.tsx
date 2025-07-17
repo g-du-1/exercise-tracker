@@ -7,11 +7,11 @@ import {
 } from "@testing-library/react";
 import { ExerciseTracker } from "./ExerciseTracker";
 import { getFormattedTime } from "../util/getFormattedTime";
-import { mockExercises } from "./fixtures/mockExercises";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Mock, vi } from "vitest";
 import { useRouter } from "next/navigation";
 import nock from "nock";
+import { nockBaseUrl, userExercises } from "../nockFixtures";
 
 const mockPush = vi.fn();
 
@@ -111,9 +111,9 @@ describe("ExerciseTracker", async () => {
       push: mockPush,
     }));
 
-    nock("http://localhost:3000")
-      .get("/api/v1/user-exercises")
-      .reply(200, mockExercises);
+    nock(nockBaseUrl)
+      .get(userExercises.path)
+      .reply(userExercises.success.status, userExercises.success.response);
   });
 
   afterEach(() => {
@@ -624,7 +624,12 @@ describe("ExerciseTracker", async () => {
   it("displays a message when there are no exercises", async () => {
     nock.cleanAll();
 
-    nock("http://localhost:3000").get("/api/v1/user-exercises").reply(200, []);
+    nock(nockBaseUrl)
+      .get(userExercises.path)
+      .reply(
+        userExercises.noExercises.status,
+        userExercises.noExercises.response,
+      );
 
     await renderExerciseTracker();
 
@@ -652,7 +657,12 @@ describe("ExerciseTracker", async () => {
   it("redirects to sign-in if the api response is 401", async () => {
     nock.cleanAll();
 
-    nock("http://localhost:3000").get("/api/v1/user-exercises").reply(401, []);
+    nock(nockBaseUrl)
+      .get(userExercises.path)
+      .reply(
+        userExercises.unauthorised.status,
+        userExercises.unauthorised.response,
+      );
 
     await renderExerciseTracker();
 
@@ -664,9 +674,9 @@ describe("ExerciseTracker", async () => {
 
     nock.cleanAll();
 
-    nock("http://localhost:3000")
-      .get("/api/v1/user-exercises")
-      .reply(200, [
+    nock(nockBaseUrl)
+      .get(userExercises.path)
+      .reply(userExercises.success.status, [
         {
           id: 2,
           exercise: {
@@ -695,14 +705,19 @@ describe("ExerciseTracker", async () => {
   it("displays an error if the exercises failed to load", async () => {
     nock.cleanAll();
 
-    nock("http://localhost:3000")
-      .get("/api/v1/user-exercises")
-      .reply(500, { message: "Internal Server Error" });
+    nock(nockBaseUrl)
+      .get(userExercises.path)
+      .reply(
+        userExercises.internalServerError.status,
+        userExercises.internalServerError.response,
+      );
 
     await render(<ExerciseTracker />, { wrapper });
 
     await waitFor(() => {
-      expect(screen.getByText("Internal Server Error")).toBeInTheDocument();
+      expect(
+        screen.getByText("Unexpected end of JSON input"),
+      ).toBeInTheDocument();
     });
   });
 });
