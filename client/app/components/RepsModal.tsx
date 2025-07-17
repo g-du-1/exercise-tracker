@@ -61,7 +61,11 @@ export const RepsModal = ({ exercises }: Props) => {
           savedReps[selectedExercise.key]?.reps.length ===
           selectedExercise.targetSets;
 
-        const shouldStartStopwatch = !(isLastExercise && reachedTargetSets);
+        const isNotTheLastExercise = !isLastExercise;
+        const hasNotReachedTargetSets = !reachedTargetSets;
+
+        const shouldStartStopwatch =
+          isNotTheLastExercise && hasNotReachedTargetSets;
 
         if (shouldStartStopwatch) {
           startStopwatch();
