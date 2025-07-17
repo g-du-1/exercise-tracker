@@ -32,4 +32,14 @@ public class UserSettingsService {
         
         return settings.get(0);
     }
+
+    public UserSettings updateUserSettings(Long userId, UserSettingsDTO userSettingsDTO) {
+        UserSettings existingSettings = userSettingsRepository.findByUser_UserId(userId).get(0);
+
+        existingSettings.setShowCompletedExercises(userSettingsDTO.isShowCompletedExercises());
+        existingSettings.setShowComments(userSettingsDTO.isShowComments());
+        existingSettings.setShowMedia(userSettingsDTO.isShowMedia());
+
+        return userSettingsRepository.save(existingSettings);
+    }
 }
