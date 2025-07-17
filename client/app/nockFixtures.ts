@@ -1,5 +1,5 @@
-import { mockUserExercises } from "./components/fixtures/mockUserExercises";
-import { mockExercises } from "./components/fixtures/mockExercises";
+import { mockUserExercises } from "./fixtures/mockUserExercises";
+import { mockExercises } from "./fixtures/mockExercises";
 
 export const nockBaseUrl = "http://localhost:3000";
 
