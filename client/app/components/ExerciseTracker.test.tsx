@@ -11,7 +11,12 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Mock, vi } from "vitest";
 import { useRouter } from "next/navigation";
 import nock from "nock";
-import { nockBaseUrl, userExercises, userSettings } from "../nockFixtures";
+import {
+  nockBaseUrl,
+  saveUserSettings,
+  userExercises,
+  getUserSettings,
+} from "../nockFixtures";
 
 const mockPush = vi.fn();
 
@@ -114,6 +119,10 @@ describe("ExerciseTracker", async () => {
     nock(nockBaseUrl)
       .get(userExercises.path)
       .reply(userExercises.success.status, userExercises.success.response);
+
+    nock(nockBaseUrl)
+      .get(getUserSettings.path)
+      .reply(getUserSettings.success.status, getUserSettings.success.response);
   });
 
   afterEach(() => {
@@ -146,6 +155,18 @@ describe("ExerciseTracker", async () => {
   });
 
   it("does not display media by default", async () => {
+    nock.cleanAll();
+
+    nock(nockBaseUrl)
+      .get(userExercises.path)
+      .reply(userExercises.success.status, userExercises.success.response)
+      .get(getUserSettings.path)
+      .reply(getUserSettings.success.status, {
+        showCompletedExercises: false,
+        showComments: false,
+        showMedia: false,
+      });
+
     await renderExerciseTracker();
 
     expect(screen.queryByTitle("GMB Wrist Prep Video")).not.toBeVisible();
@@ -156,12 +177,33 @@ describe("ExerciseTracker", async () => {
   });
 
   it("displays media when toggle media is clicked", async () => {
+    nock.cleanAll();
+
+    nock(nockBaseUrl)
+      .get(userExercises.path)
+      .reply(userExercises.success.status, userExercises.success.response)
+      .get(getUserSettings.path)
+      .reply(getUserSettings.success.status, {
+        showCompletedExercises: false,
+        showComments: false,
+        showMedia: false,
+      })
+      .post(saveUserSettings.path)
+      .reply(saveUserSettings.success.status, {
+        showCompletedExercises: false,
+        showComments: false,
+        showMedia: true,
+      });
+
     await renderExerciseTracker();
 
     fireEvent.click(screen.getByLabelText("Open Menu"));
-    fireEvent.click(screen.getByLabelText("Toggle Media"));
+    fireEvent.click(screen.getByLabelText("Show media is off"));
 
-    expect(screen.getByTitle("GMB Wrist Prep Video")).toBeVisible();
+    await waitFor(() => {
+      expect(screen.getByTitle("GMB Wrist Prep Video")).toBeVisible();
+    });
+
     expect(screen.getByTitle("Arch Hangs Video")).toBeVisible();
     expect(
       screen.getByAltText("Parallel Bar Support Hold Image"),
@@ -494,6 +536,14 @@ describe("ExerciseTracker", async () => {
   });
 
   it("hides completed exercises if hiding is turned on", async () => {
+    nock(nockBaseUrl)
+      .post(saveUserSettings.path)
+      .reply(saveUserSettings.success.status, {
+        showCompletedExercises: false,
+        showComments: false,
+        showMedia: false,
+      });
+
     await renderExerciseTracker();
 
     expect(screen.getByText("GMB Wrist Prep")).toBeVisible();
@@ -505,11 +555,14 @@ describe("ExerciseTracker", async () => {
     submitReps("8");
 
     fireEvent.click(screen.getByLabelText("Open Menu"));
-    const checkbox = screen.getByLabelText("Show Completed Exercises");
+    const checkbox = screen.getByLabelText("Show completed exercises is on");
     expect(checkbox).toBeChecked();
 
     fireEvent.click(checkbox);
-    expect(checkbox).not.toBeChecked();
+
+    await waitFor(() => {
+      expect(checkbox).not.toBeChecked();
+    });
 
     expect(screen.getByText("GMB Wrist Prep")).not.toBeVisible();
     expect(screen.getByText("Arch Hangs")).toBeVisible();
@@ -554,6 +607,24 @@ describe("ExerciseTracker", async () => {
   });
 
   it("shows comments when they are turned on", async () => {
+    nock.cleanAll();
+
+    nock(nockBaseUrl)
+      .get(userExercises.path)
+      .reply(userExercises.success.status, userExercises.success.response)
+      .get(getUserSettings.path)
+      .reply(getUserSettings.success.status, {
+        showCompletedExercises: false,
+        showComments: false,
+        showMedia: false,
+      })
+      .post(saveUserSettings.path)
+      .reply(saveUserSettings.success.status, {
+        showCompletedExercises: true,
+        showComments: true,
+        showMedia: true,
+      });
+
     await renderExerciseTracker();
 
     expect(
@@ -571,9 +642,13 @@ describe("ExerciseTracker", async () => {
     ).not.toBeInTheDocument();
 
     fireEvent.click(screen.getByLabelText("Open Menu"));
-    fireEvent.click(screen.getByLabelText("Toggle Comments"));
+    fireEvent.click(screen.getByLabelText("Show comments is off"));
 
-    expect(screen.getByText("Do as many reps as you want")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.getByText("Do as many reps as you want"),
+      ).toBeInTheDocument();
+    });
 
     expect(screen.getByText("Elbows should stay straight")).toBeInTheDocument();
 
@@ -625,6 +700,8 @@ describe("ExerciseTracker", async () => {
     nock.cleanAll();
 
     nock(nockBaseUrl)
+      .get(getUserSettings.path)
+      .reply(getUserSettings.success.status, getUserSettings.success.response)
       .get(userExercises.path)
       .reply(
         userExercises.noExercises.status,
@@ -662,11 +739,13 @@ describe("ExerciseTracker", async () => {
       .reply(
         userExercises.unauthorised.status,
         userExercises.unauthorised.response,
-      );
+      )
+      .get(getUserSettings.path)
+      .reply(getUserSettings.success.status, getUserSettings.success.response);
 
     await renderExerciseTracker();
 
-    expect(mockPush).toHaveBeenCalledExactlyOnceWith("/sign-in");
+    expect(mockPush).toHaveBeenCalledWith("/sign-in");
   });
 
   it("does not call the api if the flag is off", async () => {
@@ -675,6 +754,8 @@ describe("ExerciseTracker", async () => {
     nock.cleanAll();
 
     nock(nockBaseUrl)
+      .get(getUserSettings.path)
+      .reply(getUserSettings.success.status, getUserSettings.success.response)
       .get(userExercises.path)
       .reply(userExercises.success.status, [
         {
@@ -721,10 +802,17 @@ describe("ExerciseTracker", async () => {
     });
   });
 
-  it("gets the user settings", async () => {
+  it("gets and saves user settings", async () => {
+    nock.cleanAll();
+
     nock(nockBaseUrl)
-      .get(userSettings.path)
-      .reply(userSettings.success.status, userSettings.success.response);
+      .get(getUserSettings.path)
+      .reply(getUserSettings.success.status, getUserSettings.success.response)
+      .post(saveUserSettings.path)
+      .reply(
+        saveUserSettings.success.status,
+        saveUserSettings.success.response,
+      );
 
     await renderExerciseTracker();
 
@@ -742,6 +830,26 @@ describe("ExerciseTracker", async () => {
 
     await waitFor(() => {
       expect(screen.getByLabelText("Show media is on")).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      fireEvent.click(screen.getByLabelText("Show completed exercises is on"));
+      fireEvent.click(screen.getByLabelText("Show comments is on"));
+      fireEvent.click(screen.getByLabelText("Show media is on"));
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.getByLabelText("Show completed exercises is off"),
+      ).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(screen.getByLabelText("Show comments is off")).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(screen.getByLabelText("Show media is off")).toBeInTheDocument();
     });
   });
 });

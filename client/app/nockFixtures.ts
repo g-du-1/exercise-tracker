@@ -21,7 +21,7 @@ export const signIn = {
   },
 };
 
-export const userSettings = {
+export const getUserSettings = {
   path: "/api/v1/user-settings", // GET
   success: {
     status: 200,
@@ -29,6 +29,18 @@ export const userSettings = {
       showCompletedExercises: true,
       showComments: true,
       showMedia: true,
+    },
+  },
+};
+
+export const saveUserSettings = {
+  path: "/api/v1/user-settings/save", // POST
+  success: {
+    status: 200,
+    response: {
+      showCompletedExercises: false,
+      showComments: false,
+      showMedia: false,
     },
   },
 };
