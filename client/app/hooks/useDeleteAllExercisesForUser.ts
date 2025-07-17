@@ -1,11 +1,15 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteAllExercisesForUser } from "../util/api/deleteAllExercisesForUser";
+import { fetchWithAuth } from "../util/fetchWithAuth";
 
 export const useDeleteAllExercisesForUser = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: deleteAllExercisesForUser,
+    mutationFn: async () => {
+      return await fetchWithAuth("/user-exercises/all", {
+        method: "DELETE",
+      });
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["getUserExercises"] });
     },
