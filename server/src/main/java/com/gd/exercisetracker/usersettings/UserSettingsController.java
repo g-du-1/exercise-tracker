@@ -34,7 +34,7 @@ public class UserSettingsController {
     public ResponseEntity<UserSettingsDTO> saveUserSettings(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody UserSettingsDTO userSettingsDTO) {
         Long userId = userDetails.getId();
 
-        UserSettings updatedSettings = userSettingsService.updateUserSettings(userId, userSettingsDTO);
+        UserSettings updatedSettings = userSettingsService.saveUserSettings(userId, userSettingsDTO);
 
         UserSettingsDTO response = new UserSettingsDTO();
         BeanUtils.copyProperties(updatedSettings, response);

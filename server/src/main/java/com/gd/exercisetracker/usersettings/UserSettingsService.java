@@ -33,7 +33,7 @@ public class UserSettingsService {
         return settings.get(0);
     }
 
-    public UserSettings updateUserSettings(Long userId, UserSettingsDTO userSettingsDTO) {
+    public UserSettings saveUserSettings(Long userId, UserSettingsDTO userSettingsDTO) {
         UserSettings existingSettings = userSettingsRepository.findByUser_UserId(userId).get(0);
 
         existingSettings.setShowCompletedExercises(userSettingsDTO.isShowCompletedExercises());
