@@ -787,6 +787,8 @@ describe("ExerciseTracker", async () => {
     nock.cleanAll();
 
     nock(nockBaseUrl)
+      .get(getUserSettings.path)
+      .reply(getUserSettings.success.status, getUserSettings.success.response)
       .get(userExercises.path)
       .reply(
         userExercises.internalServerError.status,
