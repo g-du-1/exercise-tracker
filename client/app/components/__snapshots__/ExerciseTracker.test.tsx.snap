@@ -545,7 +545,7 @@ exports[`ExerciseTracker > matches snapshot 1`] = `
                   class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorDefault MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorDefault MuiCheckbox-sizeMedium Mui-checked MuiCheckbox-root MuiCheckbox-colorDefault MuiCheckbox-sizeMedium css-11uodz6-MuiButtonBase-root-MuiSwitchBase-root-MuiCheckbox-root"
                 >
                   <input
-                    aria-label="Show showMedia checkbox"
+                    aria-label="Show media checkbox"
                     checked=""
                     class="PrivateSwitchBase-input css-12xagqm-MuiSwitchBase-root"
                     data-indeterminate="false"

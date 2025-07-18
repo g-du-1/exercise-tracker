@@ -139,7 +139,7 @@ export const SideMenu = () => {
               <Checkbox
                 slotProps={{
                   input: {
-                    "aria-label": "Show showMedia checkbox",
+                    "aria-label": "Show media checkbox",
                   },
                 }}
                 color="default"
