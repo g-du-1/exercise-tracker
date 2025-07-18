@@ -17,16 +17,15 @@ import { CardComments } from "./card/CardComments";
 import { useBoundStore } from "../store/store";
 import { FinishTime } from "./FinishTime";
 import { useGetUserExercises } from "../hooks/useGetUserExercises";
+import { useGetUserSettings } from "../hooks/useGetUserSettings";
 
 export const ExerciseTracker = () => {
   const { data: exercisesWithIds, isLoading, error } = useGetUserExercises();
+  const { data: userSettings } = useGetUserSettings();
+
   const exercises = exercisesWithIds?.map(({ exercise }) => exercise);
 
-  const showComments = useBoundStore((state) => state.showComments);
   const savedReps = useBoundStore((state) => state.savedReps);
-  const showCompletedExercises = useBoundStore(
-    (state) => state.showCompletedExercises,
-  );
   const setSelectedExercise = useBoundStore(
     (state) => state.setSelectedExercise,
   );
@@ -43,7 +42,7 @@ export const ExerciseTracker = () => {
 
   const shouldShowExercise = (exercise: Exercise) => {
     const completed = isExerciseCompleted(exercise);
-    return showCompletedExercises || !completed;
+    return userSettings?.showCompletedExercises || !completed;
   };
 
   const shouldShowDivider = (
@@ -84,7 +83,7 @@ export const ExerciseTracker = () => {
 
             <SavedReps exercise={exercise} />
 
-            {showComments && exercise.comments && (
+            {userSettings?.showComments && exercise.comments && (
               <CardComments comments={exercise.comments} />
             )}
           </CardContent>

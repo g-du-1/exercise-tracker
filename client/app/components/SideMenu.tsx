@@ -8,27 +8,19 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import SettingsIcon from "@mui/icons-material/Settings";
 import IconButton from "@mui/material/IconButton";
-import PermMediaIcon from "@mui/icons-material/PermMedia";
-import { useBoundStore } from "../store/store";
-import NotesIcon from "@mui/icons-material/Notes";
 import Checkbox from "@mui/material/Checkbox";
 import { useRouter } from "next/navigation";
 import Divider from "@mui/material/Divider";
 import HouseIcon from "@mui/icons-material/House";
+import { useGetUserSettings } from "../hooks/useGetUserSettings";
+import { useSaveUserSettings } from "../hooks/useSaveUserSettings";
 
 export const SideMenu = () => {
   const router = useRouter();
 
-  const setShowMedia = useBoundStore((state) => state.setShowMedia);
-  const showMedia = useBoundStore((state) => state.showMedia);
-  const setShowComments = useBoundStore((state) => state.setShowComments);
-  const showComments = useBoundStore((state) => state.showComments);
-  const showCompletedExercises = useBoundStore(
-    (state) => state.showCompletedExercises,
-  );
-  const setShowCompletedExercises = useBoundStore(
-    (state) => state.setShowCompletedExercises,
-  );
+  const { data: userSettings } = useGetUserSettings();
+
+  const mutation = useSaveUserSettings();
 
   const [open, setOpen] = React.useState(false);
 
@@ -36,9 +28,12 @@ export const SideMenu = () => {
     setOpen(newOpen);
   };
 
-  const showCompletedLabel = {
-    inputProps: { "aria-label": "Show Completed Exercises" },
-  };
+  if (!userSettings) {
+    return null;
+  }
+
+  const { showCompletedExercises, showMedia, showComments } =
+    userSettings || {};
 
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
@@ -80,17 +75,23 @@ export const SideMenu = () => {
 
         <ListItem key={"Show Completed"} disablePadding>
           <ListItemButton
-            id={"test"}
-            onClick={() => setShowCompletedExercises(!showCompletedExercises)}
+            aria-label={`Show completed exercises is ${showCompletedExercises ? "on" : "off"}`}
+            onClick={() =>
+              mutation.mutate({
+                ...userSettings,
+                showCompletedExercises: !showCompletedExercises,
+              })
+            }
           >
             <ListItemIcon sx={{ justifyContent: "center" }}>
               <Checkbox
-                {...showCompletedLabel}
+                slotProps={{
+                  input: {
+                    "aria-label": "Show completed exercises checkbox",
+                  },
+                }}
                 color="default"
                 checked={showCompletedExercises}
-                onChange={() =>
-                  setShowCompletedExercises(!showCompletedExercises)
-                }
               />
             </ListItemIcon>
 
@@ -101,33 +102,53 @@ export const SideMenu = () => {
           </ListItemButton>
         </ListItem>
 
-        <ListItem key={"Toggle Comments"} disablePadding>
+        <ListItem key={"Show Comments"} disablePadding>
           <ListItemButton
-            aria-label="Toggle Comments"
-            onClick={() => setShowComments(!showComments)}
+            aria-label={`Show comments is ${showComments ? "on" : "off"}`}
+            onClick={() =>
+              mutation.mutate({ ...userSettings, showComments: !showComments })
+            }
           >
             <ListItemIcon sx={{ justifyContent: "center" }}>
-              <NotesIcon />
+              <Checkbox
+                slotProps={{
+                  input: {
+                    "aria-label": "Show comments checkbox",
+                  },
+                }}
+                color="default"
+                checked={showComments}
+              />
             </ListItemIcon>
 
             <ListItemText
-              primary={"Toggle Comments"}
+              primary={"Show Comments"}
               sx={{ paddingLeft: ".5rem" }}
             />
           </ListItemButton>
         </ListItem>
 
-        <ListItem key={"Toggle Media"} disablePadding>
+        <ListItem key={"Show Media"} disablePadding>
           <ListItemButton
-            aria-label="Toggle Media"
-            onClick={() => setShowMedia(!showMedia)}
+            aria-label={`Show media is ${showMedia ? "on" : "off"}`}
+            onClick={() =>
+              mutation.mutate({ ...userSettings, showMedia: !showMedia })
+            }
           >
             <ListItemIcon sx={{ justifyContent: "center" }}>
-              <PermMediaIcon />
+              <Checkbox
+                slotProps={{
+                  input: {
+                    "aria-label": "Show media checkbox",
+                  },
+                }}
+                color="default"
+                checked={showMedia}
+              />
             </ListItemIcon>
 
             <ListItemText
-              primary={"Toggle Media"}
+              primary={"Show Media"}
               sx={{ paddingLeft: ".5rem" }}
             />
           </ListItemButton>

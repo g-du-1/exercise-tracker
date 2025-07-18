@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import { Exercise } from "app/types";
 import { getYtVidId } from "../../util/getYtVidId";
-import { useBoundStore } from "../../store/store";
+import { useGetUserSettings } from "../../hooks/useGetUserSettings";
 
 const renderYouTubeVideo = (exercise: Exercise, showMedia: boolean) => {
   const videoId = getYtVidId(exercise.mediaLink);
@@ -41,10 +41,14 @@ const renderImage = (exercise: Exercise, showMedia: boolean) => {
 };
 
 export const CardExerciseMedia = ({ exercise }: { exercise: Exercise }) => {
-  const showMedia = useBoundStore((state) => state.showMedia);
+  const { data: userSettings } = useGetUserSettings();
+
+  if (!userSettings) return null;
 
   const isYoutubeVideo = exercise.mediaLink.includes("youtube");
   const isImage = exercise.mediaLink.endsWith("jpg");
+
+  const { showMedia } = userSettings;
 
   return (
     <Box sx={{ borderBottom: "1px solid #e8e8e8" }}>
