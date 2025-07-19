@@ -4,8 +4,6 @@ import com.gd.exercisetracker.security.user.User;
 import com.gd.exercisetracker.security.user.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class UserSettingsService {
     private final UserSettingsRepository userSettingsRepository;
@@ -17,9 +15,9 @@ public class UserSettingsService {
     }
 
     public UserSettings getUserSettings(Long userId) {
-        List<UserSettings> settings = userSettingsRepository.findByUser_UserId(userId);
+        UserSettings settings = userSettingsRepository.findByUser_UserId(userId);
 
-        if (settings.isEmpty()) {
+        if (settings == null) {
             UserSettings defaultSettings = new UserSettings();
 
             User user = userRepository.findById(userId)
@@ -29,12 +27,12 @@ public class UserSettingsService {
 
             return userSettingsRepository.save(defaultSettings);
         }
-        
-        return settings.get(0);
+
+        return settings;
     }
 
     public UserSettings saveUserSettings(Long userId, UserSettingsDTO userSettingsDTO) {
-        UserSettings existingSettings = userSettingsRepository.findByUser_UserId(userId).get(0);
+        UserSettings existingSettings = userSettingsRepository.findByUser_UserId(userId);
 
         existingSettings.setShowCompletedExercises(userSettingsDTO.isShowCompletedExercises());
         existingSettings.setShowComments(userSettingsDTO.isShowComments());
