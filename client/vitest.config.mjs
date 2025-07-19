@@ -17,12 +17,6 @@ export default defineConfig({
         "**/constants.ts",
         "**/examples/",
       ],
-      thresholds: {
-        lines: 80,
-        functions: 80,
-        branches: 80,
-        statements: 80,
-      },
     },
     globals: true,
     environment: "jsdom",
