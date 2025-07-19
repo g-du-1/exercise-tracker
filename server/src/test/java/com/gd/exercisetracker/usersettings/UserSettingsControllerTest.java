@@ -73,4 +73,51 @@ class UserSettingsControllerTest {
             .body("showComments", is(false))
             .body("showMedia", is(false));
     }
+
+    @Test
+    void getsAlreadyExistingUserSettings() {
+        UserSettings userSettings = new UserSettings();
+        userSettings.setShowCompletedExercises(true);
+        userSettings.setShowComments(true);
+        userSettings.setShowMedia(true);
+
+        User user = testHelpers.saveTestUser();
+        userSettings.setUser(user);
+        userSettingsRepository.save(userSettings);
+        String jwt = testHelpers.getTestJwt(user.getUserName());
+
+        given()
+            .contentType(ContentType.JSON)
+            .cookie("JWT_TOKEN", jwt)
+        .when()
+            .get("/api/v1/user-settings")
+        .then()
+            .statusCode(200)
+            .body("showCompletedExercises", is(true))
+            .body("showComments", is(true))
+            .body("showMedia", is(true));
+    }
+
+    @Test
+    void savesUserSettings() {
+        User user = testHelpers.saveTestUser();
+        UserSettings userSettings = new UserSettings();
+        userSettings.setUser(user);
+        userSettingsRepository.save(userSettings);
+        String jwt = testHelpers.getTestJwt(user.getUserName());
+
+        String requestBody = "{\"showCompletedExercises\": true, \"showComments\": false, \"showMedia\": true}";
+
+        given()
+            .contentType(ContentType.JSON)
+            .cookie("JWT_TOKEN", jwt)
+            .body(requestBody)
+        .when()
+            .post("/api/v1/user-settings/save")
+        .then()
+            .statusCode(200)
+            .body("showCompletedExercises", is(true))
+            .body("showComments", is(false))
+            .body("showMedia", is(true));
+    }
 }
