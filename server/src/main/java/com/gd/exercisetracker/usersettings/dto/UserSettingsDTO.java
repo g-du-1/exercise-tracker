@@ -1,4 +1,4 @@
-package com.gd.exercisetracker.usersettings;
+package com.gd.exercisetracker.usersettings.dto;
 
 import lombok.Data;
 

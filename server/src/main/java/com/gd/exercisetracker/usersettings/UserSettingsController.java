@@ -1,7 +1,7 @@
 package com.gd.exercisetracker.usersettings;
 
 import com.gd.exercisetracker.security.user.UserDetailsImpl;
-import org.springframework.beans.BeanUtils;
+import com.gd.exercisetracker.usersettings.dto.UserSettingsDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +19,7 @@ public class UserSettingsController {
     public ResponseEntity<UserSettingsDTO> getUserSettings(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         Long userId = userDetails.getId();
 
-        UserSettings userSettings = userSettingsService.getUserSettings(userId);
-
-        UserSettingsDTO response = new UserSettingsDTO();
-        BeanUtils.copyProperties(userSettings, response);
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(userSettingsService.getUserSettings(userId));
     }
 
 
@@ -32,11 +27,6 @@ public class UserSettingsController {
     public ResponseEntity<UserSettingsDTO> saveUserSettings(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody UserSettingsDTO userSettingsDTO) {
         Long userId = userDetails.getId();
 
-        UserSettings updatedSettings = userSettingsService.saveUserSettings(userId, userSettingsDTO);
-
-        UserSettingsDTO response = new UserSettingsDTO();
-        BeanUtils.copyProperties(updatedSettings, response);
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(userSettingsService.saveUserSettings(userId, userSettingsDTO));
     }
 }
