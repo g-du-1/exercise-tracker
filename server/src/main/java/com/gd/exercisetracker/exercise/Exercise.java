@@ -1,5 +1,7 @@
 package com.gd.exercisetracker.exercise;
 
+import com.gd.exercisetracker.exercise.enums.ExerciseCategory;
+import com.gd.exercisetracker.exercise.enums.ExerciseType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

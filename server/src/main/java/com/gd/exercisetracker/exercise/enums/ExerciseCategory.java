@@ -1,4 +1,4 @@
-package com.gd.exercisetracker.exercise;
+package com.gd.exercisetracker.exercise.enums;
 
 public enum ExerciseCategory {
     WARM_UP,
