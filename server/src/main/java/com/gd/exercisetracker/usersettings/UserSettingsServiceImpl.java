@@ -2,7 +2,7 @@ package com.gd.exercisetracker.usersettings;
 
 import com.gd.exercisetracker.security.user.User;
 import com.gd.exercisetracker.security.user.UserRepository;
-import com.gd.exercisetracker.usersettings.dto.UserSettingsDTO;
+import com.gd.exercisetracker.usersettings.dto.UserSettingsDto;
 import com.gd.exercisetracker.usersettings.dto.UserSettingsMapper;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class UserSettingsServiceImpl implements UserSettingsService {
     }
 
     @Override
-    public UserSettingsDTO getUserSettings(Long userId) {
+    public UserSettingsDto getUserSettings(Long userId) {
         UserSettings settings = userSettingsRepository.findByUser_UserId(userId);
 
         if (settings == null) {
@@ -28,20 +28,20 @@ public class UserSettingsServiceImpl implements UserSettingsService {
 
             defaultSettings.setUser(user);
 
-            return UserSettingsMapper.INSTANCE.userSettingsToUserSettingsDTO(defaultSettings);
+            return UserSettingsMapper.INSTANCE.userSettingsToUserSettingsDto(defaultSettings);
         }
 
-        return UserSettingsMapper.INSTANCE.userSettingsToUserSettingsDTO(settings);
+        return UserSettingsMapper.INSTANCE.userSettingsToUserSettingsDto(settings);
     }
 
     @Override
-    public UserSettingsDTO saveUserSettings(Long userId, UserSettingsDTO userSettingsDTO) {
+    public UserSettingsDto saveUserSettings(Long userId, UserSettingsDto userSettingsDto) {
         UserSettings existingSettings = userSettingsRepository.findByUser_UserId(userId);
 
-        existingSettings.setShowCompletedExercises(userSettingsDTO.isShowCompletedExercises());
-        existingSettings.setShowComments(userSettingsDTO.isShowComments());
-        existingSettings.setShowMedia(userSettingsDTO.isShowMedia());
+        existingSettings.setShowCompletedExercises(userSettingsDto.isShowCompletedExercises());
+        existingSettings.setShowComments(userSettingsDto.isShowComments());
+        existingSettings.setShowMedia(userSettingsDto.isShowMedia());
 
-        return UserSettingsMapper.INSTANCE.userSettingsToUserSettingsDTO(existingSettings);
+        return UserSettingsMapper.INSTANCE.userSettingsToUserSettingsDto(existingSettings);
     }
 }

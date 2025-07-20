@@ -1,7 +1,7 @@
 package com.gd.exercisetracker.usersettings;
 
 import com.gd.exercisetracker.security.user.UserDetailsImpl;
-import com.gd.exercisetracker.usersettings.dto.UserSettingsDTO;
+import com.gd.exercisetracker.usersettings.dto.UserSettingsDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +16,7 @@ public class UserSettingsController {
     }
 
     @GetMapping
-    public ResponseEntity<UserSettingsDTO> getUserSettings(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<UserSettingsDto> getUserSettings(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         Long userId = userDetails.getId();
 
         return ResponseEntity.ok(userSettingsService.getUserSettings(userId));
@@ -24,9 +24,9 @@ public class UserSettingsController {
 
 
     @PostMapping("/save")
-    public ResponseEntity<UserSettingsDTO> saveUserSettings(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody UserSettingsDTO userSettingsDTO) {
+    public ResponseEntity<UserSettingsDto> saveUserSettings(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody UserSettingsDto userSettingsDto) {
         Long userId = userDetails.getId();
 
-        return ResponseEntity.ok(userSettingsService.saveUserSettings(userId, userSettingsDTO));
+        return ResponseEntity.ok(userSettingsService.saveUserSettings(userId, userSettingsDto));
     }
 }

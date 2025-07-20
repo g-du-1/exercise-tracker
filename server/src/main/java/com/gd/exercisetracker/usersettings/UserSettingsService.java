@@ -1,8 +1,8 @@
 package com.gd.exercisetracker.usersettings;
 
-import com.gd.exercisetracker.usersettings.dto.UserSettingsDTO;
+import com.gd.exercisetracker.usersettings.dto.UserSettingsDto;
 
 public interface UserSettingsService {
-    UserSettingsDTO getUserSettings(Long userId);
-    UserSettingsDTO saveUserSettings(Long userId, UserSettingsDTO userSettingsDTO);
+    UserSettingsDto getUserSettings(Long userId);
+    UserSettingsDto saveUserSettings(Long userId, UserSettingsDto userSettingsDto);
 }

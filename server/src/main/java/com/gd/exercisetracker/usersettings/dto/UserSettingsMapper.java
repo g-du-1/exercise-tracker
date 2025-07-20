@@ -8,5 +8,5 @@ import org.mapstruct.factory.Mappers;
 public interface UserSettingsMapper {
     UserSettingsMapper INSTANCE = Mappers.getMapper(UserSettingsMapper.class);
 
-    UserSettingsDTO userSettingsToUserSettingsDTO(UserSettings userSettings);
+    UserSettingsDto userSettingsToUserSettingsDto(UserSettings userSettings);
 }
