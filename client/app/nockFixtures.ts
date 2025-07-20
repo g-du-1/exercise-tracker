@@ -21,6 +21,30 @@ export const signIn = {
   },
 };
 
+export const getUserSettings = {
+  path: "/api/v1/user-settings", // GET
+  success: {
+    status: 200,
+    response: {
+      showCompletedExercises: true,
+      showComments: true,
+      showMedia: true,
+    },
+  },
+};
+
+export const saveUserSettings = {
+  path: "/api/v1/user-settings/save", // POST
+  success: {
+    status: 200,
+    response: {
+      showCompletedExercises: false,
+      showComments: false,
+      showMedia: false,
+    },
+  },
+};
+
 export const userExercises = {
   path: "/api/v1/user-exercises", // GET
   success: {
