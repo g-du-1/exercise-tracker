@@ -5,6 +5,11 @@ import com.gd.exercisetracker.exercise.enums.ExerciseType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -30,4 +35,13 @@ public class Exercise {
 
     @Column(columnDefinition = "TEXT")
     private String comments;
+
+    @CreatedDate
+    private LocalDateTime createdAt;
+    
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
+    
+    @CreatedBy
+    private String createdBy;
 }
