@@ -1,5 +1,6 @@
-package com.gd.exercisetracker.exercise;
+package com.gd.exercisetracker.exercise.dto;
 
+import com.gd.exercisetracker.exercise.Exercise;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

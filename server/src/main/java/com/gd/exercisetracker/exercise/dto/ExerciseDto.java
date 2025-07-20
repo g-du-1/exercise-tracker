@@ -1,4 +1,4 @@
-package com.gd.exercisetracker.exercise;
+package com.gd.exercisetracker.exercise.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

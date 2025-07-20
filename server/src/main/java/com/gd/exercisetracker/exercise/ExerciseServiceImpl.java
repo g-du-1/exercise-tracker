@@ -1,5 +1,7 @@
 package com.gd.exercisetracker.exercise;
 
+import com.gd.exercisetracker.exercise.dto.ExerciseDto;
+import com.gd.exercisetracker.exercise.dto.ExerciseMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.gd.exercisetracker.userexercise;
+package com.gd.exercisetracker.userexercise.dtos;
 
 import lombok.Data;
 
