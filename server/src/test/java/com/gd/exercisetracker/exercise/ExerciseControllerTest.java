@@ -1,6 +1,8 @@
 package com.gd.exercisetracker.exercise;
 
 import com.gd.exercisetracker.TestHelpers;
+import com.gd.exercisetracker.exercise.enums.ExerciseCategory;
+import com.gd.exercisetracker.exercise.enums.ExerciseType;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.AfterAll;
@@ -14,8 +16,8 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 
-import static com.gd.exercisetracker.exercise.ExerciseCategory.WARM_UP;
-import static com.gd.exercisetracker.exercise.ExerciseType.PULL_UP;
+import static com.gd.exercisetracker.exercise.enums.ExerciseCategory.WARM_UP;
+import static com.gd.exercisetracker.exercise.enums.ExerciseType.PULL_UP;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;

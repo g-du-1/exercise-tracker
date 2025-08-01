@@ -1,9 +1,9 @@
 package com.gd.exercisetracker;
 
 import com.gd.exercisetracker.exercise.Exercise;
-import com.gd.exercisetracker.exercise.ExerciseCategory;
+import com.gd.exercisetracker.exercise.enums.ExerciseCategory;
 import com.gd.exercisetracker.exercise.ExerciseRepository;
-import com.gd.exercisetracker.exercise.ExerciseType;
+import com.gd.exercisetracker.exercise.enums.ExerciseType;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;

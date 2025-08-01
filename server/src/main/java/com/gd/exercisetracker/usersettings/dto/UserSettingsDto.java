@@ -1,9 +1,9 @@
-package com.gd.exercisetracker.usersettings;
+package com.gd.exercisetracker.usersettings.dto;
 
 import lombok.Data;
 
 @Data
-public class UserSettingsDTO {
+public class UserSettingsDto {
     private boolean showCompletedExercises;
     private boolean showComments;
     private boolean showMedia;

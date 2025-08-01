@@ -1,10 +1,12 @@
 package com.gd.exercisetracker.userexercise;
 
+import com.gd.exercisetracker.userexercise.dtos.UserExerciseDto;
+
 import java.util.List;
 
 public interface UserExerciseService {
-    UserExercise saveUserExercise(Long userId, Long exerciseId);
-    List<UserExercise> getUserExercises(Long userId);
+    UserExerciseDto saveUserExercise(Long userId, Long exerciseId);
+    List<UserExerciseDto> getUserExercises(Long userId);
     void deleteUserExercise(Long userId, Long exerciseId);
     void deleteAllExercisesForUser(Long userId);
 }
