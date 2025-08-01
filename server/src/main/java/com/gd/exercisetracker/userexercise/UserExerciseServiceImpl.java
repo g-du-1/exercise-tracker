@@ -1,5 +1,6 @@
 package com.gd.exercisetracker.userexercise;
 
+import com.gd.exercisetracker.KafkaProducer;
 import com.gd.exercisetracker.exercise.Exercise;
 import com.gd.exercisetracker.exercise.ExerciseRepository;
 import com.gd.exercisetracker.security.user.User;
@@ -16,11 +17,13 @@ public class UserExerciseServiceImpl implements UserExerciseService {
     private final UserRepository userRepository;
     private final ExerciseRepository exerciseRepository;
     private final UserExerciseRepository userExerciseRepository;
+    private final KafkaProducer kafkaProducer;
 
-    public UserExerciseServiceImpl(UserRepository userRepository, ExerciseRepository exerciseRepository, UserExerciseRepository userExerciseRepository) {
+    public UserExerciseServiceImpl(UserRepository userRepository, ExerciseRepository exerciseRepository, UserExerciseRepository userExerciseRepository, KafkaProducer kafkaProducer) {
         this.userRepository = userRepository;
         this.exerciseRepository = exerciseRepository;
         this.userExerciseRepository = userExerciseRepository;
+        this.kafkaProducer = kafkaProducer;
     }
 
     @Override
@@ -33,6 +36,8 @@ public class UserExerciseServiceImpl implements UserExerciseService {
         
         userExercise.setUser(user);
         userExercise.setExercise(exercise);
+
+        kafkaProducer.send("my-topic", "User Exercise Added!");
 
         UserExercise savedUserExercise = userExerciseRepository.save(userExercise);
 
