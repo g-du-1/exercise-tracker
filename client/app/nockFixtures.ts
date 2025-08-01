@@ -1,5 +1,5 @@
-import { mockUserExercises } from "./components/fixtures/mockUserExercises";
-import { mockExercises } from "./components/fixtures/mockExercises";
+import { mockUserExercises } from "./fixtures/mockUserExercises";
+import { mockExercises } from "./fixtures/mockExercises";
 
 export const nockBaseUrl = "http://localhost:3000";
 
@@ -17,6 +17,30 @@ export const signIn = {
     response: {
       message: "Bad credentials",
       status: false,
+    },
+  },
+};
+
+export const getUserSettings = {
+  path: "/api/v1/user-settings", // GET
+  success: {
+    status: 200,
+    response: {
+      showCompletedExercises: true,
+      showComments: true,
+      showMedia: true,
+    },
+  },
+};
+
+export const saveUserSettings = {
+  path: "/api/v1/user-settings/save", // POST
+  success: {
+    status: 200,
+    response: {
+      showCompletedExercises: false,
+      showComments: false,
+      showMedia: false,
     },
   },
 };

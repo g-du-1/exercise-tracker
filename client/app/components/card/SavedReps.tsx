@@ -2,86 +2,50 @@ import Box from "@mui/material/Box";
 import { Exercise } from "app/types";
 import { useBoundStore } from "../../store/store";
 
-type RepRange = "lower" | "inRange" | "higher";
-type RepRangeMap = { [key in RepRange]: string };
+const getRepRangeStatus = (exercise: Exercise, rep: number) => {
+  const min = exercise.targetRepsMin || 0;
+  const max = exercise.targetRepsMax || min;
 
-const getRepRange = (
-  targetRepsMin: number = 0,
-  targetRepsMax: number | null,
-  rep: number
-): RepRange | undefined => {
-  const repsMax = targetRepsMax ?? targetRepsMin;
-
-  if (rep < targetRepsMin) {
-    return "lower";
-  } else if (rep >= targetRepsMin && rep <= repsMax) {
-    return "inRange";
-  } else if (rep > repsMax) {
-    return "higher";
+  if (rep < min) {
+    return { statusColor: "red", statusLabel: "Lower Than Range" };
+  } else if (rep > max) {
+    return { statusColor: "orange", statusLabel: "Higher Than Range" };
+  } else {
+    return { statusColor: "green", statusLabel: "In Range" };
   }
-};
-
-const getRepRangeLabel = (
-  exercise: Exercise,
-  rep: number,
-  repRange: RepRange
-): string => {
-  const labels: RepRangeMap = {
-    lower: `${exercise.name} ${rep} Reps Lower Than Range`,
-    inRange: `${exercise.name} ${rep} Reps In Range`,
-    higher: `${exercise.name} ${rep} Reps Higher Than Range`,
-  };
-
-  return labels[repRange];
 };
 
 export const SavedReps = ({ exercise }: { exercise: Exercise }) => {
   const savedReps = useBoundStore((state) => state.savedReps);
+  const exerciseReps = savedReps?.[exercise.key]?.reps || [];
+
+  if (exerciseReps.length === 0) {
+    return null;
+  }
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "row",
-        fontSize: "12px",
-      }}
-    >
-      {savedReps?.[exercise.key]?.reps.map((rep: number, idx: number) => {
-        const colorMap: RepRangeMap = {
-          lower: "red",
-          inRange: "green",
-          higher: "orange",
-        };
+    <Box sx={{ display: "flex", flexDirection: "row", fontSize: "12px" }}>
+      {exerciseReps.map((rep: number, index: number) => {
+        const key = exercise.key + "-" + index;
 
-        const repRange = getRepRange(
-          exercise.targetRepsMin,
-          exercise.targetRepsMax,
-          rep
-        );
+        const { statusColor, statusLabel } = getRepRangeStatus(exercise, rep);
+
+        const repAriaLabel = `${exercise.name} ${rep} Reps ${statusLabel}`;
+        const setLabel = `Set ${index + 1}:`;
 
         return (
           <Box
-            key={`${exercise.key}-${idx}`}
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              mr: 1,
-              mb: 1.5,
-            }}
+            key={key}
+            sx={{ display: "flex", flexDirection: "row", mr: 1, mb: 1.5 }}
           >
-            <Box sx={{ mr: 0.75, color: "#b9b9b9" }}>Set {idx + 1}:</Box>
+            <Box sx={{ mr: 0.75, color: "#b9b9b9" }}>{setLabel}</Box>
 
-            {repRange && (
-              <Box
-                sx={{
-                  fontWeight: "500",
-                  color: colorMap[repRange],
-                }}
-                aria-label={getRepRangeLabel(exercise, rep, repRange)}
-              >
-                {rep}
-              </Box>
-            )}
+            <Box
+              sx={{ fontWeight: "500", color: statusColor }}
+              aria-label={repAriaLabel}
+            >
+              {rep}
+            </Box>
           </Box>
         );
       })}

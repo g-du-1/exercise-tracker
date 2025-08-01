@@ -5,6 +5,8 @@ import com.gd.exercisetracker.exercise.Exercise;
 import com.gd.exercisetracker.exercise.ExerciseRepository;
 import com.gd.exercisetracker.security.user.User;
 import com.gd.exercisetracker.security.user.UserRepository;
+import com.gd.exercisetracker.userexercise.dtos.UserExerciseDto;
+import com.gd.exercisetracker.userexercise.dtos.UserExerciseMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +27,7 @@ public class UserExerciseServiceImpl implements UserExerciseService {
     }
 
     @Override
-    public UserExercise saveUserExercise(Long userId, Long exerciseId) {
+    public UserExerciseDto saveUserExercise(Long userId, Long exerciseId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
 
         Exercise exercise = exerciseRepository.findById(exerciseId).orElseThrow(() -> new RuntimeException("Exercise not found"));
@@ -37,12 +39,15 @@ public class UserExerciseServiceImpl implements UserExerciseService {
 
         kafkaProducer.send("my-topic", "User Exercise Added!");
 
-        return userExerciseRepository.save(userExercise);
+        UserExercise savedUserExercise = userExerciseRepository.save(userExercise);
+
+        return UserExerciseMapper.INSTANCE.userExerciseToUserExerciseDto(savedUserExercise);
     }
 
     @Override
-    public List<UserExercise> getUserExercises(Long userId) {
-        return userExerciseRepository.findByUser_UserId(userId);
+    public List<UserExerciseDto> getUserExercises(Long userId) {
+        List<UserExercise> byUserUserId = userExerciseRepository.findByUser_UserId(userId);
+        return UserExerciseMapper.INSTANCE.userExercisesToUserExerciseDtos(byUserUserId);
     }
 
     @Override

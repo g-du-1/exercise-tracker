@@ -1,6 +1,9 @@
 package com.gd.exercisetracker.userexercise;
 
 import com.gd.exercisetracker.security.user.UserDetailsImpl;
+import com.gd.exercisetracker.userexercise.dtos.MessageDto;
+import com.gd.exercisetracker.userexercise.dtos.UserExerciseDto;
+import com.gd.exercisetracker.userexercise.dtos.SaveUserExerciseRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -17,37 +20,37 @@ public class UserExerciseController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<UserExercise> saveUserExercise(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody SaveUserExerciseRequest saveUserExerciseRequest) {
+    public ResponseEntity<UserExerciseDto> saveUserExercise(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody SaveUserExerciseRequest saveUserExerciseRequest) {
         Long exerciseId = saveUserExerciseRequest.getExerciseId();
         Long userId = userDetails.getId();
 
-        UserExercise savedExercise = userExerciseService.saveUserExercise(userId, exerciseId);
+        UserExerciseDto savedExercise = userExerciseService.saveUserExercise(userId, exerciseId);
 
         return ResponseEntity.ok(savedExercise);
     }
 
     @GetMapping
-    public ResponseEntity<List<UserExercise>> getUserExercises(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<List<UserExerciseDto>> getUserExercises(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         Long userId = userDetails.getId();
 
         return ResponseEntity.ok(userExerciseService.getUserExercises(userId));
     }
 
     @DeleteMapping("/{exerciseId}")
-    public ResponseEntity<DeleteUserExerciseResponse> deleteUserExercise(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long exerciseId) {
+    public ResponseEntity<MessageDto> deleteUserExercise(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long exerciseId) {
         Long userId = userDetails.getId();
 
         userExerciseService.deleteUserExercise(userId, exerciseId);
 
-        return ResponseEntity.ok(new DeleteUserExerciseResponse("User exercise deleted."));
+        return ResponseEntity.ok(new MessageDto("User exercise deleted."));
     }
 
     @DeleteMapping("/all")
-    public ResponseEntity<DeleteAllExercisesForUserResponse> deleteAllExercisesForUser(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<MessageDto> deleteAllExercisesForUser(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         Long userId = userDetails.getId();
 
         userExerciseService.deleteAllExercisesForUser(userId);
 
-        return ResponseEntity.ok(new DeleteAllExercisesForUserResponse("All exercises deleted for user."));
+        return ResponseEntity.ok(new MessageDto("All exercises deleted for user."));
     }
 }

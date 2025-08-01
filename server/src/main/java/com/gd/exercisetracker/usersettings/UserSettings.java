@@ -1,7 +1,6 @@
-package com.gd.exercisetracker.userexercise;
+package com.gd.exercisetracker.usersettings;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.gd.exercisetracker.exercise.Exercise;
 import com.gd.exercisetracker.security.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -15,20 +14,19 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-public class UserExercise {
-
+public class UserSettings {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "exercise_id", nullable = false)
-    private Exercise exercise;
+    private boolean showCompletedExercises = true;
+    private boolean showComments = false;
+    private boolean showMedia = false;
 
     @CreatedDate
     private LocalDateTime createdAt;

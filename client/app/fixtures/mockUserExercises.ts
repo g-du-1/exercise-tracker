@@ -1,4 +1,4 @@
-import { UserExercise } from "../../types";
+import { UserExercise } from "../types";
 
 export const mockUserExercises: UserExercise[] = [
   {

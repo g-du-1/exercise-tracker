@@ -56,6 +56,12 @@ export type User = {
   roles: Role[];
 };
 
+export type UserSettings = {
+  showCompletedExercises: boolean;
+  showComments: boolean;
+  showMedia: boolean;
+};
+
 export type SignInResponse = {
   status: number;
   message?: string;
