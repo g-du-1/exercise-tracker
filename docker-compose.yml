@@ -1,6 +1,7 @@
 services:
   bwf-kafka:
     image: confluentinc/cp-kafka:latest
+    container_name: bwf-kafka
     hostname: kafka
     ports:
       - "9092:9092"
@@ -20,6 +21,7 @@ services:
 
   bwf-db:
     image: postgres:17-alpine
+    container_name: bwf-db
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-exercisetracker}
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
@@ -30,6 +32,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   bwf-server:
+    container_name: bwf-server
     build: ./server
     ports:
       - "8080:8080"
@@ -46,7 +49,16 @@ services:
       - bwf-kafka
 
   bwf-client:
-    build: ./client
+    container_name: bwf-client
+    build:
+      context: ./client
+      args:
+        NEXT_PUBLIC_API_PREFIX: ${NEXT_PUBLIC_API_PREFIX:-/api/v1}
+        NEXT_PUBLIC_API_SIGN_UP_ENDPOINT: ${NEXT_PUBLIC_API_SIGN_UP_ENDPOINT:-/auth/public/signup}
+        NEXT_PUBLIC_API_SIGN_IN_ENDPOINT: ${NEXT_PUBLIC_API_SIGN_IN_ENDPOINT:-/auth/public/signin}
+        NEXT_PUBLIC_GET_ALL_EXERCISES_ENDPOINT: ${NEXT_PUBLIC_GET_ALL_EXERCISES_ENDPOINT:-/exercises}
+        NEXT_PUBLIC_SERVER_URL: ${NEXT_PUBLIC_SERVER_URL:-http://bwf-server:8080}
+        NEXT_PUBLIC_ENABLE_API_CONNECTION: ${NEXT_PUBLIC_ENABLE_API_CONNECTION:-true}
     ports:
       - "3000:3000"
     depends_on:
