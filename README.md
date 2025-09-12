@@ -8,8 +8,6 @@ There are a couple of apps that do this, however they are annoying to use and no
 
 The goal was to have a web app that can be operated with as little interaction as possible to provide the best UX and to make it easier to track an exercise.
 
-Currently the app is for my own personal use and it has my exercise progression hardcoded both in the client - `constants.ts` and server - `DataLoader.java`. In the future this will be replaced by a login system where users can select their own exercises so that other people can start using it.
-
 ## Live URL
 
 The front end is hosted on Vercel. Please bear in mind the design is mobile only at the moment.
@@ -56,11 +54,8 @@ https://exercise-tracker-iota-gules.vercel.app
 
 ## Development
 
-Add .env from the template.
+Add .envs from the templates.
 
 `docker-compose up -d`
 
-Or use the .env.local template and the IntelliJ run config to run the server and client locally but still connect to the rest of the services in docker.
-
-- Check files / folders
-- Update README
+For local dev use the .env.local template and IntelliJ run configs (add these envs) to run the server and client locally to replace the two services running in docker.
