@@ -1,8 +1,9 @@
 services:
   bwf-kafka:
-    image: confluentinc/cp-kafka:latest
+    image: confluentinc/cp-kafka:7.2.15
     container_name: bwf-kafka
     hostname: kafka
+    restart: unless-stopped
     ports:
       - "9092:9092"
     environment:
@@ -18,38 +19,63 @@ services:
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: true
       KAFKA_DELETE_TOPIC_ENABLE: true
       CLUSTER_ID: 4L6g3nShT-eMCtK--X86sw
+    healthcheck:
+      test: ["CMD", "kafka-broker-api-versions", "--bootstrap-server", "localhost:9092"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - bwf-network
 
   bwf-db:
     image: postgres:17-alpine
     container_name: bwf-db
+    restart: unless-stopped
     environment:
       POSTGRES_HOST: ${POSTGRES_HOST}
       POSTGRES_PORT: ${POSTGRES_PORT}
-      POSTGRES_DB: ${POSTGRES_DB:-exercisetracker}
+      POSTGRES_DB: ${POSTGRES_DB:-bwf_db}
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-bwf_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - bwf-network
 
   bwf-server:
     container_name: bwf-server
     build: ./server
+    restart: unless-stopped
     ports:
       - "8080:8080"
     environment:
       POSTGRES_HOST: bwf-db
       POSTGRES_PORT: 5432
-      POSTGRES_DB: ${POSTGRES_DB:-exercisetracker}
+      POSTGRES_DB: ${POSTGRES_DB:-bwf_db}
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
       JWT_SECRET: ${JWT_SECRET:-mySecretKey}
       JWT_EXPIRATION_MS: ${JWT_EXPIRATION_MS:-86400000}
-      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS}
+      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:-bwf-kafka:29092}
     depends_on:
-      - bwf-db
-      - bwf-kafka
+      bwf-db:
+        condition: service_healthy
+      bwf-kafka:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '0.5'
+    networks:
+      - bwf-network
 
   bwf-client:
     container_name: bwf-client
@@ -62,10 +88,17 @@ services:
         NEXT_PUBLIC_GET_ALL_EXERCISES_ENDPOINT: ${NEXT_PUBLIC_GET_ALL_EXERCISES_ENDPOINT:-/exercises}
         NEXT_PUBLIC_SERVER_URL: ${NEXT_PUBLIC_SERVER_URL:-http://bwf-server:8080}
         NEXT_PUBLIC_ENABLE_API_CONNECTION: ${NEXT_PUBLIC_ENABLE_API_CONNECTION:-true}
+    restart: unless-stopped
     ports:
       - "3000:3000"
     depends_on:
       - bwf-server
+    networks:
+      - bwf-network
+
+networks:
+  bwf-network:
+    driver: bridge
 
 volumes:
   postgres_data:
