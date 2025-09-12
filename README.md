@@ -8,8 +8,6 @@ There are a couple of apps that do this, however they are annoying to use and no
 
 The goal was to have a web app that can be operated with as little interaction as possible to provide the best UX and to make it easier to track an exercise.
 
-Currently the app is for my own personal use and it has my exercise progression hardcoded both in the client - `constants.ts` and server - `DataLoader.java`. In the future this will be replaced by a login system where users can select their own exercises so that other people can start using it.
-
 ## Live URL
 
 The front end is hosted on Vercel. Please bear in mind the design is mobile only at the moment.
@@ -51,67 +49,13 @@ https://exercise-tracker-iota-gules.vercel.app
 ## Future work:
 
 - Reduce Readme gif size
-- Add a login system
-- Add a page where users can select their exercises
 - Host the server
-- Connect the front end to the server
 - Add styling for larger screens
-- Dockerise
 
 ## Development
 
-### Client
+Add .envs from the templates.
 
-#### Change to the correct folder
+`docker-compose up -d`
 
-```
-cd client
-```
-
-#### Run the dev app
-
-```
-npm run dev
-```
-
-#### Run the tests
-
-```
-npm run test
-```
-
-### Server (WIP)
-
-#### Change to the correct folder
-
-```
-cd server
-```
-
-Add `.env`
-
-#### Run PostgreSQL
-
-```
-docker run --name exercise-tracker-postgres -e POSTGRES_PASSWORD=mysecretpassword -d -p 5432:5432 postgres
-```
-
-#### Create the DB if it doesn't exist
-
-```
-docker exec -it exercise-tracker-postgres psql -U postgres -c "CREATE DATABASE exercise_tracker"
-```
-
-#### Run Spring Boot
-
-```
-./mvnw clean spring-boot:run
-```
-
-More info in `server/README.md`
-
-### Linux
-
-Export env vars in the terminal before running IntelliJ from the same session.
-
-`export $(cat .env | xargs)`
+For local dev use the .env.local template and IntelliJ run configs (add these envs) to run the server and client locally to replace the two services running in docker.
