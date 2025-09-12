@@ -1,6 +1,6 @@
 services:
   bwf-kafka:
-    image: confluentinc/cp-kafka:7.2.15
+    image: confluentinc/cp-kafka:7.4.10
     container_name: bwf-kafka
     hostname: kafka
     restart: unless-stopped
