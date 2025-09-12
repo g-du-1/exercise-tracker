@@ -37,11 +37,22 @@ public class UserSettingsServiceImpl implements UserSettingsService {
     @Override
     public UserSettingsDto saveUserSettings(Long userId, UserSettingsDto userSettingsDto) {
         UserSettings existingSettings = userSettingsRepository.findByUser_UserId(userId);
+        
+        if (existingSettings == null) {
+            existingSettings = new UserSettings();
+
+            User user = userRepository.findById(userId)
+                    .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+            existingSettings.setUser(user);
+        }
 
         existingSettings.setShowCompletedExercises(userSettingsDto.isShowCompletedExercises());
         existingSettings.setShowComments(userSettingsDto.isShowComments());
         existingSettings.setShowMedia(userSettingsDto.isShowMedia());
+        
+        UserSettings savedSettings = userSettingsRepository.save(existingSettings);
 
-        return UserSettingsMapper.INSTANCE.userSettingsToUserSettingsDto(existingSettings);
+        return UserSettingsMapper.INSTANCE.userSettingsToUserSettingsDto(savedSettings);
     }
 }
