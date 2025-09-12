@@ -1,0 +1,12 @@
+target/
+.mvn/wrapper/maven-wrapper.jar
+*.jar
+*.war
+*.ear
+*.class
+*.log
+.git
+.gitignore
+README.md
+Dockerfile
+.dockerignore
