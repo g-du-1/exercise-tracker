@@ -28,6 +28,10 @@ export const RepsModal = ({ exercises }: Props) => {
   const resetStopwatch = useBoundStore((state) => state.resetStopwatch);
   const setSavedStartTime = useBoundStore((state) => state.setSavedStartTime);
 
+  if (!selectedExercise) {
+    return null;
+  }
+
   const handleModalClose = () => {
     const fieldValNum = parseInt(fieldValue);
 
@@ -75,33 +79,37 @@ export const RepsModal = ({ exercises }: Props) => {
 
   const handleDeleteRepsClick = (selectedExercise: Exercise) => {
     const newReps = { ...savedReps };
-
-    const existingExercise = newReps[selectedExercise.key];
+    const exerciseKey = selectedExercise.key;
+    const existingExercise = newReps[exerciseKey];
 
     if (existingExercise) {
       existingExercise.reps = [];
-
       setSavedReps(newReps);
     }
 
     setModalOpen(false);
+
     resetStopwatch();
   };
+
+  const hasReps = savedReps?.[selectedExercise.key]?.reps?.length > 0;
 
   return (
     <Dialog
       open={modalOpen}
       onClose={handleModalClose}
       disableRestoreFocus
-      PaperProps={{
-        component: "form",
-        onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
-          event.preventDefault();
-          handleModalClose();
+      slotProps={{
+        paper: {
+          component: "form",
+          onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
+            event.preventDefault();
+            handleModalClose();
+          },
         },
       }}
     >
-      <DialogTitle>Add {selectedExercise?.name} Reps</DialogTitle>
+      <DialogTitle>Add {selectedExercise.name} Reps</DialogTitle>
 
       <DialogContent>
         <TextField
@@ -117,17 +125,16 @@ export const RepsModal = ({ exercises }: Props) => {
       </DialogContent>
 
       <DialogActions>
-        {selectedExercise &&
-          savedReps?.[selectedExercise.key]?.reps?.length > 0 && (
-            <IconButton
-              color="error"
-              size="large"
-              aria-label="Delete Reps"
-              onClick={() => handleDeleteRepsClick(selectedExercise)}
-            >
-              <DeleteIcon />
-            </IconButton>
-          )}
+        {hasReps && (
+          <IconButton
+            color="error"
+            size="large"
+            aria-label="Delete Reps"
+            onClick={() => handleDeleteRepsClick(selectedExercise)}
+          >
+            <DeleteIcon />
+          </IconButton>
+        )}
 
         <Button onClick={() => setModalOpen(false)}>Cancel</Button>
       </DialogActions>

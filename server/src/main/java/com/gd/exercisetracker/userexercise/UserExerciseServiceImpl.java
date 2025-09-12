@@ -1,9 +1,12 @@
 package com.gd.exercisetracker.userexercise;
 
+import com.gd.exercisetracker.KafkaProducer;
 import com.gd.exercisetracker.exercise.Exercise;
 import com.gd.exercisetracker.exercise.ExerciseRepository;
 import com.gd.exercisetracker.security.user.User;
 import com.gd.exercisetracker.security.user.UserRepository;
+import com.gd.exercisetracker.userexercise.dtos.UserExerciseDto;
+import com.gd.exercisetracker.userexercise.dtos.UserExerciseMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -14,15 +17,17 @@ public class UserExerciseServiceImpl implements UserExerciseService {
     private final UserRepository userRepository;
     private final ExerciseRepository exerciseRepository;
     private final UserExerciseRepository userExerciseRepository;
+    private final KafkaProducer kafkaProducer;
 
-    public UserExerciseServiceImpl(UserRepository userRepository, ExerciseRepository exerciseRepository, UserExerciseRepository userExerciseRepository) {
+    public UserExerciseServiceImpl(UserRepository userRepository, ExerciseRepository exerciseRepository, UserExerciseRepository userExerciseRepository, KafkaProducer kafkaProducer) {
         this.userRepository = userRepository;
         this.exerciseRepository = exerciseRepository;
         this.userExerciseRepository = userExerciseRepository;
+        this.kafkaProducer = kafkaProducer;
     }
 
     @Override
-    public UserExercise saveUserExercise(Long userId, Long exerciseId) {
+    public UserExerciseDto saveUserExercise(Long userId, Long exerciseId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
 
         Exercise exercise = exerciseRepository.findById(exerciseId).orElseThrow(() -> new RuntimeException("Exercise not found"));
@@ -32,12 +37,17 @@ public class UserExerciseServiceImpl implements UserExerciseService {
         userExercise.setUser(user);
         userExercise.setExercise(exercise);
 
-        return userExerciseRepository.save(userExercise);
+        kafkaProducer.send("my-topic", "User Exercise Added!");
+
+        UserExercise savedUserExercise = userExerciseRepository.save(userExercise);
+
+        return UserExerciseMapper.INSTANCE.userExerciseToUserExerciseDto(savedUserExercise);
     }
 
     @Override
-    public List<UserExercise> getUserExercises(Long userId) {
-        return userExerciseRepository.findByUser_UserId(userId);
+    public List<UserExerciseDto> getUserExercises(Long userId) {
+        List<UserExercise> byUserUserId = userExerciseRepository.findByUser_UserId(userId);
+        return UserExerciseMapper.INSTANCE.userExercisesToUserExerciseDtos(byUserUserId);
     }
 
     @Override

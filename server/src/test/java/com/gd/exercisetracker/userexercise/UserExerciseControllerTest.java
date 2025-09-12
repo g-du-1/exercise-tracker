@@ -3,8 +3,6 @@ package com.gd.exercisetracker.userexercise;
 import com.gd.exercisetracker.TestHelpers;
 import com.gd.exercisetracker.exercise.Exercise;
 import com.gd.exercisetracker.exercise.ExerciseRepository;
-import com.gd.exercisetracker.security.role.AppRole;
-import com.gd.exercisetracker.security.role.Role;
 import com.gd.exercisetracker.security.role.RoleRepository;
 import com.gd.exercisetracker.security.user.User;
 import com.gd.exercisetracker.security.user.UserRepository;
@@ -78,23 +76,9 @@ class UserExerciseControllerTest {
         userExerciseRepository.deleteAll();
     }
 
-    private User saveTestUser() {
-        String username = "user";
-
-        Role userRole = roleRepository.findByRoleName(AppRole.ROLE_USER).orElseGet(() -> roleRepository.save(new Role(AppRole.ROLE_USER)));
-
-        User user = new User(username, "user@example.com", passwordEncoder.encode("password"));
-
-        user.setEnabled(true);
-        user.setSignUpMethod("From Test");
-        user.setRole(userRole);
-
-        return userRepository.save(user);
-    }
-
     @Test
     void savesExercisesForUser() {
-        User user = saveTestUser();
+        User user = testHelpers.saveTestUser();
         String jwt = testHelpers.getTestJwt(user.getUserName());
 
         // Exercise
@@ -121,7 +105,7 @@ class UserExerciseControllerTest {
 
     @Test
     void getsUserExercises() {
-        User user = saveTestUser();
+        User user = testHelpers.saveTestUser();
         String jwt = testHelpers.getTestJwt(user.getUserName());
 
         // Exercises
@@ -185,7 +169,7 @@ class UserExerciseControllerTest {
 
     @Test
     void deletesUserExercise() {
-        User user = saveTestUser();
+        User user = testHelpers.saveTestUser();
         String jwt = testHelpers.getTestJwt(user.getUserName());
 
         Exercise exercise1 = new Exercise();
@@ -220,7 +204,7 @@ class UserExerciseControllerTest {
 
     @Test
     void deletesAllUserExercises() {
-        User user = saveTestUser();
+        User user = testHelpers.saveTestUser();
         String jwt = testHelpers.getTestJwt(user.getUserName());
 
         Exercise exercise1 = new Exercise();

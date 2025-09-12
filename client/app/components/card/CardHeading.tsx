@@ -10,6 +10,22 @@ type Props = {
   exerciseCompleted: boolean;
 };
 
+const buildTargetReps = (exercise: Exercise) => {
+  const { targetSets, targetRepsMin, targetRepsMax, duration } = exercise;
+
+  let targetFormat = `${targetSets}x${targetRepsMin}`;
+
+  if (targetRepsMax && targetRepsMin !== targetRepsMax) {
+    targetFormat += `-${targetRepsMax}`;
+  }
+
+  if (duration) {
+    targetFormat += "s";
+  }
+
+  return targetFormat;
+};
+
 export const CardHeading = ({ exercise, exerciseCompleted }: Props) => {
   return (
     <Typography
@@ -23,7 +39,7 @@ export const CardHeading = ({ exercise, exerciseCompleted }: Props) => {
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Box sx={{ mr: 1, fontSize: "12px", color: "#b9b9b9" }}>
-            {`${exercise.targetSets}x${exercise.targetRepsMin}${exercise.targetRepsMax && exercise.targetRepsMin !== exercise.targetRepsMax ? `-${exercise.targetRepsMax}` : ``}${exercise.duration ? `s` : ``}`}
+            {buildTargetReps(exercise)}
           </Box>
 
           <Box sx={{ fontSize: "14px", fontWeight: 500 }}>{exercise.name}</Box>

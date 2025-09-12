@@ -1,9 +1,9 @@
 package com.gd.exercisetracker;
 
 import com.gd.exercisetracker.exercise.Exercise;
-import com.gd.exercisetracker.exercise.ExerciseCategory;
+import com.gd.exercisetracker.exercise.enums.ExerciseCategory;
 import com.gd.exercisetracker.exercise.ExerciseRepository;
-import com.gd.exercisetracker.exercise.ExerciseType;
+import com.gd.exercisetracker.exercise.enums.ExerciseType;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -47,7 +47,7 @@ public class DataLoader implements ApplicationRunner {
         ringAbRollouts.setMediaLink("https://www.youtube.com/watch?v=LBUfnmugKLw");
         ringAbRollouts.setComments("<ul><li>Elbows should stay straight</li><li>Remain in a hollow body position (ribs down, butt tucked)</li><li>Keep your hands as close as your overhead mobility will allow.</li><li>Higher ring position will make this easier. Elevating the feet will make it harder.</li></ul>");
 
-        exerciseRepository.save(ringAbRollouts);
+        saveOrUpdateExercise(ringAbRollouts);
 
         Exercise assistedKneeCoppenhagenPlank = new Exercise();
 
@@ -64,7 +64,7 @@ public class DataLoader implements ApplicationRunner {
         assistedKneeCoppenhagenPlank.setMediaLink("https://i.imgur.com/6vOLzTC.jpg");
         assistedKneeCoppenhagenPlank.setComments("<ul><li>Lower leg should give the minimum assistance you need.</li><li>Don't let the hips sag.</li><li>Can be performed on your hand instead of elbow.</li></ul>");
 
-        exerciseRepository.save(assistedKneeCoppenhagenPlank);
+        saveOrUpdateExercise(assistedKneeCoppenhagenPlank);
 
         Exercise bandedPallofPress = new Exercise();
 
@@ -83,7 +83,7 @@ public class DataLoader implements ApplicationRunner {
                 "These are performed under control with a short pause when your arms are fully extended"
         )));
 
-        exerciseRepository.save(bandedPallofPress);
+        saveOrUpdateExercise(bandedPallofPress);
 
         Exercise reverseHyperExtension = new Exercise();
 
@@ -100,7 +100,7 @@ public class DataLoader implements ApplicationRunner {
         reverseHyperExtension.setMediaLink("https://www.youtube.com/watch?v=ZeRsNzFcQLQ&");
         reverseHyperExtension.setComments("<ul><li>Keep your butt tucked</li></ul>");
 
-        exerciseRepository.save(reverseHyperExtension);
+        saveOrUpdateExercise(reverseHyperExtension);
     }
 
     private void addThirdPair() {
@@ -119,7 +119,7 @@ public class DataLoader implements ApplicationRunner {
         inclineRows.setMediaLink("https://www.youtube.com/watch?v=LR2EnFWpVao");
         inclineRows.setComments("<ul><li>Perform a row, but with the body position somewhere between vertical and horizontal. Go closer to horizontal to make it harder.</li></ul>");
 
-        exerciseRepository.save(inclineRows);
+        saveOrUpdateExercise(inclineRows);
 
         Exercise fullPushUp = new Exercise();
 
@@ -136,7 +136,7 @@ public class DataLoader implements ApplicationRunner {
         fullPushUp.setMediaLink("https://www.youtube.com/watch?v=IODxDxX7oi4");
         fullPushUp.setComments("<ul><li>Body in a straight line from head to toe: don't let the hips sag!</li><li>Lock out arms and protract the shoulderblades (<a href=\"https://reddit.com/r/bodyweightfitness/wiki/kb/positioning\" rel=\"nofollow\">what does that even mean?</a>) at the top</li><li>Go down until chest nearly touches the ground</li><li>Keep the elbows in, don't let them flare out</li><li>Don't shrug up your shoulders to your ears, focus on depressing the shoulderblades (<a href=\"https://reddit.com/r/bodyweightfitness/wiki/kb/positioning\" rel=\"nofollow\">what does that even mean?</a>).</li></ul>");
 
-        exerciseRepository.save(fullPushUp);
+        saveOrUpdateExercise(fullPushUp);
 
         Exercise diamondPushup = new Exercise();
 
@@ -156,7 +156,7 @@ public class DataLoader implements ApplicationRunner {
                 "If this is too difficult or feels uncomfortable, put your hands just a bit closer than in a normal pushup. Work on moving the hands closer together over time until you reach diamond pushups"
         )));
 
-        exerciseRepository.save(diamondPushup);
+        saveOrUpdateExercise(diamondPushup);
     }
 
     private void addSecondPair() {
@@ -175,7 +175,7 @@ public class DataLoader implements ApplicationRunner {
         parallelBarSupportHold.setMediaLink("https://antranik.org/wp-content/uploads/2014/01/antranik-holding-support-hold-on-parallel-bars.jpg");
         parallelBarSupportHold.setComments("<ul><li>Work up to 3 sets of 1 minute holds for this progression</li><li>If you can't hold yourself up at all, consider using bands or your feet to assist you until you gain the necessary strength.</li></ul>");
 
-        exerciseRepository.save(parallelBarSupportHold);
+        saveOrUpdateExercise(parallelBarSupportHold);
 
         Exercise negativeDips = new Exercise();
 
@@ -198,7 +198,7 @@ public class DataLoader implements ApplicationRunner {
 
         negativeDips.setComments(comments);
 
-        exerciseRepository.save(negativeDips);
+        saveOrUpdateExercise(negativeDips);
 
         Exercise negativeHamstringSlide = new Exercise();
 
@@ -215,7 +215,7 @@ public class DataLoader implements ApplicationRunner {
         negativeHamstringSlide.setMediaLink("https://www.youtube.com/watch?v=OY8Jci5KJdM");
         negativeHamstringSlide.setComments("<ul><li>Start in the top position of a glute bridge, slide legs out under control until your butt touches the ground/knees are extended.</li><li>Return to starting position and repeat for desired reps.</li></ul>");
 
-        exerciseRepository.save(negativeHamstringSlide);
+        saveOrUpdateExercise(negativeHamstringSlide);
 
         Exercise hamstringSlide = new Exercise();
 
@@ -239,7 +239,7 @@ public class DataLoader implements ApplicationRunner {
                 "As before, but pull ankles back to glutes after eccentric movement, contracting the hamstrings and glutes"
         )));
 
-        exerciseRepository.save(hamstringSlide);
+        saveOrUpdateExercise(hamstringSlide);
     }
 
     private void addFirstPair() {
@@ -258,7 +258,7 @@ public class DataLoader implements ApplicationRunner {
         archHangs.setMediaLink("https://www.youtube.com/watch?v=C995b3KLXS4&t=7s");
         archHangs.setComments("<ul><li>Elbows should stay straight</li><li>Hold it for time/reps</li><li>Start at this <a href=\"https://www.youtube.com/watch?v=HoE-C85ZlCE\">level</a></li><li>Progress towards a 90 degree in your shoulder. Like <a href=\"https://i.ytimg.com/vi/JusddCep6PA/hqdefault.jpg\">this</a></li></ul>");
 
-        exerciseRepository.save(archHangs);
+        saveOrUpdateExercise(archHangs);
 
         Exercise pullUpNegatives = new Exercise();
 
@@ -281,7 +281,7 @@ public class DataLoader implements ApplicationRunner {
 
         pullUpNegatives.setComments(comments);
 
-        exerciseRepository.save(pullUpNegatives);
+        saveOrUpdateExercise(pullUpNegatives);
 
         Exercise bulgarianSplitSquats = new Exercise();
 
@@ -298,10 +298,27 @@ public class DataLoader implements ApplicationRunner {
         bulgarianSplitSquats.setMediaLink("https://www.youtube.com/watch?v=kkdmHTASZg8&t=75s");
         bulgarianSplitSquats.setComments("<ul><li>Pretend the barbell doesn't exist.</li><li>You can progress this further by elevating both your legs</li></ul>");
 
-        exerciseRepository.save(bulgarianSplitSquats);
+        saveOrUpdateExercise(bulgarianSplitSquats);
     }
 
     private void addWarmups() {
+        Exercise stickDisplocates = new Exercise();
+
+        stickDisplocates.setKey("stick-disclocates");
+        stickDisplocates.setName("Stick Dislocates");
+        stickDisplocates.setCategory(ExerciseCategory.WARM_UP);
+        stickDisplocates.setType(ExerciseType.WARM_UP);
+        stickDisplocates.setTargetSets(1);
+        stickDisplocates.setTargetRepsMin(5);
+        stickDisplocates.setTargetRepsMax(10);
+        stickDisplocates.setDuration(false);
+        stickDisplocates.setTargetRest(0);
+        stickDisplocates.setAdditionalRest(0);
+        stickDisplocates.setMediaLink("https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMHJldDNxOXFjenpiN3RkZzRpMmtwd3UwZGd4ajByc2NnNGFsMmc2MyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/2x6ZLj05SFvHy/giphy.gif");
+        stickDisplocates.setComments("<ul><li>Can also be done with a tee-shirt</li></ul>");
+
+        saveOrUpdateExercise(stickDisplocates);
+
         Exercise shoulderBand = new Exercise();
 
         shoulderBand.setKey("yuris-shoulder-band-warmup");
@@ -317,7 +334,7 @@ public class DataLoader implements ApplicationRunner {
         shoulderBand.setMediaLink("https://www.youtube.com/watch?v=6y_AU-aGhVE");
         shoulderBand.setComments("<ul><li>Can also be done with a tee-shirt</li></ul>");
 
-        exerciseRepository.save(shoulderBand);
+        saveOrUpdateExercise(shoulderBand);
 
         Exercise skySquat = new Exercise();
 
@@ -334,7 +351,7 @@ public class DataLoader implements ApplicationRunner {
         skySquat.setMediaLink("https://www.youtube.com/watch?v=lbozu0DPcYI&t=42s");
         skySquat.setComments(null);
 
-        exerciseRepository.save(skySquat);
+        saveOrUpdateExercise(skySquat);
 
         Exercise wristPrep = new Exercise();
 
@@ -351,7 +368,7 @@ public class DataLoader implements ApplicationRunner {
         wristPrep.setMediaLink("https://www.youtube.com/watch?v=mSZWSQSSEjE");
         wristPrep.setComments("<ul><li>Do as many reps as you want</li></ul>");
 
-        exerciseRepository.save(wristPrep);
+        saveOrUpdateExercise(wristPrep);
 
         Exercise deadbugsBothLegs = new Exercise();
 
@@ -368,7 +385,7 @@ public class DataLoader implements ApplicationRunner {
         deadbugsBothLegs.setMediaLink("https://www.youtube.com/watch?v=HFv2WwgeVMk");
         deadbugsBothLegs.setComments(null);
 
-        exerciseRepository.save(deadbugsBothLegs);
+        saveOrUpdateExercise(deadbugsBothLegs);
 
         addAdditionalWarmups();
     }
@@ -392,7 +409,7 @@ public class DataLoader implements ApplicationRunner {
                 "Beginner attempts will look more like <a href=\"https://www.youtube.com/watch?v=HoE-C85ZlCE\">this</a>"))
         );
 
-        exerciseRepository.save(archHangsWarmup);
+        saveOrUpdateExercise(archHangsWarmup);
 
         Exercise supportHoldWarmup = new Exercise();
 
@@ -414,7 +431,7 @@ public class DataLoader implements ApplicationRunner {
                 "The stability of the PB allows you to build some strength and perfect your form. Have a minimum 60sec hold before moving on to the rings"
         )));
 
-        exerciseRepository.save(supportHoldWarmup);
+        saveOrUpdateExercise(supportHoldWarmup);
 
         Exercise squatWarmup = new Exercise();
 
@@ -437,7 +454,29 @@ public class DataLoader implements ApplicationRunner {
                 "Don't let the knees come inward on either the descend or the ascend; think about pushing the knees out"
         )));
 
-        exerciseRepository.save(squatWarmup);
+        saveOrUpdateExercise(squatWarmup);
+    }
+
+    private void saveOrUpdateExercise(Exercise exercise) {
+        Exercise existing = exerciseRepository.findByKey(exercise.getKey());
+
+        if (existing != null) {
+            existing.setName(exercise.getName());
+            existing.setCategory(exercise.getCategory());
+            existing.setType(exercise.getType());
+            existing.setTargetSets(exercise.getTargetSets());
+            existing.setTargetRepsMin(exercise.getTargetRepsMin());
+            existing.setTargetRepsMax(exercise.getTargetRepsMax());
+            existing.setDuration(exercise.isDuration());
+            existing.setTargetRest(exercise.getTargetRest());
+            existing.setAdditionalRest(exercise.getAdditionalRest());
+            existing.setMediaLink(exercise.getMediaLink());
+            existing.setComments(exercise.getComments());
+
+            exerciseRepository.save(existing);
+        } else {
+            exerciseRepository.save(exercise);
+        }
     }
 
     private String buildComments(List<String> lines) {
