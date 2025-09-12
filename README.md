@@ -51,67 +51,16 @@ https://exercise-tracker-iota-gules.vercel.app
 ## Future work:
 
 - Reduce Readme gif size
-- Add a login system
-- Add a page where users can select their exercises
 - Host the server
-- Connect the front end to the server
 - Add styling for larger screens
-- Dockerise
 
 ## Development
 
-### Client
+Add .env from the template.
 
-#### Change to the correct folder
+`docker-compose up -d`
 
-```
-cd client
-```
+Or use the .env.local template and the IntelliJ run config to run the server and client locally but still connect to the rest of the services in docker.
 
-#### Run the dev app
-
-```
-npm run dev
-```
-
-#### Run the tests
-
-```
-npm run test
-```
-
-### Server (WIP)
-
-#### Change to the correct folder
-
-```
-cd server
-```
-
-Add `.env`
-
-#### Run PostgreSQL
-
-```
-docker run --name exercise-tracker-postgres -e POSTGRES_PASSWORD=mysecretpassword -d -p 5432:5432 postgres
-```
-
-#### Create the DB if it doesn't exist
-
-```
-docker exec -it exercise-tracker-postgres psql -U postgres -c "CREATE DATABASE exercise_tracker"
-```
-
-#### Run Spring Boot
-
-```
-./mvnw clean spring-boot:run
-```
-
-More info in `server/README.md`
-
-### Linux
-
-Export env vars in the terminal before running IntelliJ from the same session.
-
-`export $(cat .env | xargs)`
+- Check files / folders
+- Update README
