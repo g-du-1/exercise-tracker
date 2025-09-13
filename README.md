@@ -46,6 +46,10 @@ https://exercise-tracker-iota-gules.vercel.app
 - REST Assured
 - CI / CD (GH Actions, Vercel)
 
+## Architecture (WIP)
+
+![](docs/architecture.drawio)
+
 ## Future work:
 
 - Reduce Readme gif size
