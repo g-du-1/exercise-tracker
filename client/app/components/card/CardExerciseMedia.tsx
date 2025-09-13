@@ -24,7 +24,7 @@ const renderYouTubeVideo = (exercise: Exercise, showMedia: boolean) => {
   );
 };
 
-const renderImage = (exercise: Exercise, showMedia: boolean) => {
+const renderMedia = (exercise: Exercise, showMedia: boolean) => {
   const visibleStyles = { width: "100%", height: "auto", display: "block" };
   const hiddenStyles = { display: "none" };
 
@@ -46,14 +46,12 @@ export const CardExerciseMedia = ({ exercise }: { exercise: Exercise }) => {
   if (!userSettings) return null;
 
   const isYoutubeVideo = exercise.mediaLink.includes("youtube");
-  const isImage = exercise.mediaLink.endsWith("jpg");
 
   const { showMedia } = userSettings;
 
   return (
     <Box sx={{ borderBottom: "1px solid #e8e8e8" }}>
-      {isYoutubeVideo && renderYouTubeVideo(exercise, showMedia)}
-      {isImage && renderImage(exercise, showMedia)}
+      {isYoutubeVideo ? renderYouTubeVideo(exercise, showMedia) : renderMedia(exercise, showMedia)}
     </Box>
   );
 };

@@ -314,7 +314,7 @@ public class DataLoader implements ApplicationRunner {
         stickDisplocates.setDuration(false);
         stickDisplocates.setTargetRest(0);
         stickDisplocates.setAdditionalRest(0);
-        stickDisplocates.setMediaLink("https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMHJldDNxOXFjenpiN3RkZzRpMmtwd3UwZGd4ajByc2NnNGFsMmc2MyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/2x6ZLj05SFvHy/giphy.gif");
+        stickDisplocates.setMediaLink("https://i.giphy.com/2x6ZLj05SFvHy.webp");
         stickDisplocates.setComments("<ul><li>Can also be done with a tee-shirt</li></ul>");
 
         saveOrUpdateExercise(stickDisplocates);
