@@ -1,4 +1,4 @@
-# exercise-tracker
+# RRLog
 
 An exercise tracker for bodyweight exercises - https://www.reddit.com/r/bodyweightfitness/wiki/kb/recommended_routine
 
