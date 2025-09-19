@@ -30,6 +30,10 @@ https://rr-log-iota-gules.vercel.app
 - Hiding and showing exercise comments
 - Hiding and showing completed exercises
 
+## Roadmap
+
+https://github.com/users/g-du-1/projects/4
+
 ## Technologies / approach
 
 - TDD
@@ -45,10 +49,6 @@ https://rr-log-iota-gules.vercel.app
 - JUnit
 - REST Assured
 - CI / CD (GH Actions, Vercel)
-
-## Architecture (WIP)
-
-![](docs/architecture.drawio)
 
 ## Future work:
 
