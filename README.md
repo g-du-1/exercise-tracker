@@ -1,4 +1,4 @@
-# exercise-tracker
+# RRLog
 
 An exercise tracker for bodyweight exercises - https://www.reddit.com/r/bodyweightfitness/wiki/kb/recommended_routine
 
@@ -10,13 +10,13 @@ The goal was to have a web app that can be operated with as little interaction a
 
 ## Live URL
 
-The front end is hosted on Vercel. Please bear in mind the design is mobile only at the moment.
+The front end is hosted on Vercel. Please bear in mind the design is mobile only at the moment. The front end can be checked on the link below, but there is a WIP server that is not deployed yet that allows users to log in and select their own exercises. This can be checked out locally in Docker.
 
-https://exercise-tracker-iota-gules.vercel.app
+https://rr-log-iota-gules.vercel.app
 
 ## Features
 
-![](docs/exercise-tracker.gif)
+![](docs/rr-log.gif)
 
 - Warning icons and notifications for rest time
 
@@ -30,6 +30,10 @@ https://exercise-tracker-iota-gules.vercel.app
 - Hiding and showing exercise comments
 - Hiding and showing completed exercises
 
+## Roadmap
+
+https://github.com/users/g-du-1/projects/4
+
 ## Technologies / approach
 
 - TDD
@@ -40,21 +44,12 @@ https://exercise-tracker-iota-gules.vercel.app
 - zustand
 - Material UI
 - Java Spring Boot
+- Spring Security
 - PostgreSQL (Docker)
 - Testcontainers
 - JUnit
 - REST Assured
 - CI / CD (GH Actions, Vercel)
-
-## Architecture (WIP)
-
-![](docs/architecture.drawio)
-
-## Future work:
-
-- Reduce Readme gif size
-- Host the server
-- Add styling for larger screens
 
 ## Development
 
